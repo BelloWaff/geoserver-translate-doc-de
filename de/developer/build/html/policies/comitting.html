@@ -1,0 +1,213 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Comitting &mdash; GeoServer 2.2.x Developer Manual</title>
+  <link rel="stylesheet" href="../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../_static/jquery.js"></script>
+  <script type="text/javascript" src="../_static/doctools.js"></script>
+  <script type="text/javascript" src="../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x Developer Manual" href="../index.html" />
+      <link rel="up" title="Policies and Procedures" href="index.html" />
+      <link rel="next" title="Submitting Patches" href="patches.html" />
+      <link rel="prev" title="Policies and Procedures" href="index.html" />
+</head>
+<body class="policies/comitting">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../index.html">GeoServer 2.2.x Developer Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../index.html">GeoServer 2.2.x Developer Manual</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Policies and Procedures</a> &raquo;</li>
+  <li>Comitting</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="patches.html" title="Submitting Patches"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="index.html" title="Policies and Procedures"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="comitting">
+<span id="id1"></span><h1>Comitting<a class="headerlink" href="#comitting" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="getting-commit-access">
+<h2>Getting commit access<a class="headerlink" href="#getting-commit-access" title="Permalink to this headline">¶</a></h2>
+<p>There are two stages of commit access:</p>
+<ol class="arabic simple">
+<li>community module or extension commit access</li>
+<li>core commit access</li>
+</ol>
+<p>The first stage of access allows a developer to commit only to the community
+module or extension for which they are the maintainer. This stage of access can
+be obtained quite easily.</p>
+<p>The second allows a developer to make commits to the core modules of geoserver.
+Being granted this stage of access takes time, and is obtained only after the
+developer has gained the trust of the other core comitters.</p>
+<div class="section" id="community-commit-access">
+<h3>Community commit access<a class="headerlink" href="#community-commit-access" title="Permalink to this headline">¶</a></h3>
+<p>The process of getting community commit access is as follows:</p>
+<ol class="arabic">
+<li><p class="first"><strong>Email the developer list</strong></p>
+<p>This first step is all about communication. In order to grant commit access
+the other developers on the project must first know what the intention is.
+Therefore any developer looking for commit access must first describe what
+they want to commit (usually a community module), and what it does.</p>
+</li>
+<li><p class="first"><strong>Sign up for a GitHub account</strong></p>
+<p>GeoServer source code is hosted on Github and you&#8217;ll need an account in
+order to access it. You can sign-up <a class="reference external" href="https://github.com/signup/">here</a>.</p>
+</li>
+<li><p class="first"><strong>Notify the developer list</strong></p>
+<p>After a developer has signed up on Github they must notify the developer
+list. A project despot will then add them to the group of GeoServer
+committers and grant write access to the canonical repository.</p>
+</li>
+<li><p class="first"><strong>Fork the canonical GeoServer repository</strong></p>
+<p>All committers maintain a fork of the GeoServer repository that they work
+from. Fork the canonical repository into your own account.</p>
+</li>
+<li><p class="first"><strong>Configure your local setup</strong></p>
+<p>Follow this <a class="reference internal" href="../source.html#source"><em>guide</em></a> in the developer manual.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="core-commit-access">
+<h3>Core commit access<a class="headerlink" href="#core-commit-access" title="Permalink to this headline">¶</a></h3>
+<p>The process of obtaining core commit access is far less mechanical than the one
+to obtain community commit access. It is based soley on trust. To obtain core
+commit access a developer must first obtain the trust of the other core
+commiters.</p>
+<p>The way this is typically done is through continuous code review of patches.
+After a developer has submitted enough patches that have been met with a
+postitive response, and those patches require little modifications, the
+developer will be granted core commit access.</p>
+<p>There is no magic number of patches that make the criteria, it is based mostly
+on the nature of the patches, how in depth the they are, etc... Basically it
+boils down the developer being able to show that they understand the code base
+well enough to not seriously break anything.</p>
+</div>
+</div>
+<div class="section" id="commit-guidelines">
+<h2>Commit Guidelines<a class="headerlink" href="#commit-guidelines" title="Permalink to this headline">¶</a></h2>
+<p>There is not much in the way of strict commit policies when it comes to committing
+in GeoServer. But over time some rules and conventions have emerged:</p>
+<ol class="arabic">
+<li><p class="first"><strong>Add copyright headers for new files</strong></p>
+<p>When adding new source files to the repository remember to add the standard
+copyright header:</p>
+<div class="highlight-python"><pre>/* Copyright (c) 2001 - 2011 TOPP - www.openplans.org. All rights reserved.
+ * This code is licensed under the GPL 2.0 license, available at the root
+ * application directory.
+ */</pre>
+</div>
+</li>
+<li><p class="first"><strong>Do not commit large amounts of binary data</strong></p>
+<p>In general do not commit any binary data to the repository. There are cases where
+it is appropriate like some data for a test case, but in these cases the files
+should be kept as small as possible.</p>
+</li>
+<li><p class="first"><strong>Do not commit jars or libs, use Maven instead</strong></p>
+<p>In general never commit a depending library directly into the repository, this is
+what we use Maven for. If you have a jar that is not present in any maven
+repositories ask on the developer list to get it uploaded to one of the project
+maven repositories.</p>
+</li>
+<li><p class="first"><strong>Ensure code is properly formatted</strong></p>
+<p>Ensure that the IDE or editor used to edit source files is setup with proper
+formatting rules. This means spaces instead of tabs, 100 character line break,
+etc...</p>
+<p>If using Eclipse ensure you have configured it with the <a class="reference external" href="http://docs.geotools.org/latest/developer/guide/conventions/code/style.html#use-of-formatting-tools">template and formatter</a>
+used for GeoTools.</p>
+</li>
+</ol>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="index.html" title="previous chapter">Policies and Procedures</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="patches.html" title="next chapter">Submitting Patches</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">Comitting</a><ul>
+<li><a class="reference internal" href="#getting-commit-access">Getting commit access</a><ul>
+<li><a class="reference internal" href="#community-commit-access">Community commit access</a></li>
+<li><a class="reference internal" href="#core-commit-access">Core commit access</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#commit-guidelines">Commit Guidelines</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="index.html" title="previous chapter">Policies and Procedures</a></li>
+            <li>Next: <a href="patches.html" title="next chapter">Submitting Patches</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../_sources/policies/comitting.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2011 GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

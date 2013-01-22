@@ -1,0 +1,384 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Managing Layers &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../../index.html" />
+      <link rel="up" title="GeoWebCache REST API" href="index.html" />
+      <link rel="next" title="Seeding and Truncating" href="seed.html" />
+      <link rel="prev" title="GeoWebCache REST API" href="index.html" />
+</head>
+<body class="geowebcache/rest/layers">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Caching with GeoWebCache</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">GeoWebCache REST API</a> &raquo;</li>
+  <li>Managing Layers</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="seed.html" title="Seeding and Truncating"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="index.html" title="GeoWebCache REST API"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="managing-layers">
+<span id="gwc-rest-layers"></span><h1>Managing Layers<a class="headerlink" href="#managing-layers" title="Permalink to this headline">¶</a></h1>
+<p>The GeoWebCache REST API provides a RESTful interface through which users can add, modify, or remove cached layers.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">JSON is not recommended for managing layers as the JSON library has a number of issues with multi-valued properties such as &#8220;parameterFilters&#8221;.</p>
+</div>
+<div class="section" id="layer-list">
+<h2>Layer list<a class="headerlink" href="#layer-list" title="Permalink to this headline">¶</a></h2>
+<p>URL: <tt class="docutils literal"><span class="pre">/gwc/rest/seed/layers.xml</span></tt></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Action</th>
+<th class="head">Return Code</th>
+<th class="head">Formats</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>Return the list of available layers</td>
+<td>200</td>
+<td>XML</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>&nbsp;</td>
+<td>400</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>&nbsp;</td>
+<td>400</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>&nbsp;</td>
+<td>400</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p>The following example will request a full list of layers:</p>
+<div class="highlight-xml"><div class="highlight"><pre>curl -u admin:geoserver &quot;http://localhost:8080/geoserver/gwc/rest/layers&quot;
+</pre></div>
+</div>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;layers&gt;</span>
+  <span class="nt">&lt;layer&gt;</span>
+    <span class="nt">&lt;name&gt;</span>img states<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;atom:link</span> <span class="na">xmlns:atom=</span><span class="s">&quot;http://www.w3.org/2005/Atom&quot;</span> <span class="na">rel=</span><span class="s">&quot;alternate&quot;</span> <span class="na">href=</span><span class="s">&quot;http://localhost:8080/geoserver/gwc/rest/layers/img+states.xml&quot;</span> <span class="na">type=</span><span class="s">&quot;text/xml&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/layer&gt;</span>
+  <span class="nt">&lt;layer&gt;</span>
+    <span class="nt">&lt;name&gt;</span>raster test layer<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;atom:link</span> <span class="na">xmlns:atom=</span><span class="s">&quot;http://www.w3.org/2005/Atom&quot;</span> <span class="na">rel=</span><span class="s">&quot;alternate&quot;</span> <span class="na">href=</span><span class="s">&quot;http://localhost:8080/geoserver/gwc/rest/layers/raster+test+layer.xml&quot;</span> <span class="na">type=</span><span class="s">&quot;text/xml&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/layer&gt;</span>
+  <span class="nt">&lt;layer&gt;</span>
+    <span class="nt">&lt;name&gt;</span>topp:states<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;atom:link</span> <span class="na">xmlns:atom=</span><span class="s">&quot;http://www.w3.org/2005/Atom&quot;</span> <span class="na">rel=</span><span class="s">&quot;alternate&quot;</span> <span class="na">href=</span><span class="s">&quot;http://localhost:8080/geoserver/gwc/rest/layers/topp%3Astates.xml&quot;</span> <span class="na">type=</span><span class="s">&quot;text/xml&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/layer&gt;</span>
+ <span class="nt">&lt;/layers&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="layer-operations">
+<h2>Layer Operations<a class="headerlink" href="#layer-operations" title="Permalink to this headline">¶</a></h2>
+<p>URL: <tt class="docutils literal"><span class="pre">/gwc/rest/seed/layers/&lt;layer&gt;.xml</span></tt></p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">JSON is not recommended for managing layers as the JSON library has a number of issues with multi-valued properties such as &#8220;parameterFilters&#8221;.</p>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Action</th>
+<th class="head">Return Code</th>
+<th class="head">Formats</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>Return the XML representation of the layer</td>
+<td>200</td>
+<td>XML</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>Modify the definition/configuration of the layer</td>
+<td>200</td>
+<td>XML</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>Add a new layer</td>
+<td>200</td>
+<td>XML</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>Delete the layer</td>
+<td>200</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">There are two different representations for cached layers, depending on whether the tile layer is created from the GeoServer WMS layer or layer group (<tt class="docutils literal"><span class="pre">GeoServerLayer</span></tt>), or is configured in <tt class="docutils literal"><span class="pre">geowebcache.xml</span></tt> as a regular GWC layer (<tt class="docutils literal"><span class="pre">wmsLayer</span></tt>). A GeoServer layer is referred to as a  <tt class="docutils literal"><span class="pre">GeoServerLayer</span></tt> and contains no image data source information such as origin WMS URL.</p>
+</div>
+<p><strong>Representations</strong>:</p>
+<ul class="simple">
+<li>GeoWebCache (<tt class="docutils literal"><span class="pre">wmsLayer</span></tt>) <a class="reference download internal" href="../../_downloads/wmslayer_minimal.xml.txt"><tt class="xref download docutils literal"><span class="pre">XML</span> <span class="pre">minimal</span></tt></a></li>
+<li>GeoWebCache (<tt class="docutils literal"><span class="pre">wmsLayer</span></tt>) <a class="reference download internal" href="../../_downloads/wmslayer.xml.txt"><tt class="xref download docutils literal"><span class="pre">XML</span></tt></a></li>
+<li>GeoServer (<tt class="docutils literal"><span class="pre">GeoServerLayer</span></tt>) <a class="reference download internal" href="../../_downloads/geoserverlayer_minimal.xml.txt"><tt class="xref download docutils literal"><span class="pre">XML</span> <span class="pre">minimal</span></tt></a></li>
+<li>GeoServer (<tt class="docutils literal"><span class="pre">GeoServerLayer</span></tt>) <a class="reference download internal" href="../../_downloads/geoserverlayer.xml.txt"><tt class="xref download docutils literal"><span class="pre">XML</span></tt></a></li>
+</ul>
+<p>The examples below use the <a class="reference external" href="http://curl.haxx.se/">cURL</a> tool, though the examples apply to any HTTP-capable tool or library.</p>
+<div class="section" id="adding-a-geowebcache-layer">
+<h3>Adding a GeoWebCache layer<a class="headerlink" href="#adding-a-geowebcache-layer" title="Permalink to this headline">¶</a></h3>
+<p>The following example will add a new layer to GeoWebCache:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -v -u admin:geoserver -XPUT -H &quot;Content-type: text/xml&quot; -d @layer.xml  &quot;http://localhost:8080/geoserver/gwc/rest/layers/newlayer.xml&quot;</span>
+</pre></div>
+</div>
+<p>The <tt class="file docutils literal"><span class="pre">layer.xml</span></tt> file is defined as the following:</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;wmsLayer&gt;</span>
+  <span class="nt">&lt;name&gt;</span>newlayer<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;mimeFormats&gt;</span>
+    <span class="nt">&lt;string&gt;</span>image/png<span class="nt">&lt;/string&gt;</span>
+  <span class="nt">&lt;/mimeFormats&gt;</span>
+  <span class="nt">&lt;gridSubsets&gt;</span>
+    <span class="nt">&lt;gridSubset&gt;</span>
+      <span class="nt">&lt;gridSetName&gt;</span>EPSG:900913<span class="nt">&lt;/gridSetName&gt;</span>
+    <span class="nt">&lt;/gridSubset&gt;</span>
+  <span class="nt">&lt;/gridSubsets&gt;</span>
+  <span class="nt">&lt;wmsUrl&gt;</span>
+    <span class="nt">&lt;string&gt;</span>http://localhost:8080/geoserver/wms<span class="nt">&lt;/string&gt;</span>
+  <span class="nt">&lt;/wmsUrl&gt;</span>
+  <span class="nt">&lt;wmsLayers&gt;</span>topp:states<span class="nt">&lt;/wmsLayers&gt;</span>
+<span class="nt">&lt;/wmsLayer&gt;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The addressed resource (<tt class="docutils literal"><span class="pre">newlayer</span></tt> in this example) must match the name of the layer in the XML representation.</p>
+</div>
+</div>
+<div class="section" id="adding-a-geoserver-layer">
+<h3>Adding a GeoServer layer<a class="headerlink" href="#adding-a-geoserver-layer" title="Permalink to this headline">¶</a></h3>
+<p>The following example will add a new layer to both GeoServer and GeoWebCache:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -v -u admin:geoserver -XPUT -H &quot;Content-type: text/xml&quot; -d @poi.xml  &quot;http://localhost:8080/geoserver/gwc/rest/layers/tiger:poi.xml&quot;</span>
+</pre></div>
+</div>
+<p>The <tt class="file docutils literal"><span class="pre">poi.xml</span></tt> file is defined as the following:</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;GeoServerLayer&gt;</span>
+  <span class="nt">&lt;id&gt;</span>LayerInfoImpl--570ae188:124761b8d78:-7fd0<span class="nt">&lt;/id&gt;</span>
+  <span class="nt">&lt;enabled&gt;</span>true<span class="nt">&lt;/enabled&gt;</span>
+  <span class="nt">&lt;name&gt;</span>tiger:poi<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;mimeFormats&gt;</span>
+    <span class="nt">&lt;string&gt;</span>image/png8<span class="nt">&lt;/string&gt;</span>
+  <span class="nt">&lt;/mimeFormats&gt;</span>
+  <span class="nt">&lt;gridSubsets&gt;</span>
+    <span class="nt">&lt;gridSubset&gt;</span>
+      <span class="nt">&lt;gridSetName&gt;</span>GoogleCRS84Quad<span class="nt">&lt;/gridSetName&gt;</span>
+      <span class="nt">&lt;zoomStart&gt;</span>0<span class="nt">&lt;/zoomStart&gt;</span>
+      <span class="nt">&lt;zoomStop&gt;</span>14<span class="nt">&lt;/zoomStop&gt;</span>
+      <span class="nt">&lt;minCachedLevel&gt;</span>1<span class="nt">&lt;/minCachedLevel&gt;</span>
+      <span class="nt">&lt;maxCachedLevel&gt;</span>9<span class="nt">&lt;/maxCachedLevel&gt;</span>
+    <span class="nt">&lt;/gridSubset&gt;</span>
+  <span class="nt">&lt;/gridSubsets&gt;</span>
+  <span class="nt">&lt;metaWidthHeight&gt;</span>
+    <span class="nt">&lt;int&gt;</span>4<span class="nt">&lt;/int&gt;</span>
+    <span class="nt">&lt;int&gt;</span>4<span class="nt">&lt;/int&gt;</span>
+  <span class="nt">&lt;/metaWidthHeight&gt;</span>
+  <span class="nt">&lt;gutter&gt;</span>50<span class="nt">&lt;/gutter&gt;</span>
+  <span class="nt">&lt;autoCacheStyles&gt;</span>true<span class="nt">&lt;/autoCacheStyles&gt;</span>
+<span class="nt">&lt;/GeoServerLayer&gt;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The addressed resource ( <tt class="docutils literal"><span class="pre">tiger:poi</span></tt> in this example) must match the name of the layer in the XML representation, as well as the name of an <em>existing</em> GeoServer layer or layer group.</p>
+</div>
+</div>
+<div class="section" id="modifying-a-layer">
+<h3>Modifying a layer<a class="headerlink" href="#modifying-a-layer" title="Permalink to this headline">¶</a></h3>
+<p>This example modifies the layer definition via the <tt class="file docutils literal"><span class="pre">layer.xml</span></tt> file.  The request adds a parameter filter and a grid subset to the existing <tt class="docutils literal"><span class="pre">tiger:poi</span></tt> tile layer:</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;GeoServerLayer&gt;</span>
+ <span class="nt">&lt;enabled&gt;</span>true<span class="nt">&lt;/enabled&gt;</span>
+ <span class="nt">&lt;name&gt;</span>tiger:poi<span class="nt">&lt;/name&gt;</span>
+ <span class="nt">&lt;mimeFormats&gt;</span>
+   <span class="nt">&lt;string&gt;</span>image/png8<span class="nt">&lt;/string&gt;</span>
+ <span class="nt">&lt;/mimeFormats&gt;</span>
+ <span class="nt">&lt;gridSubsets&gt;</span>
+   <span class="nt">&lt;gridSubset&gt;</span>
+     <span class="nt">&lt;gridSetName&gt;</span>GoogleCRS84Quad<span class="nt">&lt;/gridSetName&gt;</span>
+     <span class="nt">&lt;zoomStart&gt;</span>0<span class="nt">&lt;/zoomStart&gt;</span>
+     <span class="nt">&lt;zoomStop&gt;</span>14<span class="nt">&lt;/zoomStop&gt;</span>
+     <span class="nt">&lt;minCachedLevel&gt;</span>1<span class="nt">&lt;/minCachedLevel&gt;</span>
+     <span class="nt">&lt;maxCachedLevel&gt;</span>9<span class="nt">&lt;/maxCachedLevel&gt;</span>
+   <span class="nt">&lt;/gridSubset&gt;</span>
+   <span class="nt">&lt;gridSubset&gt;</span>
+     <span class="nt">&lt;gridSetName&gt;</span>EPSG:900913<span class="nt">&lt;/gridSetName&gt;</span>
+     <span class="nt">&lt;extent&gt;</span>
+       <span class="nt">&lt;coords&gt;</span>
+         <span class="nt">&lt;double&gt;</span>-8238959.403861314<span class="nt">&lt;/double&gt;</span>
+         <span class="nt">&lt;double&gt;</span>4969300.121476209<span class="nt">&lt;/double&gt;</span>
+         <span class="nt">&lt;double&gt;</span>-8237812.689219721<span class="nt">&lt;/double&gt;</span>
+         <span class="nt">&lt;double&gt;</span>4971112.167757057<span class="nt">&lt;/double&gt;</span>
+       <span class="nt">&lt;/coords&gt;</span>
+     <span class="nt">&lt;/extent&gt;</span>
+   <span class="nt">&lt;/gridSubset&gt;</span>
+ <span class="nt">&lt;/gridSubsets&gt;</span>
+ <span class="nt">&lt;metaWidthHeight&gt;</span>
+   <span class="nt">&lt;int&gt;</span>4<span class="nt">&lt;/int&gt;</span>
+   <span class="nt">&lt;int&gt;</span>4<span class="nt">&lt;/int&gt;</span>
+ <span class="nt">&lt;/metaWidthHeight&gt;</span>
+ <span class="nt">&lt;parameterFilters&gt;</span>
+   <span class="nt">&lt;floatParameterFilter&gt;</span>
+     <span class="nt">&lt;key&gt;</span>ELEVATION<span class="nt">&lt;/key&gt;</span>
+     <span class="nt">&lt;defaultValue&gt;</span>0.0<span class="nt">&lt;/defaultValue&gt;</span>
+     <span class="nt">&lt;values&gt;</span>
+       <span class="nt">&lt;float&gt;</span>0.0<span class="nt">&lt;/float&gt;</span>
+       <span class="nt">&lt;float&gt;</span>1.0<span class="nt">&lt;/float&gt;</span>
+       <span class="nt">&lt;float&gt;</span>2.0<span class="nt">&lt;/float&gt;</span>
+       <span class="nt">&lt;float&gt;</span>3.0<span class="nt">&lt;/float&gt;</span>
+       <span class="nt">&lt;float&gt;</span>4.0<span class="nt">&lt;/float&gt;</span>
+     <span class="nt">&lt;/values&gt;</span>
+     <span class="nt">&lt;threshold&gt;</span>1.0E-3<span class="nt">&lt;/threshold&gt;</span>
+   <span class="nt">&lt;/floatParameterFilter&gt;</span>
+ <span class="nt">&lt;/parameterFilters&gt;</span>
+ <span class="nt">&lt;gutter&gt;</span>50<span class="nt">&lt;/gutter&gt;</span>
+ <span class="nt">&lt;autoCacheStyles&gt;</span>true<span class="nt">&lt;/autoCacheStyles&gt;</span>
+<span class="nt">&lt;/GeoServerLayer&gt;</span>
+</pre></div>
+</div>
+<p>Instead of PUT, use the HTTP POST method instead:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -v -u admin:geoserver -XPOST -H &quot;Content-type: text/xml&quot; -d @poi.xml  &quot;http://localhost:8080/geoserver/gwc/rest/layers/tiger:poi.xml&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="deleting-a-layer">
+<h3>Deleting a layer<a class="headerlink" href="#deleting-a-layer" title="Permalink to this headline">¶</a></h3>
+<p>Deleting a GeoWebCache tile layer deletes the layer configuration <em>as well as the layer&#8217;s disk cache</em>. No tile images will remain in the cache directory after deleting a tile layer.</p>
+<p>To delete a layer, use the HTTP DELETE method against the layer resource:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -v -u admin:geoserver -XDELETE &quot;http://localhost:8080/geoserver/gwc/rest/layers/newlayer.xml&quot;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>If trying to delete a tile layer that is an integrated <tt class="docutils literal"><span class="pre">GeoServerLayer</span></tt>, only the GeoWebCache layer definition will be deleted; the GeoServer definition is left untouched. To delete a layer in GeoServer, use the <a class="reference internal" href="../../restconfig/index.html#rest-extension"><em>GeoServer REST API</em></a> to manipulate GeoServer resources.</p>
+<p class="last">On the other hand, deleting a GeoServer layer via the GeoServer REST API <em>will</em> automatically delete the associated tile layer.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="index.html" title="previous chapter">GeoWebCache REST API</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="seed.html" title="next chapter">Seeding and Truncating</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">Managing Layers</a><ul>
+<li><a class="reference internal" href="#layer-list">Layer list</a></li>
+<li><a class="reference internal" href="#layer-operations">Layer Operations</a><ul>
+<li><a class="reference internal" href="#adding-a-geowebcache-layer">Adding a GeoWebCache layer</a></li>
+<li><a class="reference internal" href="#adding-a-geoserver-layer">Adding a GeoServer layer</a></li>
+<li><a class="reference internal" href="#modifying-a-layer">Modifying a layer</a></li>
+<li><a class="reference internal" href="#deleting-a-layer">Deleting a layer</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="index.html" title="previous chapter">GeoWebCache REST API</a></li>
+            <li>Next: <a href="seed.html" title="next chapter">Seeding and Truncating</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/geowebcache/rest/layers.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

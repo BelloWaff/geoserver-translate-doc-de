@@ -1,0 +1,314 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Geometry transformations in SLD &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../../index.html" />
+      <link rel="up" title="SLD Extensions in GeoServer" href="index.html" />
+      <link rel="next" title="Rendering Transformations" href="rendering-transform.html" />
+      <link rel="prev" title="SLD Extensions in GeoServer" href="index.html" />
+</head>
+<body class="styling/sld-extensions/geometry-transformations">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Styling</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">SLD Extensions in GeoServer</a> &raquo;</li>
+  <li>Geometry transformations in SLD</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="rendering-transform.html" title="Rendering Transformations"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="index.html" title="SLD Extensions in GeoServer"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="geometry-transformations-in-sld">
+<span id="geometry-transformations"></span><h1>Geometry transformations in SLD<a class="headerlink" href="#geometry-transformations-in-sld" title="Permalink to this headline">¶</a></h1>
+<p>In SLD symbolizers may contain an optional <tt class="docutils literal"><span class="pre">&lt;Geometry&gt;</span></tt> element, which allows specifying which geometry attribute is to be rendered.
+In the common case of a featuretype with a single geometry attribute this element is usually omitted,
+but it is useful when a featuretype has multiple geometry-valued attributes.</p>
+<p>SLD 1.0 requires the <tt class="docutils literal"><span class="pre">&lt;Geometry&gt;</span></tt> content to be a <tt class="docutils literal"><span class="pre">&lt;ogc:PropertyName&gt;</span></tt>.
+GeoServer extends this to allow a general SLD expression to be used.
+The expression can contain  filter functions that manipulate geometries by transforming them into something different.
+This facility is called SLD <em>geometry transformations</em>.</p>
+<p>GeoServer provides a number of filter functions that can transform geometry.
+A full list is available in the <a class="reference internal" href="../../filter/function_reference.html#filter-function-reference"><em>Filter Function Reference</em></a>.
+They can be used to do things such as extracting line vertices or endpoints,
+offsetting polygons, or buffering geometries.</p>
+<p>Geometry transformations are computed in the geometry&#8217;s original coordinate reference system, before any reprojection and rescaling to the output map is performed.
+For this reason, transformation parameters must be expressed in the units of the geometry CRS.
+This must be taken into account when using geometry transformations at different screen scales,
+since the parameters will not change with scale.</p>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<p>Let&#8217;s look at some examples.</p>
+<div class="section" id="extracting-vertices">
+<h3>Extracting vertices<a class="headerlink" href="#extracting-vertices" title="Permalink to this headline">¶</a></h3>
+<p>Here is an example that allows one to extract all the vertices of a geometry, and make them visible in a map, using the <tt class="docutils literal"><span class="pre">vertices</span></tt> function:</p>
+<div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16</pre></div></td><td class="code"><div class="highlight"><pre>   <span class="nt">&lt;PointSymbolizer&gt;</span>
+     <span class="nt">&lt;Geometry&gt;</span>
+       <span class="nt">&lt;ogc:Function</span> <span class="na">name=</span><span class="s">&quot;vertices&quot;</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;ogc:PropertyName&gt;</span>the_geom<span class="nt">&lt;/ogc:PropertyName&gt;</span>
+       <span class="nt">&lt;/ogc:Function&gt;</span>
+     <span class="nt">&lt;/Geometry&gt;</span>
+     <span class="nt">&lt;Graphic&gt;</span>
+       <span class="nt">&lt;Mark&gt;</span>
+         <span class="nt">&lt;WellKnownName&gt;</span>square<span class="nt">&lt;/WellKnownName&gt;</span>
+         <span class="nt">&lt;Fill&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;fill&quot;</span><span class="nt">&gt;</span>#FF0000<span class="nt">&lt;/CssParameter&gt;</span>
+         <span class="nt">&lt;/Fill&gt;</span>
+       <span class="nt">&lt;/Mark&gt;</span>
+       <span class="nt">&lt;Size&gt;</span>6<span class="nt">&lt;/Size&gt;</span>
+     <span class="nt">&lt;/Graphic&gt;</span>
+  <span class="nt">&lt;/PointSymbolizer&gt;</span>
+</pre></div>
+</td></tr></table></div>
+<p><a class="reference download internal" href="../../_downloads/vertices.sld"><tt class="xref download docutils literal"><span class="pre">View</span> <span class="pre">the</span> <span class="pre">full</span> <span class="pre">&quot;Vertices&quot;</span> <span class="pre">SLD</span></tt></a></p>
+<p>Applied to the sample <cite>tasmania_roads</cite> layer this will result in:</p>
+<div class="figure align-center">
+<img alt="../../_images/vertices.png" src="../../_images/vertices.png" />
+<p class="caption"><em>Extracting and showing the vertices out of a geometry</em></p>
+</div>
+</div>
+<div class="section" id="start-and-end-point">
+<h3>Start and end point<a class="headerlink" href="#start-and-end-point" title="Permalink to this headline">¶</a></h3>
+<p>The <cite>startPoint</cite> and <cite>endPoint</cite> functions can be used to extract the start and end point of a line.</p>
+<div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33</pre></div></td><td class="code"><div class="highlight"><pre><span class="nt">&lt;PointSymbolizer&gt;</span>
+  <span class="nt">&lt;Geometry&gt;</span>
+    <span class="nt">&lt;ogc:Function</span> <span class="na">name=</span><span class="s">&quot;startPoint&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;ogc:PropertyName&gt;</span>the_geom<span class="nt">&lt;/ogc:PropertyName&gt;</span>
+    <span class="nt">&lt;/ogc:Function&gt;</span>
+  <span class="nt">&lt;/Geometry&gt;</span>
+  <span class="nt">&lt;Graphic&gt;</span>
+    <span class="nt">&lt;Mark&gt;</span>
+      <span class="nt">&lt;WellKnownName&gt;</span>square<span class="nt">&lt;/WellKnownName&gt;</span>
+      <span class="nt">&lt;Stroke&gt;</span>
+        <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke&quot;</span><span class="nt">&gt;</span>0x00FF00<span class="nt">&lt;/CssParameter&gt;</span>
+        <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke-width&quot;</span><span class="nt">&gt;</span>1.5<span class="nt">&lt;/CssParameter&gt;</span>
+      <span class="nt">&lt;/Stroke&gt;</span>
+    <span class="nt">&lt;/Mark&gt;</span>
+    <span class="nt">&lt;Size&gt;</span>8<span class="nt">&lt;/Size&gt;</span>
+  <span class="nt">&lt;/Graphic&gt;</span>
+ <span class="nt">&lt;/PointSymbolizer&gt;</span>
+ <span class="nt">&lt;PointSymbolizer&gt;</span>
+   <span class="nt">&lt;Geometry&gt;</span>
+     <span class="nt">&lt;ogc:Function</span> <span class="na">name=</span><span class="s">&quot;endPoint&quot;</span><span class="nt">&gt;</span>
+       <span class="nt">&lt;ogc:PropertyName&gt;</span>the_geom<span class="nt">&lt;/ogc:PropertyName&gt;</span>
+     <span class="nt">&lt;/ogc:Function&gt;</span>
+   <span class="nt">&lt;/Geometry&gt;</span>
+   <span class="nt">&lt;Graphic&gt;</span>
+     <span class="nt">&lt;Mark&gt;</span>
+       <span class="nt">&lt;WellKnownName&gt;</span>circle<span class="nt">&lt;/WellKnownName&gt;</span>
+       <span class="nt">&lt;Fill&gt;</span>
+          <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;fill&quot;</span><span class="nt">&gt;</span>0xFF0000<span class="nt">&lt;/CssParameter&gt;</span>
+       <span class="nt">&lt;/Fill&gt;</span>
+     <span class="nt">&lt;/Mark&gt;</span>
+     <span class="nt">&lt;Size&gt;</span>4<span class="nt">&lt;/Size&gt;</span>
+   <span class="nt">&lt;/Graphic&gt;</span>
+ <span class="nt">&lt;/PointSymbolizer&gt;</span>
+</pre></div>
+</td></tr></table></div>
+<p><a class="reference download internal" href="../../_downloads/startend.sld"><tt class="xref download docutils literal"><span class="pre">View</span> <span class="pre">the</span> <span class="pre">full</span> <span class="pre">&quot;StartEnd&quot;</span> <span class="pre">SLD</span></tt></a></p>
+<p>Applied to the sample <cite>tasmania_roads</cite> layer this will result in:</p>
+<div class="figure align-center">
+<img alt="../../_images/startend.png" src="../../_images/startend.png" />
+<p class="caption"><em>Extracting start and end point of a line</em></p>
+</div>
+</div>
+<div class="section" id="drop-shadow">
+<h3>Drop shadow<a class="headerlink" href="#drop-shadow" title="Permalink to this headline">¶</a></h3>
+<p>The <cite>offset</cite> function can be used to create drop shadow effects below polygons.
+Notice that the offset values reflect the fact that the data used in the example is in a geographic coordinate system.</p>
+<div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12</pre></div></td><td class="code"><div class="highlight"><pre>  <span class="nt">&lt;PolygonSymbolizer&gt;</span>
+    <span class="nt">&lt;Geometry&gt;</span>
+       <span class="nt">&lt;ogc:Function</span> <span class="na">name=</span><span class="s">&quot;offset&quot;</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;ogc:PropertyName&gt;</span>the_geom<span class="nt">&lt;/ogc:PropertyName&gt;</span>
+          <span class="nt">&lt;ogc:Literal&gt;</span>0.00004<span class="nt">&lt;/ogc:Literal&gt;</span>
+          <span class="nt">&lt;ogc:Literal&gt;</span>-0.00004<span class="nt">&lt;/ogc:Literal&gt;</span>
+       <span class="nt">&lt;/ogc:Function&gt;</span>
+    <span class="nt">&lt;/Geometry&gt;</span>
+    <span class="nt">&lt;Fill&gt;</span>
+      <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;fill&quot;</span><span class="nt">&gt;</span>#555555<span class="nt">&lt;/CssParameter&gt;</span>
+    <span class="nt">&lt;/Fill&gt;</span>
+  <span class="nt">&lt;/PolygonSymbolizer&gt;</span>
+</pre></div>
+</td></tr></table></div>
+<p><a class="reference download internal" href="../../_downloads/shadow.sld"><tt class="xref download docutils literal"><span class="pre">View</span> <span class="pre">the</span> <span class="pre">full</span> <span class="pre">&quot;Shadow&quot;</span> <span class="pre">SLD</span></tt></a></p>
+<p>Applied to the sample <cite>tasmania_roads</cite> layer this will result in:</p>
+<div class="figure align-center">
+<img alt="../../_images/shadow.png" src="../../_images/shadow.png" />
+<p class="caption"><em>Dropping building shadows</em></p>
+</div>
+</div>
+</div>
+<div class="section" id="performance-tips">
+<h2>Performance tips<a class="headerlink" href="#performance-tips" title="Permalink to this headline">¶</a></h2>
+<p>GeoServer&#8217;s filter functions contain a number of set-related or constructive geometric functions,
+such as <tt class="docutils literal"><span class="pre">buffer</span></tt>, <tt class="docutils literal"><span class="pre">intersection</span></tt>, <tt class="docutils literal"><span class="pre">difference</span></tt> and others.
+These can be used as geometry transformations, but they be can quite heavy in terms of CPU consumption so it is advisable to use them with care.
+One strategy is to activate them only at higher zoom levels, so that fewer features are processed.</p>
+<p>Buffering can often be visually approximated by using very large strokes together with round line joins and line caps.
+This avoids incurring the performance cost of a true geometric buffer transformation.</p>
+</div>
+<div class="section" id="adding-new-transformations">
+<h2>Adding new transformations<a class="headerlink" href="#adding-new-transformations" title="Permalink to this headline">¶</a></h2>
+<p>Additional filter functions can be developed in Java and then deployed in a JAR file as a GeoServer plugin.
+A guide is not available at this time, but see the GeoTools <tt class="docutils literal"><span class="pre">main</span></tt> module for examples.</p>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="index.html" title="previous chapter">SLD Extensions in GeoServer</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="rendering-transform.html" title="next chapter">Rendering Transformations</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">Geometry transformations in SLD</a><ul>
+<li><a class="reference internal" href="#examples">Examples</a><ul>
+<li><a class="reference internal" href="#extracting-vertices">Extracting vertices</a></li>
+<li><a class="reference internal" href="#start-and-end-point">Start and end point</a></li>
+<li><a class="reference internal" href="#drop-shadow">Drop shadow</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#performance-tips">Performance tips</a></li>
+<li><a class="reference internal" href="#adding-new-transformations">Adding new transformations</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="index.html" title="previous chapter">SLD Extensions in GeoServer</a></li>
+            <li>Next: <a href="rendering-transform.html" title="next chapter">Rendering Transformations</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/styling/sld-extensions/geometry-transformations.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

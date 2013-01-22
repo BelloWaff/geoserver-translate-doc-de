@@ -1,0 +1,372 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Role services &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../../index.html" />
+      <link rel="up" title="Role system" href="index.html" />
+      <link rel="next" title="Role source and role calculation" href="rolesource.html" />
+      <link rel="prev" title="Roles" href="roles.html" />
+</head>
+<body class="security/usergrouprole/roleservices">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Security</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Role system</a> &raquo;</li>
+  <li>Role services</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="rolesource.html" title="Role source and role calculation"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="roles.html" title="Roles"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="role-services">
+<span id="sec-rolesystem-roleservices"></span><h1>Role services<a class="headerlink" href="#role-services" title="Permalink to this headline">¶</a></h1>
+<p>A <strong>role service</strong> provides the following information for roles:</p>
+<ul class="simple">
+<li>List of roles</li>
+<li>Calculation of role assignments for a given user</li>
+<li>Mapping of a role to the system role <tt class="docutils literal"><span class="pre">ROLE_ADMINISTRATOR</span></tt></li>
+<li>Mapping of a role to the system role <tt class="docutils literal"><span class="pre">ROLE_GROUP_ADMIN</span></tt></li>
+</ul>
+<p>When a user/group service loads information about a user or a group, it delegates to the role service to determine which roles should be assigned to the user or group.  Unlike <a class="reference internal" href="usergroupservices.html#sec-rolesystem-usergroupservices"><em>User/group services</em></a>, only one role service is active at any given time.</p>
+<p>By default, GeoServer supports two types of role services:</p>
+<ul class="simple">
+<li>XML—<em>(Default)</em> role service persisted as XML</li>
+<li>JDBC—Role service persisted in a database via JDBC</li>
+</ul>
+<div class="section" id="mapping-roles-to-system-roles">
+<span id="sec-rolesystem-mapping"></span><h2>Mapping roles to system roles<a class="headerlink" href="#mapping-roles-to-system-roles" title="Permalink to this headline">¶</a></h2>
+<p>To assign the system role <tt class="docutils literal"><span class="pre">ROLE_ADMINISTRATOR</span></tt> to a user or to a group, a new role with a different name must be created and mapped to the <tt class="docutils literal"><span class="pre">ROLE_ADMINISTRATOR</span></tt> role. The same holds true for the system role <tt class="docutils literal"><span class="pre">ROLE_GROUP_ADMIN</span></tt>. The mapping is stored in the service&#8217;s <tt class="docutils literal"><span class="pre">config.xml</span></tt> file.</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;roleService&gt;</span>
+  <span class="nt">&lt;id&gt;</span>471ed59f:13915c479bc:-7ffc<span class="nt">&lt;/id&gt;</span>
+  <span class="nt">&lt;name&gt;</span>default<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;className&gt;</span>org.geoserver.security.xml.XMLRoleService<span class="nt">&lt;/className&gt;</span>
+  <span class="nt">&lt;fileName&gt;</span>roles.xml<span class="nt">&lt;/fileName&gt;</span>
+  <span class="nt">&lt;checkInterval&gt;</span>10000<span class="nt">&lt;/checkInterval&gt;</span>
+  <span class="nt">&lt;validating&gt;</span>true<span class="nt">&lt;/validating&gt;</span>
+  <span class="nt">&lt;adminRoleName&gt;</span>ADMIN<span class="nt">&lt;/adminRoleName&gt;</span>
+  <span class="nt">&lt;groupAdminRoleName&gt;</span>GROUP_ADMIN<span class="nt">&lt;/groupAdminRoleName&gt;</span>
+<span class="nt">&lt;/roleService&gt;</span>
+</pre></div>
+</div>
+<p>In this example, a user or a group assigned to the role <tt class="docutils literal"><span class="pre">ADMIN</span></tt> is also assigned to the system role <tt class="docutils literal"><span class="pre">ROLE_ADMINISTRATOR</span></tt>. The same holds true for <tt class="docutils literal"><span class="pre">GROUP_ADMIN</span></tt> and <tt class="docutils literal"><span class="pre">ROLE_GROUP_ADMIN</span></tt>.</p>
+</div>
+<div class="section" id="xml-role-service">
+<span id="sec-rolesystem-rolexml"></span><h2>XML role service<a class="headerlink" href="#xml-role-service" title="Permalink to this headline">¶</a></h2>
+<p>The XML role service persists the role database in an XML file. This is the default role service for GeoServer.
+This service represents the user database as XML, and corresponds to this <a class="reference download internal" href="../../_downloads/roles.xsd"><tt class="xref download docutils literal"><span class="pre">XML</span> <span class="pre">schema</span></tt></a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The XML role file, <tt class="file docutils literal"><span class="pre">roles.xml</span></tt>, is located in  the GeoServer data directory, <tt class="docutils literal"><span class="pre">security/role/&lt;name&gt;/roles.xml</span></tt>, where``&lt;name&gt;`` is the name of the role service.</p>
+</div>
+<p>The service is configured to map the local role <tt class="docutils literal"><span class="pre">ADMIN</span></tt> to the system role <tt class="docutils literal"><span class="pre">ROLE_ADMINISTRATOR</span></tt>. Additionally, <tt class="docutils literal"><span class="pre">GROUP_ADMIN</span></tt> is mapped to <tt class="docutils literal"><span class="pre">ROLE_GROUP_ADMIN</span></tt>. The mapping is stored the <tt class="docutils literal"><span class="pre">config.xml</span></tt> file of each role service.</p>
+<p>The following provides an illustration of the <tt class="docutils literal"><span class="pre">roles.xml</span></tt> that ships with the default GeoServer configuration:</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;roleRegistry</span> <span class="na">version=</span><span class="s">&quot;1.0&quot;</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.geoserver.org/security/roles&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;roleList&gt;</span>
+    <span class="nt">&lt;role</span> <span class="na">id=</span><span class="s">&quot;ADMIN&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;role</span> <span class="na">id=</span><span class="s">&quot;GROUP_ADMIN&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/roleList&gt;</span>
+  <span class="nt">&lt;userList&gt;</span>
+    <span class="nt">&lt;userRoles</span> <span class="na">username=</span><span class="s">&quot;admin&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;roleRef</span> <span class="na">roleID=</span><span class="s">&quot;ADMIN&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/userRoles&gt;</span>
+  <span class="nt">&lt;/userList&gt;</span>
+  <span class="nt">&lt;groupList/&gt;</span>
+<span class="nt">&lt;/roleRegistry&gt;</span>
+</pre></div>
+</div>
+<p>This configuration contains two roles named <tt class="docutils literal"><span class="pre">ADMIN</span></tt> and <tt class="docutils literal"><span class="pre">GROUP_ADMIN</span></tt>. The role <tt class="docutils literal"><span class="pre">ADMIN</span></tt> is assigned to the <tt class="docutils literal"><span class="pre">admin</span></tt> user. Since the <tt class="docutils literal"><span class="pre">ADMIN</span></tt> role is mapped to the system role <tt class="docutils literal"><span class="pre">ROLE_ADMINISTRATOR</span></tt>, the role calculation assigns both roles to the <tt class="docutils literal"><span class="pre">admin</span></tt> user.</p>
+<p>For further information, please refer to <a class="reference internal" href="../../webadmin/security/ugr.html#webadmin-sec-roleservices"><em>configuring a role service</em></a> in the <a class="reference internal" href="../../webadmin/index.html#web-admin"><em>Web Administration Interface</em></a>.</p>
+</div>
+<div class="section" id="jdbc-role-service">
+<span id="sec-rolesystem-rolejdbc"></span><h2>JDBC role service<a class="headerlink" href="#jdbc-role-service" title="Permalink to this headline">¶</a></h2>
+<p>The JDBC role service persists the role database via JDBC, managing the role information in multiple tables. The role database schema is as follows:</p>
+<table border="1" class="docutils">
+<caption>Table: roles</caption>
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Field</th>
+<th class="head">Type</th>
+<th class="head">Null</th>
+<th class="head">Key</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>name</td>
+<td>varchar(64)</td>
+<td>NO</td>
+<td>PRI</td>
+</tr>
+<tr class="row-odd"><td>parent</td>
+<td>varchar(64)</td>
+<td>YES</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<caption>Table: role_props</caption>
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Field</th>
+<th class="head">Type</th>
+<th class="head">Null</th>
+<th class="head">Key</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>rolename</td>
+<td>varchar(64)</td>
+<td>NO</td>
+<td>PRI</td>
+</tr>
+<tr class="row-odd"><td>propname</td>
+<td>varchar(64)</td>
+<td>NO</td>
+<td>PRI</td>
+</tr>
+<tr class="row-even"><td>propvalue</td>
+<td>varchar(2048)</td>
+<td>YES</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<caption>Table: user_roles</caption>
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Field</th>
+<th class="head">Type</th>
+<th class="head">Null</th>
+<th class="head">Key</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>username</td>
+<td>varchar(128)</td>
+<td>NO</td>
+<td>PRI</td>
+</tr>
+<tr class="row-odd"><td>rolename</td>
+<td>varchar(64)</td>
+<td>NO</td>
+<td>PRI</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<caption>Table: group_roles</caption>
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Field</th>
+<th class="head">Type</th>
+<th class="head">Null</th>
+<th class="head">Key</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>groupname</td>
+<td>varchar(128)</td>
+<td>NO</td>
+<td>PRI</td>
+</tr>
+<tr class="row-odd"><td>rolename</td>
+<td>varchar(64)</td>
+<td>NO</td>
+<td>PRI</td>
+</tr>
+</tbody>
+</table>
+<p>The <tt class="docutils literal"><span class="pre">roles</span></tt> table is the primary table and contains the list of roles.  Roles in GeoServer support inheritance, so a role may optionally have a link to a parent role. The <tt class="docutils literal"><span class="pre">role_props</span></tt> table maps additional properties to a role. (See the section on <a class="reference internal" href="roles.html#sec-rolesystem-roles"><em>Roles</em></a> for more details.)  The <tt class="docutils literal"><span class="pre">user_roles</span></tt> table maps users to the roles they are assigned.  Similarly the <tt class="docutils literal"><span class="pre">group_roles</span></tt> table maps which groups have been assigned to which roles.</p>
+<p>The default GeoServer security configuration is:</p>
+<table border="1" class="docutils">
+<caption>Table: roles</caption>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">name</th>
+<th class="head">parent</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>Empty</em></td>
+<td><em>Empty</em></td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<caption>Table: role_props</caption>
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">rolename</th>
+<th class="head">propname</th>
+<th class="head">propvalue</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>Empty</em></td>
+<td><em>Empty</em></td>
+<td><em>Empty</em></td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<caption>Table: user_roles</caption>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">username</th>
+<th class="head">rolename</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>Empty</em></td>
+<td><em>Empty</em></td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<caption>Table: group_roles</caption>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">groupname</th>
+<th class="head">rolename</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>Empty</em></td>
+<td><em>Empty</em></td>
+</tr>
+</tbody>
+</table>
+<p>For further information, please refer to <a class="reference internal" href="../../webadmin/security/ugr.html#webadmin-sec-roleservices"><em>configuring a role service</em></a> in the <a class="reference internal" href="../../webadmin/index.html#web-admin"><em>Web Administration Interface</em></a>.</p>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="roles.html" title="previous chapter">Roles</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="rolesource.html" title="next chapter">Role source and role calculation</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">Role services</a><ul>
+<li><a class="reference internal" href="#mapping-roles-to-system-roles">Mapping roles to system roles</a></li>
+<li><a class="reference internal" href="#xml-role-service">XML role service</a></li>
+<li><a class="reference internal" href="#jdbc-role-service">JDBC role service</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="roles.html" title="previous chapter">Roles</a></li>
+            <li>Next: <a href="rolesource.html" title="next chapter">Role source and role calculation</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/security/usergrouprole/roleservices.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

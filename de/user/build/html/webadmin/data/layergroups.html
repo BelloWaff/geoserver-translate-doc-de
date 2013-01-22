@@ -1,0 +1,181 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Layer Groups &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../../index.html" />
+      <link rel="up" title="Data" href="index.html" />
+      <link rel="next" title="Styles" href="styles.html" />
+      <link rel="prev" title="Layers" href="layers.html" />
+</head>
+<body class="webadmin/data/layergroups">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Web Administration Interface</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Data</a> &raquo;</li>
+  <li>Layer Groups</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="styles.html" title="Styles"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="layers.html" title="Layers"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="layer-groups">
+<span id="webadmin-layergroups"></span><h1>Layer Groups<a class="headerlink" href="#layer-groups" title="Permalink to this headline">¶</a></h1>
+<p>A layer group is a group of layers that can be referred to by one name. This allows for simpler WMS requests, as the request need only refer to one layer as opposed to multiple individual layers. Layer groups act just like standard layers as far as WMS is concerned.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_layergroups.png" src="../../_images/data_layergroups.png" />
+<p class="caption"><em>Layer Groups page</em></p>
+</div>
+<div class="section" id="edit-layer-group">
+<h2>Edit Layer Group<a class="headerlink" href="#edit-layer-group" title="Permalink to this headline">¶</a></h2>
+<p>To bring up the layer group edit page, click a layer group name. The initial fields allow you configure the name,  bounds, and projection of the layer group. To automatically set bounding box, select the <em class="guilabel">Generate Bounds</em> button. You may also provide your own custom bounding box parameters. To select an appropriate projection click the <em class="guilabel">Find</em> button.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">A layer group can consist of layers with dissimilar bounds and projections. GeoServer will automatically reproject all layers to the projection of the layer group.</p>
+</div>
+<p>The table at the bottom pof the page lists the layers contained within the current layer group. When a layer group is processed, the layers are rendered in the order provided, so the layer at the bottom of list will be rendered last and will show on top of the other layers.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_layergroups_edit.png" src="../../_images/data_layergroups_edit.png" />
+<p class="caption"><em>Layer Groups Edit page</em></p>
+</div>
+<p>The <em class="guilabel">Style</em> column shows the style associated with each layer. To change the style associated with a layer, click the appropriate style link. A list of enabled styles will be displayed. Clicking on a style name reassigns the layer&#8217;s style.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_layergroups_edit_styles.png" src="../../_images/data_layergroups_edit_styles.png" />
+<p class="caption"><em>Style editing for a layer within a layer group</em></p>
+</div>
+<p>To remove a layer from the layer group, select the layer&#8217;s button in the <em class="guilabel">Remove</em> column. You will not be prompted to confirm or cancel this deletion.</p>
+<p>You can view layers group in the <a class="reference internal" href="../layerpreview/index.html#layerpreview"><em>Layer Preview</em></a> section of the web admin.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_layergroups_tasmania.png" src="../../_images/data_layergroups_tasmania.png" />
+<p class="caption"><em>Openlayers preview of the layer group &#8220;tasmania&#8221;</em></p>
+</div>
+<p>A layer can be positioned higher or lower on this list by clicking the green up or down arrows, respectively.</p>
+<p>A layer can be added to the list by clicking the <em class="guilabel">Add Layer...</em> button at the top of the layer table. From the list of layers, select the layer to be added by clicking the layer name. The   selected layer will be appended to the bottom of the layer list.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_layergroups_add_layer.png" src="../../_images/data_layergroups_add_layer.png" />
+<p class="caption"><em>Dialog for adding a layer to a layer group</em></p>
+</div>
+</div>
+<div class="section" id="add-a-layer-group">
+<h2>Add a Layer Group<a class="headerlink" href="#add-a-layer-group" title="Permalink to this headline">¶</a></h2>
+<p>The buttons for adding and removing a layer group can be found at the top of the <em class="guilabel">Layer Groups</em> page.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_layergroups_add.png" src="../../_images/data_layergroups_add.png" />
+<p class="caption"><em>Buttons to add or remove a layer group</em></p>
+</div>
+<p>To add a new layer group, select the &#8220;Add a new layer group&#8221; button. You will be prompted to name the layer group.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_layergroups_name.png" src="../../_images/data_layergroups_name.png" />
+<p class="caption"><em>New layer group dialog</em></p>
+</div>
+<p>When finished, click <em class="guilabel">Submit</em>. You will be redirected to an empty layer group configuration page. Begin by adding layers by clicking the <em class="guilabel">Add layer...</em> button (described in the previous section). Once the layers are positioned accordingly, press <em class="guilabel">Generate Bounds</em> to automatically generate the bounding box and projection. Press <em class="guilabel">Save</em> to save the new layer group.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_layergroups_add_edit.png" src="../../_images/data_layergroups_add_edit.png" />
+<p class="caption"><em>New layer group configuration page</em></p>
+</div>
+</div>
+<div class="section" id="remove-a-layer-group">
+<h2>Remove a layer group<a class="headerlink" href="#remove-a-layer-group" title="Permalink to this headline">¶</a></h2>
+<p>To remove a layer group, click the check box next to the layer group. Multiple layer groups can be selected for batch removal. Click the <em class="guilabel">remove selected layer group(s)</em> link. You will be asked to confirm or cancel the deletion. Selecting <em class="guilabel">OK</em> successfully removes the layer group.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_layergroups_delete.png" src="../../_images/data_layergroups_delete.png" />
+<p class="caption"><em>Removing a layer group</em></p>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="layers.html" title="previous chapter">Layers</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="styles.html" title="next chapter">Styles</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">Layer Groups</a><ul>
+<li><a class="reference internal" href="#edit-layer-group">Edit Layer Group</a></li>
+<li><a class="reference internal" href="#add-a-layer-group">Add a Layer Group</a></li>
+<li><a class="reference internal" href="#remove-a-layer-group">Remove a layer group</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="layers.html" title="previous chapter">Layers</a></li>
+            <li>Next: <a href="styles.html" title="next chapter">Styles</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/webadmin/data/layergroups.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

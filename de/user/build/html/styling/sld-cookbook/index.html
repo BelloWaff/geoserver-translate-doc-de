@@ -1,0 +1,191 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>SLD Cookbook &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../../index.html" />
+      <link rel="up" title="Styling" href="../index.html" />
+      <link rel="next" title="Points" href="points.html" />
+      <link rel="prev" title="Working with SLD" href="../sld-working.html" />
+</head>
+<body class="styling/sld-cookbook/index">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Styling</a> &raquo;</li>
+  <li>SLD Cookbook</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="points.html" title="Points"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="../sld-working.html" title="Working with SLD"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="sld-cookbook">
+<span id="id1"></span><h1>SLD Cookbook<a class="headerlink" href="#sld-cookbook" title="Permalink to this headline">¶</a></h1>
+<p>The SLD Cookbook is a collection of SLD &#8220;recipes&#8221; for creating various types of map styles.  Wherever possible, each example is designed to show off a single SLD feature so that code can be copied from the examples and adapted when creating SLDs of your own.  While not an exhaustive reference like the <a class="reference internal" href="../sld-reference/index.html#sld-reference"><em>SLD Reference</em></a> or the <a class="reference external" href="http://www.opengeospatial.org/standards/sld">OGC SLD 1.0 specification</a> the SLD Cookbook is designed to be a practical reference, showing common style templates that are easy to understand.</p>
+<p>The SLD Cookbook is divided into four sections: the first three for each of the vector types (points, lines, and polygons) and the fourth section for rasters.  Each example in every section contains a screenshot showing actual GeoServer WMS output, a snippet of the SLD code for reference, and a link to download the full SLD.</p>
+<p>Each section uses data created especially for the SLD Cookbook, with shapefiles for vector data and GeoTIFFs for raster data.  The projection for data is EPSG:4326.  All files can be easily loaded into GeoServer in order to recreate the examples.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Data Type</strong></td>
+<td><strong>Shapefile</strong></td>
+</tr>
+<tr class="row-even"><td>Point</td>
+<td><a class="reference download internal" href="../../_downloads/sld_cookbook_point.zip"><tt class="xref download docutils literal"><span class="pre">sld_cookbook_point.zip</span></tt></a></td>
+</tr>
+<tr class="row-odd"><td>Line</td>
+<td><a class="reference download internal" href="../../_downloads/sld_cookbook_line.zip"><tt class="xref download docutils literal"><span class="pre">sld_cookbook_line.zip</span></tt></a></td>
+</tr>
+<tr class="row-even"><td>Polygon</td>
+<td><a class="reference download internal" href="../../_downloads/sld_cookbook_polygon.zip"><tt class="xref download docutils literal"><span class="pre">sld_cookbook_polygon.zip</span></tt></a></td>
+</tr>
+<tr class="row-odd"><td>Raster</td>
+<td><a class="reference download internal" href="../../_downloads/sld_cookbook_raster.zip"><tt class="xref download docutils literal"><span class="pre">sld_cookbook_raster.zip</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="points.html">Points</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="points.html#example-points-layer">Example points layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="points.html#simple-point">Simple point</a></li>
+<li class="toctree-l2"><a class="reference internal" href="points.html#simple-point-with-stroke">Simple point with stroke</a></li>
+<li class="toctree-l2"><a class="reference internal" href="points.html#rotated-square">Rotated square</a></li>
+<li class="toctree-l2"><a class="reference internal" href="points.html#transparent-triangle">Transparent triangle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="points.html#point-as-graphic">Point as graphic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="points.html#point-with-default-label">Point with default label</a></li>
+<li class="toctree-l2"><a class="reference internal" href="points.html#point-with-styled-label">Point with styled label</a></li>
+<li class="toctree-l2"><a class="reference internal" href="points.html#point-with-rotated-label">Point with rotated label</a></li>
+<li class="toctree-l2"><a class="reference internal" href="points.html#attribute-based-point">Attribute-based point</a></li>
+<li class="toctree-l2"><a class="reference internal" href="points.html#zoom-based-point">Zoom-based point</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lines.html">Lines</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lines.html#example-lines-layer">Example lines layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lines.html#simple-line">Simple line</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lines.html#line-with-border">Line with border</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lines.html#dashed-line">Dashed line</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lines.html#railroad-hatching">Railroad (hatching)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lines.html#spaced-graphic-symbols">Spaced graphic symbols</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lines.html#alternating-symbols-with-dash-offsets">Alternating symbols with dash offsets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lines.html#line-with-default-label">Line with default label</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lines.html#label-following-line">Label following line</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lines.html#optimized-label-placement">Optimized label placement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lines.html#optimized-and-styled-label">Optimized and styled label</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lines.html#attribute-based-line">Attribute-based line</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lines.html#zoom-based-line">Zoom-based line</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="polygons.html">Polygons</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="polygons.html#example-polygons-layer">Example polygons layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="polygons.html#simple-polygon">Simple polygon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="polygons.html#simple-polygon-with-stroke">Simple polygon with stroke</a></li>
+<li class="toctree-l2"><a class="reference internal" href="polygons.html#transparent-polygon">Transparent polygon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="polygons.html#graphic-fill">Graphic fill</a></li>
+<li class="toctree-l2"><a class="reference internal" href="polygons.html#hatching-fill">Hatching fill</a></li>
+<li class="toctree-l2"><a class="reference internal" href="polygons.html#polygon-with-default-label">Polygon with default label</a></li>
+<li class="toctree-l2"><a class="reference internal" href="polygons.html#label-halo">Label halo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="polygons.html#polygon-with-styled-label">Polygon with styled label</a></li>
+<li class="toctree-l2"><a class="reference internal" href="polygons.html#attribute-based-polygon">Attribute-based polygon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="polygons.html#zoom-based-polygon">Zoom-based polygon</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rasters.html">Rasters</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rasters.html#example-raster">Example raster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rasters.html#two-color-gradient">Two-color gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rasters.html#transparent-gradient">Transparent gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rasters.html#brightness-and-contrast">Brightness and contrast</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rasters.html#three-color-gradient">Three-color gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rasters.html#alpha-channel">Alpha channel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rasters.html#discrete-colors">Discrete colors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rasters.html#many-color-gradient">Many color gradient</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="../sld-working.html" title="previous chapter">Working with SLD</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="points.html" title="next chapter">Points</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="../sld-working.html" title="previous chapter">Working with SLD</a></li>
+            <li>Next: <a href="points.html" title="next chapter">Points</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/styling/sld-cookbook/index.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

@@ -1,0 +1,271 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>DXF OutputFormat for WFS &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../../index.html" />
+      <link rel="up" title="Community" href="../index.html" />
+      <link rel="next" title="DDS/BIL(World Wind Data Formats) Extension" href="../dds/index.html" />
+      <link rel="prev" title="CSS Style Examples" href="../css/examples.html" />
+</head>
+<body class="community/dxf/index">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Community</a> &raquo;</li>
+  <li>DXF OutputFormat for WFS</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="../dds/index.html" title="DDS/BIL(World Wind Data Formats) Extension"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="../css/examples.html" title="CSS Style Examples"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="dxf-outputformat-for-wfs">
+<span id="dxf"></span><h1>DXF OutputFormat for WFS<a class="headerlink" href="#dxf-outputformat-for-wfs" title="Permalink to this headline">¶</a></h1>
+<p>The DXF OutputFormat for WFS adds the support for two additional output formats for
+WFS GetFeature requests. The new formats, DXF and DXF-ZIP are associated to the
+&#8220;application/dxf&#8221; and &#8220;application/zip&#8221; mime type, respectively.
+They produce a standard DXF file or a DXF file compressed in zip format.</p>
+<p>DXF is a CAD interchange format, useful to import data in several CAD systems.
+Being a textual format it can be easily compressed to a much smaller version, so
+the need for a DXF-ZIP format, for low bandwidth usage.</p>
+<p>There have been multiple revisions of the format, so we need to choose a &#8220;version&#8221;
+of DXF to write. The extension implements version 14, but can be easily extended
+(through SPI providers) to write other versions too.</p>
+<div class="section" id="usage">
+<h2>USAGE<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>Request Example:</p>
+<div class="highlight-python"><pre>http://localhost:8080/geoserver/wfs?request=GetFeature&amp;typeName=Polygons&amp;
+outputFormat=dxf</pre>
+</div>
+<p>Output Example (portion):</p>
+<div class="highlight-python"><pre>  0
+SECTION
+  2
+HEADER
+  9
+$ACADVER
+  1
+AC1014
+...
+  0
+ENDSEC
+...
+  0
+SECTION
+  2
+TABLES
+...
+  0
+TABLE
+  2
+LAYER
+...
+  0
+LAYER
+  5
+2E
+330
+2
+100
+AcDbSymbolTableRecord
+100
+AcDbLayerTableRecord
+  2
+POLYGONS
+ 70
+         0
+ 62
+         7
+  6
+CONTINUOUS
+  0
+ENDTAB
+...
+  0
+ENDSEC
+  0
+SECTION
+  2
+BLOCKS
+  ...
+  0
+ENDSEC
+  0
+SECTION
+  2
+ENTITIES
+  0
+LWPOLYLINE
+  5
+927C0
+330
+1F
+100
+AcDbEntity
+  8
+POLYGONS
+100
+AcDbPolyline
+ 90
+         5
+ 70
+         1
+ 43
+0.0
+ 10
+500225.0
+ 20
+500025.0
+ 10
+500225.0
+ 20
+500075.0
+ 10
+500275.0
+ 20
+500050.0
+ 10
+500275.0
+ 20
+500025.0
+ 10
+500225.0
+ 20
+500025.0
+  0
+ENDSEC
+  0
+SECTION
+  2
+OBJECTS
+...
+  0
+ENDSEC
+  0
+EOF</pre>
+</div>
+<p>Each single query is rendered as a layer. Geometries are encoded as
+entities (if simple enough to be expressed by a single DXF geometry
+type) or blocks (if complex, such as polygons with holes or collections).</p>
+<p>Some options are available to control the output generated. They are
+described in the following paragraphs.</p>
+</div>
+<div class="section" id="get-requests-format-options">
+<h2>GET requests format_options<a class="headerlink" href="#get-requests-format-options" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>The following format_options are supported:</dt>
+<dd><ol class="first last arabic simple">
+<li>version: (number) creates a DXF in the specified version format (only 14 is currently supported)</li>
+<li>asblock: (true/false) if true, all geometries are written as blocks and then inserted as entities. If false, simple geometries are directly written as entities.</li>
+<li>colors: (comma delimited list of numbers): colors to be used for the DXF layers, in sequence. If layers are more than the specified colors, they will be reused many times. A set of default colors is used if the option is not used. Colors are AutoCad color numbers (7=white, etc.).</li>
+<li>ltypes: (comma delimited list of line type descriptors): line types to be used for the DXF layers, in sequence. If layers are more than the specified line types, they will be reused many times. If not specified, all layers will be given a solid, continuous line type. A descriptor has the following format: &lt;name&gt;!&lt;repeatable pattern&gt;[!&lt;base length&gt;], where &lt;name&gt; is the name assigned to the line type, &lt;base length&gt; (optional) is a real number that tells how long is each part of the line pattern (defaults to 0.125), and &lt;repeatable pattern&gt; is a visual description of the repeatable part of the line pattern, as a sequence of - (solid line),* (dot) and _ (empty space). For example a dash-dot pattern would be expressed as &#8211;_*_.</li>
+<li>layers: (comma delimited list of strings) names to be assigned to the DXF layers. If specified, must contain a name for each requested query. By default a standard name will be assigned to layers.</li>
+</ol>
+</dd>
+</dl>
+</div>
+<div class="section" id="post-options">
+<h2>POST options<a class="headerlink" href="#post-options" title="Permalink to this headline">¶</a></h2>
+<p>Unfortunately, it&#8217;s not currently possibile to use format_options in POST
+requests. The only thing we chose to implement is the layers options, via
+the handle attribute of Query attributes. So, if specified, the layer
+of a Query will be named as its handle attribute.
+The handle attribute of the GetFeature tag can also be used to override
+the name of the file produced.</p>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="../css/examples.html" title="previous chapter">CSS Style Examples</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="../dds/index.html" title="next chapter">DDS/BIL(World Wind Data Formats) Extension</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">DXF OutputFormat for WFS</a><ul>
+<li><a class="reference internal" href="#usage">USAGE</a></li>
+<li><a class="reference internal" href="#get-requests-format-options">GET requests format_options</a></li>
+<li><a class="reference internal" href="#post-options">POST options</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="../css/examples.html" title="previous chapter">CSS Style Examples</a></li>
+            <li>Next: <a href="../dds/index.html" title="next chapter">DDS/BIL(World Wind Data Formats) Extension</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/community/dxf/index.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

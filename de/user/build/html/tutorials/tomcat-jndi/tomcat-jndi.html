@@ -1,0 +1,181 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Setting up a JNDI connection pool with Tomcat &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../../index.html" />
+      <link rel="up" title="Tutorials" href="../index.html" />
+      <link rel="next" title="Community" href="../../community/index.html" />
+      <link rel="prev" title="Using the GeoTools feature-pregeneralized module" href="../feature-pregeneralized/feature-pregeneralized_tutorial.html" />
+</head>
+<body class="tutorials/tomcat-jndi/tomcat-jndi">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Tutorials</a> &raquo;</li>
+  <li>Setting up a JNDI connection pool with Tomcat</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="../../community/index.html" title="Community"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="../feature-pregeneralized/feature-pregeneralized_tutorial.html" title="Using the GeoTools feature-pregeneralized module"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="setting-up-a-jndi-connection-pool-with-tomcat">
+<span id="tomcat-jndi"></span><h1>Setting up a JNDI connection pool with Tomcat<a class="headerlink" href="#setting-up-a-jndi-connection-pool-with-tomcat" title="Permalink to this headline">¶</a></h1>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The screenshots on this tutorial have not yet been updated for the 2.0.x user interface.  But most all the rest of the information should be valid, and the user interface is roughly the same.</p>
+</div>
+<p>This tutorial walks the reader through the procedures necessary to setup a Oracle JNDI connection pool in Tomcat 6 and how to retrieve it from GeoServer</p>
+<div class="section" id="tomcat-setup">
+<h2>Tomcat setup<a class="headerlink" href="#tomcat-setup" title="Permalink to this headline">¶</a></h2>
+<p>In order to setup a connection pool Tomcat needs a JDBC driver and the necessary pool configurations.</p>
+<p>First off, you need to find the JDBC driver for your database. Most often it is distributed on the web site of your DBMS provider, or available in the installed version of your database.
+For example, a Oracle XE install on a Linux system provides the driver at  <tt class="file docutils literal"><span class="pre">/usr/lib/oracle/xe/app/oracle/product/10.2.0/server/jdbc/lib/ojdbc14.jar</span></tt>, and that file needs to be copied into Tomcat shared libs directory, <tt class="file docutils literal"><em><span class="pre">TOMCAT_HOME</span></em><span class="pre">/lib</span></tt></p>
+<p>Once that is done, the Tomcat configuration file <tt class="file docutils literal"><em><span class="pre">TOMCAT_HOME</span></em><span class="pre">/conf/context.xml</span></tt> needs to be edited in order to setup the connection pool. In the case of a local Oracle XE the setup might look like:</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;Context&gt;</span>
+   ...
+   <span class="nt">&lt;Resource</span> <span class="na">name=</span><span class="s">&quot;jdbc/oralocal&quot;</span> <span class="na">auth=</span><span class="s">&quot;Container&quot;</span> <span class="na">type=</span><span class="s">&quot;javax.sql.DataSource&quot;</span>
+             <span class="na">url=</span><span class="s">&quot;jdbc:oracle:thin:@localhost:1521:xe&quot;</span>
+             <span class="na">driverClassName=</span><span class="s">&quot;oracle.jdbc.driver.OracleDriver&quot;</span>
+             <span class="na">username=</span><span class="s">&quot;dbuser&quot;</span> <span class="na">password=</span><span class="s">&quot;dbpasswd&quot;</span>
+             <span class="na">maxActive=</span><span class="s">&quot;20&quot;</span> <span class="na">maxIdle=</span><span class="s">&quot;3&quot;</span> <span class="na">maxWait=</span><span class="s">&quot;10000&quot;</span>
+             <span class="na">poolPreparedStatements=</span><span class="s">&quot;true&quot;</span>
+             <span class="na">maxOpenPreparedStatements=</span><span class="s">&quot;100&quot;</span>
+             <span class="na">validationQuery=</span><span class="s">&quot;SELECT SYSDATE FROM DUAL&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/Context&gt;</span>
+</pre></div>
+</div>
+<p>The example sets up a connection pool connecting to the local Oracle XE instance.
+The pool configuration shows is quite full fledged:</p>
+<ul class="simple">
+<li>at most 20 active connections (max number of connection that will ever be used in parallel)</li>
+<li>at most 3 connections kept in the pool unused</li>
+<li>prepared statement pooling (very important for good performance)</li>
+<li>at most 100 prepared statements in the pool</li>
+<li>a validation query that double checks the connection is still alive before actually using it (this is not necessary if there is guarantee the connections will never drop, either due to the server forcefully closing them, or to network/maintenance issues).</li>
+</ul>
+<p>For more information about the possible parameters and their values refer to the <a class="reference external" href="http://commons.apache.org/dbcp/configuration.html">DBCP documentation</a>.</p>
+</div>
+<div class="section" id="geoserver-setup">
+<h2>GeoServer setup<a class="headerlink" href="#geoserver-setup" title="Permalink to this headline">¶</a></h2>
+<p>To allow a web application reference to a JNDI resource its <tt class="file docutils literal"><span class="pre">web.xml</span></tt> file must be modified so that the reference is explicit. Following the above example, we have to modify <tt class="file docutils literal"><em><span class="pre">TOMCAT_HOME</span></em><span class="pre">/webapps/geoserver/WEB-INF/web.xml</span></tt> and add at its very end the following declaration:</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;web-app&gt;</span>
+  ...
+  <span class="nt">&lt;resource-ref&gt;</span>
+    <span class="nt">&lt;description&gt;</span>Oracle Datasource<span class="nt">&lt;/description&gt;</span>
+    <span class="nt">&lt;res-ref-name&gt;</span>jdbc/oralocal<span class="nt">&lt;/res-ref-name&gt;</span>
+    <span class="nt">&lt;res-type&gt;</span>javax.sql.DataSource<span class="nt">&lt;/res-type&gt;</span>
+    <span class="nt">&lt;res-auth&gt;</span>Container<span class="nt">&lt;/res-auth&gt;</span>
+  <span class="nt">&lt;/resource-ref&gt;</span>
+<span class="nt">&lt;/web-app&gt;</span>
+</pre></div>
+</div>
+<p>Once that is done, it is possible to login into the GeoServer web administration interface and configure the datastore.</p>
+<p>First, choose the <em>Oracle (JNDI)</em> datastore and give it a name:</p>
+<div class="figure align-center">
+<img alt="../../_images/choose-datastore.png" src="../../_images/choose-datastore.png" />
+<p class="caption"><em>Choosing a JNDI enabled datastore</em></p>
+</div>
+<p>Then, configure the connection parameters so that the JNDI path matches the one specified in the Tomcat configuration:</p>
+<div class="figure align-center">
+<img alt="../../_images/setup-params.png" src="../../_images/setup-params.png" />
+<p class="caption"><em>Configuring the JNDI connection</em></p>
+</div>
+<p>When you are doing this, make sure the <em>schema</em> is properly setup, or the datastore will list all the tables it can find in the schema it can access. In the case of Oracle the schema is usually the user name, upper cased.</p>
+<p>Once the datastore is accepted the GeoServer usage proceeds as normal.</p>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="../feature-pregeneralized/feature-pregeneralized_tutorial.html" title="previous chapter">Using the GeoTools feature-pregeneralized module</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="../../community/index.html" title="next chapter">Community</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">Setting up a JNDI connection pool with Tomcat</a><ul>
+<li><a class="reference internal" href="#tomcat-setup">Tomcat setup</a></li>
+<li><a class="reference internal" href="#geoserver-setup">GeoServer setup</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="../feature-pregeneralized/feature-pregeneralized_tutorial.html" title="previous chapter">Using the GeoTools feature-pregeneralized module</a></li>
+            <li>Next: <a href="../../community/index.html" title="next chapter">Community</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/tutorials/tomcat-jndi/tomcat-jndi.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

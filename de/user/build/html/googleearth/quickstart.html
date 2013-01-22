@@ -1,0 +1,172 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Quickstart &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../_static/jquery.js"></script>
+  <script type="text/javascript" src="../_static/doctools.js"></script>
+  <script type="text/javascript" src="../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../index.html" />
+      <link rel="up" title="Google Earth" href="index.html" />
+      <link rel="next" title="KML Styling" href="kmlstyling.html" />
+      <link rel="prev" title="Overview" href="overview.html" />
+</head>
+<body class="googleearth/quickstart">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Google Earth</a> &raquo;</li>
+  <li>Quickstart</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="kmlstyling.html" title="KML Styling"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="overview.html" title="Overview"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="quickstart">
+<span id="google-earth-quickstart"></span><h1>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you are using GeoServer locally, the GEOSERVER_URL is usually <tt class="docutils literal"><span class="pre">http://localhost:8080/geoserver</span></tt></p>
+</div>
+<div class="section" id="viewing-a-layer">
+<h2>Viewing a layer<a class="headerlink" href="#viewing-a-layer" title="Permalink to this headline">¶</a></h2>
+<p>Once GeoServer is installed and running, open up a web browser and go to the web admin console (<a class="reference internal" href="../webadmin/basics.html#webadmin-basics"><em>Interface basics</em></a>).  Navigate to the <a class="reference internal" href="../webadmin/layerpreview/index.html#layerpreview"><em>Layer Preview</em></a> by clicking on the Layer Preview link at the bottom of the left sidebar. You will be presented with a list of the currently configured layers in your GeoServer instance. Find the row that says <tt class="docutils literal"><span class="pre">topp:states</span></tt>. To the right of the layer click on the link that says <strong>KML</strong>.</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../_images/preview_list1.png" src="../_images/preview_list1.png" />
+<p class="caption"><em>The Map Preview page</em></p>
+</div>
+</div></blockquote>
+<p>If Google Earth is correctly installed on your computer, you will see a dialog asking how to open the file. Select <strong>Open with Google Earth</strong>.</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../_images/openingkml.png" src="../_images/openingkml.png" />
+<p class="caption"><em>Open with Google Earth</em></p>
+</div>
+</div></blockquote>
+<p>When Google Earth is finished loading the result will be similar to below.</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../_images/googleearth.jpg" src="../_images/googleearth.jpg" />
+<p class="caption"><em>The topp:states layer rendered in Google Earth</em></p>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="direct-access-to-kml">
+<h2>Direct access to KML<a class="headerlink" href="#direct-access-to-kml" title="Permalink to this headline">¶</a></h2>
+<p>All of the configured FeatureTypes are available to be output as KML (and thus loaded into Google Earth). The URL structure for KMLs is:</p>
+<div class="highlight-python"><pre>http://GEOSERVER_URL/wms/kml?layers=&lt;layername&gt;</pre>
+</div>
+<p>For example, the topp:states layer URL is:</p>
+<div class="highlight-python"><pre>http://GEOSERVER_URL/wms/kml?layers=topp:states</pre>
+</div>
+</div>
+<div class="section" id="adding-a-network-link">
+<h2>Adding a Network Link<a class="headerlink" href="#adding-a-network-link" title="Permalink to this headline">¶</a></h2>
+<p>An alternative to serving KML directly into Google Earth is to use a Network Link. A Network Link allows for better integration into Google Earth. For example, using a Network Link enables the user to refresh the data within Google Earth, without having to retype a URL, or click on links in the GeoServer Map Preview again.</p>
+<p>To add a Network Link, pull down the <strong>Add</strong> menu, and go to <strong>Network Link</strong>. The <strong>New Network Link</strong> dialog box will appear.
+Name your layer in the <strong>Name</strong> field. (This will show up in <strong>My Places</strong> on the main Google Earth screen.) Set <strong>Link</strong> to:</p>
+<div class="highlight-python"><pre>http://GEOSERVER_URL/wms/kml?layers=topp:states</pre>
+</div>
+<p>(Don&#8217;t forget to replace the GEOSERVER_URL.)  Click <strong>OK</strong>. You can now save this layer in your <strong>My Places</strong>.</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../_images/networklink.png" src="../_images/networklink.png" />
+<p class="caption"><em>Adding a network link</em></p>
+</div>
+</div></blockquote>
+<p>Check out the sections on <a class="reference internal" href="tutorials/index.html#google-earth-tutorials"><em>Tutorials</em></a> and the <a class="reference internal" href="kmlstyling.html#google-earth-kml-styling"><em>KML Styling</em></a> for more information.</p>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="overview.html" title="previous chapter">Overview</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="kmlstyling.html" title="next chapter">KML Styling</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">Quickstart</a><ul>
+<li><a class="reference internal" href="#viewing-a-layer">Viewing a layer</a></li>
+<li><a class="reference internal" href="#direct-access-to-kml">Direct access to KML</a></li>
+<li><a class="reference internal" href="#adding-a-network-link">Adding a Network Link</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="overview.html" title="previous chapter">Overview</a></li>
+            <li>Next: <a href="kmlstyling.html" title="next chapter">KML Styling</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../_sources/googleearth/quickstart.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

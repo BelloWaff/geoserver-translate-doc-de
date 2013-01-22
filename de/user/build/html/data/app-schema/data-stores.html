@@ -1,0 +1,453 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Data Stores &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../../index.html" />
+      <link rel="up" title="Working with Application Schemas" href="index.html" />
+      <link rel="next" title="Feature Chaining" href="feature-chaining.html" />
+      <link rel="prev" title="Property Interpolation" href="property-interpolation.html" />
+</head>
+<body class="data/app-schema/data-stores">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Working with Application Schemas</a> &raquo;</li>
+  <li>Data Stores</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="feature-chaining.html" title="Feature Chaining"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="property-interpolation.html" title="Property Interpolation"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="data-stores">
+<span id="app-schema-data-stores"></span><h1>Data Stores<a class="headerlink" href="#data-stores" title="Permalink to this headline">¶</a></h1>
+<p>The app-schema <a class="reference internal" href="mapping-file.html#app-schema-mapping-file"><em>Mapping File</em></a> requires you to specify your data sources in the <tt class="docutils literal"><span class="pre">sourceDataStores</span></tt> section. For GeoServer simple features, these are configured using the web interface, but because app-schema lacks a web configuration interface, data stores must be configured by editing the mapping file.</p>
+<p>Many configuration options may be externalised through the use of <a class="reference internal" href="property-interpolation.html#app-schema-property-interpolation"><em>Property Interpolation</em></a>.</p>
+<div class="section" id="the-datastore-element">
+<h2>The DataStore element<a class="headerlink" href="#the-datastore-element" title="Permalink to this headline">¶</a></h2>
+<p>A <tt class="docutils literal"><span class="pre">DataStore</span></tt> configuration consists of</p>
+<ul class="simple">
+<li>an <tt class="docutils literal"><span class="pre">id</span></tt>, which is an opaque identifier used to refer to the data store elsewhere in a mapping file, and</li>
+<li>one or more <tt class="docutils literal"><span class="pre">Parameter</span></tt> elements, which each contain the <tt class="docutils literal"><span class="pre">name</span></tt> and <tt class="docutils literal"><span class="pre">value</span></tt> of one parameter, and are used to configure the data store.</li>
+</ul>
+<p>An outline of the <tt class="docutils literal"><span class="pre">DataStore</span></tt> element:</p>
+<div class="highlight-python"><pre>&lt;DataStore&gt;
+     &lt;id&gt;datastore&lt;/id&gt;
+     &lt;parameters&gt;
+         &lt;Parameter&gt;
+             &lt;name&gt;...&lt;/name&gt;
+             &lt;value&gt;...&lt;/value&gt;
+         &lt;/Parameter&gt;
+         ...
+     &lt;/parameters&gt;
+&lt;/DataStore&gt;</pre>
+</div>
+<p>Parameter order is not significant.</p>
+</div>
+<div class="section" id="database-options">
+<h2>Database options<a class="headerlink" href="#database-options" title="Permalink to this headline">¶</a></h2>
+<p>Databases such as PostGIS, Oracle, and ArcSDE share some common or similar configuration options.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="16%" />
+<col width="34%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><tt class="docutils literal"><span class="pre">name</span></tt></th>
+<th class="head">Meaning</th>
+<th class="head"><tt class="docutils literal"><span class="pre">value</span></tt> examples</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">dbtype</span></tt></td>
+<td>Database type</td>
+<td><tt class="docutils literal"><span class="pre">postgisng</span></tt>, <tt class="docutils literal"><span class="pre">Oracle</span></tt>, <tt class="docutils literal"><span class="pre">arcsde</span></tt></td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">host</span></tt></td>
+<td>Host name or IP address of database server</td>
+<td><tt class="docutils literal"><span class="pre">database.example.org</span></tt>, <tt class="docutils literal"><span class="pre">192.168.3.12</span></tt></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">port</span></tt></td>
+<td>TCP port on database server</td>
+<td>Default if omitted: <tt class="docutils literal"><span class="pre">1521</span></tt> (Oracle), <tt class="docutils literal"><span class="pre">5432</span></tt> (PostGIS), <tt class="docutils literal"><span class="pre">5151</span></tt> (ArcSDE)</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">database</span></tt></td>
+<td>PostGIS/Oracle database</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">instance</span></tt></td>
+<td>ArcSDE instance</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">schema</span></tt></td>
+<td>The database schema</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">user</span></tt></td>
+<td>The user name used to login to the database server</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">passwd</span></tt></td>
+<td>The password used to login to the database server</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">Expose</span> <span class="pre">primary</span> <span class="pre">keys</span></tt></td>
+<td>Columns with primary keys available for mapping</td>
+<td>Default is <tt class="docutils literal"><span class="pre">false</span></tt>, set to <tt class="docutils literal"><span class="pre">true</span></tt> to use primary key columns in mapping</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="postgis">
+<h2>PostGIS<a class="headerlink" href="#postgis" title="Permalink to this headline">¶</a></h2>
+<p>Set the parameter <tt class="docutils literal"><span class="pre">dbtype</span></tt> to <tt class="docutils literal"><span class="pre">postgisng</span></tt> to use the PostGIS NG (New Generation) driver bundled with GeoServer 2.0 and later.</p>
+<p>Example:</p>
+<div class="highlight-python"><pre>&lt;DataStore&gt;
+    &lt;id&gt;datastore&lt;/id&gt;
+    &lt;parameters&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;dbtype&lt;/name&gt;
+            &lt;value&gt;postgisng&lt;/value&gt;
+        &lt;/Parameter&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;host&lt;/name&gt;
+            &lt;value&gt;postgresql.example.org&lt;/value&gt;
+        &lt;/Parameter&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;port&lt;/name&gt;
+            &lt;value&gt;5432&lt;/value&gt;
+        &lt;/Parameter&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;database&lt;/name&gt;
+            &lt;value&gt;test&lt;/value&gt;
+        &lt;/Parameter&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;user&lt;/name&gt;
+            &lt;value&gt;test&lt;/value&gt;
+        &lt;/Parameter&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;passwd&lt;/name&gt;
+            &lt;value&gt;test&lt;/value&gt;
+        &lt;/Parameter&gt;
+    &lt;/parameters&gt;
+&lt;/DataStore&gt;</pre>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">PostGIS  support is included in the main GeoServer bundle, so a separate plugin is not required.</p>
+</div>
+</div>
+<div class="section" id="oracle">
+<h2>Oracle<a class="headerlink" href="#oracle" title="Permalink to this headline">¶</a></h2>
+<p>Set the parameter <tt class="docutils literal"><span class="pre">dbtype</span></tt> to <tt class="docutils literal"><span class="pre">Oracle</span></tt> to use the Oracle Spatial NG (New Generation) driver compatible with GeoServer 2.0 and later.</p>
+<p>Example:</p>
+<div class="highlight-python"><pre>&lt;DataStore&gt;
+    &lt;id&gt;datastore&lt;/id&gt;
+    &lt;parameters&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;dbtype&lt;/name&gt;
+            &lt;value&gt;Oracle&lt;/value&gt;
+        &lt;/Parameter&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;host&lt;/name&gt;
+            &lt;value&gt;oracle.example.org&lt;/value&gt;
+        &lt;/Parameter&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;port&lt;/name&gt;
+            &lt;value&gt;1521&lt;/value&gt;
+        &lt;/Parameter&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;database&lt;/name&gt;
+            &lt;value&gt;demodb&lt;/value&gt;
+        &lt;/Parameter&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;user&lt;/name&gt;
+            &lt;value&gt;orauser&lt;/value&gt;
+        &lt;/Parameter&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;passwd&lt;/name&gt;
+            &lt;value&gt;s3cr3t&lt;/value&gt;
+        &lt;/Parameter&gt;
+    &lt;/parameters&gt;
+&lt;/DataStore&gt;</pre>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You must install the Oracle plugin to connect to Oracle Spatial databases.</p>
+</div>
+</div>
+<div class="section" id="arcsde">
+<h2>ArcSDE<a class="headerlink" href="#arcsde" title="Permalink to this headline">¶</a></h2>
+<p>This example connects to an ArcSDE database:</p>
+<div class="highlight-python"><pre>&lt;DataStore&gt;
+    &lt;id&gt;datastore&lt;/id&gt;
+    &lt;parameters&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;dbtype&lt;/name&gt;
+            &lt;value&gt;arcsde&lt;/value&gt;
+        &lt;/Parameter&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;server&lt;/name&gt;
+            &lt;value&gt;arcsde.example.org&lt;/value&gt;
+        &lt;/Parameter&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;port&lt;/name&gt;
+            &lt;value&gt;5151&lt;/value&gt;
+        &lt;/Parameter&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;instance&lt;/name&gt;
+            &lt;value&gt;sde&lt;/value&gt;
+        &lt;/Parameter&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;user&lt;/name&gt;
+            &lt;value&gt;demo&lt;/value&gt;
+        &lt;/Parameter&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;password&lt;/name&gt;
+            &lt;value&gt;s3cr3t&lt;/value&gt;
+        &lt;/Parameter&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;datastore.allowNonSpatialTables&lt;/name&gt;
+            &lt;value&gt;true&lt;/value&gt;
+        &lt;/Parameter&gt;
+    &lt;/parameters&gt;
+&lt;/DataStore&gt;</pre>
+</div>
+<p>The use of non-spatial tables aids delivery of application schemas that use non-spatial properties.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You must install the ArcSDE plugin to connect to ArcSDE databases.</p>
+</div>
+</div>
+<div class="section" id="shapefile">
+<h2>Shapefile<a class="headerlink" href="#shapefile" title="Permalink to this headline">¶</a></h2>
+<p>Shapefile data sources are identified by the presence of a parameter <tt class="docutils literal"><span class="pre">url</span></tt>, whose value should be the file URL for the .shp file.</p>
+<p>In this example, only the <tt class="docutils literal"><span class="pre">url</span></tt> parameter is required. The others are optional:</p>
+<div class="highlight-python"><pre>&lt;DataStore&gt;
+    &lt;id&gt;shapefile&lt;/id&gt;
+    &lt;parameters&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;url&lt;/name&gt;
+            &lt;value&gt;file:/D:/Workspace/shapefiles/VerdeRiverBuffer.shp&lt;/value&gt;
+        &lt;/Parameter&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;memory mapped buffer&lt;/name&gt;
+            &lt;value&gt;false&lt;/value&gt;
+        &lt;/Parameter&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;create spatial index&lt;/name&gt;
+            &lt;value&gt;true&lt;/value&gt;
+        &lt;/Parameter&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;charset&lt;/name&gt;
+            &lt;value&gt;ISO-8859-1&lt;/value&gt;
+        &lt;/Parameter&gt;
+    &lt;/parameters&gt;
+&lt;/DataStore&gt;</pre>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <tt class="docutils literal"><span class="pre">url</span></tt> in this case is an example of a Windows filesystem path translated to URL notation.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Shapefile support is included in the main GeoServer bundle, so a separate plugin is not required.</p>
+</div>
+</div>
+<div class="section" id="property-file">
+<h2>Property file<a class="headerlink" href="#property-file" title="Permalink to this headline">¶</a></h2>
+<p>Property files are configured by specifying a <tt class="docutils literal"><span class="pre">directory</span></tt> that is a <tt class="docutils literal"><span class="pre">file:</span></tt> URI.</p>
+<ul class="simple">
+<li>If the directory starts with <tt class="docutils literal"><span class="pre">file:./</span></tt> it is relative to the mapping file directory. (This is an invalid URI, but it works.)</li>
+</ul>
+<p>For example, the following data store is used to access property files in the same directory as the mapping file:</p>
+<div class="highlight-python"><pre>&lt;DataStore&gt;
+    &lt;id&gt;propertyfile&lt;/id&gt;
+    &lt;parameters&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;directory&lt;/name&gt;
+            &lt;value&gt;file:./&lt;/value&gt;
+        &lt;/Parameter&gt;
+    &lt;/parameters&gt;
+&lt;/DataStore&gt;</pre>
+</div>
+<p>A property file data store contains <em>all</em> the feature types stored in .properties files in the directory. For example, if the directory contained River.properties and station.properties, the data store would be able to serve them as the feature types <tt class="docutils literal"><span class="pre">River</span></tt> and <tt class="docutils literal"><span class="pre">station</span></tt>. Other file extensions are ignored.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Property file support is included in the main GeoServer bundle, so a separate plugin is not required.</p>
+</div>
+</div>
+<div class="section" id="jndi">
+<h2>JNDI<a class="headerlink" href="#jndi" title="Permalink to this headline">¶</a></h2>
+<p>Defining a JDBC data store with a <tt class="docutils literal"><span class="pre">jndiReferenceName</span></tt> allows you to use a connection pool provided by your servlet container. This allows detailed configuration of connection pool parameters and sharing of connections between data sources, and even between servlets.</p>
+<p>To use a JNDI connection provider:</p>
+<ol class="arabic simple">
+<li>Specify a <tt class="docutils literal"><span class="pre">dbtype</span></tt> parameter to to indicate the database type. These values are the same as for the non-JNDI examples above.</li>
+<li>Give the <tt class="docutils literal"><span class="pre">jndiReferenceName</span></tt> you set in your servlet container. Both the abbreviated form <tt class="docutils literal"><span class="pre">jdbc/oracle</span></tt> form, as in Tomcat, and the canonical form <tt class="docutils literal"><span class="pre">java:comp/env/jdbc/oracle</span></tt> are supported.</li>
+</ol>
+<p>This example uses JNDI to obtain Oracle connections:</p>
+<div class="highlight-python"><pre>&lt;DataStore&gt;
+    &lt;id&gt;datastore&lt;/id&gt;
+    &lt;parameters&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;dbtype&lt;/name&gt;
+            &lt;value&gt;Oracle&lt;/value&gt;
+        &lt;/Parameter&gt;
+        &lt;Parameter&gt;
+            &lt;name&gt;jndiReferenceName&lt;/name&gt;
+            &lt;value&gt;jdbc/oracle&lt;/value&gt;
+        &lt;/Parameter&gt;
+    &lt;/parameters&gt;
+&lt;/DataStore&gt;</pre>
+</div>
+<p>Your servlet container my require you to add a <tt class="docutils literal"><span class="pre">resource-ref</span></tt> section at the end of  your <tt class="docutils literal"><span class="pre">geoserver/WEB-INF/web.xml</span></tt>. (Tomcat requires this, Jetty does not.) For example:</p>
+<div class="highlight-python"><pre>&lt;resource-ref&gt;
+    &lt;description&gt;Oracle Spatial Datasource&lt;/description&gt;
+    &lt;res-ref-name&gt;jdbc/oracle&lt;/res-ref-name&gt;
+    &lt;res-type&gt;javax.sql.DataSource&lt;/res-type&gt;
+    &lt;res-auth&gt;Container&lt;/res-auth&gt;
+&lt;/resource-ref&gt;</pre>
+</div>
+<p>Here is an example of a Tomcat 6 context in <tt class="docutils literal"><span class="pre">/etc/tomcat6/server.xml</span></tt> that includes an Oracle connection pool:</p>
+<div class="highlight-python"><pre>&lt;Context
+    path="/geoserver"
+    docBase="/usr/local/geoserver"
+    crossContext="false"
+    reloadable="false"&gt;
+    &lt;Resource
+        name="jdbc/oracle"
+        auth="Container"
+        type="javax.sql.DataSource"
+        url="jdbc:oracle:thin:@YOUR_DATABASE_HOSTNAME:1521:YOUR_DATABASE_NAME"
+        driverClassName="oracle.jdbc.driver.OracleDriver"
+        username="YOUR_DATABASE_USERNAME"
+        password="YOUR_DATABASE_PASSWORD"
+        maxActive="20"
+        maxIdle="10"
+        minIdle="0"
+        maxWait="10000"
+        minEvictableIdleTimeMillis="300000"
+        timeBetweenEvictionRunsMillis="300000"
+        numTestsPerEvictionRun="20"
+        poolPreparedStatements="true"
+        maxOpenPreparedStatements="100"
+        testOnBorrow="true"
+        validationQuery="SELECT SYSDATE FROM DUAL" /&gt;
+&lt;/Context&gt;</pre>
+</div>
+<p>Firewall timeouts can silently sever idle connections to the database and cause GeoServer to hang. If there is a firewall between GeoServer and the database, a connection pool configured to shut down idle connections before the firewall can drop them will prevent GeoServer from hanging. This JNDI connection pool is configured to shut down idle connections after 5 to 10 minutes.</p>
+<p>See also <a class="reference internal" href="../../tutorials/tomcat-jndi/tomcat-jndi.html#tomcat-jndi"><em>Setting up a JNDI connection pool with Tomcat</em></a>.</p>
+</div>
+<div class="section" id="expose-primary-keys">
+<h2>Expose primary keys<a class="headerlink" href="#expose-primary-keys" title="Permalink to this headline">¶</a></h2>
+<p>By default, GeoServer conceals the existence of database columns with a primary key. To make such columns available for use in app-schema mapping files, set the data store parameter <tt class="docutils literal"><span class="pre">Expose</span> <span class="pre">primary</span> <span class="pre">keys</span></tt> to <tt class="docutils literal"><span class="pre">true</span></tt>:</p>
+<div class="highlight-python"><pre>&lt;Parameter&gt;
+    &lt;name&gt;Expose primary keys&lt;/name&gt;
+   &lt;value&gt;true&lt;/value&gt;
+&lt;/Parameter&gt;</pre>
+</div>
+<p>This is known to work with PostGIS, Oracle, and JNDI data stores.</p>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="property-interpolation.html" title="previous chapter">Property Interpolation</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="feature-chaining.html" title="next chapter">Feature Chaining</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">Data Stores</a><ul>
+<li><a class="reference internal" href="#the-datastore-element">The DataStore element</a></li>
+<li><a class="reference internal" href="#database-options">Database options</a></li>
+<li><a class="reference internal" href="#postgis">PostGIS</a></li>
+<li><a class="reference internal" href="#oracle">Oracle</a></li>
+<li><a class="reference internal" href="#arcsde">ArcSDE</a></li>
+<li><a class="reference internal" href="#shapefile">Shapefile</a></li>
+<li><a class="reference internal" href="#property-file">Property file</a></li>
+<li><a class="reference internal" href="#jndi">JNDI</a></li>
+<li><a class="reference internal" href="#expose-primary-keys">Expose primary keys</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="property-interpolation.html" title="previous chapter">Property Interpolation</a></li>
+            <li>Next: <a href="feature-chaining.html" title="next chapter">Feature Chaining</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/data/app-schema/data-stores.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

@@ -1,0 +1,358 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Authentication with LDAP &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../../../index.html" />
+      <link rel="up" title="Tutorials" href="../index.html" />
+      <link rel="next" title="Configuring Digest Authentication" href="../digest/index.html" />
+      <link rel="prev" title="Tutorials" href="../index.html" />
+</head>
+<body class="security/tutorials/ldap/index">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="../../index.html" accesskey="U">Security</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Tutorials</a> &raquo;</li>
+  <li>Authentication with LDAP</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="../digest/index.html" title="Configuring Digest Authentication"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="../index.html" title="Tutorials"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="authentication-with-ldap">
+<span id="sec-tutorials-ldap"></span><h1>Authentication with LDAP<a class="headerlink" href="#authentication-with-ldap" title="Permalink to this headline">¶</a></h1>
+<p>This tutorial introduces GeoServer LDAP support and walks through the process of setting up authentication against an LDAP server.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Read more about the <a class="reference internal" href="../../auth/providers.html#sec-auth-provider-ldap"><em>LDAP authentication provider</em></a>.</p>
+</div>
+<div class="section" id="ldap-server-setup">
+<h2>LDAP server setup<a class="headerlink" href="#ldap-server-setup" title="Permalink to this headline">¶</a></h2>
+<p>A mock LDAP server will be used for this tutorial. Download and run the <a class="reference external" href="http://files.opengeo.org/geoserver/acme-ldap.jar">acme-ldap</a> jar:</p>
+<div class="highlight-python"><pre>java -jar acme-ldap.jar</pre>
+</div>
+<p>The output of which should look like the following:</p>
+<div class="highlight-python"><pre>Directory contents:
+  ou=people,dc=acme,dc=org
+    uid=bob,ou=people,dc=acme,dc=org
+    uid=alice,ou=people,dc=acme,dc=org
+    uid=bill,ou=people,dc=acme,dc=org
+  ou=groups,dc=acme,dc=org
+  cn=user,ou=groups,dc=acme,dc=org
+    member: uid=bob,ou=people,dc=acme,dc=org
+    member: uid=alice,ou=people,dc=acme,dc=org
+  cn=admin,ou=groups,dc=acme,dc=org
+    member: uid=bill,ou=people,dc=acme,dc=org
+
+  Server running on port 10389</pre>
+</div>
+<p>The following diagram illustrates the hierarchy of this LDAP datatabse:</p>
+<blockquote>
+<div><div class="figure">
+<img alt="../../../_images/acme_ldap.png" src="../../../_images/acme_ldap.png" />
+<p class="caption"><em>Diagram of custom LDAP</em></p>
+</div>
+</div></blockquote>
+<p>The LDAP tree consists of:</p>
+<ul class="simple">
+<li>The root domain component, <tt class="docutils literal"><span class="pre">dc=acme,dc=org</span></tt></li>
+<li>Two organizational units named <tt class="docutils literal"><span class="pre">people</span></tt> and <tt class="docutils literal"><span class="pre">groups</span></tt></li>
+<li>Two groups named <tt class="docutils literal"><span class="pre">user</span></tt> and <tt class="docutils literal"><span class="pre">admin</span></tt></li>
+<li>Two users named <tt class="docutils literal"><span class="pre">bob</span></tt> and <tt class="docutils literal"><span class="pre">alice</span></tt> who are members of the <tt class="docutils literal"><span class="pre">user</span></tt> group</li>
+<li>One user named <tt class="docutils literal"><span class="pre">bill</span></tt> who is a member of the <tt class="docutils literal"><span class="pre">admin</span></tt> group</li>
+</ul>
+</div>
+<div class="section" id="configure-the-ldap-authentication-provider">
+<h2>Configure the LDAP authentication provider<a class="headerlink" href="#configure-the-ldap-authentication-provider" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Start GeoServer and login to the web admin interface as the admin user.</p>
+</li>
+<li><p class="first">Click the <em class="guilabel">Authentication</em> link located under the <em class="guilabel">Security</em> section of the navigation sidebar.</p>
+<div class="figure align-center">
+<img alt="../../../_images/authlink.png" src="../../../_images/authlink.png" />
+<p class="caption"><em>Click to bring up the Authentication settings page</em></p>
+</div>
+</li>
+<li><p class="first">Scroll down to the <em class="guilabel">Authentication Providers</em> panel and click the <em class="guilabel">Add new</em> link.</p>
+<div class="figure align-center">
+<img alt="../../../_images/addnewauthprovider.png" src="../../../_images/addnewauthprovider.png" />
+<p class="caption"><em>Click to create a new authentication provider</em></p>
+</div>
+</li>
+<li><p class="first">Click the <em class="guilabel">LDAP</em> link.</p>
+<div class="figure align-center">
+<img alt="../../../_images/newldapauthprovider.png" src="../../../_images/newldapauthprovider.png" />
+<p class="caption"><em>Selecting a new LDAP authentication provider</em></p>
+</div>
+</li>
+<li><p class="first">Fill in the form as follows:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><p class="first last">Field</p>
+</th>
+<th class="head"><p class="first last">Description</p>
+</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><p class="first last"><em class="guilabel">Name</em></p>
+</td>
+<td><p class="first last"><tt class="docutils literal"><span class="pre">acme-ldap</span></tt></p>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first last"><em class="guilabel">Server URL</em></p>
+</td>
+<td><p class="first last"><tt class="docutils literal"><span class="pre">ldap://localhost:10389/dc=acme,dc=org</span></tt></p>
+</td>
+</tr>
+<tr class="row-even"><td><p class="first last"><em class="guilabel">User lookup pattern</em></p>
+</td>
+<td><p class="first last"><tt class="docutils literal"><span class="pre">uid={0},ou=people</span></tt></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="figure align-center">
+<img alt="../../../_images/ldapsettings.png" src="../../../_images/ldapsettings.png" />
+<p class="caption"><em>Configuring an LDAP authentication provider</em></p>
+</div>
+</li>
+<li><p class="first">Test the LDAP connection by entering the user name <em class="guilabel">bob</em> and password <em class="guilabel">secret</em> in the connection test form located on the right side of the page and clicking the <em class="guilabel">Test Connection</em> button. A successful connection should be reported at the top of the page.</p>
+<div class="figure align-center">
+<img alt="../../../_images/testconnection.png" src="../../../_images/testconnection.png" />
+<p class="caption"><em>Testing the connection to the LDAP connection</em></p>
+</div>
+</li>
+<li><p class="first">Click <em class="guilabel">Save</em>.</p>
+</li>
+<li><p class="first">Back on the authentication page, scroll down to the <em class="guilabel">Provider Chain</em> panel and click the right-arrow button to move the <em class="guilabel">acme-ldap</em> provider from <em class="guilabel">Available</em> to <em class="guilabel">Selected</em>.</p>
+<div class="figure align-center">
+<img alt="../../../_images/selectedprovider.png" src="../../../_images/selectedprovider.png" />
+<p class="caption"><em>Activating the LDAP authentication provider</em></p>
+</div>
+</li>
+<li><p class="first">Click <em class="guilabel">Save</em>.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="test-the-ldap-login">
+<h2>Test the LDAP login<a class="headerlink" href="#test-the-ldap-login" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Log out of the admin account.</p>
+</li>
+<li><p class="first">Login as the user <em class="guilabel">bob</em> with the with the password <em class="guilabel">secret</em>.</p>
+<div class="figure align-center">
+<img alt="../../../_images/boblogin.png" src="../../../_images/boblogin.png" />
+<p class="caption"><em>Logging in as user &#8220;bob&#8221;</em></p>
+</div>
+<div class="figure align-center">
+<img alt="../../../_images/bobloggedin.png" src="../../../_images/bobloggedin.png" />
+<p class="caption"><em>Successfully logged in</em></p>
+</div>
+</li>
+<li><p class="first">While the connection was successful, logging in as &#8220;bob&#8221; doesn&#8217;t yield any administrative functionality because the account has not been mapped to the administrator role. In the next section GeoServer will be configured to map groups from the LDAP database to roles.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="map-ldap-groups-to-geoserver-roles">
+<h2>Map LDAP groups to GeoServer roles<a class="headerlink" href="#map-ldap-groups-to-geoserver-roles" title="Permalink to this headline">¶</a></h2>
+<p>When using LDAP for authentication, GeoServer maps LDAP groups to GeoServer roles by prefixing the group name with <tt class="docutils literal"><span class="pre">ROLE_</span></tt> and converting the result to uppercase. For example &#8220;bob&#8221; and &#8220;alice&#8221; are members of the <strong>user</strong> group, so they would be assigned a role named <tt class="docutils literal"><span class="pre">ROLE_USER</span></tt>. Similarly &#8220;bill&#8221; is a member of the <strong>admin</strong> group, so he would be assigned a role named <tt class="docutils literal"><span class="pre">ROLE_ADMIN</span></tt>.</p>
+<ol class="arabic">
+<li><p class="first">Log out and log back in as the admin user.</p>
+</li>
+<li><p class="first">Navigate to the <em class="guilabel">Authentication</em> page as before.</p>
+</li>
+<li><p class="first">Scroll to the <em class="guilabel">Authentication Providers</em> panel and click the <em class="guilabel">acme-ldap</em> link.</p>
+<div class="figure align-center">
+<img alt="../../../_images/acmeproviderlink.png" src="../../../_images/acmeproviderlink.png" />
+<p class="caption"><em>Click to access the LDAP connection settings</em></p>
+</div>
+</li>
+<li><p class="first">Fill in the following form fields:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><p class="first last">Field</p>
+</th>
+<th class="head"><p class="first last">Description</p>
+</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><p class="first last"><em class="guilabel">Group search base</em></p>
+</td>
+<td><p class="first last"><tt class="docutils literal"><span class="pre">ou=groups</span></tt></p>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first last"><em class="guilabel">Group search filter</em></p>
+</td>
+<td><p class="first last"><tt class="docutils literal"><span class="pre">member={0}</span></tt></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The first field specifies the node of the LDAP directory tree at which groups are located. In this case the organizational unit named <strong>groups</strong>. The second field specifies the LDAP query filter to use in order to locate those groups that a specific user is a member of. The <tt class="docutils literal"><span class="pre">{0}</span></tt> is a placeholder which is replaced with the UID of the user.</p>
+<div class="figure align-center">
+<img alt="../../../_images/acmegroups.png" src="../../../_images/acmegroups.png" />
+<p class="caption"><em>Mapping LDAP groups to GeoServer roles</em></p>
+</div>
+</li>
+<li><p class="first">Click <em class="guilabel">Save</em>.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="map-a-geoserver-role-to-the-administrator-role">
+<h2>Map a GeoServer role to the administrator role<a class="headerlink" href="#map-a-geoserver-role-to-the-administrator-role" title="Permalink to this headline">¶</a></h2>
+<p>At this point the LDAP provider will populate an authenticated user with roles based on the groups the user is a member of. However, the GeoServer administrative role is named <tt class="docutils literal"><span class="pre">ROLE_ADMINISTRATOR</span></tt>, not <tt class="docutils literal"><span class="pre">ROLE_ADMIN</span></tt>, so &#8220;bill&#8221; who is assigned the role <tt class="docutils literal"><span class="pre">ROLE_ADMIN</span></tt> will not be granted administrative rights. To remedy this, the GeoServer role service will be reconfigured to treat <tt class="docutils literal"><span class="pre">ROLE_ADMIN</span></tt> as an administrative role.</p>
+<ol class="arabic">
+<li><p class="first">Click the <em class="guilabel">Users, Groups, Roles</em> link located under the <em class="guilabel">Security</em> section of the navigation sidebar.</p>
+<div class="figure align-center">
+<img alt="../../../_images/ugrlink.png" src="../../../_images/ugrlink.png" />
+<p class="caption"><em>Click to bring up the Users, Groups, and Roles settings page</em></p>
+</div>
+</li>
+<li><p class="first">Click the <em class="guilabel">default</em> role service in the <em class="guilabel">Role Services`</em> panel.</p>
+<div class="figure align-center">
+<img alt="../../../_images/defaultroleservice.png" src="../../../_images/defaultroleservice.png" />
+<p class="caption"><em>Click to edit the settings of the default role service</em></p>
+</div>
+</li>
+<li><p class="first">Click the <em class="guilabel">Roles</em> tab.</p>
+</li>
+<li><p class="first">Click <em class="guilabel">Add new role</em>.</p>
+<div class="figure align-center">
+<img alt="../../../_images/addnewrolelink.png" src="../../../_images/addnewrolelink.png" />
+<p class="caption"><em>Click to add a new role</em></p>
+</div>
+</li>
+<li><p class="first">Enter <em class="guilabel">ROLE_ADMIN</em> in the <em class="guilabel">Name field</em>. Leave the other fields as-is.</p>
+<div class="figure align-center">
+<img alt="../../../_images/roleadmin.png" src="../../../_images/roleadmin.png" />
+<p class="caption"><em>Creating a new role</em></p>
+</div>
+</li>
+<li><p class="first">Click <em class="guilabel">Save</em>.</p>
+<div class="figure align-center">
+<img alt="../../../_images/allroles.png" src="../../../_images/allroles.png" />
+<p class="caption"><em>New role successfully created</em></p>
+</div>
+</li>
+<li><p class="first">Click the <em class="guilabel">Settings</em> tab.</p>
+</li>
+<li><p class="first">Select <em class="guilabel">ROLE_ADMIN</em> in the <em class="guilabel">Administrator role</em> box.</p>
+<div class="figure align-center">
+<img alt="../../../_images/settingadminrole.png" src="../../../_images/settingadminrole.png" />
+<p class="caption"><em>Setting the admin role</em></p>
+</div>
+</li>
+<li><p class="first">Click <em class="guilabel">Save</em>.</p>
+</li>
+</ol>
+<p>At this point members of the <tt class="docutils literal"><span class="pre">admin</span></tt> LDAP group (in this case, the user &#8220;bill&#8221;) should be given full administrative privileges once authenticated. Log out of the admin account and log in as &#8220;bill&#8221; with the password &#8220;hello&#8221;. Once logged in full administrative functionality should be available.</p>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="../index.html" title="previous chapter">Tutorials</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="../digest/index.html" title="next chapter">Configuring Digest Authentication</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">Authentication with LDAP</a><ul>
+<li><a class="reference internal" href="#ldap-server-setup">LDAP server setup</a></li>
+<li><a class="reference internal" href="#configure-the-ldap-authentication-provider">Configure the LDAP authentication provider</a></li>
+<li><a class="reference internal" href="#test-the-ldap-login">Test the LDAP login</a></li>
+<li><a class="reference internal" href="#map-ldap-groups-to-geoserver-roles">Map LDAP groups to GeoServer roles</a></li>
+<li><a class="reference internal" href="#map-a-geoserver-role-to-the-administrator-role">Map a GeoServer role to the administrator role</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="../index.html" title="previous chapter">Tutorials</a></li>
+            <li>Next: <a href="../digest/index.html" title="next chapter">Configuring Digest Authentication</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../../_sources/security/tutorials/ldap/index.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

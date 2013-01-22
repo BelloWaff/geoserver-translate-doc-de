@@ -1,0 +1,289 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Layers &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../../index.html" />
+      <link rel="up" title="Data" href="index.html" />
+      <link rel="next" title="Layer Groups" href="layergroups.html" />
+      <link rel="prev" title="Stores" href="stores.html" />
+</head>
+<body class="webadmin/data/layers">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Web Administration Interface</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Data</a> &raquo;</li>
+  <li>Layers</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="layergroups.html" title="Layer Groups"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="stores.html" title="Stores"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="layers">
+<span id="webadmin-layers"></span><h1>Layers<a class="headerlink" href="#layers" title="Permalink to this headline">¶</a></h1>
+<p>In Geoserver, the term layer refers to raster or vector data that contains geographic features. Vector layers are analogous to featureTypes and raster layers are analogous to coverages. Layers represent each feature that needs to be shown on a map. All layers have a source of data, known as a Store.</p>
+<p>In the layers section, you can view and edit an existing layers, add (register) a new layer, or delete (unregister) a layer. As in previous View tables, the Layers View page displays relevant dependencies, that is, the layer within the store within the workspace. The View page also displays the layer&#8217;s status and native SRS.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_layers1.png" src="../../_images/data_layers1.png" />
+<p class="caption"><em>Layers View</em></p>
+</div>
+<div class="section" id="layer-types">
+<h2>Layer Types<a class="headerlink" href="#layer-types" title="Permalink to this headline">¶</a></h2>
+<p>Layers are organized into two types of data, raster and vector. These two formats differ in how they store spatial information. Vector types store information about feature types as mathematical paths—a point as a single x,y coordinate, lines as a series of x,y coordinates, and polygons as a series of x,y coordinates that start and end on the same place. Raster format data is a cell-based representation of features on the earth surface. Each cell has a distinct value, and all cells with the same value represent a specific feature.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="7%" />
+<col width="93%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Field</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td><img alt="../../_images/data_layers_type1.png" class="first last" src="../../_images/data_layers_type1.png" />
+</td>
+<td>raster (grid)</td>
+</tr>
+<tr class="row-odd"><td><img alt="../../_images/data_layers_type2.png" class="first last" src="../../_images/data_layers_type2.png" />
+</td>
+<td>vector (feature)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="edit-layer-data">
+<span id="id1"></span><h2>Edit Layer Data<a class="headerlink" href="#edit-layer-data" title="Permalink to this headline">¶</a></h2>
+<p>Clicking the layer name opens a layer configuration panel. The <em class="guilabel">Data</em> tab, activated by default, allows you to define and change data parameters for a layer.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_layers_edit_data.png" src="../../_images/data_layers_edit_data.png" />
+<p class="caption"><em>Layers Data View</em></p>
+</div>
+<div class="section" id="basic-info">
+<h3>Basic Info<a class="headerlink" href="#basic-info" title="Permalink to this headline">¶</a></h3>
+<p>The beginning sections&#8211;Basic Resource Info, Keywords and Metadata link are analogous to the <a class="reference internal" href="../services/WCS.html#service-metadata"><em>Service Metadata</em></a> section for WCS, WFS and WMS. These sections provide &#8220;data about the data,&#8221; specifically textual information that make the layer data easier to work with it.</p>
+<p><strong>Name</strong>—Identifier used to reference the layer in WMS requests</p>
+<p><strong>Title</strong>—Human-readable description to briefly identify the layer to clients (required)</p>
+<p><strong>Abstract</strong>—Describes the layer</p>
+<p><strong>Keywords</strong>—List of short words associated with the layer to assist catalog searching</p>
+<p><strong>Metadata Link</strong>—Allows linking to external documents that describe the data layer. Currently only two standard format types are valid: TC211 and FGDC. TC211 refers to the metadata structure established by the <a class="reference external" href="http://www.isotc211.org/">ISO Technical Committee for Geographic Information/Geomatics</a> (ISO/TC 211) while FGDC refers to those set out by the <a class="reference external" href="http://www.fgdc.gov/">Federal Geographic Data Committee</a> (FGDC) of the United States.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_layers_meta.png" src="../../_images/data_layers_meta.png" />
+<p class="caption"><em>Adding a metadata link n FGDC format</em></p>
+</div>
+</div>
+<div class="section" id="coordinate-reference-systems">
+<h3>Coordinate Reference Systems<a class="headerlink" href="#coordinate-reference-systems" title="Permalink to this headline">¶</a></h3>
+<p>A coordinate reference system (CRS) defines how your georeferenced spatial data relates to real locations on the Earth’s surface. CRSs are part of a more general model called Spatial Reference Systems (SRS), which includes referencing by coordinates and geographic identifiers. Geoserver needs to know what Coordinate Reference System of your data. This information is used for computing the latitude/longitude bounding box and reprojecting the data during both WMS and WFS requests</p>
+<div class="figure align-center">
+<img alt="../../_images/data_layers_CRS.png" src="../../_images/data_layers_CRS.png" />
+<p class="caption"><em>Adding a metadata link n FGDC format</em></p>
+</div>
+<p><strong>Native SRS</strong>—Refers to the projection the layer is stored in. Clicking the projection link displays a description of the SRS.</p>
+<p><strong>Declared SRS</strong>—Refers to what GeoServer gives to clients</p>
+<p><strong>SRS Handling:</strong>—Determines how GeoServer should handle projection when the two SRS differ</p>
+</div>
+<div class="section" id="bounding-boxes">
+<h3>Bounding Boxes<a class="headerlink" href="#bounding-boxes" title="Permalink to this headline">¶</a></h3>
+<p>The bounding box determines the extent of a layer. The <em class="guilabel">Native Bounding Box</em> are the bounds of the data projected in the Native SRS. You can generate these bounds by clicking the <em class="guilabel">Compute from data</em> button. The <em class="guilabel">Lat/Long Bounding Box</em> computes the bounds based on the standard lat/long. These bounds can be generated by clicking the <em class="guilabel">Compute from native bounds</em> button.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_layers_BB.png" src="../../_images/data_layers_BB.png" />
+<p class="caption"><em>Bounding Box for sf:archsites</em></p>
+</div>
+</div>
+<div class="section" id="coverage-parameters-raster">
+<h3>Coverage Parameters (Raster)<a class="headerlink" href="#coverage-parameters-raster" title="Permalink to this headline">¶</a></h3>
+<p>Optional coverage parameters are possible for certain types of raster data. WorldImage formats request a valid range of grid coordinates in two dimensions known as a <em class="guilabel">ReadGridGeometry2D.</em> For ImageMosaic, you can use <em class="guilabel">InputImageThresholdValue</em>, <em class="guilabel">InputTransparentColor</em>, and <em class="guilabel">OutputTransparentColor</em> to control the rendering of the mosaic in terms of thresholding and transparency.</p>
+</div>
+<div class="section" id="feature-type-details-vector">
+<h3>Feature Type Details (Vector)<a class="headerlink" href="#feature-type-details-vector" title="Permalink to this headline">¶</a></h3>
+<p>Instead of coverage parameters, vector layers have a list of the <em class="guilabel">Feature Type Details</em>. These include the <em class="guilabel">Property</em> and <em class="guilabel">Type</em> of a data source. For example, the <tt class="docutils literal"><span class="pre">sf:archsites</span></tt> layer show below includes a geometry, <tt class="docutils literal"><span class="pre">the_geom</span></tt> of type point.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_layers_feature.png" src="../../_images/data_layers_feature.png" />
+<p class="caption"><em>Feature Types Detaisl for sf:archsites</em></p>
+</div>
+<p>The <em class="guilabel">Nillable</em> refers to whether the property requires a value or may be flagged as being null. Meanwhile <em class="guilabel">Min/Max Occurrences</em> refers to how many values a field is allowed to have. Currently both <em class="guilabel">Nillable</em> and <em class="guilabel">Min/Max Occurrences</em> are set to <tt class="docutils literal"><span class="pre">true</span></tt> and <tt class="docutils literal"><span class="pre">0/1</span></tt> but might be   extended with future work on complex features.</p>
+</div>
+</div>
+<div class="section" id="edit-publishing-information">
+<h2>Edit Publishing Information<a class="headerlink" href="#edit-publishing-information" title="Permalink to this headline">¶</a></h2>
+<p>The publishing tab is for configuring HTTP and WCS settings.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_layers_edit_publish.png" src="../../_images/data_layers_edit_publish.png" />
+<p class="caption"><em>Editing Publishing Data</em></p>
+</div>
+<ul class="simple">
+<li><em>Enabled</em>—A layer that is not enabled won&#8217;t be available to any kind of request, it will just show up in the configuration (and in REST-config)</li>
+<li><em>Additional styles</em>—A layer is advertised by default. A non-advertised layer will be available in all data access requests (for example, WMS GetMap, WMS GetFeature) but won&#8217;t appear in any capabilities document or in the layer preview.</li>
+</ul>
+<p><strong>HTTP Settings</strong>—Cache parameters that apply to the HTTP response from client requests. If <em class="guilabel">Response Cache Headers</em> is selected, GeoServer will not request the same tile twice within the time specified in <em class="guilabel">Cache Time</em>. One hour measured in seconds (3600), is the default value for <em class="guilabel">Cache Time</em>.</p>
+<p><strong>WMS Settings</strong>—Sets the WMS specific publishing parameters</p>
+<div class="figure align-center">
+<img alt="../../_images/wms_settings.png" src="../../_images/wms_settings.png" />
+<p class="caption"><em>WMS Settings</em></p>
+</div>
+<ul class="simple">
+<li><em>Default style</em>:—Style that will be used when the client does not specify a named style in GetMap requests</li>
+<li><em>Additional styles</em>—Other styles that can be associated to this layers. Some clients (and the GeoServer own preview) will present those as styling alternatives for that layer to the end user</li>
+<li><em>Default rendering buffer</em> (available since version 2.0.3)—the default value of the <tt class="docutils literal"><span class="pre">buffer</span></tt> GetMap/GetFeatureInfo vendor parameter. See the <a class="reference internal" href="../../services/wms/vendor.html#wms-vendor-parameters"><em>WMS vendor parameters</em></a> for more details</li>
+<li><em>Default WMS path</em>—Location of the layer in the WMS capabilities layer tree. Useful to build non-opaque layer groups</li>
+</ul>
+<p><strong>WMS Attribution</strong>—Sets publishing information about data providers</p>
+<div class="figure align-center">
+<img alt="../../_images/data_layers_WMS.png" src="../../_images/data_layers_WMS.png" />
+<p class="caption"><em>WMS Attribution</em></p>
+</div>
+<ul class="simple">
+<li><em>Attribution Text</em>—Human-readable text describing the data provider. This might be used as the text for a hyperlink to the data provider&#8217;s web site.</li>
+<li><em>Attribution Link</em>—URL to the data provider&#8217;s website.</li>
+<li><em>Logo URL</em>—URL to an image that serves as a logo for the data provider.</li>
+<li><em>Logo Content Type, Width, and Height</em> —These fields provide information about the logo image that clients may use to assist with layout. GeoServer will auto-detect these values if you click the <em class="guilabel">Auto-detect image size and type</em> link at the bottom of the section.</li>
+</ul>
+<p>The text, link, and URL are each advertised in the WMS Capabilities document if they are provided. Some WMS clients will display this information to advise users which providers provide a particular dataset. If you omit some of the fields, those that are provided will be published and those that are not will be omitted from the Capabilities document.</p>
+<p><strong>WFS Settings</strong>—Sets the maximum number of features for a layer a WFS GetFeature operation should generate (regardless of the actual number of query hits)</p>
+<p><strong>WCS Settings</strong>—Provides a list the SRS the layer can be converted to. <em class="guilabel">New Request SRS</em> allows you to add an SRS to that list.</p>
+<p><strong>Interpolation Methods</strong>—Sets the raster rendering process</p>
+<p><strong>Formats</strong>—Lists which output formats a layers supports</p>
+<p><strong>Default Title</strong>—Assigns a style to a layer. Additional styles are ones published with the layer in the capabilities document.</p>
+<p><strong>Geosearch</strong>—When enabled, allows the Google Geo search crawler to index from this particular layer. See <a class="reference external" href="http://www.google.com/support/webmasters/bin/answer.py?hl=en&amp;answer=94554">What is a Geo Sitemap?</a> for more information.</p>
+<p><strong>KML Format Settings</strong>—Limits features based on certain criteria, otherwise known as <em>regionation</em>. Choose which feature should show up more prominently than others with the guilabel:<cite>Default Regionating Attribute</cite>. There are four types of <em class="guilabel">Regionating Methods</em>:</p>
+<ul class="simple">
+<li><em>external-sorting</em>—Creates a temporary auxiliary database within GeoServer. The first request to build an index takes longer than subsequent requests.</li>
+<li><em>geometry</em>—Externally sorts by length (if lines) or area (if polygons)</li>
+<li><em>native-sorting</em>—Uses the default sorting algorithm of the backend where the data is hosted. It is faster than external-sorting, but will only work with PostGIS datastores.</li>
+<li><em>random</em>—Uses the existing order of the data and does not sort</li>
+</ul>
+</div>
+<div class="section" id="add-or-delete-a-layer">
+<h2>Add or Delete a Layer<a class="headerlink" href="#add-or-delete-a-layer" title="Permalink to this headline">¶</a></h2>
+<p>At the upper left-hand corner of the layers view page there are two buttons for the adding and deletion of layers. The green plus button allows you to add a new layer, referred to as resource. The red minus button allows you to remove selected layers.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_layers_add_remove.png" src="../../_images/data_layers_add_remove.png" />
+<p class="caption"><em>Buttons to Add or Remove a Layer</em></p>
+</div>
+<p>Clicking the <em class="guilabel">Add a new resource</em> button brings up a <em class="guilabel">New Layer Chooser</em> panel. The menu displays all currently enabled stores. From this menu, select the Store where the layer should be added.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_layers_add_chooser.png" src="../../_images/data_layers_add_chooser.png" />
+<p class="caption"><em>List of all currently enabled stores</em></p>
+</div>
+<p>Upon selection of a Store, a view table of existing layers within the selected store will be displayed. In this example, <tt class="docutils literal"><span class="pre">giant_polygon</span></tt>, <tt class="docutils literal"><span class="pre">poi</span></tt>, <tt class="docutils literal"><span class="pre">poly_landmarks</span></tt> and <tt class="docutils literal"><span class="pre">tiger_roads</span></tt> are all layers within the NYC store.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_layers_add_view.png" src="../../_images/data_layers_add_view.png" />
+<p class="caption"><em>View of all layers</em></p>
+</div>
+<p>On selecting a layer name, you are redirected to a layer edit page. <a class="reference internal" href="#edit-layer-data"><em>Edit Layer Data</em></a></p>
+<p>To delete a layer, click the check box on the left side of each layer row. As shown below, multiple layers can be selected for removal on a single results page. It should be noted, however, that selections for removal will not persist from one results pages to the next.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_layers_delete.png" src="../../_images/data_layers_delete.png" />
+<p class="caption"><em>Layers nurc:Img_Sample, sf:restricted, sf:streams selected for deletion</em></p>
+</div>
+<p>All layers can be selected for removal by selecting the check box in the header row.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_layers_delete_all.png" src="../../_images/data_layers_delete_all.png" />
+<p class="caption"><em>All layers selected to be deleted</em></p>
+</div>
+<p>Once layer(s) are selected, the <em class="guilabel">Remove selected resources</em> link is activated. Once you&#8217;ve clicked the link, you will be asked to confirm or cancel the deletion. Selecting <em class="guilabel">OK</em> successfully deletes the layer.</p>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="stores.html" title="previous chapter">Stores</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="layergroups.html" title="next chapter">Layer Groups</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">Layers</a><ul>
+<li><a class="reference internal" href="#layer-types">Layer Types</a></li>
+<li><a class="reference internal" href="#edit-layer-data">Edit Layer Data</a><ul>
+<li><a class="reference internal" href="#basic-info">Basic Info</a></li>
+<li><a class="reference internal" href="#coordinate-reference-systems">Coordinate Reference Systems</a></li>
+<li><a class="reference internal" href="#bounding-boxes">Bounding Boxes</a></li>
+<li><a class="reference internal" href="#coverage-parameters-raster">Coverage Parameters (Raster)</a></li>
+<li><a class="reference internal" href="#feature-type-details-vector">Feature Type Details (Vector)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#edit-publishing-information">Edit Publishing Information</a></li>
+<li><a class="reference internal" href="#add-or-delete-a-layer">Add or Delete a Layer</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="stores.html" title="previous chapter">Stores</a></li>
+            <li>Next: <a href="layergroups.html" title="next chapter">Layer Groups</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/webadmin/data/layers.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

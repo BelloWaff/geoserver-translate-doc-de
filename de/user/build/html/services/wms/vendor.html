@@ -1,0 +1,383 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>WMS vendor parameters &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../../index.html" />
+      <link rel="up" title="Web Map Service" href="index.html" />
+      <link rel="next" title="WMS configuration" href="configuration.html" />
+      <link rel="prev" title="WMS output formats" href="outputformats.html" />
+</head>
+<body class="services/wms/vendor">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Services</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Web Map Service</a> &raquo;</li>
+  <li>WMS vendor parameters</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="configuration.html" title="WMS configuration"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="outputformats.html" title="WMS output formats"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="wms-vendor-parameters">
+<span id="id1"></span><h1>WMS vendor parameters<a class="headerlink" href="#wms-vendor-parameters" title="Permalink to this headline">¶</a></h1>
+<p>WMS vendor parameters are non-standard request parameters
+that are defined by an implementation to provide enhanced capabilities.
+GeoServer supports a variety of vendor-specific WMS parameters.</p>
+<div class="section" id="angle">
+<h2>angle<a class="headerlink" href="#angle" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">angle</span></tt> parameter rotates the output map clockwise around its center.
+The syntax is:</p>
+<div class="highlight-python"><pre>angle=&lt;x&gt;</pre>
+</div>
+<p>where <tt class="docutils literal"><span class="pre">&lt;x&gt;</span></tt> is the number of degrees to rotate by.</p>
+<p>Map rotation is supported in all raster formats, PDF, and SVG when using the Batik producer (which is the default).</p>
+</div>
+<div class="section" id="buffer">
+<h2>buffer<a class="headerlink" href="#buffer" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">buffer</span></tt> parameter specifies the number of additional border pixels that are used in the <tt class="docutils literal"><span class="pre">GetMap</span></tt> and <tt class="docutils literal"><span class="pre">GetFeatureInfo</span></tt> operations.
+The syntax is:</p>
+<div class="highlight-python"><pre>buffer=&lt;bufferwidth&gt;</pre>
+</div>
+<p>where <tt class="docutils literal"><span class="pre">&lt;bufferwidth&gt;</span></tt> is the width of the buffer in pixels.</p>
+<p>In the <a class="reference internal" href="reference.html#wms-getmap"><em>GetMap</em></a> operation,
+buffering includes features that lie outside the request bounding box, but whose styling is thick enough to be visible inside the map area.</p>
+<p>In the <a class="reference internal" href="reference.html#wms-getfeatureinfo"><em>GetFeatureInfo</em></a> operation,
+buffering creates a &#8220;search radius&#8221; around the location of the request.
+Feature info is returned for features intersecting the search area.
+This is useful when working with an OpenLayers map (such as those generated by the <a class="reference internal" href="../../webadmin/layerpreview/index.html#layerpreview"><em>Layer Preview</em></a> page) since it relaxes the need to click precisely on a point for the appropriate feature info to be returned.</p>
+<p>In both operations GeoServer attempts to compute the <tt class="docutils literal"><span class="pre">buffer</span></tt> value automatically by inspecting the styles for each layer.
+All active symbolizers are evaluated, and the size of the largest is used (i.e. largest point symbolizer, thickest line symbolizer).
+Automatic buffer sizing cannot be computed if:</p>
+<ul class="simple">
+<li>the SLD contains sizes that are specified as feature attribute values</li>
+<li>the SLD contains external graphics and does not specify their size explicitly</li>
+</ul>
+<p>In this event, the following defaults are used:</p>
+<ul class="simple">
+<li>0 pixels for <a class="reference internal" href="reference.html#wms-getmap"><em>GetMap</em></a> requests</li>
+<li>2 pixels for <a class="reference internal" href="reference.html#wms-getfeatureinfo"><em>GetFeatureInfo</em></a> requests</li>
+</ul>
+<p>If these are not sufficiently large, the explicit parameter can be used.</p>
+</div>
+<div class="section" id="cql-filter">
+<h2>cql_filter<a class="headerlink" href="#cql-filter" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">cql_filter</span></tt> parameter is similar to the standard <tt class="docutils literal"><span class="pre">filter</span></tt> parameter, but the filter is expressed using ECQL (Extended Common Query Language).
+ECQL provides a more compact and readable syntax compared to OGC XML filters.
+For full details see the <a class="reference internal" href="../../filter/ecql_reference.html#filter-ecql-reference"><em>ECQL Reference</em></a> and <a class="reference internal" href="../../tutorials/cql/cql_tutorial.html#cql-tutorial"><em>CQL and ECQL</em></a> tutorial.</p>
+<p>If more than one layer is specified in the <tt class="docutils literal"><span class="pre">layers</span></tt> parameter, then a separate filter can be specified for each layer, separated by semicolons.
+The syntax is:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">cql_filter</span><span class="o">=</span><span class="n">filter1</span><span class="p">;</span><span class="n">filter2</span><span class="o">...</span>
+</pre></div>
+</div>
+<p>An example of a simple CQL filter is:</p>
+<div class="highlight-python"><pre>cql_filter=INTERSECT(the_geom,%20POINT%20(-74.817265%2040.5296504))</pre>
+</div>
+</div>
+<div class="section" id="env">
+<h2>env<a class="headerlink" href="#env" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">env</span></tt> parameter defines the set of substitution values that can be used in SLD variable substitution.
+The syntax is:</p>
+<div class="highlight-python"><pre>env=param1:value1;param2:value2;...</pre>
+</div>
+<p>See <a class="reference internal" href="../../styling/sld-extensions/substitution.html#sld-variable-substitution"><em>Variable substitution in SLD</em></a> for more information.</p>
+</div>
+<div class="section" id="featureid">
+<h2>featureid<a class="headerlink" href="#featureid" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">featureid</span></tt> parameter filters by feature ID, a unique value given to all features.
+Multiple features can be selected by separating the featureids by comma, as in this example:</p>
+<div class="highlight-python"><pre>featureid=states.1,states.45</pre>
+</div>
+</div>
+<div class="section" id="filter">
+<h2>filter<a class="headerlink" href="#filter" title="Permalink to this headline">¶</a></h2>
+<p>The WMS specification allows only limited filtering of data.
+GeoServer enhances the WMS filter capability to match that provided by WFS.
+The <tt class="docutils literal"><span class="pre">filter</span></tt> parameter can specify a list of OGC XML filters.
+The list is enclosed in parentheses: <strong>( )</strong>.
+When used in a GET request, the XML tag brackets must be URL-encoded.</p>
+<p>If more than one layer is specified in the <tt class="docutils literal"><span class="pre">layers</span></tt> parameter then a separate filter can be specified for each layer.</p>
+<p>An example of an OGC filter encoded in a GET request is:</p>
+<div class="highlight-python"><pre>filter=%3CFilter%20xmlns:gml=%22http://www.opengis.net/gml%22%3E%3CIntersects%3E%3CPropertyName%3Ethe_geom%3C/PropertyName%3E%3Cgml:Point%20srsName=%224326%22%3E%3Cgml:coordinates%3E-74.817265,40.5296504%3C/gml:coordinates%3E%3C/gml:Point%3E%3C/Intersects%3E%3C/Filter%3E</pre>
+</div>
+</div>
+<div class="section" id="format-options">
+<h2>format_options<a class="headerlink" href="#format-options" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">format_options</span></tt> is a container for parameters that are format-specific.
+The syntax is:</p>
+<div class="highlight-python"><pre>format_options=param1:value1;param2:value2;...</pre>
+</div>
+<p>The supported format options are:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">antialiasing</span></tt> (values = <tt class="docutils literal"><span class="pre">on</span></tt>, <tt class="docutils literal"><span class="pre">off</span></tt>, <tt class="docutils literal"><span class="pre">text</span></tt>): controls the use of antialiased rendering in raster output.</li>
+<li><tt class="docutils literal"><span class="pre">dpi</span></tt>: sets the rendering DPI (dots-per-inch) for raster outputs.
+The OGC standard output resolution is 90 DPI.
+If you need to create high resolution images (e.g for printing) it is advisable to request a larger image size and specify a higher DPI.
+In general, the image size should be increased by a factor equal to <tt class="docutils literal"><span class="pre">targetDPI/90</span></tt>, with the target dpi set in the format options.
+For example, to print  a 100x100 image at 300 DPI request a 333x333 image with the DPI value set to 300: <tt class="docutils literal"><span class="pre">&amp;width=333&amp;height=333&amp;format_options=dpi:300</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">layout</span></tt>: specifies a layout name to use.  Layouts are used to add decorators such as compasses and legends.  This capability is discussed further in the <a class="reference internal" href="../../advanced/wmsdecoration.html#wms-decorations"><em>WMS Decorations</em></a> section.</li>
+<li><tt class="docutils literal"><span class="pre">quantizer</span></tt> ((values = <tt class="docutils literal"><span class="pre">octree</span></tt>, <tt class="docutils literal"><span class="pre">mediancut</span></tt>): controls the color quantizer used to produce PNG8 images. GeoServer 2.2.0 provides two quantizers, a fast RGB quantizer called <tt class="docutils literal"><span class="pre">octree</span></tt> that does not handle translucency and a slower but more accurate RGBA quantizer called <tt class="docutils literal"><span class="pre">mediancut</span></tt>. By default the first is used on opaque images, whilst the second is enabled if the client asks for a transparent image (<tt class="docutils literal"><span class="pre">transparent=true</span></tt>). This vendor parameter can be used to manually force the usage of a particular quantizer.</li>
+</ul>
+</div>
+<div class="section" id="kmattr">
+<h2>kmattr<a class="headerlink" href="#kmattr" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">kmattr</span></tt> parameter determines whether the KML returned by GeoServer should include clickable attributes or not.
+This parameter primarily affects Google Earth rendering.
+The syntax is:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">kmattr</span><span class="o">=</span><span class="p">[</span><span class="n">true</span><span class="o">|</span><span class="n">false</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="kmscore">
+<h2>kmscore<a class="headerlink" href="#kmscore" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">kmscore</span></tt> parameter sets whether GeoServer should render KML data as vector or raster.
+This parameter primarily affects Google Earth rendering.
+The syntax is:</p>
+<div class="highlight-python"><pre>kmscore=&lt;value&gt;</pre>
+</div>
+<p>The possible values for this parameter are between <tt class="docutils literal"><span class="pre">0</span></tt> (force raster output) and <tt class="docutils literal"><span class="pre">100</span></tt> (force vector output).</p>
+</div>
+<div class="section" id="maxfeatures-and-startindex">
+<h2>maxFeatures and startIndex<a class="headerlink" href="#maxfeatures-and-startindex" title="Permalink to this headline">¶</a></h2>
+<p>The parameters <tt class="docutils literal"><span class="pre">maxFeatures</span></tt> and <tt class="docutils literal"><span class="pre">startIndex</span></tt> can be used together to provide &#8220;paging&#8221; support.
+Paging is helpful in situations such as KML crawling, where it is desirable to be able to retrieve the map in sections when there are a large number of features.</p>
+<p>The <tt class="docutils literal"><span class="pre">startindex=n</span></tt> parameter specifies the index from which to start rendering in an ordered list of features.
+<tt class="docutils literal"><span class="pre">n</span></tt> must be a positive integer.</p>
+<p>The <tt class="docutils literal"><span class="pre">maxfeatures=n</span></tt> parameter sets a limit on the amount of features rendered.
+<tt class="docutils literal"><span class="pre">n</span></tt> must be a positive integer.
+When used with <tt class="docutils literal"><span class="pre">startindex</span></tt>, the features rendered will be the ones starting at the <tt class="docutils literal"><span class="pre">startindex</span></tt> value.</p>
+<p>Note that not all layers support paging.
+For a layer to be queried in this way, the underlying feature source must support paging.
+This is usually the case for databases (such as PostGIS).</p>
+</div>
+<div class="section" id="namespace">
+<h2>namespace<a class="headerlink" href="#namespace" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">namespace</span></tt> parameter causes WMS <a class="reference internal" href="reference.html#wms-getcap"><em>GetCapabilities</em></a> responses to be filtered to only contain layers in to a particular namespace.
+The syntax is:</p>
+<div class="highlight-python"><pre>namespace=&lt;namespace&gt;</pre>
+</div>
+<p>where <tt class="docutils literal"><span class="pre">&lt;namespace&gt;</span></tt> is the namespace prefix.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Using an invalid namespace prefix will not cause an error, but the capabilities document returned will contain no layers, only layer groups.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This affects the capabilities document only, not other requests.
+Other WMS operations will still process all layers, even when a namespace is specified.</p>
+</div>
+</div>
+<div class="section" id="palette">
+<h2>palette<a class="headerlink" href="#palette" title="Permalink to this headline">¶</a></h2>
+<p>It is sometimes advisable (for speed and bandwidth reasons) to downsample the bit depth of returned maps.
+The way to do this is to create an image with a limited color palette, and save it in the <tt class="docutils literal"><span class="pre">palettes</span></tt> directory inside your GeoServer Data Directory.
+It is then possible to specify the <tt class="docutils literal"><span class="pre">palette</span></tt> parameter of the form:</p>
+<div class="highlight-python"><pre>palette=&lt;image&gt;</pre>
+</div>
+<p>where <tt class="docutils literal"><span class="pre">&lt;image&gt;</span></tt> is the filename of the palette image (without the extension).  To force a web-safe palette, use the syntax <tt class="docutils literal"><span class="pre">palette=safe</span></tt>.
+For more information see the tutorial on <a class="reference internal" href="../../tutorials/palettedimage/palettedimage.html#tutorials-palettedimages"><em>Paletted Images</em></a></p>
+</div>
+<div class="section" id="propertyname">
+<h2>propertyName<a class="headerlink" href="#propertyname" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">propertyName</span></tt> parameter specifies which properties are included in the response of the <tt class="docutils literal"><span class="pre">GetFeatureInfo</span></tt> operation.
+The syntax is the same as in the WFS <tt class="docutils literal"><span class="pre">GetFeature</span></tt> operation.
+For a request for a single layer the syntax is:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">propertyName</span><span class="o">=</span><span class="n">name1</span><span class="p">,</span><span class="o">...</span><span class="p">,</span><span class="n">nameN</span>
+</pre></div>
+</div>
+<p>For multiple layers the syntax is:</p>
+<div class="highlight-python"><pre>propertyName=(nameLayer11,...,nameLayer1N)...(name1LayerN,...,nameNLayerN)</pre>
+</div>
+<p>The nature of the properties depends on the layer type:</p>
+<ul class="simple">
+<li>For vector layers the names specify the feature attributes.</li>
+<li>For raster layers the names specify the bands.</li>
+<li>For cascaded WMS layers the names specify the GML properties to be returned by the remote server.</li>
+</ul>
+</div>
+<div class="section" id="tiled">
+<h2>tiled<a class="headerlink" href="#tiled" title="Permalink to this headline">¶</a></h2>
+<p>Meta-tiling prevents issues with duplicated labels when using a tiled client such as OpenLayers.
+When meta-tiling is used, images are rendered and then split into smaller tiles (by default in a 3x3 pattern) before being served.
+In order for meta-tiling to work, the tile size <em>must</em> be set to 256x256 pixels,
+and the <tt class="docutils literal"><span class="pre">tiled</span></tt> and <tt class="docutils literal"><span class="pre">tilesorigin</span></tt> parameters must be specified.</p>
+<p>The <tt class="docutils literal"><span class="pre">tiled</span></tt> parameter controls whether meta-tiling is used.
+The syntax is:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">tiled</span><span class="o">=</span><span class="p">[</span><span class="n">yes</span><span class="o">|</span><span class="n">no</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>To invoke meta-tiling use <tt class="docutils literal"><span class="pre">tiled=yes</span></tt>.</p>
+</div>
+<div class="section" id="tilesorigin">
+<h2>tilesorigin<a class="headerlink" href="#tilesorigin" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">tilesorigin</span></tt> parameter is also required for meta-tiling.
+The syntax is:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">tilesorigin</span><span class="o">=</span><span class="n">x</span><span class="p">,</span><span class="n">y</span>
+</pre></div>
+</div>
+<p>where <tt class="docutils literal"><span class="pre">x</span></tt> and <tt class="docutils literal"><span class="pre">y</span></tt> are the coordinates of the lower left corner (the &#8220;origin&#8221;) of the tile grid system.</p>
+<div class="section" id="openlayers-example">
+<h3>OpenLayers example<a class="headerlink" href="#openlayers-example" title="Permalink to this headline">¶</a></h3>
+<p>In OpenLayers, a good way to specify the <tt class="docutils literal"><span class="pre">tilesorigin</span></tt> is to reference the map  extents directly.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">If the map extents are modified dynamically, the <tt class="docutils literal"><span class="pre">tilesorigin</span></tt> of each meta-tiled layer must be updated accordingly.</p>
+</div>
+<p>The following code shows how to specify the meta-tiling parameters:</p>
+<div class="highlight-javascript"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21</pre></div></td><td class="code"><div class="highlight"><pre> <span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+     <span class="p">...</span>
+     <span class="nx">maxExtent</span><span class="o">:</span> <span class="k">new</span> <span class="nx">OpenLayers</span><span class="p">.</span><span class="nx">Bounds</span><span class="p">(</span><span class="o">-</span><span class="mi">180</span><span class="p">,</span> <span class="o">-</span><span class="mi">90</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">90</span><span class="p">),</span>
+     <span class="p">...</span>
+ <span class="p">};</span>
+ <span class="nx">map</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">OpenLayers</span><span class="p">.</span><span class="nx">Map</span><span class="p">(</span><span class="s1">&#39;map&#39;</span><span class="p">,</span> <span class="nx">options</span><span class="p">);</span>
+
+ <span class="nx">tiled</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">OpenLayers</span><span class="p">.</span><span class="nx">Layer</span><span class="p">.</span><span class="nx">WMS</span><span class="p">(</span>
+     <span class="s2">&quot;Layer name&quot;</span><span class="p">,</span> <span class="s2">&quot;http://localhost:8080/geoserver/wms&quot;</span><span class="p">,</span>
+     <span class="p">{</span>
+         <span class="nx">srs</span><span class="o">:</span> <span class="s1">&#39;EPSG:4326&#39;</span><span class="p">,</span>
+         <span class="nx">width</span><span class="o">:</span> <span class="mi">391</span><span class="p">,</span>
+         <span class="nx">styles</span><span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+         <span class="nx">height</span><span class="o">:</span> <span class="mi">550</span><span class="p">,</span>
+         <span class="nx">layers</span><span class="o">:</span> <span class="s1">&#39;layerName&#39;</span><span class="p">,</span>
+         <span class="nx">format</span><span class="o">:</span> <span class="s1">&#39;image/png&#39;</span><span class="p">,</span>
+         <span class="nx">tiled</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+         <span class="nx">tilesorigin</span><span class="o">:</span> <span class="p">[</span><span class="nx">map</span><span class="p">.</span><span class="nx">maxExtent</span><span class="p">.</span><span class="nx">left</span><span class="p">,</span> <span class="nx">map</span><span class="p">.</span><span class="nx">maxExtent</span><span class="p">.</span><span class="nx">bottom</span><span class="p">]</span>
+     <span class="p">},</span>
+     <span class="p">{</span><span class="nx">buffer</span><span class="o">:</span> <span class="mi">0</span><span class="p">}</span>
+ <span class="p">);</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="outputformats.html" title="previous chapter">WMS output formats</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="configuration.html" title="next chapter">WMS configuration</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">WMS vendor parameters</a><ul>
+<li><a class="reference internal" href="#angle">angle</a></li>
+<li><a class="reference internal" href="#buffer">buffer</a></li>
+<li><a class="reference internal" href="#cql-filter">cql_filter</a></li>
+<li><a class="reference internal" href="#env">env</a></li>
+<li><a class="reference internal" href="#featureid">featureid</a></li>
+<li><a class="reference internal" href="#filter">filter</a></li>
+<li><a class="reference internal" href="#format-options">format_options</a></li>
+<li><a class="reference internal" href="#kmattr">kmattr</a></li>
+<li><a class="reference internal" href="#kmscore">kmscore</a></li>
+<li><a class="reference internal" href="#maxfeatures-and-startindex">maxFeatures and startIndex</a></li>
+<li><a class="reference internal" href="#namespace">namespace</a></li>
+<li><a class="reference internal" href="#palette">palette</a></li>
+<li><a class="reference internal" href="#propertyname">propertyName</a></li>
+<li><a class="reference internal" href="#tiled">tiled</a></li>
+<li><a class="reference internal" href="#tilesorigin">tilesorigin</a><ul>
+<li><a class="reference internal" href="#openlayers-example">OpenLayers example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="outputformats.html" title="previous chapter">WMS output formats</a></li>
+            <li>Next: <a href="configuration.html" title="next chapter">WMS configuration</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/services/wms/vendor.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

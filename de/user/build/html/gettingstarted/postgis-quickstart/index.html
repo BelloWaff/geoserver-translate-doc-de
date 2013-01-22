@@ -1,0 +1,318 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Publishing a PostGIS Table &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../../index.html" />
+      <link rel="up" title="Getting Started" href="../index.html" />
+      <link rel="next" title="Styling a Map" href="../styling-quickstart/index.html" />
+      <link rel="prev" title="Publishing a Shapefile" href="../shapefile-quickstart/index.html" />
+</head>
+<body class="gettingstarted/postgis-quickstart/index">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Getting Started</a> &raquo;</li>
+  <li>Publishing a PostGIS Table</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="../styling-quickstart/index.html" title="Styling a Map"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="../shapefile-quickstart/index.html" title="Publishing a Shapefile"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="publishing-a-postgis-table">
+<span id="postgis-quickstart"></span><h1>Publishing a PostGIS Table<a class="headerlink" href="#publishing-a-postgis-table" title="Permalink to this headline">¶</a></h1>
+<p>This tutorial walks through the steps of publishing a PostGIS table with GeoServer.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This tutorial assumes that GeoServer is running at <a class="reference external" href="http://localhost:8080/geoserver">http://localhost:8080/geoserver</a>.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This tutorial assumes PostGIS has been previously installed on the system.</p>
+</div>
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Download the zip file <a class="reference download internal" href="../../_downloads/nyc_buildings.zip"><tt class="xref download docutils literal"><span class="pre">nyc_buildings.zip</span></tt></a>. It contains a PostGIS dump of a dataset of buildings from New York City that will be used during in this tutorial.</p>
+</li>
+<li><p class="first">Create a PostGIS database called &#8220;nyc&#8221;. This can be done with the following command line:</p>
+<div class="highlight-python"><pre>createdb -T template_postgis nyc</pre>
+</div>
+<p>If the PostGIS install is not set up with the &#8220;postgis_template&#8221; then the following sequence of commands will perform the equivalent:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="o">...</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Unzip <tt class="docutils literal"><span class="pre">nyc_buildings.zip</span></tt> to some location on the file system. This will result in the file <tt class="docutils literal"><span class="pre">nyc_buildings.sql</span></tt>.</p>
+</li>
+<li><p class="first">Import <tt class="docutils literal"><span class="pre">nyc_buildings.sql</span></tt> into the <tt class="docutils literal"><span class="pre">nyc</span></tt> database:</p>
+<div class="highlight-python"><pre>psql -f nyc_buildings.sql nyc</pre>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="create-a-data-store">
+<h2>Create a Data Store<a class="headerlink" href="#create-a-data-store" title="Permalink to this headline">¶</a></h2>
+<p>The first step is to create a <em>data store</em> for the PostGIS database &#8220;nyc&#8221;. The data store tells GeoServer how to connect to the database.</p>
+<blockquote>
+<div><ol class="arabic">
+<li><p class="first">In a web browser navigate to <a class="reference external" href="http://localhost:8080/geoserver">http://localhost:8080/geoserver</a>.</p>
+</li>
+<li><p class="first">Navigate to <em class="menuselection">Data‣Stores</em>.</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../_images/datastores.png" src="../../_images/datastores.png" />
+<p class="caption"><em>Adding a New Data Source</em></p>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">Create a new data store by clicking the <tt class="docutils literal"><span class="pre">PostGIS</span> <span class="pre">NG</span></tt> link.</p>
+</li>
+<li><p class="first">Enter the <em class="guilabel">Basic Store Info</em>.  Keep the default <em class="guilabel">Workspace</em>, and enter the <em class="guilabel">Data Source Name</em> as <tt class="docutils literal"><span class="pre">nyc_buildings</span></tt> and a brief <em class="guilabel">Description</em>.</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../_images/basicStore.png" src="../../_images/basicStore.png" />
+<p class="caption"><em>Basic Store Info</em></p>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">Specify the PostGIS database <em class="guilabel">Connection Parameters</em></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><p class="first last"><tt class="docutils literal"><span class="pre">dbtype</span></tt></p>
+</td>
+<td><p class="first last">postgisng</p>
+</td>
+</tr>
+<tr class="row-even"><td><p class="first last"><tt class="docutils literal"><span class="pre">host</span></tt></p>
+</td>
+<td><p class="first last">localhost</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first last"><tt class="docutils literal"><span class="pre">post</span></tt></p>
+</td>
+<td><p class="first last">5432</p>
+</td>
+</tr>
+<tr class="row-even"><td><p class="first last"><tt class="docutils literal"><span class="pre">database</span></tt></p>
+</td>
+<td><p class="first last">nyc</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first last"><tt class="docutils literal"><span class="pre">schema</span></tt></p>
+</td>
+<td><p class="first last">public</p>
+</td>
+</tr>
+<tr class="row-even"><td><p class="first last"><tt class="docutils literal"><span class="pre">user</span></tt></p>
+</td>
+<td><p class="first last">postgres</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first last"><tt class="docutils literal"><span class="pre">passwd</span></tt></p>
+</td>
+<td><p class="first last">enter postgres password</p>
+</td>
+</tr>
+<tr class="row-even"><td><p class="first last"><tt class="docutils literal"><span class="pre">validate</span> <span class="pre">connections</span></tt></p>
+</td>
+<td><p class="first last">enable with check box</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <strong>username</strong> and <strong>password</strong> parameters are specific to the user who created the postgis database. Depending on how PostgreSQL is configured the password parameter may be unnecessary.</p>
+</div>
+<div class="figure align-center">
+<img alt="../../_images/connectionParameters.png" src="../../_images/connectionParameters.png" />
+<p class="caption"><em>Connection Parameters</em></p>
+</div>
+</li>
+<li><p class="first">Click <em class="guilabel">Save</em>.</p>
+</li>
+</ol>
+</div></blockquote>
+</div>
+<div class="section" id="create-a-layer">
+<h2>Create a Layer<a class="headerlink" href="#create-a-layer" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ol class="arabic">
+<li><p class="first">Navigate to <em class="menuselection">Data‣Layers</em>.</p>
+</li>
+<li><p class="first">Click <em class="guilabel">Add a new resource</em>.</p>
+</li>
+<li><p class="first">From the <em class="guilabel">New Layer chooser</em> drop-down menu, select <tt class="docutils literal"><span class="pre">cite:nyc_buidings</span></tt>.</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../_images/newlayerchooser.png" src="../../_images/newlayerchooser.png" />
+<p class="caption"><em>New Layer drop down selection</em></p>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">On the resulting layer row, select the layer name <tt class="docutils literal"><span class="pre">nyc_buildings</span></tt>.</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../_images/layerrow.png" src="../../_images/layerrow.png" />
+<p class="caption"><em>New Layer row</em></p>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">The <em class="guilabel">Edit Layer</em> page defines the Data and Publishing parameters for a layer. Enter a short <em class="guilabel">Title</em> and an <em class="guilabel">Abstract</em> for the <tt class="docutils literal"><span class="pre">nyc_buildings</span></tt> layer.</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../_images/basicInfo.png" src="../../_images/basicInfo.png" />
+<p class="caption"><em>Basic Resource Info</em></p>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">Generate the layer&#8217;s <em>bounding boxes</em> by clicking the <em class="guilabel">Compute from data</em> and then <em class="guilabel">Compute from Native bounds.</em></p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../_images/boundingbox.png" src="../../_images/boundingbox.png" />
+<p class="caption"><em>Generate Bounding Boxes</em></p>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">Set the layer&#8217;s style by switching to the <em class="guilabel">Publishing</em> tab.</p>
+</li>
+<li><p class="first">Select the <em class="guilabel">polygon</em> style from the <em class="guilabel">Default Style</em> drop down list.</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../_images/style.png" src="../../_images/style.png" />
+<p class="caption"><em>Select Default Style</em></p>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">Finalize the layer configuration by scrolling to the bottom of the page and clicking <em class="guilabel">Save</em>.</p>
+</li>
+</ol>
+</div></blockquote>
+</div>
+<div class="section" id="preview-the-layer">
+<h2>Preview the Layer<a class="headerlink" href="#preview-the-layer" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ol class="arabic">
+<li><p class="first">In order to verify that the <tt class="docutils literal"><span class="pre">nyc_buildings</span></tt> layer is published correctly you can preview the layer.  Navigate to the <em class="guilabel">Layer Preview</em> screen and find the <tt class="docutils literal"><span class="pre">cite:nyc_buildings</span></tt> layer.</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../_images/layer-preview.png" src="../../_images/layer-preview.png" />
+<p class="caption"><em>Layer Preview</em></p>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">Click on the <em class="guilabel">OpenLayers</em> link in the <em class="guilabel">Common Formats</em> column.</p>
+</li>
+<li><p class="first">Success! An OpenLayers map loads in a new page and displays the layer data with the default polygon style. You can use the Preview Map to zoom and pan around the dataset, as well as display the attributes of features.</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../_images/openlayers.png" src="../../_images/openlayers.png" />
+<p class="caption"><em>Preview map of nyc_buildings</em></p>
+</div>
+</div></blockquote>
+</li>
+</ol>
+</div></blockquote>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="../shapefile-quickstart/index.html" title="previous chapter">Publishing a Shapefile</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="../styling-quickstart/index.html" title="next chapter">Styling a Map</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">Publishing a PostGIS Table</a><ul>
+<li><a class="reference internal" href="#getting-started">Getting Started</a></li>
+<li><a class="reference internal" href="#create-a-data-store">Create a Data Store</a></li>
+<li><a class="reference internal" href="#create-a-layer">Create a Layer</a></li>
+<li><a class="reference internal" href="#preview-the-layer">Preview the Layer</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="../shapefile-quickstart/index.html" title="previous chapter">Publishing a Shapefile</a></li>
+            <li>Next: <a href="../styling-quickstart/index.html" title="next chapter">Styling a Map</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/gettingstarted/postgis-quickstart/index.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

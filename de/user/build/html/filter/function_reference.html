@@ -1,0 +1,832 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Filter Function Reference &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../_static/jquery.js"></script>
+  <script type="text/javascript" src="../_static/doctools.js"></script>
+  <script type="text/javascript" src="../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../index.html" />
+      <link rel="up" title="Filtering in GeoServer" href="index.html" />
+      <link rel="next" title="Styling" href="../styling/index.html" />
+      <link rel="prev" title="Filter functions" href="function.html" />
+</head>
+<body class="filter/function_reference">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Filtering in GeoServer</a> &raquo;</li>
+  <li>Filter Function Reference</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="../styling/index.html" title="Styling"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="function.html" title="Filter functions"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="filter-function-reference">
+<span id="id1"></span><h1>Filter Function Reference<a class="headerlink" href="#filter-function-reference" title="Permalink to this headline">¶</a></h1>
+<p>This reference describes all filter functions that can be used in WFS/WMS filtering or in SLD expressions.</p>
+<p>The list of functions available on a Geoserver instance can be determined by
+browsing to <a class="reference external" href="http://localhost:8080/geoserver/wfs?request=GetCapabilities">http://localhost:8080/geoserver/wfs?request=GetCapabilities</a>
+and searching for <tt class="docutils literal"><span class="pre">ogc:FunctionNames</span></tt> in the returned XML.
+If a function is described in the Capabilities document but is not in this reference,
+then it might mean that the function cannot be used for filtering,
+or that it is new and has not been documented.  Ask for details on the user mailing list.</p>
+<p>Unless otherwise specified, none of the filter functions in this reference are understood natively by the data stores, and thus expressions using them will be evaluated in-memory.</p>
+<div class="section" id="function-argument-type-reference">
+<h2>Function argument type reference<a class="headerlink" href="#function-argument-type-reference" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Type</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td>Double</td>
+<td>Floating point number, 8 bytes, IEEE 754. Ranges from 4.94065645841246544e-324d to 1.79769313486231570e+308d</td>
+</tr>
+<tr class="row-odd"><td>Float</td>
+<td>Floating point number, 4 bytes, IEEE 754. Ranges from 1.40129846432481707e-45 to 3.40282346638528860e+38. Smaller range and less accurate than Double.</td>
+</tr>
+<tr class="row-even"><td>Integer</td>
+<td>Integer number, ranging from -2,147,483,648 to 2,147,483,647</td>
+</tr>
+<tr class="row-odd"><td>Long</td>
+<td>Integer number, ranging from -9,223,372,036,854,775,808 to +9,223,372,036,854,775,807</td>
+</tr>
+<tr class="row-even"><td>Number</td>
+<td>A numeric value of any type</td>
+</tr>
+<tr class="row-odd"><td>Object</td>
+<td>A value of any type</td>
+</tr>
+<tr class="row-even"><td>String</td>
+<td>A sequence of characters</td>
+</tr>
+<tr class="row-odd"><td>Timestamp</td>
+<td>Date and time information</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="comparison-functions">
+<h2>Comparison Functions<a class="headerlink" href="#comparison-functions" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="25%" />
+<col width="55%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Name</strong></td>
+<td><strong>Arguments</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td>between</td>
+<td><tt class="docutils literal"><span class="pre">num</span></tt>:Number, <tt class="docutils literal"><span class="pre">low</span></tt>:Number,``high``:Number</td>
+<td>returns true if <tt class="docutils literal"><span class="pre">low</span></tt> &lt;= <tt class="docutils literal"><span class="pre">num</span></tt> &lt;= <tt class="docutils literal"><span class="pre">high</span></tt></td>
+</tr>
+<tr class="row-odd"><td>equalTo</td>
+<td><tt class="docutils literal"><span class="pre">a</span></tt>:Object, <tt class="docutils literal"><span class="pre">b</span></tt>:Object</td>
+<td>Can be used to compare for equality two numbers, two strings, two dates, and so on</td>
+</tr>
+<tr class="row-even"><td>greaterEqualThan</td>
+<td><tt class="docutils literal"><span class="pre">x</span></tt>:Object, <tt class="docutils literal"><span class="pre">y</span></tt>:Object</td>
+<td>Returns true if <tt class="docutils literal"><span class="pre">x</span></tt> &gt;= <tt class="docutils literal"><span class="pre">y</span></tt>. Parameters can be either numbers or strings (in the second case lexicographic ordering is used)</td>
+</tr>
+<tr class="row-odd"><td>greaterThan</td>
+<td><tt class="docutils literal"><span class="pre">x</span></tt>:Object, <tt class="docutils literal"><span class="pre">y</span></tt>:Object</td>
+<td>Returns true if <tt class="docutils literal"><span class="pre">x</span></tt> &gt; <tt class="docutils literal"><span class="pre">y</span></tt>. Parameters can be either numbers or strings (in the second case lexicographic ordering is used)</td>
+</tr>
+<tr class="row-even"><td>in2, in3, in4, in5, in6, in7, in8, in9, in10</td>
+<td><tt class="docutils literal"><span class="pre">candidate</span></tt>:Object, <tt class="docutils literal"><span class="pre">v1</span></tt>:Object, ..., <tt class="docutils literal"><span class="pre">v9</span></tt>:Object</td>
+<td>Returns true if <tt class="docutils literal"><span class="pre">candidate</span></tt> is equal to one of the <tt class="docutils literal"><span class="pre">v1</span></tt>, ..., <tt class="docutils literal"><span class="pre">v9</span></tt> values. Use the appropriate function name depending on how many arguments you need to pass.</td>
+</tr>
+<tr class="row-odd"><td>isLike</td>
+<td><tt class="docutils literal"><span class="pre">string</span></tt>:String, <tt class="docutils literal"><span class="pre">pattern</span></tt>:String</td>
+<td>Returns true if the string matches the specified pattern. For the full syntax of the pattern specification see the <a class="reference external" href="http://java.sun.com/javase/6/docs/api/java/util/regex/Pattern.html">Java Pattern class javadocs</a></td>
+</tr>
+<tr class="row-even"><td>isNull</td>
+<td><tt class="docutils literal"><span class="pre">obj</span></tt>:Object</td>
+<td>Returns true the passed parameter is <tt class="docutils literal"><span class="pre">null</span></tt>, false otherwise</td>
+</tr>
+<tr class="row-odd"><td>lessThan</td>
+<td><tt class="docutils literal"><span class="pre">x</span></tt>:Object, <tt class="docutils literal"><span class="pre">y</span></tt>:Object</td>
+<td>Returns true if <tt class="docutils literal"><span class="pre">x</span></tt> &lt; <tt class="docutils literal"><span class="pre">y</span></tt>. Parameters can be either numbers or strings (in the second case lexicographic ordering is used</td>
+</tr>
+<tr class="row-even"><td>lessEqualThan</td>
+<td><tt class="docutils literal"><span class="pre">x</span></tt>:Object, <tt class="docutils literal"><span class="pre">y</span></tt>:Object</td>
+<td>Returns true if <tt class="docutils literal"><span class="pre">x</span></tt> &lt;= <tt class="docutils literal"><span class="pre">y</span></tt>. Parameters can be either numbers or strings (in the second case lexicographic ordering is used</td>
+</tr>
+<tr class="row-odd"><td>not</td>
+<td><tt class="docutils literal"><span class="pre">bool</span></tt>:Boolean</td>
+<td>Returns the negation of <tt class="docutils literal"><span class="pre">bool</span></tt></td>
+</tr>
+<tr class="row-even"><td>notEqual</td>
+<td><tt class="docutils literal"><span class="pre">x</span></tt>:Object, <tt class="docutils literal"><span class="pre">y</span></tt>:Object</td>
+<td>Returns true if <tt class="docutils literal"><span class="pre">x</span></tt> and <tt class="docutils literal"><span class="pre">y</span></tt> are equal, false otherwise</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="control-functions">
+<h2>Control Functions<a class="headerlink" href="#control-functions" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="25%" />
+<col width="55%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Name</strong></td>
+<td><strong>Arguments</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td>if_then_else</td>
+<td><tt class="docutils literal"><span class="pre">condition</span></tt>:Boolean, <tt class="docutils literal"><span class="pre">x</span></tt>:Object, <tt class="docutils literal"><span class="pre">y</span></tt>: Object</td>
+<td>Returns <tt class="docutils literal"><span class="pre">x</span></tt> if the condition is true, <tt class="docutils literal"><span class="pre">y</span></tt> otherwise</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="feature-functions">
+<h2>Feature functions<a class="headerlink" href="#feature-functions" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="25%" />
+<col width="55%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Name</strong></td>
+<td><strong>Arguments</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td>id</td>
+<td><tt class="docutils literal"><span class="pre">feature</span></tt>:Feature</td>
+<td>returns the identifier of the feature</td>
+</tr>
+<tr class="row-odd"><td>PropertyExists</td>
+<td><tt class="docutils literal"><span class="pre">f</span></tt>:Feature, <tt class="docutils literal"><span class="pre">propertyName</span></tt>:String</td>
+<td>Returns <tt class="docutils literal"><span class="pre">true</span></tt> if <tt class="docutils literal"><span class="pre">f</span></tt> has a property named <tt class="docutils literal"><span class="pre">propertyName</span></tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="spatial-relationship-functions">
+<h2>Spatial Relationship Functions<a class="headerlink" href="#spatial-relationship-functions" title="Permalink to this headline">¶</a></h2>
+<p>For more information about the precise meaning of the spatial relationships consult the <a class="reference external" href="http://www.opengeospatial.org/standards/sfs">OGC Simple Feature Specification for SQL</a></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="25%" />
+<col width="55%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Name</strong></td>
+<td><strong>Arguments</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td>contains</td>
+<td><tt class="docutils literal"><span class="pre">a</span></tt>:Geometry, <tt class="docutils literal"><span class="pre">b</span></tt>:Geometry</td>
+<td>Returns true if the geometry <tt class="docutils literal"><span class="pre">a</span></tt> contains <tt class="docutils literal"><span class="pre">b</span></tt></td>
+</tr>
+<tr class="row-odd"><td>crosses</td>
+<td><tt class="docutils literal"><span class="pre">a</span></tt>:Geometry, <tt class="docutils literal"><span class="pre">b</span></tt>:Geometry</td>
+<td>Returns true if <tt class="docutils literal"><span class="pre">a</span></tt> crosses <tt class="docutils literal"><span class="pre">b</span></tt></td>
+</tr>
+<tr class="row-even"><td>disjoint</td>
+<td><tt class="docutils literal"><span class="pre">a</span></tt>:Geometry, <tt class="docutils literal"><span class="pre">b</span></tt>:Geometry</td>
+<td>Returns true if the two geometries are disjoint, false otherwise</td>
+</tr>
+<tr class="row-odd"><td>equalsExact</td>
+<td><tt class="docutils literal"><span class="pre">a</span></tt>:Geometry, <tt class="docutils literal"><span class="pre">b</span></tt>:Geometry</td>
+<td>Returns true if the two geometries are exactly equal, same coordinates in the same order</td>
+</tr>
+<tr class="row-even"><td>equalsExactTolerance</td>
+<td><tt class="docutils literal"><span class="pre">a</span></tt>:Geometry, <tt class="docutils literal"><span class="pre">b</span></tt>:Geometry, <tt class="docutils literal"><span class="pre">tol</span></tt>:Double</td>
+<td>Returns true if the two geometries are exactly equal, same coordinates in the same order, allowing for a <tt class="docutils literal"><span class="pre">tol</span></tt> distance in the corresponding points</td>
+</tr>
+<tr class="row-odd"><td>intersects</td>
+<td><tt class="docutils literal"><span class="pre">a</span></tt>:Geometry, <tt class="docutils literal"><span class="pre">b</span></tt>:Geometry</td>
+<td>Returns true if <tt class="docutils literal"><span class="pre">a</span></tt> intersects <tt class="docutils literal"><span class="pre">b</span></tt></td>
+</tr>
+<tr class="row-even"><td>isWithinDistance</td>
+<td><tt class="docutils literal"><span class="pre">a</span></tt>: Geometry, <tt class="docutils literal"><span class="pre">b</span></tt>:Geometry, <tt class="docutils literal"><span class="pre">distance</span></tt>: Double</td>
+<td>Returns true if the distance between <tt class="docutils literal"><span class="pre">a</span></tt> and <tt class="docutils literal"><span class="pre">b</span></tt> is less than <tt class="docutils literal"><span class="pre">distance</span></tt> (measured as an euclidean distance)</td>
+</tr>
+<tr class="row-odd"><td>overlaps</td>
+<td><tt class="docutils literal"><span class="pre">a</span></tt>: Geometry, <tt class="docutils literal"><span class="pre">b</span></tt>:Geometry</td>
+<td>Returns true <tt class="docutils literal"><span class="pre">a</span></tt> overlaps with <tt class="docutils literal"><span class="pre">b</span></tt></td>
+</tr>
+<tr class="row-even"><td>relate</td>
+<td><tt class="docutils literal"><span class="pre">a</span></tt>: Geometry, <tt class="docutils literal"><span class="pre">b</span></tt>:Geometry</td>
+<td>Returns the DE-9IM intersection matrix for <tt class="docutils literal"><span class="pre">a</span></tt> and <tt class="docutils literal"><span class="pre">b</span></tt></td>
+</tr>
+<tr class="row-odd"><td>relatePattern</td>
+<td><tt class="docutils literal"><span class="pre">a</span></tt>: Geometry, <tt class="docutils literal"><span class="pre">b</span></tt>:Geometry, <tt class="docutils literal"><span class="pre">pattern</span></tt>:String</td>
+<td>Returns true if the DE-9IM intersection matrix for <tt class="docutils literal"><span class="pre">a</span></tt> and <tt class="docutils literal"><span class="pre">b</span></tt> matches the specified pattern</td>
+</tr>
+<tr class="row-even"><td>touches</td>
+<td><tt class="docutils literal"><span class="pre">a</span></tt>: Geometry, <tt class="docutils literal"><span class="pre">b</span></tt>: Geometry</td>
+<td>Returns true if <tt class="docutils literal"><span class="pre">a</span></tt> touches <tt class="docutils literal"><span class="pre">b</span></tt> according to the SQL simple feature specification rules</td>
+</tr>
+<tr class="row-odd"><td>within</td>
+<td><tt class="docutils literal"><span class="pre">a</span></tt>: Geometry, <tt class="docutils literal"><span class="pre">b</span></tt>:Geometry</td>
+<td>Returns true is fully contained inside <tt class="docutils literal"><span class="pre">b</span></tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="geometric-functions">
+<h2>Geometric Functions<a class="headerlink" href="#geometric-functions" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="25%" />
+<col width="55%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Name</strong></td>
+<td><strong>Arguments</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td>area</td>
+<td><tt class="docutils literal"><span class="pre">geometry</span></tt>:Geometry</td>
+<td>The area of the specified geometry. Works in a Cartesian plane, the result will be in the same unit of measure as the geometry coordinates (which also means the results won&#8217;t make any sense for geographic data)</td>
+</tr>
+<tr class="row-odd"><td>boundary</td>
+<td><tt class="docutils literal"><span class="pre">geometry</span></tt>:Geometry</td>
+<td>Returns the boundary of a geometry</td>
+</tr>
+<tr class="row-even"><td>boundaryDimension</td>
+<td><tt class="docutils literal"><span class="pre">geometry</span></tt>:Geometry</td>
+<td>Returns the number of dimensions of the geometry boundary</td>
+</tr>
+<tr class="row-odd"><td>buffer</td>
+<td><tt class="docutils literal"><span class="pre">geometry</span></tt>:Geometry, <tt class="docutils literal"><span class="pre">distance</span></tt>:Double</td>
+<td>Returns the buffered area around the geometry using the specified distance</td>
+</tr>
+<tr class="row-even"><td>bufferWithSegments</td>
+<td><tt class="docutils literal"><span class="pre">geometry</span></tt>:Geometry, <tt class="docutils literal"><span class="pre">distance</span></tt>:Double, <tt class="docutils literal"><span class="pre">segments</span></tt>:Integer</td>
+<td>Returns the buffered area around the geometry using the specified distance and using the specified number of segments to represent a quadrant of a circle.</td>
+</tr>
+<tr class="row-odd"><td>bufferWithSegments</td>
+<td><tt class="docutils literal"><span class="pre">geometry</span></tt>:Geometry, <tt class="docutils literal"><span class="pre">distance</span></tt>:Double, <tt class="docutils literal"><span class="pre">segments</span></tt>:Integer</td>
+<td>Returns the buffered area around the geometry using the specified distance and using the specified number of segments to represent a quadrant of a circle.</td>
+</tr>
+<tr class="row-even"><td>centroid</td>
+<td><tt class="docutils literal"><span class="pre">geometry</span></tt>:Geometry</td>
+<td>Returns the centroid of the geometry. Can be often used as a label point for polygons, though there is no guarantee it will actually lie inside the geometry</td>
+</tr>
+<tr class="row-odd"><td>convexHull</td>
+<td><tt class="docutils literal"><span class="pre">geometry</span></tt>:Geometry</td>
+<td>Returns the convex hull of the specified geometry</td>
+</tr>
+<tr class="row-even"><td>difference</td>
+<td><tt class="docutils literal"><span class="pre">a</span></tt>:Geometry, <tt class="docutils literal"><span class="pre">b</span></tt>:Geometry</td>
+<td>Returns all the points that sit in <tt class="docutils literal"><span class="pre">a</span></tt> but not in <tt class="docutils literal"><span class="pre">b</span></tt></td>
+</tr>
+<tr class="row-odd"><td>dimension</td>
+<td><tt class="docutils literal"><span class="pre">a</span></tt>:Geometry</td>
+<td>Returns the dimension of the specified geometry</td>
+</tr>
+<tr class="row-even"><td>distance</td>
+<td><tt class="docutils literal"><span class="pre">a</span></tt>:Geometry, <tt class="docutils literal"><span class="pre">b</span></tt>:Geometry</td>
+<td>Returns the euclidean distance between the two geometries</td>
+</tr>
+<tr class="row-odd"><td>endPoint</td>
+<td><tt class="docutils literal"><span class="pre">line</span></tt>:LineString</td>
+<td>Returns the end point of the line</td>
+</tr>
+<tr class="row-even"><td>envelope</td>
+<td><tt class="docutils literal"><span class="pre">geometry</span></tt>:geometry</td>
+<td>Returns the polygon representing the envelope of the geometry, that is, the minimum rectangle with sides parallels to the axis containing it</td>
+</tr>
+<tr class="row-odd"><td>exteriorRing</td>
+<td><tt class="docutils literal"><span class="pre">poly</span></tt>:Polygon</td>
+<td>Returns the exterior ring of the specified polygon</td>
+</tr>
+<tr class="row-even"><td>geometryType</td>
+<td><tt class="docutils literal"><span class="pre">geometry</span></tt>:Geometry</td>
+<td>Returns the type of the geometry as a string. May be <tt class="docutils literal"><span class="pre">Point</span></tt>, <tt class="docutils literal"><span class="pre">MultiPoint</span></tt>, <tt class="docutils literal"><span class="pre">LineString</span></tt>, <tt class="docutils literal"><span class="pre">LinearRing</span></tt>, <tt class="docutils literal"><span class="pre">MultiLineString</span></tt>, <tt class="docutils literal"><span class="pre">Polygon</span></tt>, <tt class="docutils literal"><span class="pre">MultiPoligon</span></tt>, <tt class="docutils literal"><span class="pre">GeometryCollection</span></tt></td>
+</tr>
+<tr class="row-odd"><td>geomFromWKT</td>
+<td><tt class="docutils literal"><span class="pre">wkt</span></tt>:String</td>
+<td>Returns the <tt class="docutils literal"><span class="pre">Geometry</span></tt> represented in the Well Known Text format contained in the <tt class="docutils literal"><span class="pre">wkt</span></tt> parameter</td>
+</tr>
+<tr class="row-even"><td>geomLength</td>
+<td><tt class="docutils literal"><span class="pre">geometry</span></tt>:Geometry</td>
+<td>Returns the length/perimeter of this geometry (computed in Cartesian space)</td>
+</tr>
+<tr class="row-odd"><td>getGeometryN</td>
+<td><tt class="docutils literal"><span class="pre">collection</span></tt>:GeometryCollection, <tt class="docutils literal"><span class="pre">n</span></tt>:Integer</td>
+<td>Returns the n-th geometry inside the collection</td>
+</tr>
+<tr class="row-even"><td>getX</td>
+<td><tt class="docutils literal"><span class="pre">p</span></tt>:Point</td>
+<td>Returns the <tt class="docutils literal"><span class="pre">x</span></tt> ordinate of <tt class="docutils literal"><span class="pre">p</span></tt></td>
+</tr>
+<tr class="row-odd"><td>getY</td>
+<td><tt class="docutils literal"><span class="pre">p</span></tt>:Point</td>
+<td>Returns the <tt class="docutils literal"><span class="pre">y</span></tt> ordinate of <tt class="docutils literal"><span class="pre">p</span></tt></td>
+</tr>
+<tr class="row-even"><td>getZ</td>
+<td><tt class="docutils literal"><span class="pre">p</span></tt>:Point</td>
+<td>Returns the <tt class="docutils literal"><span class="pre">z</span></tt> ordinate of <tt class="docutils literal"><span class="pre">p</span></tt></td>
+</tr>
+<tr class="row-odd"><td>interiorPoint</td>
+<td><tt class="docutils literal"><span class="pre">geometry</span></tt>:Geometry</td>
+<td>Returns a point that is either interior to the geometry, when possible, or sitting on its boundary, otherwise</td>
+</tr>
+<tr class="row-even"><td>interiorRingN</td>
+<td><tt class="docutils literal"><span class="pre">polyg</span></tt>:Polygon, <tt class="docutils literal"><span class="pre">n</span></tt>:Integer</td>
+<td>Returns the n-th interior ring of the polygon</td>
+</tr>
+<tr class="row-odd"><td>intersection</td>
+<td><tt class="docutils literal"><span class="pre">a</span></tt>:Geometry, <tt class="docutils literal"><span class="pre">b</span></tt>:Geometry</td>
+<td>Returns the intersection between <tt class="docutils literal"><span class="pre">a</span></tt> and <tt class="docutils literal"><span class="pre">b</span></tt>. The intersection result can be anything including a geometry collection of heterogeneous, if the result is empty, it will be represented by an empty collection.</td>
+</tr>
+<tr class="row-even"><td>isClosed</td>
+<td><tt class="docutils literal"><span class="pre">line</span></tt>: LineString</td>
+<td>Returns true if <tt class="docutils literal"><span class="pre">line</span></tt> forms a closed ring, that is, if the first and last coordinates are equal</td>
+</tr>
+<tr class="row-odd"><td>isEmpty</td>
+<td><tt class="docutils literal"><span class="pre">geometry</span></tt>:Geometry</td>
+<td>Returns true if the geometry does not contain any point (typical case, an empty geometry collection)</td>
+</tr>
+<tr class="row-even"><td>isometric</td>
+<td><tt class="docutils literal"><span class="pre">geometry</span></tt>:Geometry, <tt class="docutils literal"><span class="pre">extrusion</span></tt>:Double</td>
+<td>Returns a multi-polygon containing the isometric extrusions of all segments part of the original geometry. The extrusion distance is <tt class="docutils literal"><span class="pre">extrusion</span></tt> and it&#8217;s assume to be expressed in the same unit as the geometry coordinates. Can be used to get a cheap pseudo-3d map effect</td>
+</tr>
+<tr class="row-odd"><td>isRing</td>
+<td><tt class="docutils literal"><span class="pre">line</span></tt>:LineString</td>
+<td>Returns true if the <tt class="docutils literal"><span class="pre">line</span></tt> is actually a closed ring (equivalent to <tt class="docutils literal"><span class="pre">isRing(line)</span> <span class="pre">and</span> <span class="pre">isSimple(line)</span></tt>)</td>
+</tr>
+<tr class="row-even"><td>isSimple</td>
+<td><tt class="docutils literal"><span class="pre">line</span></tt>:LineString</td>
+<td>Returns true if the geometry self intersects only at boundary points</td>
+</tr>
+<tr class="row-odd"><td>isValid</td>
+<td><tt class="docutils literal"><span class="pre">geometry</span></tt>: Geometry</td>
+<td>Returns true if the geometry is topologically valid (rings are closed, holes are inside the hull, and so on)</td>
+</tr>
+<tr class="row-even"><td>numGeometries</td>
+<td><tt class="docutils literal"><span class="pre">collection</span></tt>: GeometryCollection</td>
+<td>Returns the number of geometries contained in the geometry collection</td>
+</tr>
+<tr class="row-odd"><td>numInteriorRing</td>
+<td><tt class="docutils literal"><span class="pre">poly</span></tt>: Polygon</td>
+<td>Returns the number of interior rings (holes) inside the specified polygon</td>
+</tr>
+<tr class="row-even"><td>numPoint</td>
+<td><tt class="docutils literal"><span class="pre">geometry</span></tt>: Geometry</td>
+<td>Returns the number of points (vertexes) contained in <tt class="docutils literal"><span class="pre">geometry</span></tt></td>
+</tr>
+<tr class="row-odd"><td>offset</td>
+<td><tt class="docutils literal"><span class="pre">geometry</span></tt>: Geometry, <tt class="docutils literal"><span class="pre">offsetX</span></tt>:Double, <tt class="docutils literal"><span class="pre">offsetY</span></tt>:Double</td>
+<td>Offsets all points in a geometry by the specified X and Y offsets. Offsets are working in the same coordinate system as the geometry own coordinates.</td>
+</tr>
+<tr class="row-even"><td>pointN</td>
+<td><tt class="docutils literal"><span class="pre">geometry</span></tt>: Geometry, <tt class="docutils literal"><span class="pre">n</span></tt>:Integer</td>
+<td>Returns the n-th point inside the specified geometry</td>
+</tr>
+<tr class="row-odd"><td>startPoint</td>
+<td><tt class="docutils literal"><span class="pre">line</span></tt>: LineString</td>
+<td>Returns the starting point of the specified geometry</td>
+</tr>
+<tr class="row-even"><td>symDifference</td>
+<td><tt class="docutils literal"><span class="pre">a</span></tt>: Geometry, <tt class="docutils literal"><span class="pre">b</span></tt>:Geometry</td>
+<td>Returns the symmetrical difference between <tt class="docutils literal"><span class="pre">a</span></tt> and <tt class="docutils literal"><span class="pre">b</span></tt> (all points that are inside <tt class="docutils literal"><span class="pre">a</span></tt> or <tt class="docutils literal"><span class="pre">b</span></tt>, but not both)</td>
+</tr>
+<tr class="row-odd"><td>toWKT</td>
+<td><tt class="docutils literal"><span class="pre">geometry</span></tt>: Geometry</td>
+<td>Returns the WKT representation of <tt class="docutils literal"><span class="pre">geometry</span></tt></td>
+</tr>
+<tr class="row-even"><td>union</td>
+<td><tt class="docutils literal"><span class="pre">a</span></tt>: Geometry, <tt class="docutils literal"><span class="pre">b</span></tt>:Geometry</td>
+<td>Returns the union of <tt class="docutils literal"><span class="pre">a</span></tt> and <tt class="docutils literal"><span class="pre">b</span></tt> (the result may be a geometry collection)</td>
+</tr>
+<tr class="row-odd"><td>vertices</td>
+<td><tt class="docutils literal"><span class="pre">geom</span></tt>: Geometry</td>
+<td>Returns a multi-point made with all the vertices of <tt class="docutils literal"><span class="pre">geom</span></tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="math-functions">
+<h2>Math Functions<a class="headerlink" href="#math-functions" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="25%" />
+<col width="55%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Name</strong></td>
+<td><strong>Arguments</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td>abs</td>
+<td><tt class="docutils literal"><span class="pre">value</span></tt>:Integer</td>
+<td>The absolute value of the specified Integer <tt class="docutils literal"><span class="pre">value</span></tt></td>
+</tr>
+<tr class="row-odd"><td>abs_2</td>
+<td><tt class="docutils literal"><span class="pre">value</span></tt>:Long</td>
+<td>The absolute value of the specified Long <tt class="docutils literal"><span class="pre">value</span></tt></td>
+</tr>
+<tr class="row-even"><td>abs_3</td>
+<td><tt class="docutils literal"><span class="pre">value</span></tt>:Float</td>
+<td>The absolute value of the specified Float <tt class="docutils literal"><span class="pre">value</span></tt></td>
+</tr>
+<tr class="row-odd"><td>abs_4</td>
+<td><tt class="docutils literal"><span class="pre">value</span></tt>:Double</td>
+<td>The absolute value of the specified Double <tt class="docutils literal"><span class="pre">value</span></tt></td>
+</tr>
+<tr class="row-even"><td>acos</td>
+<td><tt class="docutils literal"><span class="pre">angle</span></tt>:Double</td>
+<td>Returns the arc cosine of an <tt class="docutils literal"><span class="pre">angle</span></tt> expressed in radians, in the range of 0.0 through <tt class="docutils literal"><span class="pre">PI</span></tt></td>
+</tr>
+<tr class="row-odd"><td>asin</td>
+<td><tt class="docutils literal"><span class="pre">angle</span></tt>:Double</td>
+<td>Returns the arc sine of an <tt class="docutils literal"><span class="pre">angle</span></tt> expressed in radians, in the range of <tt class="docutils literal"><span class="pre">-PI</span> <span class="pre">/</span> <span class="pre">2</span></tt> through <tt class="docutils literal"><span class="pre">PI</span> <span class="pre">/</span> <span class="pre">2</span></tt></td>
+</tr>
+<tr class="row-even"><td>atan</td>
+<td><tt class="docutils literal"><span class="pre">angle</span></tt>:Double</td>
+<td>Returns the arc tangent of an angle, in the range of <tt class="docutils literal"><span class="pre">-PI/2</span></tt> through <tt class="docutils literal"><span class="pre">PI/2</span></tt></td>
+</tr>
+<tr class="row-odd"><td>atan2</td>
+<td><tt class="docutils literal"><span class="pre">x</span></tt>:Double, <tt class="docutils literal"><span class="pre">y</span></tt>:Double</td>
+<td>Converts rectangular coordinates <tt class="docutils literal"><span class="pre">(x,</span> <span class="pre">y)</span></tt> to polar <tt class="docutils literal"><span class="pre">(r,</span> <span class="pre">theta)</span></tt>.</td>
+</tr>
+<tr class="row-even"><td>ceil</td>
+<td><tt class="docutils literal"><span class="pre">x</span></tt>: Double</td>
+<td>Returns the smallest (closest to negative infinity) double value that is greater than or equal to the argument and is equal to a mathematical integer.</td>
+</tr>
+<tr class="row-odd"><td>cos</td>
+<td><tt class="docutils literal"><span class="pre">angle</span></tt>: Double</td>
+<td>Returns the cosine of an <tt class="docutils literal"><span class="pre">angle</span></tt> expressed in radians</td>
+</tr>
+<tr class="row-even"><td>double2bool</td>
+<td><tt class="docutils literal"><span class="pre">x</span></tt>: Double</td>
+<td>Returns true if the number is zero, false otherwise</td>
+</tr>
+<tr class="row-odd"><td>exp</td>
+<td><tt class="docutils literal"><span class="pre">x</span></tt>: Double</td>
+<td>Returns Euler&#8217;s number raised to the power of <tt class="docutils literal"><span class="pre">x</span></tt></td>
+</tr>
+<tr class="row-even"><td>floor</td>
+<td><tt class="docutils literal"><span class="pre">x</span></tt>: Double</td>
+<td>Returns the largest (closest to positive infinity) value that is less than or equal to the argument and is equal to a mathematical integer</td>
+</tr>
+<tr class="row-odd"><td>IEEERemainder</td>
+<td><tt class="docutils literal"><span class="pre">x</span></tt>: Double, <tt class="docutils literal"><span class="pre">y</span></tt>:Double</td>
+<td>Computes the remainder operation on two arguments as prescribed by the IEEE 754 standard</td>
+</tr>
+<tr class="row-even"><td>int2bbool</td>
+<td><tt class="docutils literal"><span class="pre">x</span></tt>: Integer</td>
+<td>Returns true if the number is zero, false otherwise</td>
+</tr>
+<tr class="row-odd"><td>int2ddouble</td>
+<td><tt class="docutils literal"><span class="pre">x</span></tt>: Integer</td>
+<td>Converts the number to Double</td>
+</tr>
+<tr class="row-even"><td>log</td>
+<td><tt class="docutils literal"><span class="pre">x</span></tt>: Integer</td>
+<td>Returns the natural logarithm (base <tt class="docutils literal"><span class="pre">e</span></tt>) of <tt class="docutils literal"><span class="pre">x</span></tt></td>
+</tr>
+<tr class="row-odd"><td>max, max_3, max_4</td>
+<td><tt class="docutils literal"><span class="pre">x1</span></tt>: Double, <tt class="docutils literal"><span class="pre">x2</span></tt>:Double, <tt class="docutils literal"><span class="pre">x3</span></tt>:Double, <tt class="docutils literal"><span class="pre">x4</span></tt>:Double</td>
+<td>Returns the maximum between <tt class="docutils literal"><span class="pre">x1</span></tt>, ..., <tt class="docutils literal"><span class="pre">x4</span></tt></td>
+</tr>
+<tr class="row-even"><td>min, min_3, min_4</td>
+<td><tt class="docutils literal"><span class="pre">x1</span></tt>: Double, <tt class="docutils literal"><span class="pre">x2</span></tt>:Double, <tt class="docutils literal"><span class="pre">x3</span></tt>:Double, <tt class="docutils literal"><span class="pre">x4</span></tt>:Double</td>
+<td>Returns the minimum between <tt class="docutils literal"><span class="pre">x1</span></tt>, ..., <tt class="docutils literal"><span class="pre">x4</span></tt></td>
+</tr>
+<tr class="row-odd"><td>pi</td>
+<td>None</td>
+<td>Returns an approximation of <tt class="docutils literal"><span class="pre">pi</span></tt>, the ratio of the circumference of a circle to its diameter</td>
+</tr>
+<tr class="row-even"><td>pow</td>
+<td><tt class="docutils literal"><span class="pre">base</span></tt>:Double, <tt class="docutils literal"><span class="pre">exponent</span></tt>:Double</td>
+<td>Returns the value of <tt class="docutils literal"><span class="pre">base</span></tt> raised to the power of <tt class="docutils literal"><span class="pre">exponent</span></tt></td>
+</tr>
+<tr class="row-odd"><td>random</td>
+<td>None</td>
+<td>Returns a Double value with a positive sign, greater than or equal to <tt class="docutils literal"><span class="pre">0.0</span></tt> and less than <tt class="docutils literal"><span class="pre">1.0</span></tt>. Returned values are chosen pseudo-randomly with (approximately) uniform distribution from that range.</td>
+</tr>
+<tr class="row-even"><td>rint</td>
+<td><tt class="docutils literal"><span class="pre">x</span></tt>:Double</td>
+<td>Returns the Double value that is closest in value to the argument and is equal to a mathematical integer. If two double values that are mathematical integers are equally close, the result is the integer value that is even.</td>
+</tr>
+<tr class="row-odd"><td>round_2</td>
+<td><tt class="docutils literal"><span class="pre">x</span></tt>:Double</td>
+<td>Same as <tt class="docutils literal"><span class="pre">round</span></tt>, but returns a Long</td>
+</tr>
+<tr class="row-even"><td>round</td>
+<td><tt class="docutils literal"><span class="pre">x</span></tt>:Double</td>
+<td>Returns the closest Integer to the argument. The result is rounded to an integer by adding 1/2, taking the floor of the result, and casting the result to type Integer. In other words, the result is equal to the value of the expression <tt class="docutils literal"><span class="pre">(int)floor(a</span> <span class="pre">+</span> <span class="pre">0.5)</span></tt></td>
+</tr>
+<tr class="row-odd"><td>roundDouble</td>
+<td><tt class="docutils literal"><span class="pre">x</span></tt>:Double</td>
+<td>Returns the closest Long to the argument</td>
+</tr>
+<tr class="row-even"><td>tan</td>
+<td><tt class="docutils literal"><span class="pre">angle</span></tt>:Double</td>
+<td>Returns the trigonometric tangent of <tt class="docutils literal"><span class="pre">angle</span></tt></td>
+</tr>
+<tr class="row-odd"><td>toDegrees</td>
+<td><tt class="docutils literal"><span class="pre">angle</span></tt>:Double</td>
+<td>Converts an angle expressed in radians into degrees</td>
+</tr>
+<tr class="row-even"><td>toRadians</td>
+<td><tt class="docutils literal"><span class="pre">angle</span></tt>:Double</td>
+<td>Converts an angle expressed in radians into degrees</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="string-functions">
+<h2>String functions<a class="headerlink" href="#string-functions" title="Permalink to this headline">¶</a></h2>
+<p>String functions generally will accept any type of value for <tt class="docutils literal"><span class="pre">String</span></tt> arguments.
+Non-string values will be converted into a string representation automatically.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="25%" />
+<col width="55%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Name</strong></td>
+<td><strong>Arguments</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td>Concatenate</td>
+<td><tt class="docutils literal"><span class="pre">s1</span></tt>:String, <tt class="docutils literal"><span class="pre">s2</span></tt>:String, ...</td>
+<td>Concatenates any number of strings.  Non-string arguments are allowed.</td>
+</tr>
+<tr class="row-odd"><td>strCapitalize</td>
+<td><tt class="docutils literal"><span class="pre">sentence</span></tt>:String</td>
+<td>Fully capitalizes the sentence. For example, &#8220;HoW aRe YOU?&#8221; will be turned into &#8220;How Are You?&#8221;</td>
+</tr>
+<tr class="row-even"><td>strConcat</td>
+<td><tt class="docutils literal"><span class="pre">a</span></tt>:String, <tt class="docutils literal"><span class="pre">b</span></tt>:String</td>
+<td>Concatenates the two strings into one</td>
+</tr>
+<tr class="row-odd"><td>strEndsWith</td>
+<td><tt class="docutils literal"><span class="pre">string</span></tt>:String, <tt class="docutils literal"><span class="pre">suffix</span></tt>:String</td>
+<td>Returns true if <tt class="docutils literal"><span class="pre">string</span></tt> ends with <tt class="docutils literal"><span class="pre">suffix</span></tt></td>
+</tr>
+<tr class="row-even"><td>strEqualsIgnoreCase</td>
+<td><tt class="docutils literal"><span class="pre">a</span></tt>:String, <tt class="docutils literal"><span class="pre">b</span></tt>:String</td>
+<td>Returns true if the two strings are equal ignoring case considerations</td>
+</tr>
+<tr class="row-odd"><td>strIndexOf</td>
+<td><tt class="docutils literal"><span class="pre">string</span></tt>:String, <tt class="docutils literal"><span class="pre">substring</span></tt>:String</td>
+<td>Returns the index within this string of the first occurrence of the specified substring, or <tt class="docutils literal"><span class="pre">-1</span></tt> if not found</td>
+</tr>
+<tr class="row-even"><td>strLastIndexOf</td>
+<td><tt class="docutils literal"><span class="pre">string</span></tt>:String, <tt class="docutils literal"><span class="pre">substring</span></tt>:String</td>
+<td>Returns the index within this string of the last occurrence of the specified substring, or <tt class="docutils literal"><span class="pre">-1</span></tt> if not found</td>
+</tr>
+<tr class="row-odd"><td>strLength</td>
+<td><tt class="docutils literal"><span class="pre">string</span></tt>:String</td>
+<td>Returns the string length</td>
+</tr>
+<tr class="row-even"><td>strMatches</td>
+<td><tt class="docutils literal"><span class="pre">string</span></tt>:String, <tt class="docutils literal"><span class="pre">pattern</span></tt>:String</td>
+<td>Returns true if the string matches the specified regular expression. For the full syntax of the pattern specification see the <a class="reference external" href="http://java.sun.com/javase/6/docs/api/java/util/regex/Pattern.html">Java Pattern class javadocs</a></td>
+</tr>
+<tr class="row-odd"><td>strReplace</td>
+<td><tt class="docutils literal"><span class="pre">string</span></tt>:String, <tt class="docutils literal"><span class="pre">pattern</span></tt>:String, <tt class="docutils literal"><span class="pre">replacement</span></tt>:String, <tt class="docutils literal"><span class="pre">global</span></tt>: boolean</td>
+<td>Returns the string with the pattern replaced with the given replacement text.  If the <tt class="docutils literal"><span class="pre">global</span></tt> argument is <tt class="docutils literal"><span class="pre">true</span></tt> then all occurrences of the pattern will be replaced, otherwise only the first. For the full syntax of the pattern specification see the <a class="reference external" href="http://java.sun.com/javase/6/docs/api/java/util/regex/Pattern.html">Java Pattern class javadocs</a></td>
+</tr>
+<tr class="row-even"><td>strStartsWith</td>
+<td><tt class="docutils literal"><span class="pre">string</span></tt>:String, <tt class="docutils literal"><span class="pre">prefix</span></tt>:String</td>
+<td>Returns true if <tt class="docutils literal"><span class="pre">string</span></tt> starts with <tt class="docutils literal"><span class="pre">prefix</span></tt></td>
+</tr>
+<tr class="row-odd"><td>strSubstring</td>
+<td><tt class="docutils literal"><span class="pre">string</span></tt>:String, <tt class="docutils literal"><span class="pre">begin</span></tt>:Integer, <tt class="docutils literal"><span class="pre">end</span></tt>:Integer</td>
+<td>Returns a new string that is a substring of this string. The substring begins at the specified <tt class="docutils literal"><span class="pre">begin</span></tt> and extends to the character at index <tt class="docutils literal"><span class="pre">endIndex</span> <span class="pre">-</span> <span class="pre">1</span></tt> (indexes are zero-based).</td>
+</tr>
+<tr class="row-even"><td>strSubstringStart</td>
+<td><tt class="docutils literal"><span class="pre">string</span></tt>:String, <tt class="docutils literal"><span class="pre">begin</span></tt>:Integer</td>
+<td>Returns a new string that is a substring of this string. The substring begins at the specified <tt class="docutils literal"><span class="pre">begin</span></tt> and extends to the last character of the string</td>
+</tr>
+<tr class="row-odd"><td>strToLowerCase</td>
+<td><tt class="docutils literal"><span class="pre">string</span></tt>:String</td>
+<td>Returns the lower case version of the string</td>
+</tr>
+<tr class="row-even"><td>strToUpperCase</td>
+<td><tt class="docutils literal"><span class="pre">string</span></tt>:String</td>
+<td>Returns the upper case version of the string</td>
+</tr>
+<tr class="row-odd"><td>strTrim</td>
+<td><tt class="docutils literal"><span class="pre">string</span></tt>:String</td>
+<td>Returns a copy of the string, with leading and trailing white space omitted</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="parsing-and-formatting-functions">
+<h2>Parsing and formatting functions<a class="headerlink" href="#parsing-and-formatting-functions" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="25%" />
+<col width="55%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Name</strong></td>
+<td><strong>Arguments</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td>dateFormat</td>
+<td><tt class="docutils literal"><span class="pre">date</span></tt>:Timestamp, <tt class="docutils literal"><span class="pre">format</span></tt>:String</td>
+<td>Formats the specified date according to the provided format. The format syntax can be found in the <a class="reference external" href="http://java.sun.com/javase/6/docs/api/java/text/SimpleDateFormat.html">Java SimpleDateFormat javadocs</a></td>
+</tr>
+<tr class="row-odd"><td>dateParse</td>
+<td><tt class="docutils literal"><span class="pre">dateString</span></tt>:String, <tt class="docutils literal"><span class="pre">format</span></tt>:String</td>
+<td>Parses a date from a <tt class="docutils literal"><span class="pre">dateString</span></tt> formatted according to the <tt class="docutils literal"><span class="pre">format</span></tt> specification. The format syntax can be found in the <a class="reference external" href="http://java.sun.com/javase/6/docs/api/java/text/SimpleDateFormat.html">Java SimpleDateFormat javadocs</a></td>
+</tr>
+<tr class="row-even"><td>numberFormat</td>
+<td><tt class="docutils literal"><span class="pre">number</span></tt>:Double, <tt class="docutils literal"><span class="pre">format</span></tt>:String</td>
+<td>Formats the number according to the specified <tt class="docutils literal"><span class="pre">format</span></tt>. The format syntax can be found in the <a class="reference external" href="http://java.sun.com/javase/6/docs/api/java/text/DecimalFormat.html">Java DecimalFormat javadocs</a></td>
+</tr>
+<tr class="row-odd"><td>parseBoolean</td>
+<td><tt class="docutils literal"><span class="pre">boolean</span></tt>:String</td>
+<td>Parses a string into a boolean. The empty string, <tt class="docutils literal"><span class="pre">f</span></tt>, <tt class="docutils literal"><span class="pre">0.0</span></tt> and <tt class="docutils literal"><span class="pre">0</span></tt> are considered false, everything else is considered true.</td>
+</tr>
+<tr class="row-even"><td>parseDouble</td>
+<td><tt class="docutils literal"><span class="pre">number</span></tt>:String</td>
+<td>Parses a string into a double. The number can be expressed in normal or scientific form.</td>
+</tr>
+<tr class="row-odd"><td>parseInt</td>
+<td><tt class="docutils literal"><span class="pre">number</span></tt>:String</td>
+<td>Parses a string into an integer.</td>
+</tr>
+<tr class="row-even"><td>parseLong</td>
+<td><tt class="docutils literal"><span class="pre">number</span></tt>:String</td>
+<td>Parses a string into a long integer</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="transformation-functions">
+<h2>Transformation functions<a class="headerlink" href="#transformation-functions" title="Permalink to this headline">¶</a></h2>
+<p>Transformation functions transform values from one data space into another.
+These functions provide a concise way to compute styling parameters from feature attribute values.
+See also <a class="reference internal" href="../styling/sld-tipstricks/transformation-func.html#transformation-func"><em>Styling using Transformation Functions</em></a>.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="25%" />
+<col width="55%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Name</strong></td>
+<td><strong>Arguments</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td>Recode</td>
+<td><p class="first"><tt class="docutils literal"><span class="pre">lookupValue</span></tt>:Object,</p>
+<p class="last"><tt class="docutils literal"><span class="pre">data</span></tt>:Object,
+<tt class="docutils literal"><span class="pre">value</span></tt>:Object, ...</p>
+</td>
+<td>Transforms a <tt class="docutils literal"><span class="pre">lookupValue</span></tt> from a set of discrete attribute values into another set of values.
+Any number of <tt class="docutils literal"><span class="pre">data</span></tt>/<tt class="docutils literal"><span class="pre">value</span></tt> pairs may be specified.
+<tt class="docutils literal"><span class="pre">belongsTo</span></tt> is optional, and has the value <tt class="docutils literal"><span class="pre">succeeding</span></tt> or <tt class="docutils literal"><span class="pre">preceding</span></tt>.</td>
+</tr>
+<tr class="row-odd"><td>Categorize</td>
+<td><p class="first"><tt class="docutils literal"><span class="pre">lookupValue</span></tt>:Object,
+<tt class="docutils literal"><span class="pre">thresholdLow</span></tt>:Object,</p>
+<p><tt class="docutils literal"><span class="pre">value</span></tt>:Object,
+<tt class="docutils literal"><span class="pre">threshold</span></tt>:Object, ...</p>
+<p class="last"><tt class="docutils literal"><span class="pre">belongsTo</span></tt> : String</p>
+</td>
+<td>Transforms a continuous-valued attribute value into a set of discrete values.
+<tt class="docutils literal"><span class="pre">lookupValue</span></tt> and <tt class="docutils literal"><span class="pre">value</span></tt> must be an orderable type (typically numeric).
+The initial <tt class="docutils literal"><span class="pre">thresholdLow</span></tt> value is required.
+Any number of additional <tt class="docutils literal"><span class="pre">value</span></tt>/<tt class="docutils literal"><span class="pre">threshold</span></tt> pairs may be specified.
+<tt class="docutils literal"><span class="pre">belongsTo</span></tt> is optional, and defines which interval contains lookup values equal to a threshold value
+with the value <tt class="docutils literal"><span class="pre">succeeding</span></tt> or <tt class="docutils literal"><span class="pre">preceding</span></tt>.</td>
+</tr>
+<tr class="row-even"><td>Interpolate</td>
+<td><p class="first"><tt class="docutils literal"><span class="pre">lookupValue</span></tt>:Numeric,</p>
+<p><tt class="docutils literal"><span class="pre">data</span></tt>:Numeric,
+<tt class="docutils literal"><span class="pre">value</span></tt>:Numeric <em>or</em> String,
+...</p>
+<p class="last"><tt class="docutils literal"><span class="pre">mode</span></tt>:String,
+<tt class="docutils literal"><span class="pre">method</span></tt>:String</p>
+</td>
+<td>Transforms a continuous-valued attribute value into another continuous range of values.
+Any number of <tt class="docutils literal"><span class="pre">data</span></tt>/<tt class="docutils literal"><span class="pre">value</span></tt> pairs may be specified.
+<tt class="docutils literal"><span class="pre">mode</span></tt> is optional, and defines the interpolation algorithm used
+with the value <tt class="docutils literal"><span class="pre">linear</span></tt>, <tt class="docutils literal"><span class="pre">cosine</span></tt> or <tt class="docutils literal"><span class="pre">cubic</span></tt>.
+<tt class="docutils literal"><span class="pre">method</span></tt> is optional, and defines whether the target values are numeric or colors
+with the value <tt class="docutils literal"><span class="pre">numeric</span></tt> or <tt class="docutils literal"><span class="pre">color</span></tt>.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="function.html" title="previous chapter">Filter functions</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="../styling/index.html" title="next chapter">Styling</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">Filter Function Reference</a><ul>
+<li><a class="reference internal" href="#function-argument-type-reference">Function argument type reference</a></li>
+<li><a class="reference internal" href="#comparison-functions">Comparison Functions</a></li>
+<li><a class="reference internal" href="#control-functions">Control Functions</a></li>
+<li><a class="reference internal" href="#feature-functions">Feature functions</a></li>
+<li><a class="reference internal" href="#spatial-relationship-functions">Spatial Relationship Functions</a></li>
+<li><a class="reference internal" href="#geometric-functions">Geometric Functions</a></li>
+<li><a class="reference internal" href="#math-functions">Math Functions</a></li>
+<li><a class="reference internal" href="#string-functions">String functions</a></li>
+<li><a class="reference internal" href="#parsing-and-formatting-functions">Parsing and formatting functions</a></li>
+<li><a class="reference internal" href="#transformation-functions">Transformation functions</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="function.html" title="previous chapter">Filter functions</a></li>
+            <li>Next: <a href="../styling/index.html" title="next chapter">Styling</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../_sources/filter/function_reference.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

@@ -1,0 +1,129 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Advanced GeoServer Configuration &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../_static/jquery.js"></script>
+  <script type="text/javascript" src="../_static/doctools.js"></script>
+  <script type="text/javascript" src="../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../index.html" />
+      <link rel="next" title="Coordinate Reference System Handling" href="crshandling/index.html" />
+      <link rel="prev" title="Ruby" href="../restconfig/rest-config-examples/rest-config-examples-ruby.html" />
+</head>
+<body class="advanced/index">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li>Advanced GeoServer Configuration</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="crshandling/index.html" title="Coordinate Reference System Handling"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="../restconfig/rest-config-examples/rest-config-examples-ruby.html" title="Ruby"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="advanced-geoserver-configuration">
+<span id="advanced-config"></span><h1>Advanced GeoServer Configuration<a class="headerlink" href="#advanced-geoserver-configuration" title="Permalink to this headline">¶</a></h1>
+<p>GeoServer provides a variety of options to customize your service for different situations.  While none of the configuration options discussed in this section are required for a basic GeoServer installation, they allow you to adapt your GeoServer to your own needs, beyond the options exposed in OGC standard services.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="crshandling/index.html">Coordinate Reference System Handling</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="crshandling/configurecrs.html">Coordinate Reference System Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="crshandling/customcrs.html">Custom CRS Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="crshandling/coordtransforms.html">Coordinate Operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="crshandling/manualepsg.html">Manually editing the EPSG database</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="logging.html">Advanced log configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="logging.html#custom-logging-profiles">Custom logging profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html#overriding-the-log-location-setup-in-the-geoserver-configuration">Overriding the log location setup in the GeoServer configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html#forcing-geoserver-to-relinquish-log4j-control">Forcing GeoServer to relinquish Log4J control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html#forcing-geoserver-to-use-an-alternate-logging-redirection">Forcing GeoServer to use an alternate logging redirection</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="wmsdecoration.html">WMS Decorations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="wmsdecoration.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wmsdecoration.html#decoration-types">Decoration Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wmsdecoration.html#example">Example</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="../restconfig/rest-config-examples/rest-config-examples-ruby.html" title="previous chapter">Ruby</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="crshandling/index.html" title="next chapter">Coordinate Reference System Handling</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="../restconfig/rest-config-examples/rest-config-examples-ruby.html" title="previous chapter">Ruby</a></li>
+            <li>Next: <a href="crshandling/index.html" title="next chapter">Coordinate Reference System Handling</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../_sources/advanced/index.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

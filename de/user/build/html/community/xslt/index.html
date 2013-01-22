@@ -1,0 +1,348 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>XSLT WFS output format module &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../../index.html" />
+      <link rel="up" title="Community" href="../index.html" />
+      <link rel="prev" title="SpatiaLite" href="../spatialite/index.html" />
+</head>
+<body class="community/xslt/index">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Community</a> &raquo;</li>
+  <li>XSLT WFS output format module</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="../spatialite/index.html" title="SpatiaLite"
+       accesskey="P">previous</a></li>
+</ul>
+        
+  <div class="section" id="xslt-wfs-output-format-module">
+<span id="xslt"></span><h1>XSLT WFS output format module<a class="headerlink" href="#xslt-wfs-output-format-module" title="Permalink to this headline">¶</a></h1>
+<p>The <tt class="docutils literal"><span class="pre">xslt</span></tt> module for GeoServer is a WFS output format generator which brings togheter a base output,
+such as GML, and a XSLT 1.0 style sheet to generate a new textual output format of user choosing.</p>
+<p>The configuration for this output format can be either performed directly on disk, or via a REST API.</p>
+<div class="section" id="manual-configuration">
+<h2>Manual configuration<a class="headerlink" href="#manual-configuration" title="Permalink to this headline">¶</a></h2>
+<p>All the configuration for the output resides in the <tt class="docutils literal"><span class="pre">$GEOSERVER_DATA_DIR/wfs/transform</span></tt> folder,
+which is going to be created on startup when missing if the XSLT output format has been installed
+in GeoServer.</p>
+<p>The configuration of a new output format requires the addition of two new files, a XML file configuring
+the new output format, and a XSLT transformation generating the desired output.</p>
+<p>The full fledged form of the XML configuration is as follows:</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;transform&gt;</span>
+  <span class="nt">&lt;sourceFormat&gt;</span>text/xml; subtype=gml/2.1.2<span class="nt">&lt;/sourceFormat&gt;</span>
+  <span class="nt">&lt;outputFormat&gt;</span>HTML<span class="nt">&lt;/outputFormat&gt;</span>
+  <span class="nt">&lt;outputMimeType&gt;</span>text/html<span class="nt">&lt;/outputMimeType&gt;</span>
+  <span class="nt">&lt;fileExtension&gt;</span>html<span class="nt">&lt;/fileExtension&gt;</span>
+  <span class="nt">&lt;xslt&gt;</span>test.xslt<span class="nt">&lt;/xslt&gt;</span>
+  <span class="nt">&lt;featureType&gt;</span>
+    <span class="nt">&lt;id&gt;</span>cite:Bridges<span class="nt">&lt;/id&gt;</span>
+  <span class="nt">&lt;/featureType&gt;</span>
+<span class="nt">&lt;/transform&gt;</span>
+</pre></div>
+</div>
+<p>Here is an explanation of each element:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">sourceFormat</span></tt> (mandatory): the output format used as the source of the XSLT transformation</li>
+<li><tt class="docutils literal"><span class="pre">outputFormat</span></tt> (mandatory): the output format generated by the transformation</li>
+<li><tt class="docutils literal"><span class="pre">outputMimeType</span></tt> (optional): the mime type for the generated output. In case it&#8217;s missing, the <tt class="docutils literal"><span class="pre">outputFormat</span></tt> is assumed to be a mime type and used for the purpose.</li>
+<li><tt class="docutils literal"><span class="pre">fileExtension</span></tt> (optional): the file extension for the generated output. In case it&#8217;s missing <tt class="docutils literal"><span class="pre">txt</span></tt> will be used.</li>
+<li><tt class="docutils literal"><span class="pre">xslt</span></tt> (mandatory): the name of XSLT 1.0 style sheet used for the transformation</li>
+<li><tt class="docutils literal"><span class="pre">featureType</span></tt> (optional): an eventual association between this configuration and a specific feature type</li>
+</ul>
+<p>From the above it follows there are two types of style sheets in use:</p>
+<ul class="simple">
+<li>global XSLT that make no assumption about the contents of the input, and work equally well on all of them</li>
+<li>type specific XSLT that make assumptions about specific attributes available in the input, and that will work only against a specific feature type</li>
+</ul>
+<p>The XSLT file must be in the same <tt class="docutils literal"><span class="pre">$GEOSERVER_DATA_DIR/wfs/transform</span></tt> folder and use the name specified in the XML configuration.</p>
+<p>Here is an example sheet transforming any GML2 input into a HTML page:</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;</span>
+<span class="nt">&lt;xsl:stylesheet</span> <span class="na">version=</span><span class="s">&quot;1.0&quot;</span> <span class="na">xmlns:wfs=</span><span class="s">&quot;http://www.opengis.net/wfs&quot;</span>
+  <span class="na">xmlns:tiger=</span><span class="s">&quot;http://www.census.gov&quot;</span> <span class="na">xmlns:gml=</span><span class="s">&quot;http://www.opengis.net/gml&quot;</span>
+  <span class="na">xmlns:xsl=</span><span class="s">&quot;http://www.w3.org/1999/XSL/Transform&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsl:template</span> <span class="na">match=</span><span class="s">&quot;/&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;html&gt;</span>
+      <span class="nt">&lt;body&gt;</span>
+      <span class="nt">&lt;xsl:for-each</span> <span class="na">select=</span><span class="s">&quot;wfs:FeatureCollection/gml:featureMember/*&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;h2&gt;&lt;xsl:value-of</span> <span class="na">select=</span><span class="s">&quot;@fid&quot;</span><span class="nt">/&gt;&lt;/h2&gt;</span>
+        <span class="nt">&lt;table</span> <span class="na">border=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;tr&gt;</span>
+            <span class="nt">&lt;th&gt;</span>Attribute<span class="nt">&lt;/th&gt;</span>
+            <span class="nt">&lt;th&gt;</span>Value<span class="nt">&lt;/th&gt;</span>
+          <span class="nt">&lt;/tr&gt;</span>
+            <span class="c">&lt;!-- [not(*)] strips away all nodes having</span>
+<span class="c">                 children, in particular, geometries --&gt;</span>
+            <span class="nt">&lt;xsl:for-each</span> <span class="na">select=</span><span class="s">&quot;./*[not(*)]&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;tr&gt;</span>
+              <span class="nt">&lt;td&gt;</span>
+                <span class="nt">&lt;xsl:value-of</span> <span class="na">select=</span><span class="s">&quot;name()&quot;</span> <span class="nt">/&gt;</span>
+              <span class="nt">&lt;/td&gt;</span>
+              <span class="nt">&lt;td&gt;</span>
+                <span class="nt">&lt;xsl:value-of</span> <span class="na">select=</span><span class="s">&quot;.&quot;</span> <span class="nt">/&gt;</span>
+              <span class="nt">&lt;/td&gt;</span>
+            <span class="nt">&lt;/tr&gt;</span>
+            <span class="nt">&lt;/xsl:for-each&gt;</span>
+        <span class="nt">&lt;/table&gt;</span>
+     <span class="nt">&lt;/xsl:for-each&gt;</span>
+     <span class="nt">&lt;/body&gt;</span>
+   <span class="nt">&lt;/html&gt;</span>
+  <span class="nt">&lt;/xsl:template&gt;</span>
+<span class="nt">&lt;/xsl:stylesheet&gt;</span>
+</pre></div>
+</div>
+<p>And here is a type specific one, leveraging knowlegde about the input attributes:</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;</span>
+<span class="nt">&lt;xsl:stylesheet</span> <span class="na">version=</span><span class="s">&quot;1.0&quot;</span> <span class="na">xmlns:wfs=</span><span class="s">&quot;http://www.opengis.net/wfs&quot;</span>
+  <span class="na">xmlns:cite=</span><span class="s">&quot;http://www.opengis.net/cite&quot;</span> <span class="na">xmlns:gml=</span><span class="s">&quot;http://www.opengis.net/gml&quot;</span>
+  <span class="na">xmlns:xsl=</span><span class="s">&quot;http://www.w3.org/1999/XSL/Transform&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsl:template</span> <span class="na">match=</span><span class="s">&quot;/&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;html&gt;</span>
+      <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;h2&gt;</span>Bridges<span class="nt">&lt;/h2&gt;</span>
+        <span class="nt">&lt;xsl:for-each</span>
+            <span class="na">select=</span><span class="s">&quot;wfs:FeatureCollection/gml:featureMember/cite:Bridges&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;ul&gt;</span>
+          <span class="nt">&lt;li&gt;</span>ID: <span class="nt">&lt;xsl:value-of</span> <span class="na">select=</span><span class="s">&quot;@fid&quot;</span> <span class="nt">/&gt;&lt;/li&gt;</span>
+          <span class="nt">&lt;li&gt;</span>FID: <span class="nt">&lt;xsl:value-of</span> <span class="na">select=</span><span class="s">&quot;cite:FID&quot;</span> <span class="nt">/&gt;&lt;/li&gt;</span>
+          <span class="nt">&lt;li&gt;</span>Name: <span class="nt">&lt;xsl:value-of</span> <span class="na">select=</span><span class="s">&quot;cite:NAME&quot;</span> <span class="nt">/&gt;&lt;/li&gt;</span>
+        <span class="nt">&lt;/ul&gt;</span>
+        <span class="nt">&lt;p/&gt;</span>
+        <span class="nt">&lt;/xsl:for-each&gt;</span>
+      <span class="nt">&lt;/body&gt;</span>
+    <span class="nt">&lt;/html&gt;</span>
+  <span class="nt">&lt;/xsl:template&gt;</span>
+<span class="nt">&lt;/xsl:stylesheet&gt;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">While writing the XSLT always remember to declare all prefixes used in the sheet in the <tt class="docutils literal"><span class="pre">stylesheet</span></tt> element, otherwise you might encounter hard to understand error messages</p>
+</div>
+</div>
+</div>
+<div class="section" id="rest-configuration">
+<h1>Rest configuration<a class="headerlink" href="#rest-configuration" title="Permalink to this headline">¶</a></h1>
+<p>Transformations can be created, updated and deleted via the REST api (normally, this requires administrator privileges).
+Each transformation is represented with the same XML format used on disk, but with two variants:</p>
+<ul class="simple">
+<li>a new <tt class="docutils literal"><span class="pre">name</span></tt> attribute appears, which matches the XML file name</li>
+<li>the <tt class="docutils literal"><span class="pre">featureType</span></tt> element contains also a link to the resource representing the feature type in the REST config tree</li>
+</ul>
+<p>For example:</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;transform&gt;</span>
+  <span class="nt">&lt;name&gt;</span>test<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;sourceFormat&gt;</span>text/xml; subtype=gml/2.1.2<span class="nt">&lt;/sourceFormat&gt;</span>
+  <span class="nt">&lt;outputFormat&gt;</span>text/html<span class="nt">&lt;/outputFormat&gt;</span>
+  <span class="nt">&lt;fileExtension&gt;</span>html<span class="nt">&lt;/fileExtension&gt;</span>
+  <span class="nt">&lt;xslt&gt;</span>test-tx.xslt<span class="nt">&lt;/xslt&gt;</span>
+  <span class="nt">&lt;featureType&gt;</span>
+    <span class="nt">&lt;name&gt;</span>tiger:poi<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;atom:link</span> <span class="na">xmlns:atom=</span><span class="s">&quot;http://www.w3.org/2005/Atom&quot;</span> <span class="na">rel=</span><span class="s">&quot;alternate&quot;</span> <span class="na">href=</span><span class="s">&quot;http://localhost:8080/geoserver/rest/workspaces/cite/datastores/cite/featuretypes/bridges.xml&quot;</span> <span class="na">type=</span><span class="s">&quot;application/xml&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/featureType&gt;</span>
+<span class="nt">&lt;/transform&gt;</span>
+</pre></div>
+</div>
+<p>Here is a list of resources and the HTTP methods that can be used on them.</p>
+<p><tt class="docutils literal"><span class="pre">/rest/services/wfs/transforms[.&lt;format&gt;]</span></tt></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Action</th>
+<th class="head">Return Code</th>
+<th class="head">Formats</th>
+<th class="head">Default Format</th>
+<th class="head">Parameters</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>List all available transforms</td>
+<td>200</td>
+<td>HTML, XML, JSON</td>
+<td>HTML</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>Add a new transformation</td>
+<td>201, with <tt class="docutils literal"><span class="pre">Location</span></tt> header</td>
+<td>XML, JSON</td>
+<td>&nbsp;</td>
+<td>name, sourceFormat, outputFormat, outputMimeType</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>Update global settings</td>
+<td>200</td>
+<td>XML, JSON</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p>The <tt class="docutils literal"><span class="pre">POST</span></tt> method can be used to create a transformation in two ways:</p>
+<ul class="simple">
+<li>if the content type used is <tt class="docutils literal"><span class="pre">application/xml</span></tt> the server will assume a <tt class="docutils literal"><span class="pre">&lt;transform&gt;</span></tt> definition is being posted,
+and the XSLT will have to be uploaded separately using a <tt class="docutils literal"><span class="pre">PUT</span></tt> request with content type <tt class="docutils literal"><span class="pre">application/xslt+xml</span></tt>
+against the transformation resource</li>
+<li>if the content type used is <tt class="docutils literal"><span class="pre">application/xslt+xml</span></tt> the server will assume the XSLT itself is being posted, and
+the <tt class="docutils literal"><span class="pre">name</span></tt>, <tt class="docutils literal"><span class="pre">sourceFormat</span></tt>, <tt class="docutils literal"><span class="pre">outputFormat</span></tt>, <tt class="docutils literal"><span class="pre">outputMimeType</span></tt> query parameters will be used to fill in the
+transform configuration instead</li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">/rest/services/wfs/transforms/&lt;transform&gt;[.&lt;format&gt;]</span></tt></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Action</th>
+<th class="head">Return Code</th>
+<th class="head">Formats</th>
+<th class="head">Default Format</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>Returns the transformation</td>
+<td>200</td>
+<td>HTML, XML, XSLT</td>
+<td>HTML</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>Updates either the transformation configuration, or its XSLT, depending on the mime type used</td>
+<td>200</td>
+<td>XML, XSLT</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>Deletes the transformation</td>
+<td>200</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p>The PUT operation behaves differently depending on the content type used in the request:</p>
+<ul class="simple">
+<li>if the content type used is <tt class="docutils literal"><span class="pre">application/xml</span></tt> the server will assume a <tt class="docutils literal"><span class="pre">&lt;transform&gt;</span></tt> definition is being sent
+and will update it</li>
+<li>if the content type used is <tt class="docutils literal"><span class="pre">application/xslt+xml</span></tt> the server will assume the XSLT itself is being posted, as such
+the configuration won&#8217;t be modified, but the XSLT associated to it will be overwritten instead</li>
+</ul>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="../spatialite/index.html" title="previous chapter">SpatiaLite</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">XSLT WFS output format module</a><ul>
+<li><a class="reference internal" href="#manual-configuration">Manual configuration</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#rest-configuration">Rest configuration</a></li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="../spatialite/index.html" title="previous chapter">SpatiaLite</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/community/xslt/index.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

@@ -1,0 +1,178 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>The App Hook &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../../../index.html" />
+      <link rel="up" title="JavaScript" href="index.html" />
+      <link rel="next" title="The WPS Hook" href="wps.html" />
+      <link rel="prev" title="JavaScript" href="index.html" />
+</head>
+<body class="community/scripting/js/app">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="../../index.html" accesskey="U">Community</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Scripting</a> &raquo;</li>
+  <li><a href="../reference.html" accesskey="U">Scripting Reference</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">JavaScript</a> &raquo;</li>
+  <li>The App Hook</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="wps.html" title="The WPS Hook"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="index.html" title="JavaScript"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="the-app-hook">
+<h1>The App Hook<a class="headerlink" href="#the-app-hook" title="Permalink to this headline">¶</a></h1>
+<p>In JavaScript the app hook is based on
+<a class="reference external" href="http://wiki.commonjs.org/wiki/JSGI">JSGI</a> which provides a common interface
+for JavaScript web application development.  The app script must export a
+function named <tt class="docutils literal"><span class="pre">app</span></tt> that accepts a <tt class="docutils literal"><span class="pre">request</span></tt> object and returns a
+<tt class="docutils literal"><span class="pre">response</span></tt> object.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kr">export</span><span class="p">.</span><span class="nx">app</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">request</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// handle the request and return a response</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The function must be exported from a file named <tt class="docutils literal"><span class="pre">main.js</span></tt> in a named
+<em>application directory</em>.  Application directories live under the
+<tt class="docutils literal"><span class="pre">scripts/apps</span></tt> directory in the root of the data directory:</p>
+<div class="highlight-python"><pre>GEOSERVER_DATA_DIR/
+  ...
+  scripts/
+    apps/
+      app1/
+        main.js
+        ...
+      app2/
+        main.js
+        ...</pre>
+</div>
+<p>The application is web accessible from the path <tt class="docutils literal"><span class="pre">/script/apps/{app}</span></tt> where
+<tt class="docutils literal"><span class="pre">{app}</span></tt> is the name of the application. All requests that start with this path
+are dispatched to the <tt class="docutils literal"><span class="pre">app</span></tt> function in <tt class="docutils literal"><span class="pre">main.js</span></tt>.</p>
+<div class="section" id="hello-world-example">
+<h2>Hello World Example<a class="headerlink" href="#hello-world-example" title="Permalink to this headline">¶</a></h2>
+<p>In this example a simple &#8220;Hello World&#8221; application is built.  The first step is
+to create a directory for the app named <tt class="docutils literal"><span class="pre">hello</span></tt>:</p>
+<div class="highlight-python"><pre>cd $GEOSERVER_DATA_DIR/scripts/apps
+mkdir hello</pre>
+</div>
+<p>Next step is to create the <tt class="docutils literal"><span class="pre">main.js</span></tt> file:</p>
+<div class="highlight-python"><pre>cd hello
+touch main.js</pre>
+</div>
+<p>Within the app function the following things will happen:</p>
+<ol class="arabic simple">
+<li>Report an HTTP status code of 200</li>
+<li>Declare the content type of the response, in this case &#8220;text/plain&#8221;</li>
+<li>Generate the body of response, in this case the string &#8220;Hello World&#8221;</li>
+</ol>
+<p>This is accomplished with the following code:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kr">export</span><span class="p">.</span><span class="nx">app</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">request</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">{</span>
+    <span class="nx">status</span><span class="o">:</span> <span class="mi">200</span><span class="p">,</span> <span class="c1">// step 1</span>
+    <span class="nx">headers</span><span class="o">:</span> <span class="p">{</span><span class="s2">&quot;Content-Type&quot;</span><span class="o">:</span> <span class="s2">&quot;text/plain&quot;</span><span class="p">},</span> <span class="c1">// step 2</span>
+    <span class="nx">body</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;Hello World&quot;</span><span class="p">]</span> <span class="c1">// step 3</span>
+  <span class="p">};</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>The body of the response shown above is an array.  In general, this can be any
+object with a <tt class="docutils literal"><span class="pre">forEach</span></tt> method.  In this way, an app can returned chunked
+content instead of returning the entire body content at once.</p>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="index.html" title="previous chapter">JavaScript</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="wps.html" title="next chapter">The WPS Hook</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">The App Hook</a><ul>
+<li><a class="reference internal" href="#hello-world-example">Hello World Example</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="index.html" title="previous chapter">JavaScript</a></li>
+            <li>Next: <a href="wps.html" title="next chapter">The WPS Hook</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../../_sources/community/scripting/js/app.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

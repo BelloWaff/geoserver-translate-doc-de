@@ -1,0 +1,240 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Caching defaults &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../../index.html" />
+      <link rel="up" title="Tile Caching" href="index.html" />
+      <link rel="next" title="Gridsets" href="gridsets.html" />
+      <link rel="prev" title="Demo page" href="demopage.html" />
+</head>
+<body class="webadmin/tilecache/defaults">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Web Administration Interface</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Tile Caching</a> &raquo;</li>
+  <li>Caching defaults</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="gridsets.html" title="Gridsets"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="demopage.html" title="Demo page"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="caching-defaults">
+<span id="webadmin-tilecaching-defaults"></span><h1>Caching defaults<a class="headerlink" href="#caching-defaults" title="Permalink to this headline">¶</a></h1>
+<p>The Caching Defaults page shows the global configuration options for the tile caching functionality in GeoServer, an embedded GeoWebCache.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For more information about this embedded version, please see the section on <a class="reference internal" href="../../geowebcache/index.html#geowebcache"><em>Caching with GeoWebCache</em></a>.</p>
+</div>
+<div class="section" id="gwc-provided-services">
+<h2>GWC Provided Services<a class="headerlink" href="#gwc-provided-services" title="Permalink to this headline">¶</a></h2>
+<p>In addition to the GeoServer endpoints, GeoWebCache provides other endpoints for OGC services. For example, the GeoServer WMS endpoint is available at:</p>
+<div class="highlight-python"><pre>http://GEOSERVER_URL/wms?...</pre>
+</div>
+<p>The GeoWebCache WMS endpoint is:</p>
+<div class="highlight-python"><pre>http://GEOSERVER_URL/gwc/service/wms?...</pre>
+</div>
+<div class="figure">
+<img alt="../../_images/defaults_services.png" src="../../_images/defaults_services.png" />
+<p class="caption"><em>Provided services</em></p>
+</div>
+<p>The following settings describe the different services that can be enabled with GeoWebCache.</p>
+<div class="section" id="enable-direct-integration-with-geoserver-wms">
+<h3>Enable direct integration with GeoServer WMS<a class="headerlink" href="#enable-direct-integration-with-geoserver-wms" title="Permalink to this headline">¶</a></h3>
+<p>Direct integration allows WMS requests served through GeoServer to be cached as if they were received and processed by GeoWebCache. This provides all the advantages of using a tile server while still employing the more-flexible GeoServer WMS as a fallback. See the section on <a class="reference internal" href="../../geowebcache/using.html#gwc-using"><em>Using GeoWebCache</em></a> for more details about this feature.</p>
+<p>With direct integration, tile caching is enabled for all standard WMS requests that contain the <tt class="docutils literal"><span class="pre">tiled=true</span></tt> parameter and conform to all required parameters.</p>
+<p>This setting is disabled by default. When enabling this option, it is a good idea to also turn on <a class="reference internal" href="diskquotas.html#webadmin-tilecaching-diskquotas"><em>Disk Quotas</em></a> as well, to prevent unbounded growth of the stored tiles.</p>
+</div>
+<div class="section" id="enable-wms-c-service">
+<h3>Enable WMS-C Service<a class="headerlink" href="#enable-wms-c-service" title="Permalink to this headline">¶</a></h3>
+<p>Enables the Cached Web Map Service (WMS-C) service. When this setting is enabled, GeoWebCache will respond to its own WMS-C endpoint:</p>
+<div class="highlight-python"><pre>http://GEOSERVER_URL/gwc/service/wms?SERVICE=WMS&amp;VERSION=1.1.1&amp;TILED=true&amp;...</pre>
+</div>
+<p>When the service is disabled, calls to the capabilities document will return a <tt class="docutils literal"><span class="pre">Service</span> <span class="pre">is</span> <span class="pre">disabled</span></tt> message.</p>
+</div>
+<div class="section" id="enable-tms-service">
+<h3>Enable TMS Service<a class="headerlink" href="#enable-tms-service" title="Permalink to this headline">¶</a></h3>
+<p>Enables the Tiled Map Service (TMS) endpoint in GeoWebCache. With the TMS service, GeoWebCache will respond to its own TMS endpoint:</p>
+<div class="highlight-python"><pre>http://GEOSERVER/URL/gwc/service/tms/1.0.0</pre>
+</div>
+<p>When the service is disabled, calls to the capabilities document will return a <tt class="docutils literal"><span class="pre">Service</span> <span class="pre">is</span> <span class="pre">disabled</span></tt> message.</p>
+</div>
+<div class="section" id="enable-wmts-service">
+<h3>Enable WMTS Service<a class="headerlink" href="#enable-wmts-service" title="Permalink to this headline">¶</a></h3>
+<p>Enables the Web Map Tiled Service (WMTS) endpoint in GeoWebCache. When this setting is enabled, GeoWebCache will respond to its own WMTS endpoint:</p>
+<div class="highlight-python"><pre>http://GEOSERVER/URL/gwc/service/wmts?...</pre>
+</div>
+<p>When the service is disabled, calls to the capabilities document will return a <tt class="docutils literal"><span class="pre">Service</span> <span class="pre">is</span> <span class="pre">disabled</span></tt> message.</p>
+</div>
+</div>
+<div class="section" id="default-caching-options-for-geoserver-layers">
+<h2>Default Caching Options for GeoServer Layers<a class="headerlink" href="#default-caching-options-for-geoserver-layers" title="Permalink to this headline">¶</a></h2>
+<p>This section describes the configuration of the various defaults and other global options for the tile cache in GeoServer.</p>
+<div class="figure align-center">
+<img alt="../../_images/defaults_options.png" src="../../_images/defaults_options.png" />
+<p class="caption"><em>Default caching options</em></p>
+</div>
+<div class="section" id="automatically-configure-a-geowebcache-layer-for-each-new-layer-or-layer-group">
+<h3>Automatically configure a GeoWebCache layer for each new layer or layer group<a class="headerlink" href="#automatically-configure-a-geowebcache-layer-for-each-new-layer-or-layer-group" title="Permalink to this headline">¶</a></h3>
+<p>This setting, enabled by default, determines how layers in GeoServer are handled via the embedded GeoWebCache. When this setting is enabled, an entry in the GeoWebCache layer listing will be created whenever a new layer or layer group is published in GeoServer. Use this setting to keep the GeoWebCache catalog in sync. (This is enabled by default.)</p>
+</div>
+<div class="section" id="automatically-cache-non-default-styles">
+<h3>Automatically cache non-default styles<a class="headerlink" href="#automatically-cache-non-default-styles" title="Permalink to this headline">¶</a></h3>
+<p>By default, only requests using the default style for a given layer will be cached. When this setting is enabled, all requests for a given layer, even those that use a non-standard style will be cached. Disabling this may be useful in situations where disk space is an issue, or when only one default style is important.</p>
+</div>
+<div class="section" id="default-metatile-size">
+<h3>Default metatile size<a class="headerlink" href="#default-metatile-size" title="Permalink to this headline">¶</a></h3>
+<p>A metatile is several tiles combined into a larger one. This larger metatile is generated and then subdivided before being served back (and cached) as standard tiles. The advantage of using metatiling is in situations where a label or geometry lies on a boundary of a tile, which may be truncated or altered. With metatiling, these tile edge issues are greatly reduced.</p>
+<p>Moreover, with metatiling, the overall time it takes to seed the cache is reduced in most cases, when compared with rendering a full map with single tiles. In fact, using larger metatiling factors is a good way to reduce the time spent in seeding the cache.</p>
+<p>The disadvantage of metatiling is that at large sizes, memory consumption can be an issue.</p>
+<p>The size of the default metatile can be adjusted here. By default, GeoServer sets a metatile size of <strong>4x4</strong>, which strikes a balance between performance, memory usage, and rendering accuracy.</p>
+</div>
+<div class="section" id="default-gutter-size">
+<h3>Default gutter size<a class="headerlink" href="#default-gutter-size" title="Permalink to this headline">¶</a></h3>
+<p>The gutter size sets the amount of extra space (in pixels) used when generating a tile. Use this in conjunction with metatiles to reduce problems with labels and features not being rendered incorrectly due to being on a tile boundary.</p>
+</div>
+<div class="section" id="default-cache-formats">
+<h3>Default Cache Formats<a class="headerlink" href="#default-cache-formats" title="Permalink to this headline">¶</a></h3>
+<p>This setting determines the default image formats that can be cached when tiled requests are made. There are four image formats that can be used when saving tiles:</p>
+<ul class="simple">
+<li>PNG (24-bit PNG)</li>
+<li>PNG8 (8-bit PNG)</li>
+<li>JPEG</li>
+<li>GIF</li>
+</ul>
+<p>The default settings are subdivided into vector layers, raster layers, and layer groups. You may select any of the above four formats for each of the three types of layers. Any requests that fall outside of these layer/format combinations will not be cached if sent through GeoServer, and will return an error if sent to the GeoWebCache endpoints.</p>
+<p>These defaults can be overwritten on a per-layer basis when <a class="reference internal" href="../data/layers.html#webadmin-layers"><em>editing the layer properties</em></a>.</p>
+<div class="figure align-center">
+<img alt="../../_images/defaults_formats.png" src="../../_images/defaults_formats.png" />
+<p class="caption"><em>Default image formats</em></p>
+</div>
+</div>
+<div class="section" id="default-cached-gridsets">
+<h3>Default Cached Gridsets<a class="headerlink" href="#default-cached-gridsets" title="Permalink to this headline">¶</a></h3>
+<p>This section shows the gridsets that will be automatically configured for cached layers. While there are some pre-configured gridsets available, only two are enabled by default. These correspond to the most common and universal cases:</p>
+<ul class="simple">
+<li>EPSG:4326 (geographic) with 22 maximum zoom levels and 256x256 pixel tiles</li>
+<li>EPSG:900913 (spherical Mercator) with 31 maximum zoom levels and 256x256 pixel tiles</li>
+</ul>
+<div class="figure align-center">
+<img alt="../../_images/defaults_gridsets.png" src="../../_images/defaults_gridsets.png" />
+<p class="caption"><em>Default gridsets</em></p>
+</div>
+<p>To add a pre-existing grid set, select it from the <em class="guilabel">Add default grid set</em> menu, and click the Add icon (green circle with plus sign).</p>
+<div class="figure align-center">
+<img alt="../../_images/addexistinggridset.png" src="../../_images/addexistinggridset.png" />
+<p class="caption"><em>Adding an existing gridset to the list of defaults</em></p>
+</div>
+<p>These definitions are described in more detail on the <a class="reference internal" href="gridsets.html#webadmin-tilecaching-gridsets"><em>Gridsets</em></a> page.</p>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="demopage.html" title="previous chapter">Demo page</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="gridsets.html" title="next chapter">Gridsets</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">Caching defaults</a><ul>
+<li><a class="reference internal" href="#gwc-provided-services">GWC Provided Services</a><ul>
+<li><a class="reference internal" href="#enable-direct-integration-with-geoserver-wms">Enable direct integration with GeoServer WMS</a></li>
+<li><a class="reference internal" href="#enable-wms-c-service">Enable WMS-C Service</a></li>
+<li><a class="reference internal" href="#enable-tms-service">Enable TMS Service</a></li>
+<li><a class="reference internal" href="#enable-wmts-service">Enable WMTS Service</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#default-caching-options-for-geoserver-layers">Default Caching Options for GeoServer Layers</a><ul>
+<li><a class="reference internal" href="#automatically-configure-a-geowebcache-layer-for-each-new-layer-or-layer-group">Automatically configure a GeoWebCache layer for each new layer or layer group</a></li>
+<li><a class="reference internal" href="#automatically-cache-non-default-styles">Automatically cache non-default styles</a></li>
+<li><a class="reference internal" href="#default-metatile-size">Default metatile size</a></li>
+<li><a class="reference internal" href="#default-gutter-size">Default gutter size</a></li>
+<li><a class="reference internal" href="#default-cache-formats">Default Cache Formats</a></li>
+<li><a class="reference internal" href="#default-cached-gridsets">Default Cached Gridsets</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="demopage.html" title="previous chapter">Demo page</a></li>
+            <li>Next: <a href="gridsets.html" title="next chapter">Gridsets</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/webadmin/tilecache/defaults.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

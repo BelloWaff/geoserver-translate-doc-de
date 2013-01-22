@@ -1,0 +1,162 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Configuration &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../_static/jquery.js"></script>
+  <script type="text/javascript" src="../_static/doctools.js"></script>
+  <script type="text/javascript" src="../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../index.html" />
+      <link rel="up" title="Caching with GeoWebCache" href="index.html" />
+      <link rel="next" title="Seeding and refreshing" href="seeding.html" />
+      <link rel="prev" title="Using GeoWebCache" href="using.html" />
+</head>
+<body class="geowebcache/config">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Caching with GeoWebCache</a> &raquo;</li>
+  <li>Configuration</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="seeding.html" title="Seeding and refreshing"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="using.html" title="Using GeoWebCache"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="configuration">
+<span id="gwc-config"></span><h1>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h1>
+<p>GeoWebCache is automatically configured for use with GeoServer using the most common options, with no setup required. All communication between GeoServer and GeoWebCache happens by passing messages inside the JVM.</p>
+<p>By default, all layers served by GeoServer will be known to GeoWebCache. See the <a class="reference internal" href="../webadmin/tilecache/layers.html#webadmin-tilecaching-layers"><em>Tile Layers</em></a> page to test the configuration.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Version 2.2.0 of GeoServer introduced changes to the configuration of the integrated GeoWebCache.</p>
+</div>
+<div class="section" id="integrated-user-interface">
+<h2>Integrated user interface<a class="headerlink" href="#integrated-user-interface" title="Permalink to this headline">¶</a></h2>
+<p>GeoWebCache has a full integrated web-based configuration. See the <a class="reference internal" href="../webadmin/tilecache/index.html#webadmin-tilecaching"><em>Tile Caching</em></a> section in the <a class="reference internal" href="../webadmin/index.html#web-admin"><em>Web Administration Interface</em></a>.</p>
+</div>
+<div class="section" id="determining-tiled-layers">
+<h2>Determining tiled layers<a class="headerlink" href="#determining-tiled-layers" title="Permalink to this headline">¶</a></h2>
+<p>In versions of GeoServer prior to 2.2.0, the GeoWebCache integration was done in a such way that every GeoServer layer and layer group was forced to have an associated GeoWebCache tile layer. In addition, every such tile layer was forcedly published in the EPSG:900913 and EPSG:4326 gridsets with PNG and JPEG output formats.</p>
+<p>It is possible to selectively turn caching on or off for any layer served through GeoServer. This setting can be configured in the <a class="reference internal" href="../webadmin/tilecache/layers.html#webadmin-tilecaching-layers"><em>Tile Layers</em></a> section of the <a class="reference internal" href="../webadmin/index.html#web-admin"><em>Web Administration Interface</em></a>.</p>
+</div>
+<div class="section" id="configuration-files">
+<h2>Configuration files<a class="headerlink" href="#configuration-files" title="Permalink to this headline">¶</a></h2>
+<p>It is possible to configure most aspects of cached layers through the <a class="reference internal" href="../webadmin/tilecache/index.html#webadmin-tilecaching"><em>Tile Caching</em></a> section in the <a class="reference internal" href="../webadmin/index.html#web-admin"><em>Web Administration Interface</em></a> or the <a class="reference internal" href="rest/index.html#gwc-rest"><em>GeoWebCache REST API</em></a>.</p>
+<p>GeoWebCache keeps the configuration for each GeoServer tiled layer separately, inside the <tt class="file docutils literal"><span class="pre">&lt;data_dir&gt;/gwc-layers/</span></tt> directory. There is one XML file for each tile layer. These files contain a different syntax from the <tt class="docutils literal"><span class="pre">&lt;wmsLayer&gt;</span></tt> syntax in the standalone version and are <em>not</em> meant to be edited by hand. Instead you can configure tile layers on the <a class="reference internal" href="../webadmin/tilecache/layers.html#webadmin-tilecaching-layers"><em>Tile Layers</em></a> page or through the <a class="reference internal" href="rest/index.html#gwc-rest"><em>GeoWebCache REST API</em></a>.</p>
+<p>Configuration for the defined gridsets is saved in <tt class="file docutils literal"><span class="pre">&lt;data_dir&gt;/gwc/geowebcache.xml`</span></tt> so that the integrated GeoWebCache can continue to serve externally-defined tile layers from WMS services outside GeoServer.</p>
+<p>If upgrading from a version prior to 2.2.0, a migration process is run which creates a tile layer configuration for all the available layers and layer groups in GeoServer with the old defaults. From that point on, you should configure the tile layers on the <a class="reference internal" href="../webadmin/tilecache/layers.html#webadmin-tilecaching-layers"><em>Tile Layers</em></a> page.</p>
+</div>
+<div class="section" id="changing-the-cache-directory">
+<h2>Changing the cache directory<a class="headerlink" href="#changing-the-cache-directory" title="Permalink to this headline">¶</a></h2>
+<p>GeoWebCache will automatically store cached tiles in a <tt class="docutils literal"><span class="pre">gwc</span></tt> directory inside your GeoServer data directory. To set a different directory, stop GeoServer (if it is running) and add the following code to your GeoServer <tt class="file docutils literal"><span class="pre">web.xml</span></tt> file (located in the <tt class="file docutils literal"><span class="pre">WEB-INF</span></tt> directory):</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;context-param&gt;</span>
+   <span class="nt">&lt;param-name&gt;</span>GEOWEBCACHE_CACHE_DIR<span class="nt">&lt;/param-name&gt;</span>
+   <span class="nt">&lt;param-value&gt;</span>C:\temp<span class="nt">&lt;/param-value&gt;</span>
+<span class="nt">&lt;/context-param&gt;</span>
+</pre></div>
+</div>
+<p>Change the path inside <tt class="docutils literal"><span class="pre">&lt;param-value&gt;</span></tt> to the desired cache path (such as <tt class="file docutils literal"><span class="pre">C:\temp</span></tt> or <tt class="file docutils literal"><span class="pre">/tmp</span></tt>). Restart GeoServer when done.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Make sure GeoServer has write access in this directory.</p>
+</div>
+</div>
+<div class="section" id="geowebcache-with-multiple-geoserver-instances">
+<h2>GeoWebCache with multiple GeoServer instances<a class="headerlink" href="#geowebcache-with-multiple-geoserver-instances" title="Permalink to this headline">¶</a></h2>
+<p>For stability reasons, it is not recommended to use the embedded GeoWebCache with multiple GeoServer instances. If you want to configure GeoWebCache as a front-end for multiple instances of GeoServer, we recommend using the <a class="reference external" href="http://geowebcache.org">standalone GeoWebCache</a>.</p>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="using.html" title="previous chapter">Using GeoWebCache</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="seeding.html" title="next chapter">Seeding and refreshing</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">Configuration</a><ul>
+<li><a class="reference internal" href="#integrated-user-interface">Integrated user interface</a></li>
+<li><a class="reference internal" href="#determining-tiled-layers">Determining tiled layers</a></li>
+<li><a class="reference internal" href="#configuration-files">Configuration files</a></li>
+<li><a class="reference internal" href="#changing-the-cache-directory">Changing the cache directory</a></li>
+<li><a class="reference internal" href="#geowebcache-with-multiple-geoserver-instances">GeoWebCache with multiple GeoServer instances</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="using.html" title="previous chapter">Using GeoWebCache</a></li>
+            <li>Next: <a href="seeding.html" title="next chapter">Seeding and refreshing</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../_sources/geowebcache/config.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

@@ -1,0 +1,157 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Data &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../../index.html" />
+      <link rel="up" title="Web Administration Interface" href="../index.html" />
+      <link rel="next" title="Workspaces" href="workspaces.html" />
+      <link rel="prev" title="Layer Preview" href="../layerpreview/index.html" />
+</head>
+<body class="webadmin/data/index">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Web Administration Interface</a> &raquo;</li>
+  <li>Data</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="workspaces.html" title="Workspaces"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="../layerpreview/index.html" title="Layer Preview"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="data">
+<span id="webadmin-data"></span><h1>Data<a class="headerlink" href="#data" title="Permalink to this headline">¶</a></h1>
+<p>This section is the largest and perhaps the most important section of the Web Administration Interface. Each subsection links directly to a data type page with add, edit, and delete capabilities.</p>
+<p>In the example below, the data view page displays a table of indexed data.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_layers1.png" src="../../_images/data_layers1.png" />
+<p class="caption"><em>Layers page</em></p>
+</div>
+<p>To sort a data type alphabetically, click the column header.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_sort1.png" src="../../_images/data_sort1.png" />
+<p class="caption"><em>Unsorted (left) and sorted (right) columns</em></p>
+</div>
+<p>For simple searching of data type contents, enter the search criteria in the search box and click Enter. GeoServer will search the data types that are relevant to your query, and return a Search Results page.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_search_results1.png" src="../../_images/data_search_results1.png" />
+<p class="caption"><em>Search results for the query &#8220;top&#8221;</em></p>
+</div>
+<p>Specific details for adding, editing and deleting various data types are discussed in the following sections.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="workspaces.html">Workspaces</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="workspaces.html#edit-workspace">Edit Workspace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="workspaces.html#add-or-remove-a-workspace">Add or Remove a Workspace</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="stores.html">Stores</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="stores.html#editing-a-store">Editing a Store</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stores.html#adding-a-store">Adding a Store</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stores.html#removing-a-store">Removing a Store</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="layers.html">Layers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="layers.html#layer-types">Layer Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="layers.html#edit-layer-data">Edit Layer Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="layers.html#edit-publishing-information">Edit Publishing Information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="layers.html#add-or-delete-a-layer">Add or Delete a Layer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="layergroups.html">Layer Groups</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="layergroups.html#edit-layer-group">Edit Layer Group</a></li>
+<li class="toctree-l2"><a class="reference internal" href="layergroups.html#add-a-layer-group">Add a Layer Group</a></li>
+<li class="toctree-l2"><a class="reference internal" href="layergroups.html#remove-a-layer-group">Remove a layer group</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="styles.html">Styles</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="styles.html#edit-styles">Edit Styles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="styles.html#add-a-style">Add a Style</a></li>
+<li class="toctree-l2"><a class="reference internal" href="styles.html#remove-a-style">Remove a Style</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="../layerpreview/index.html" title="previous chapter">Layer Preview</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="workspaces.html" title="next chapter">Workspaces</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="../layerpreview/index.html" title="previous chapter">Layer Preview</a></li>
+            <li>Next: <a href="workspaces.html" title="next chapter">Workspaces</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/webadmin/data/index.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

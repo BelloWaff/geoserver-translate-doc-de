@@ -1,0 +1,145 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>WFS Service Settings &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../../index.html" />
+      <link rel="up" title="Working with Application Schemas" href="index.html" />
+      <link rel="next" title="Configuration" href="configuration.html" />
+      <link rel="prev" title="Installation" href="installation.html" />
+</head>
+<body class="data/app-schema/wfs-service-settings">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Working with Application Schemas</a> &raquo;</li>
+  <li>WFS Service Settings</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="configuration.html" title="Configuration"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="installation.html" title="Installation"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="wfs-service-settings">
+<span id="app-schema-wfs-service-settings"></span><h1>WFS Service Settings<a class="headerlink" href="#wfs-service-settings" title="Permalink to this headline">¶</a></h1>
+<p>There are two GeoServer WFS service settings that are strongly recommended for interoperable complex feature services. These can be enabled through the <em class="menuselection">Services ‣ WFS</em> page on the GeoServer web interface or by manually editing the <tt class="file docutils literal"><span class="pre">wfs.xml</span></tt> file in the data directory,</p>
+<div class="section" id="canonical-schema-location">
+<h2>Canonical schema location<a class="headerlink" href="#canonical-schema-location" title="Permalink to this headline">¶</a></h2>
+<p>The default GeoServer behaviour is to encode WFS responses that include a <tt class="docutils literal"><span class="pre">schemaLocation</span></tt> for the WFS schema that is located on the GeoServer instance. A client will not know without retrieving the schema whether it is identical to the official schema hosted at <tt class="docutils literal"><span class="pre">schemas.opengis.net</span></tt>. The solution is to encode the <tt class="docutils literal"><span class="pre">schemaLocation</span></tt> for the WFS schema as the canonical location at <tt class="docutils literal"><span class="pre">schemas.opengis.net</span></tt>.</p>
+<p>To enable this option, choose <em>one</em> of these:</p>
+<ol class="arabic">
+<li><p class="first">Either: On the <em class="menuselection">Service ‣ WFS</em> page under <em>Conformance</em> check <em>Encode canonical WFS schema location</em>.</p>
+</li>
+<li><p class="first">Or: Insert the following line before the closing tag in <tt class="file docutils literal"><span class="pre">wfs.xml</span></tt>:</p>
+<div class="highlight-python"><pre>&lt;canonicalSchemaLocation&gt;true&lt;/canonicalSchemaLocation&gt;</pre>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="encode-using-featuremember">
+<h2>Encode using featureMember<a class="headerlink" href="#encode-using-featuremember" title="Permalink to this headline">¶</a></h2>
+<p>By default GeoServer will encode WFS 1.1 responses with multiple features in a single <tt class="docutils literal"><span class="pre">gml:featureMembers</span></tt> element. This will cause invalid output if a response includes a feature at the top level that has already been encoded as a nested property of an earlier feature, because there is no single element that can be used to encode this feature by reference. The solution is to encode responses using <tt class="docutils literal"><span class="pre">gml:featureMember</span></tt>.</p>
+<p>To enable this option, choose <em>one</em> of these:</p>
+<ol class="arabic">
+<li><p class="first">Either: On the <em class="menuselection">Service ‣ WFS</em> page under <em>Encode response with</em> select <em>Multiple &#8220;featureMember&#8221; elements</em>.</p>
+</li>
+<li><p class="first">Or: Insert the following line before the closing tag in <tt class="file docutils literal"><span class="pre">wfs.xml</span></tt>:</p>
+<div class="highlight-python"><pre>&lt;encodeFeatureMember&gt;true&lt;/encodeFeatureMember&gt;</pre>
+</div>
+</li>
+</ol>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="installation.html" title="previous chapter">Installation</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="configuration.html" title="next chapter">Configuration</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">WFS Service Settings</a><ul>
+<li><a class="reference internal" href="#canonical-schema-location">Canonical schema location</a></li>
+<li><a class="reference internal" href="#encode-using-featuremember">Encode using featureMember</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="installation.html" title="previous chapter">Installation</a></li>
+            <li>Next: <a href="configuration.html" title="next chapter">Configuration</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/data/app-schema/wfs-service-settings.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

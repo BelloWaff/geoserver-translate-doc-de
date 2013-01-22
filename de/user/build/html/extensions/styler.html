@@ -1,0 +1,166 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>GeoExt Styler &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../_static/jquery.js"></script>
+  <script type="text/javascript" src="../_static/doctools.js"></script>
+  <script type="text/javascript" src="../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../index.html" />
+      <link rel="up" title="Extensions" href="index.html" />
+      <link rel="next" title="WFS Versioning" href="wfsv.html" />
+      <link rel="prev" title="Cross-layer filtering" href="querylayer/index.html" />
+</head>
+<body class="extensions/styler">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Extensions</a> &raquo;</li>
+  <li>GeoExt Styler</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="wfsv.html" title="WFS Versioning"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="querylayer/index.html" title="Cross-layer filtering"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="geoext-styler">
+<span id="styler-extension"></span><h1>GeoExt Styler<a class="headerlink" href="#geoext-styler" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Download the REST plugin for your version of GeoServer from the <a class="reference external" href="http://geoserver.org/display/GEOS/Download">download page</a> .</li>
+<li>Unzip the archive into the WEB-INF/lib directory of the GeoServer installation.</li>
+<li>Restart GeoServer</li>
+<li>Download the GeoExt Styler extension from <a class="reference external" href="http://downloads.sourceforge.net/geoserver/styler-1.7.3.zip">here</a> (it says 1.7.3 but the version number doesn&#8217;t matter.  Soon there will be an updated release)</li>
+<li>Unzip the archive into the <em>www/</em> directory of the GeoServer data directory.</li>
+</ol>
+</div></blockquote>
+</div>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>1. Visit
+<a class="reference external" href="http://localhost:8080/geoserver/www/styler/index.html">http://localhost:8080/geoserver/www/styler/index.html</a>
+2. Use the &#8220;Layers&#8221; panel to select a layer to style.</p>
+<blockquote>
+<div><div class="figure">
+<img alt="../_images/layers.png" src="../_images/layers.png" />
+</div>
+</div></blockquote>
+<ol class="arabic" start="3">
+<li><p class="first">In the &#8220;Legend&#8221; panel select a rule by clicking on it.</p>
+<blockquote>
+<div><div class="figure">
+<img alt="../_images/legend.png" src="../_images/legend.png" />
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">Change the color by clicking in the color box.</p>
+<blockquote>
+<div><div class="figure">
+<img alt="../_images/color.png" src="../_images/color.png" />
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">Click on a feature to view information about its attributes and which rules applied to it.</p>
+<blockquote>
+<div><div class="figure">
+<img alt="../_images/info.png" src="../_images/info.png" />
+</div>
+</div></blockquote>
+</li>
+</ol>
+</div></blockquote>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="querylayer/index.html" title="previous chapter">Cross-layer filtering</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="wfsv.html" title="next chapter">WFS Versioning</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">GeoExt Styler</a><ul>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#usage">Usage</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="querylayer/index.html" title="previous chapter">Cross-layer filtering</a></li>
+            <li>Next: <a href="wfsv.html" title="next chapter">WFS Versioning</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../_sources/extensions/styler.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

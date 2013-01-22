@@ -1,0 +1,236 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>The WPS Hook &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../../../index.html" />
+      <link rel="up" title="JavaScript" href="index.html" />
+      <link rel="next" title="GeoServer JavaScript API Documentation" href="api/index.html" />
+      <link rel="prev" title="The App Hook" href="app.html" />
+</head>
+<body class="community/scripting/js/wps">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="../../index.html" accesskey="U">Community</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Scripting</a> &raquo;</li>
+  <li><a href="../reference.html" accesskey="U">Scripting Reference</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">JavaScript</a> &raquo;</li>
+  <li>The WPS Hook</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="api/index.html" title="GeoServer JavaScript API Documentation"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="app.html" title="The App Hook"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="the-wps-hook">
+<h1>The WPS Hook<a class="headerlink" href="#the-wps-hook" title="Permalink to this headline">¶</a></h1>
+<p>In GeoScript JS, the <tt class="docutils literal"><span class="pre">geoscript/process</span></tt> module provides a <tt class="docutils literal"><span class="pre">Process</span></tt>
+constructor.  A process object wraps a function with a title, description, and
+additional metadata about the inputs and outputs.  With the GeoServer scripting
+extension, when a script exports a process, it is exposed in GeoServer via the
+WPS interface.</p>
+<p>To better understand how to construct a well described process, we&#8217;ll examine
+the parts of the previously provided <tt class="docutils literal"><span class="pre">buffer.js</span></tt> script:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">Process</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&quot;geoscript/process&quot;</span><span class="p">).</span><span class="nx">Process</span><span class="p">;</span>
+
+<span class="nx">exports</span><span class="p">.</span><span class="nx">process</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Process</span><span class="p">({</span>
+  <span class="nx">title</span><span class="o">:</span> <span class="s2">&quot;JavaScript Buffer Process&quot;</span><span class="p">,</span>
+  <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;Process that buffers a geometry.&quot;</span><span class="p">,</span>
+  <span class="nx">inputs</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">geom</span><span class="o">:</span> <span class="p">{</span>
+      <span class="nx">type</span><span class="o">:</span> <span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
+      <span class="nx">title</span><span class="o">:</span> <span class="s2">&quot;Input Geometry&quot;</span><span class="p">,</span>
+      <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;The target geometry.&quot;</span>
+    <span class="p">},</span>
+    <span class="nx">distance</span><span class="o">:</span> <span class="p">{</span>
+      <span class="nx">type</span><span class="o">:</span> <span class="s2">&quot;Double&quot;</span><span class="p">,</span>
+      <span class="nx">title</span><span class="o">:</span> <span class="s2">&quot;Buffer Distance&quot;</span><span class="p">,</span>
+      <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;The distance by which to buffer the geometry.&quot;</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="nx">outputs</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">result</span><span class="o">:</span> <span class="p">{</span>
+      <span class="nx">type</span><span class="o">:</span> <span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
+      <span class="nx">title</span><span class="o">:</span> <span class="s2">&quot;Result&quot;</span><span class="p">,</span>
+      <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;The buffered geometry.&quot;</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="nx">run</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">inputs</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span><span class="nx">result</span><span class="o">:</span> <span class="nx">inputs</span><span class="p">.</span><span class="nx">geom</span><span class="p">.</span><span class="nx">buffer</span><span class="p">(</span><span class="nx">inputs</span><span class="p">.</span><span class="nx">distance</span><span class="p">)};</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<p>When this script is saved in the <tt class="docutils literal"><span class="pre">$GEOSERVER_DATA_DIR/scripts/wps</span></tt> directory,
+it will be available to WPS clients with the identifier <tt class="docutils literal"><span class="pre">js:buffer</span></tt>.  In
+general, the process identifier is the name of the script prefixed by the
+language extension.</p>
+<p>First, the <tt class="docutils literal"><span class="pre">require</span></tt> function is used to pull in the <tt class="docutils literal"><span class="pre">Process</span></tt> constructor
+from the <tt class="docutils literal"><span class="pre">geoscript/process</span></tt> module:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">Process</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&quot;geoscript/process&quot;</span><span class="p">).</span><span class="nx">Process</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Next, a process is constructed and assigned to the <tt class="docutils literal"><span class="pre">process</span></tt> property of the
+<tt class="docutils literal"><span class="pre">exports</span></tt> object.  This makes it available to other JavaScript modules that
+may want to import this process with the <tt class="docutils literal"><span class="pre">require</span></tt> function in addition to
+exposing the process to GeoServer&#8217;s WPS.  The title and description provide WPS
+clients with human readable information about what the process does.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">exports</span><span class="p">.</span><span class="nx">process</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Process</span><span class="p">({</span>
+  <span class="nx">title</span><span class="o">:</span> <span class="s2">&quot;JavaScript Buffer Process&quot;</span><span class="p">,</span>
+  <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;Process that buffers a geometry.&quot;</span><span class="p">,</span>
+</pre></div>
+</div>
+<p>All the work of a process is handled by the <tt class="docutils literal"><span class="pre">run</span></tt> method.  Before clients can
+execute a process, they need to know some detail about what to provide as input
+and what to expect as output.  In general, processes accept multiple inputs and
+may return multiple outputs.  These are described by the process&#8217; <tt class="docutils literal"><span class="pre">inputs</span></tt>
+and <tt class="docutils literal"><span class="pre">outputs</span></tt> properties.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">inputs</span><span class="o">:</span> <span class="p">{</span>
+  <span class="nx">geom</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">type</span><span class="o">:</span> <span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
+    <span class="nx">title</span><span class="o">:</span> <span class="s2">&quot;Input Geometry&quot;</span><span class="p">,</span>
+    <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;The target geometry.&quot;</span>
+  <span class="p">},</span>
+  <span class="nx">distance</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">type</span><span class="o">:</span> <span class="s2">&quot;Double&quot;</span><span class="p">,</span>
+    <span class="nx">title</span><span class="o">:</span> <span class="s2">&quot;Buffer Distance&quot;</span><span class="p">,</span>
+    <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;The distance by which to buffer the geometry.&quot;</span>
+  <span class="p">}</span>
+<span class="p">},</span>
+</pre></div>
+</div>
+<p>The buffer process expects two inputs, named <tt class="docutils literal"><span class="pre">geom</span></tt> and <tt class="docutils literal"><span class="pre">distance</span></tt>.  As with
+the process itself, each of these inputs has a human readable title and
+description that will be provided to WPS clients.  The <tt class="docutils literal"><span class="pre">type</span></tt> property is a
+shorthand string identifying the data type of the input.  See the
+<a class="reference external" href="http://geoscript.org/js/api/process.html">Process API docs</a> for more detail
+on supported input and output types.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">outputs</span><span class="o">:</span> <span class="p">{</span>
+  <span class="nx">result</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">type</span><span class="o">:</span> <span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
+    <span class="nx">title</span><span class="o">:</span> <span class="s2">&quot;Result&quot;</span><span class="p">,</span>
+    <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;The buffered geometry.&quot;</span>
+  <span class="p">}</span>
+<span class="p">},</span>
+</pre></div>
+</div>
+<p>The buffer process provides a single output identified as <tt class="docutils literal"><span class="pre">result</span></tt>.  As with
+each of the inputs, this output is described with <tt class="docutils literal"><span class="pre">type</span></tt>, <tt class="docutils literal"><span class="pre">title</span></tt>, and
+<tt class="docutils literal"><span class="pre">description</span></tt> properties.</p>
+<p>To see what this process metadata looks like to a WPS client, call the
+WPS <a class="reference external" href="http://localhost:8080/geoserver/wps?service=WPS&amp;version=1.0.0&amp;request=DescribeProcess&amp;identifier=js:buffer">DescribeProcess</a>
+method:</p>
+<div class="highlight-python"><pre>http://localhost:8080/geoserver/wps
+  ?service=WPS
+  &amp;version=1.0.0
+  &amp;request=DescribeProcess
+  &amp;identifier=js:buffer</pre>
+</div>
+<p>Finally, the <tt class="docutils literal"><span class="pre">run</span></tt> method is provided.</p>
+<div class="highlight-javascript"><div class="highlight"><pre>  <span class="nx">run</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">inputs</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span><span class="nx">result</span><span class="o">:</span> <span class="nx">inputs</span><span class="p">.</span><span class="nx">geom</span><span class="p">.</span><span class="nx">buffer</span><span class="p">(</span><span class="nx">inputs</span><span class="p">.</span><span class="nx">distance</span><span class="p">)};</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">run</span></tt> method takes a single <tt class="docutils literal"><span class="pre">inputs</span></tt> argument.  This object will have
+named properties corresponding the the client provided inputs.  In this case,
+the <tt class="docutils literal"><span class="pre">geom</span></tt> property is a <tt class="docutils literal"><span class="pre">Geometry</span></tt> object from the <tt class="docutils literal"><span class="pre">geoscript/geom</span></tt>
+module.  This geometry has a <tt class="docutils literal"><span class="pre">buffer</span></tt> method that is called with the
+provided distance.  See the <a class="reference external" href="http://geoscript.org/js/api/geom/geometry.html">Geometry API docs</a>
+for more detail on available geometry properties and methods.</p>
+<p>The <tt class="docutils literal"><span class="pre">run</span></tt> method returns an object with properties corresponding to the
+above described outputs - in this case, just a single <tt class="docutils literal"><span class="pre">result</span></tt> property.</p>
+<p>To see the results of this processs in action, call the WPS
+<a class="reference external" href="http://localhost:8080/geoserver/wps?service=WPS&amp;version=1.0.0&amp;request=Execute&amp;identifier=js:buffer&amp;datainputs=geom=POINT(0%200)&#64;mimetype=application/wkt;distance=10">Execute</a>
+method:</p>
+<div class="highlight-python"><pre>http://localhost:8080/geoserver/wps
+  ?service=WPS
+  &amp;version=1.0.0
+  &amp;request=Execute
+  &amp;identifier=js:buffer
+  &amp;datainputs=geom=POINT(0 0)@mimetype=application/wkt;distance=10</pre>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="app.html" title="previous chapter">The App Hook</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="api/index.html" title="next chapter">GeoServer JavaScript API Documentation</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="app.html" title="previous chapter">The App Hook</a></li>
+            <li>Next: <a href="api/index.html" title="next chapter">GeoServer JavaScript API Documentation</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../../_sources/community/scripting/js/wps.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

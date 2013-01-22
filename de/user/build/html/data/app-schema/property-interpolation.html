@@ -1,0 +1,194 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Property Interpolation &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../../index.html" />
+      <link rel="up" title="Working with Application Schemas" href="index.html" />
+      <link rel="next" title="Data Stores" href="data-stores.html" />
+      <link rel="prev" title="Vocabulary functions" href="vocab-functions.html" />
+</head>
+<body class="data/app-schema/property-interpolation">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Working with Application Schemas</a> &raquo;</li>
+  <li>Property Interpolation</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="data-stores.html" title="Data Stores"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="vocab-functions.html" title="Vocabulary functions"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="property-interpolation">
+<span id="app-schema-property-interpolation"></span><h1>Property Interpolation<a class="headerlink" href="#property-interpolation" title="Permalink to this headline">¶</a></h1>
+<p>Interpolation in this context means the substitution of variables into strings. GeoServer app-schema supports the interpolation of properties (the Java equivalent of environment variables) into app-schema mapping files. This can be used, for example, to simplify the management of database connection parameters that would otherwise be hardcoded in a particular mapping file. This enables data directories to be given to third parties without inapplicable authentication or system configuration information. Externalising these parameters make management easier.</p>
+<div class="section" id="defining-properties">
+<h2>Defining properties<a class="headerlink" href="#defining-properties" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">If the system property <tt class="docutils literal"><span class="pre">app-schema.properties</span></tt> is not set, properties are loaded from <tt class="docutils literal"><span class="pre">WEB-INF/classes/app-schema.properties</span></tt> (or another resource <tt class="docutils literal"><span class="pre">/app-schema.properties</span></tt> on the classpath).</p>
+</li>
+<li><p class="first">If the system property <tt class="docutils literal"><span class="pre">app-schema.properties</span></tt> is set, properties are loaded from the file named as the value of the property. This is principally intended for debugging, and is designed to be used in an Eclipse launch configuration.</p>
+<blockquote>
+<div><ul class="simple">
+<li>For example, if the JVM is started with <tt class="docutils literal"><span class="pre">-Dapp-schema.properties=/path/to/some/local.properties</span></tt>, properties are loaded from <tt class="docutils literal"><span class="pre">/path/to/some/local.properties</span></tt>.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">System properties override properties defined in a configuration file, so if you define <tt class="docutils literal"><span class="pre">-Dsome.property</span></tt> at the java command line, it will override a value specified in the <tt class="docutils literal"><span class="pre">app-schema.properties</span></tt> file. This is intended for debugging, so you can set a property file in an Eclipse launch configuration, but override some of the properties contained in the file by setting them explicitly as system properties.</p>
+</li>
+<li><p class="first">All system properties are available for interpolation in mapping files.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="using-properties">
+<h2>Using properties<a class="headerlink" href="#using-properties" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Using <tt class="docutils literal"><span class="pre">${some.property}</span></tt> anywhere in the mapping file will cause it to be replaced by the value of the property <tt class="docutils literal"><span class="pre">some.property</span></tt>.</li>
+<li>It is an error for a property that has not been set to be used for interpolation.</li>
+<li>Interpolation is performed repeatedly, so values can contain new interpolations. Use this behaviour with caution because it may cause an infinite loop.</li>
+<li>Interpolation is performed before XML parsing, so can be used to include arbitrary chunks of XML.</li>
+</ul>
+</div>
+<div class="section" id="example-of-property-interpolation">
+<h2>Example of property interpolation<a class="headerlink" href="#example-of-property-interpolation" title="Permalink to this headline">¶</a></h2>
+<p>This example defines an Oracle data store, where the connection parameter are interpolated from properties:</p>
+<div class="highlight-python"><pre>&lt;sourceDataStores&gt;
+    &lt;DataStore&gt;
+        &lt;id&gt;datastore&lt;/id&gt;
+        &lt;parameters&gt;
+            &lt;Parameter&gt;
+                &lt;name&gt;dbtype&lt;/name&gt;
+                &lt;value&gt;Oracle&lt;/value&gt;
+            &lt;/Parameter&gt;
+            &lt;Parameter&gt;
+                &lt;name&gt;host&lt;/name&gt;
+                &lt;value&gt;${example.host}&lt;/value&gt;
+            &lt;/Parameter&gt;
+            &lt;Parameter&gt;
+                &lt;name&gt;port&lt;/name&gt;
+                &lt;value&gt;1521&lt;/value&gt;
+            &lt;/Parameter&gt;
+            &lt;Parameter&gt;
+                &lt;name&gt;database&lt;/name&gt;
+                &lt;value&gt;${example.database}&lt;/value&gt;
+            &lt;/Parameter&gt;
+            &lt;Parameter&gt;
+                &lt;name&gt;user&lt;/name&gt;
+                &lt;value&gt;${example.user}&lt;/value&gt;
+            &lt;/Parameter&gt;
+            &lt;Parameter&gt;
+                &lt;name&gt;passwd&lt;/name&gt;
+                &lt;value&gt;${example.passwd}&lt;/value&gt;
+            &lt;/Parameter&gt;
+        &lt;/parameters&gt;
+    &lt;/DataStore&gt;
+&lt;/sourceDataStores&gt;</pre>
+</div>
+</div>
+<div class="section" id="example-property-file">
+<h2>Example property file<a class="headerlink" href="#example-property-file" title="Permalink to this headline">¶</a></h2>
+<p>This sample property file gives the property values that are interpolated into the mapping file fragment above. These properties can be installed in <tt class="docutils literal"><span class="pre">WEB-INF/classes/app-schema.properties</span></tt> in your GeoServer installation:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">example</span><span class="o">.</span><span class="n">host</span> <span class="o">=</span> <span class="n">database</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span>
+<span class="n">example</span><span class="o">.</span><span class="n">database</span> <span class="o">=</span> <span class="n">example</span>
+<span class="n">example</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">dbuser</span>
+<span class="n">example</span><span class="o">.</span><span class="n">passwd</span> <span class="o">=</span> <span class="n">s3cr3t</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="vocab-functions.html" title="previous chapter">Vocabulary functions</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="data-stores.html" title="next chapter">Data Stores</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">Property Interpolation</a><ul>
+<li><a class="reference internal" href="#defining-properties">Defining properties</a></li>
+<li><a class="reference internal" href="#using-properties">Using properties</a></li>
+<li><a class="reference internal" href="#example-of-property-interpolation">Example of property interpolation</a></li>
+<li><a class="reference internal" href="#example-property-file">Example property file</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="vocab-functions.html" title="previous chapter">Vocabulary functions</a></li>
+            <li>Next: <a href="data-stores.html" title="next chapter">Data Stores</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/data/app-schema/property-interpolation.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

@@ -1,0 +1,169 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>GeoServer JavaScript API Documentation &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../../../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../../../../index.html" />
+      <link rel="up" title="JavaScript" href="../index.html" />
+      <link rel="next" title="SpatiaLite" href="../../../spatialite/index.html" />
+      <link rel="prev" title="The WPS Hook" href="../wps.html" />
+</head>
+<body class="community/scripting/js/api/index">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../../../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../../../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="../../../index.html" accesskey="U">Community</a> &raquo;</li>
+  <li><a href="../../index.html" accesskey="U">Scripting</a> &raquo;</li>
+  <li><a href="../../reference.html" accesskey="U">Scripting Reference</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">JavaScript</a> &raquo;</li>
+  <li>GeoServer JavaScript API Documentation</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="../../../spatialite/index.html" title="SpatiaLite"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="../wps.html" title="The WPS Hook"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="geoserver-javascript-api-documentation">
+<span id="scripting-javascript-api"></span><h1>GeoServer JavaScript API Documentation<a class="headerlink" href="#geoserver-javascript-api-documentation" title="Permalink to this headline">¶</a></h1>
+<p>The scripting extension includes a <tt class="docutils literal"><span class="pre">geoserver/catalog</span></tt> module that allows
+scripts to access resources in the GeoServer catalog.</p>
+<div class="section" id="the-catalog-module">
+<h2>The <tt class="docutils literal"><span class="pre">catalog</span></tt> module<a class="headerlink" href="#the-catalog-module" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">catalog</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&quot;geoserver/catalog&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="properties">
+<h2>Properties<a class="headerlink" href="#properties" title="Permalink to this headline">¶</a></h2>
+<dl class="attribute">
+<dt id="namespaces">
+<tt class="descname">namespaces</tt><a class="headerlink" href="#namespaces" title="Permalink to this definition">¶</a></dt>
+<dd><p><tt class="docutils literal"><span class="pre">Array</span></tt>
+A list of namespace objects.  Namespaces have <tt class="docutils literal"><span class="pre">alias</span></tt> and <tt class="docutils literal"><span class="pre">uri</span></tt>
+properties.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">catalog</span><span class="p">.</span><span class="nx">namespaces</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">namespace</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// do something with namespace.alias or namespace.uri</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="methods">
+<h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="getVectorLayer">
+<tt class="descname">getVectorLayer</tt><big>(</big><em>id</em><big>)</big><a class="headerlink" href="#getVectorLayer" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> &#8211; <tt class="docutils literal"><span class="pre">String</span></tt> The fully qualified feature type identifier (e.g.
+&#8220;topp:states&#8221;)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><tt class="docutils literal"><span class="pre">geoscript.layer.Layer</span></tt></td>
+</tr>
+</tbody>
+</table>
+<p>Access a feature type in the catalog as a <a class="reference external" href="http://geoscript.org/js/api/layer.html">GeoScript Layer</a>.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">states</span> <span class="o">=</span> <span class="nx">catalog</span><span class="p">.</span><span class="nx">getVectorLayer</span><span class="p">(</span><span class="s2">&quot;topp:states&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="../wps.html" title="previous chapter">The WPS Hook</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="../../../spatialite/index.html" title="next chapter">SpatiaLite</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">GeoServer JavaScript API Documentation</a><ul>
+<li><a class="reference internal" href="#the-catalog-module">The <tt class="docutils literal"><span class="pre">catalog</span></tt> module</a></li>
+<li><a class="reference internal" href="#properties">Properties</a></li>
+<li><a class="reference internal" href="#methods">Methods</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="../wps.html" title="previous chapter">The WPS Hook</a></li>
+            <li>Next: <a href="../../../spatialite/index.html" title="next chapter">SpatiaLite</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../../../_sources/community/scripting/js/api/index.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

@@ -1,0 +1,227 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Vocabulary functions &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../../index.html" />
+      <link rel="up" title="Working with Application Schemas" href="index.html" />
+      <link rel="next" title="Property Interpolation" href="property-interpolation.html" />
+      <link rel="prev" title="Secondary Namespaces" href="secondary-namespaces.html" />
+</head>
+<body class="data/app-schema/vocab-functions">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Working with Application Schemas</a> &raquo;</li>
+  <li>Vocabulary functions</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="property-interpolation.html" title="Property Interpolation"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="secondary-namespaces.html" title="Secondary Namespaces"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="vocabulary-functions">
+<span id="app-schema-vocab-functions"></span><h1>Vocabulary functions<a class="headerlink" href="#vocabulary-functions" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="scope">
+<h2>Scope<a class="headerlink" href="#scope" title="Permalink to this headline">¶</a></h2>
+<p>This page describes how to serve vocabulary translations using some function expressions in application schema mapping file.
+If you&#8217;re not familiar with application schema mapping file, read <a class="reference internal" href="mapping-file.html#app-schema-mapping-file"><em>Mapping File</em></a>.</p>
+<div class="section" id="versions-supported">
+<h3>Versions supported<a class="headerlink" href="#versions-supported" title="Permalink to this headline">¶</a></h3>
+<p>This functionality is supported from GeoTools version 2.6-M2 onwards.</p>
+</div>
+</div>
+<div class="section" id="useful-functions">
+<h2>Useful functions<a class="headerlink" href="#useful-functions" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="recode-function">
+<h3>Recode function<a class="headerlink" href="#recode-function" title="Permalink to this headline">¶</a></h3>
+<p>This is similar to <em>if_then_else</em> function, except that there is no default clause.
+You have to specify a translation value for every vocabulary key.</p>
+<p><strong>Syntax</strong>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">Recode</span><span class="p">(</span><span class="n">COLUMN_NAME</span><span class="p">,</span> <span class="n">key1</span><span class="p">,</span> <span class="n">value1</span><span class="p">,</span> <span class="n">key2</span><span class="p">,</span> <span class="n">value2</span><span class="p">,</span><span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><strong>COLUMN_NAME</strong>: column name to get values from</li>
+</ul>
+<p><strong>Example</strong>:</p>
+<div class="highlight-python"><pre>&lt;AttributeMapping&gt;
+  &lt;targetAttribute&gt;gml:name&lt;/targetAttribute&gt;
+  &lt;sourceExpression&gt;
+      &lt;OCQL&gt;Recode(ABBREVIATION, '1GRAV', 'urn:cgi:classifier:CGI:SimpleLithology:2008:gravel',
+                                 '1TILL', 'urn:cgi:classifier:CGI:SimpleLithology:2008:diamictite',
+                                 '6ALLU', 'urn:cgi:classifier:CGI:SimpleLithology:2008:sediment')
+      &lt;/OCQL&gt;
+  &lt;/sourceExpression&gt;
+&lt;/AttributeMapping&gt;</pre>
+</div>
+<p>The above example will map <strong>gml:name</strong> value to <em>urn:cgi:classifier:CGI:SimpleLithology:2008:gravel</em> if the ABBREVIATION column value is <em>1GRAV</em>.</p>
+</div>
+<div class="section" id="categorize-function">
+<h3>Categorize function<a class="headerlink" href="#categorize-function" title="Permalink to this headline">¶</a></h3>
+<p>This is more suitable for numeric keys, where the translation value is determined by the key&#8217;s position within the thresholds.</p>
+<p><strong>Syntax</strong>:</p>
+<div class="highlight-python"><pre>Categorize(COLUMN_NAME, default_value, threshold 1, value 1, threshold 2, value 2, ..., [preceding/succeeding])</pre>
+</div>
+<ul>
+<li><p class="first"><strong>COLUMN_NAME</strong>: data source column name</p>
+</li>
+<li><p class="first"><strong>default_value</strong>: default value to be mapped if COLUMN_NAME value is not within the threshold</p>
+</li>
+<li><p class="first"><strong>threshold(n)</strong>: threshold value</p>
+</li>
+<li><p class="first"><strong>value(n)</strong>: value to be mapped if the threshold is met</p>
+</li>
+<li><dl class="first docutils">
+<dt><strong>preceding/succeeding</strong>:</dt>
+<dd><ul class="first last simple">
+<li>optional, succeeding is used by default if not specified.</li>
+<li>not case sensitive.</li>
+<li>preceding: value is within threshold if COLUMN_NAME value &gt; threshold</li>
+<li>succeeding: value is within threshold if COLUMN_NAME value &gt;= threshold</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p><strong>Example</strong>:</p>
+<div class="highlight-python"><pre>&lt;AttributeMapping&gt;
+  &lt;targetAttribute&gt;gml:description&lt;/targetAttribute&gt;
+  &lt;sourceExpression&gt;
+      &lt;OCQL&gt;Categorize(CGI_LOWER_RANGE, 'missing_value', 1000, 'minor', 5000, 'significant')&lt;/OCQL&gt;
+  &lt;/sourceExpression&gt;
+&lt;/AttributeMapping&gt;</pre>
+</div>
+<p>The above example means <strong>gml:description</strong> value would be <em>significant</em> if CGI_LOWER_RANGE column value is &gt;= <em>5000</em>.</p>
+</div>
+<div class="section" id="vocab-function">
+<h3>Vocab function<a class="headerlink" href="#vocab-function" title="Permalink to this headline">¶</a></h3>
+<p>This is the new function Jody implemented, and more useful for bigger vocabulary pairs.
+Instead of writing a long key-to-value pairs in the function, you can keep them in a separate properties file.
+The properties file serves as a lookup table to the function. It has no header, and only contains the pairs in &#8216;&#8217;&lt;key&gt;=&lt;value&gt;&#8217;&#8217; format.</p>
+<p><strong>Syntax</strong>:</p>
+<div class="highlight-python"><pre>Vocab(COLUMN_NAME, properties file URI)</pre>
+</div>
+<ul class="simple">
+<li><strong>COLUMN_NAME</strong>: column name to get values from</li>
+<li><strong>properties file URI</strong>: absolute path of the properties file or relative to the mapping file location</li>
+</ul>
+<p><strong>Example:</strong></p>
+<p>Properties file:</p>
+<div class="highlight-python"><pre>1GRAV=urn:cgi:classifier:CGI:SimpleLithology:2008:gravel
+1TILL=urn:cgi:classifier:CGI:SimpleLithology:2008:diamictite
+6ALLU=urn:cgi:classifier:CGI:SimpleLithology:2008:sediment</pre>
+</div>
+<p>Mapping file:</p>
+<div class="highlight-python"><pre>&lt;AttributeMapping&gt;
+  &lt;targetAttribute&gt;gml:name&lt;/targetAttribute&gt;
+  &lt;sourceExpression&gt;
+      &lt;OCQL&gt;Vocab(ABBREVIATION, '/test-data/mapping.properties')&lt;/OCQL&gt;
+  &lt;/sourceExpression&gt;
+&lt;/AttributeMapping&gt;</pre>
+</div>
+<p>The above example will map <strong>gml:name</strong> to <em>urn:cgi:classifier:CGI:SimpleLithology:2008:gravel</em> if ABBREVIATION value is <em>1GRAV</em>.</p>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="secondary-namespaces.html" title="previous chapter">Secondary Namespaces</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="property-interpolation.html" title="next chapter">Property Interpolation</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">Vocabulary functions</a><ul>
+<li><a class="reference internal" href="#scope">Scope</a><ul>
+<li><a class="reference internal" href="#versions-supported">Versions supported</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#useful-functions">Useful functions</a><ul>
+<li><a class="reference internal" href="#recode-function">Recode function</a></li>
+<li><a class="reference internal" href="#categorize-function">Categorize function</a></li>
+<li><a class="reference internal" href="#vocab-function">Vocab function</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="secondary-namespaces.html" title="previous chapter">Secondary Namespaces</a></li>
+            <li>Next: <a href="property-interpolation.html" title="next chapter">Property Interpolation</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/data/app-schema/vocab-functions.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

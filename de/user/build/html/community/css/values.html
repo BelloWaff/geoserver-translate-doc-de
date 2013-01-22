@@ -1,0 +1,305 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>CSS Value Types &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../../index.html" />
+      <link rel="up" title="CSS Styling" href="index.html" />
+      <link rel="next" title="Styled Marks in CSS" href="styled-marks.html" />
+      <link rel="prev" title="Property Listing" href="properties.html" />
+</head>
+<body class="community/css/values">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Community</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">CSS Styling</a> &raquo;</li>
+  <li>CSS Value Types</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="styled-marks.html" title="Styled Marks in CSS"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="properties.html" title="Property Listing"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="css-value-types">
+<h1>CSS Value Types<a class="headerlink" href="#css-value-types" title="Permalink to this headline">¶</a></h1>
+<p>This page presents a brief overview of CSS types as used by this project.  Note
+that these can be repeated as described in <a class="reference internal" href="multivalues.html"><em>Multi-Valued Properties</em></a>.</p>
+<div class="section" id="numbers">
+<h2>Numbers<a class="headerlink" href="#numbers" title="Permalink to this headline">¶</a></h2>
+<p>Numeric values consist of a number, or a number annotated with a measurement
+value.  In general, it is wise to use measurement annotations most of the time,
+to avoid ambiguity and protect against potential future changes to the default
+units.</p>
+<p>Currently, the supported units include:</p>
+<ul class="simple">
+<li>Length<ul>
+<li><tt class="docutils literal"><span class="pre">px</span></tt> pixels</li>
+<li><tt class="docutils literal"><span class="pre">m</span></tt> meters</li>
+<li><tt class="docutils literal"><span class="pre">ft</span></tt> feet</li>
+</ul>
+</li>
+<li>Angle<ul>
+<li><tt class="docutils literal"><span class="pre">deg</span></tt> degrees</li>
+</ul>
+</li>
+<li>Ratio<ul>
+<li><tt class="docutils literal"><span class="pre">%</span></tt> percentage</li>
+</ul>
+</li>
+</ul>
+<p>When using expressions in place of numeric values, the first unit listed for
+the type of measure is assumed.</p>
+<p>Since the CSS module translates styles to SLD before any rendering occurs, its
+model of unit-of-measure is tied to that of SLD.  In practice, this means that
+for any particular symbolizer, there only one unit-of-measure applied for the
+style.  Therefore, the CSS module extracts that unit-of-measure from one
+special property for each symbolizer type.  Those types are listed below for
+reference:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">fill-size</span></tt> determines the unit-of-measure for polygon symbolizers (but
+that doesn&#8217;t matter so much since it is the only measure associated with
+fills)</li>
+<li><tt class="docutils literal"><span class="pre">stroke-width</span></tt> determines the unit-of-measure for line symbolizers</li>
+<li><tt class="docutils literal"><span class="pre">mark-size</span></tt> determines the unit-of-measure for point symbolizers</li>
+<li><tt class="docutils literal"><span class="pre">font-size</span></tt> determines the unit-of-measure for text symbolizers and the
+associated halos</li>
+</ul>
+</div>
+<div class="section" id="strings">
+<h2>Strings<a class="headerlink" href="#strings" title="Permalink to this headline">¶</a></h2>
+<p>String values consist of a small snippet of text.  For example, a string could
+be a literal label to use for a subset of roads:</p>
+<div class="highlight-css"><div class="highlight"><pre><span class="o">[</span><span class="nt">lanes</span><span class="o">&gt;</span><span class="nt">20</span><span class="o">]</span> <span class="p">{</span>
+        <span class="n">label</span><span class="o">:</span> <span class="s2">&quot;Serious Freaking Highway&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Strings can be enclosed in either single or double quotes.  It&#8217;s easiest to
+simply use whichever type of quotes are not in your string value, but you can
+escape quote characters by prefixing them with a backslash <tt class="docutils literal"><span class="pre">\</span></tt>.  Backslash
+characters themselves must also be prefixed.  For example, <tt class="docutils literal"><span class="pre">'\\\''</span></tt> is a
+string value consisting of a single backslash followed by a single single quote
+character.</p>
+</div>
+<div class="section" id="labels">
+<h2>Labels<a class="headerlink" href="#labels" title="Permalink to this headline">¶</a></h2>
+<p>While labels aren&#8217;t really a special type of value, they deserve a special
+mention since labels are more likely to require special string manipulation
+than other CSS values.</p>
+<p>If a label is a simple string value, then it works like any other string
+would:</p>
+<div class="highlight-css"><div class="highlight"><pre><span class="o">[</span><span class="nt">lanes</span> <span class="o">&gt;</span> <span class="nt">20</span><span class="o">]</span> <span class="p">{</span>
+    <span class="n">label</span><span class="o">:</span> <span class="s2">&quot;Serious Freaking Highway&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>However, if a label has multiple values, all of those values will be
+concatenated to form a single label:</p>
+<div class="highlight-css"><div class="highlight"><pre><span class="o">[</span><span class="nt">lanes</span> <span class="o">&gt;</span> <span class="nt">20</span><span class="o">]</span> <span class="p">{</span>
+   <span class="n">label</span><span class="o">:</span> <span class="s2">&quot;Serious &quot;</span> <span class="s2">&quot;Freaking &quot;</span> <span class="s2">&quot;Highway&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Note the whitespace within the label strings here; <em>no whitespace is added</em>
+when concatenating strings, so you must be explicit about where you want it
+included.  You can also mix CQL expressions in with literal string values
+here:</p>
+<div class="highlight-css"><div class="highlight"><pre><span class="nt">states</span> <span class="p">{</span>
+   <span class="n">label</span><span class="o">:</span> <span class="p">[</span><span class="n">STATE_NAME</span><span class="p">]</span> <span class="s2">&quot; (&quot;</span> <span class="p">[</span><span class="n">STATE_ABBR</span><span class="p">]</span> <span class="s2">&quot;)&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>This automatic concatenation is currently a special feature only provided
+for labels.  However, string concatenation is also supported directly in
+CQL expressions by using the <tt class="docutils literal"><span class="pre">strConcat</span></tt> filter function:</p>
+<div class="highlight-css"><div class="highlight"><pre><span class="o">*</span> <span class="p">{</span> <span class="n">fill</span><span class="o">:</span> <span class="p">[</span><span class="n">strConcat</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="o">,</span> <span class="n">color_hex</span><span class="p">)];</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p class="last">This form of concatenation works with any property that supports
+expressions.</p>
+</div>
+</div>
+<div class="section" id="colors">
+<h2>Colors<a class="headerlink" href="#colors" title="Permalink to this headline">¶</a></h2>
+<p>Color values are relatively important to styling, so there are multiple ways to
+specify them.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Format</strong></td>
+<td><strong>Interpretation</strong></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">#RRGGBB</span></tt></td>
+<td>A hexadecimal-encoded color value, with two digits each for red, green, and blue.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">#RGB</span></tt></td>
+<td>A hexadecimal-encoded color value, with one digits each for red, green,
+and blue. This is equivalent to the two-digit-per-channel encoding with
+each digit duplicated.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">rgb(r,</span> <span class="pre">g,</span> <span class="pre">b)</span></tt></td>
+<td>A three-part color value with each channel represented by a value in
+the range 0 to 1, or in the range 0 to 255.  0 to 1 is used if any of
+the values include a decimal point, otherwise it is 0 to 255.</td>
+</tr>
+<tr class="row-odd"><td><em>Simple name</em></td>
+<td>The simple English name of the color.  A full list of the supported
+colors is available at
+<a class="reference external" href="http://www.w3.org/TR/SVG/types.html#ColorKeywords">http://www.w3.org/TR/SVG/types.html#ColorKeywords</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="external-references">
+<h2>External References<a class="headerlink" href="#external-references" title="Permalink to this headline">¶</a></h2>
+<p>When using external images to decorate map features, it is necessary to
+reference them by URL.  This is done by a call to the <tt class="docutils literal"><span class="pre">url</span></tt> function.  The
+URL value may be wrapped in single or double-quotes, or not at all.  The same
+escaping rules as for string values.  The <tt class="docutils literal"><span class="pre">url</span></tt> function is also a special
+case where the surrounding quote marks can usually be omitted. Some examples:</p>
+<div class="highlight-css"><div class="highlight"><pre><span class="c">/* These properties are all equivalent. */</span>
+
+<span class="o">*</span> <span class="p">{</span>
+    <span class="n">stroke</span><span class="o">:</span> <span class="sx">url(&quot;http://example.com/&quot;)</span><span class="p">;</span>
+    <span class="n">stroke</span><span class="o">:</span> <span class="sx">url(&#39;http://example.com/&#39;)</span><span class="p">;</span>
+    <span class="n">stroke</span><span class="o">:</span> <span class="sx">url(http://example.com/)</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">While relative URLs are supported, they will be fully resolved during the conversion process to SLD and written out as absolute URLs.
+This may be cause problems when relocating data directories, etc.
+The style can be regenerated with the current correct URL by opening it in the demo editor and using the Submit button there.</p>
+</div>
+</div>
+<div class="section" id="well-known-marks">
+<h2>Well-Known Marks<a class="headerlink" href="#well-known-marks" title="Permalink to this headline">¶</a></h2>
+<p>As defined in the SLD standard, GeoServer&#8217;s <tt class="docutils literal"><span class="pre">css</span></tt> module  also allows using a
+certain set of well-known mark types without having to provide graphic
+resources explicitly.  These include:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">circle</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">square</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">cross</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">star</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">arrow</span></tt></li>
+</ul>
+<p>And others.  Additionally, vendors can provide an extended set of well-known
+marks, a facet of the standard that is exploited by some GeoTools plugins to
+provide dynamic map features such as using characters from TrueType fonts as
+map symbols, or dynamic charting.  In support of these extended mark names, the
+css module provides a <tt class="docutils literal"><span class="pre">symbol</span></tt> function similar to <tt class="docutils literal"><span class="pre">url</span></tt>.  The syntax is
+the same, aside from the function name:</p>
+<div class="highlight-css"><div class="highlight"><pre><span class="o">*</span> <span class="p">{</span>
+    <span class="n">mark</span><span class="o">:</span> <span class="n">symbol</span><span class="p">(</span><span class="k">circle</span><span class="p">);</span>
+    <span class="n">mark</span><span class="o">:</span> <span class="n">symbol</span><span class="p">(</span><span class="s1">&#39;ttf://Times+New+Roman&amp;char=0x19b2&#39;</span><span class="p">);</span>
+    <span class="n">mark</span><span class="o">:</span> <span class="n">symbol</span><span class="p">(</span><span class="s2">&quot;chart://type=pie&amp;x&amp;y&amp;z&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="properties.html" title="previous chapter">Property Listing</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="styled-marks.html" title="next chapter">Styled Marks in CSS</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">CSS Value Types</a><ul>
+<li><a class="reference internal" href="#numbers">Numbers</a></li>
+<li><a class="reference internal" href="#strings">Strings</a></li>
+<li><a class="reference internal" href="#labels">Labels</a></li>
+<li><a class="reference internal" href="#colors">Colors</a></li>
+<li><a class="reference internal" href="#external-references">External References</a></li>
+<li><a class="reference internal" href="#well-known-marks">Well-Known Marks</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="properties.html" title="previous chapter">Property Listing</a></li>
+            <li>Next: <a href="styled-marks.html" title="next chapter">Styled Marks in CSS</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/community/css/values.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

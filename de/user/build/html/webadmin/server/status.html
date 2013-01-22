@@ -1,0 +1,204 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Status &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../../index.html" />
+      <link rel="up" title="Server" href="index.html" />
+      <link rel="next" title="Contact Information" href="contact.html" />
+      <link rel="prev" title="Server" href="index.html" />
+</head>
+<body class="webadmin/server/status">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Web Administration Interface</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Server</a> &raquo;</li>
+  <li>Status</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="contact.html" title="Contact Information"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="index.html" title="Server"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="status">
+<span id="id1"></span><h1>Status<a class="headerlink" href="#status" title="Permalink to this headline">¶</a></h1>
+<p>The Server Status page provides a summary of server configuration parameters and run-time status. It provides a useful diagnostic tool in a testing environment.</p>
+<div class="figure align-center">
+<img alt="../../_images/server_status1.png" src="../../_images/server_status1.png" />
+<p class="caption"><em>Status Page</em></p>
+</div>
+<div class="section" id="status-field-descriptions">
+<h2>Status Field Descriptions<a class="headerlink" href="#status-field-descriptions" title="Permalink to this headline">¶</a></h2>
+<p>The following table describes the current status indicators.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="30%" />
+<col width="70%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Option</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td>Locks</td>
+<td>A WFS has the ability to lock features to prevent more than one person from updating the feature at one time.  If data is locked, edits can be performed by a single WFS editor. When the edits are posted, the locks are released and features can be edited by other WFS editors. A zero in the locks field means all locks are released. If locks is non-zero, then pressing &#8220;free locks,&#8221; releases all feature locks currently help by the server, and updates the field value to zero.</td>
+</tr>
+<tr class="row-odd"><td>Connections</td>
+<td>Refers to the numbers of vector stores, in the above case 4, that were able to connect.</td>
+</tr>
+<tr class="row-even"><td>Memory Usage</td>
+<td>The amount of memory current used by GeoServer. In the above example, 55.32 MB of memory is being used. Clicking on the &#8220;Free Memory&#8221; button,  cleans up memory marked for deletion by running the garbage collector.</td>
+</tr>
+<tr class="row-odd"><td>JVM Version</td>
+<td>Denotes which version of the JVM (Java Virtual Machine) is been used to power the server. Here the JVM is Apple Inc.: 1.5.0_16.</td>
+</tr>
+<tr class="row-even"><td>Native JAI</td>
+<td>GeoServer uses <a class="reference external" href="https://jai.dev.java.net">Java Advanced Imaging</a> (JAI) framework for image rendering and coverage manipulation. When properly installed (true), JAI makes WCS and WMS performance faster and more efficient.</td>
+</tr>
+<tr class="row-odd"><td>Native JAI ImageIO</td>
+<td>GeoServer uses <a class="reference external" href="https://jai-imageio.dev.java.net">JAI Image IO</a> (JAI) framework for raster data loading and image encoding. When properly installed (true), JAI Image I/O makes WCS and WMS performance faster and more efficient.</td>
+</tr>
+<tr class="row-even"><td>JAI Maximum Memory</td>
+<td>Expresses in bytes the amount of memory available for tile cache, in this case 33325056 bytes. The JAI Maximum Memory value must be between 0.0 and {0}</td>
+</tr>
+<tr class="row-odd"><td>JAI Memory Usage</td>
+<td>Run-time amount of memory is used for the tile cache. Clicking on the &#8220;Free Memory&#8221; button, clears available JAI memory by running the tile cache flushing.</td>
+</tr>
+<tr class="row-even"><td>JAI Memory Threshold</td>
+<td>Refers to the percentage, e.g. 75, of cache memory to retain during tile removal. JAI Memory Threshold value must be between 0.0 and 100.</td>
+</tr>
+<tr class="row-odd"><td>Number of JAI Tile Threads</td>
+<td>The number of parallel threads used by to scheduler to handle tiles</td>
+</tr>
+<tr class="row-even"><td>JAI Tile Thread Priority</td>
+<td>Schedules the global tile scheduler priority. The priority value is defaults to 5, and must fall between 1 and 10.</td>
+</tr>
+<tr class="row-odd"><td>Update Sequence</td>
+<td>Refers to the number of times (60) the server configuration has been modified</td>
+</tr>
+<tr class="row-even"><td>Resource cache</td>
+<td>GeoServer does not cache data, but it does cache connection to stores, feature type definitions, external graphics, font definitions and CRS definitions as well. The &#8220;Clear&#8221; button forces those caches empty and makes GeoServer reopen the stores and re-read image and font information, as well as the custom CRS definitions stored in <cite>${GEOSERVER_DATA_DIR}/user_projections/epsg.properties</cite>.</td>
+</tr>
+<tr class="row-odd"><td>Configuration and catalog</td>
+<td>GeoServer keeps in memory all of its configuration data. If for any reason that configuration information has become stale (e.g., an external utility has modified the configuration on disk) the &#8220;Reload&#8221; button will force GeoServer to reload all of its configuration from disk.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="timestamps-field-descriptions">
+<h2>Timestamps Field Descriptions<a class="headerlink" href="#timestamps-field-descriptions" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Option</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td>GeoServer</td>
+<td>Currently a placeholder. Refers to the day and time of current GeoServer install.</td>
+</tr>
+<tr class="row-odd"><td>Configuration</td>
+<td>Currently a placeholder. Refers to the day and time of last configuration change.</td>
+</tr>
+<tr class="row-even"><td>XML</td>
+<td>Currently a placeholder.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="index.html" title="previous chapter">Server</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="contact.html" title="next chapter">Contact Information</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">Status</a><ul>
+<li><a class="reference internal" href="#status-field-descriptions">Status Field Descriptions</a></li>
+<li><a class="reference internal" href="#timestamps-field-descriptions">Timestamps Field Descriptions</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="index.html" title="previous chapter">Server</a></li>
+            <li>Next: <a href="contact.html" title="next chapter">Contact Information</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/webadmin/server/status.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

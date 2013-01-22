@@ -1,0 +1,198 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Freemarker Templates &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../_static/jquery.js"></script>
+  <script type="text/javascript" src="../_static/doctools.js"></script>
+  <script type="text/javascript" src="../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../index.html" />
+      <link rel="up" title="Tutorials" href="index.html" />
+      <link rel="next" title="GeoRSS" href="georss/georss.html" />
+      <link rel="prev" title="Tutorials" href="index.html" />
+</head>
+<body class="tutorials/freemarker">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Tutorials</a> &raquo;</li>
+  <li>Freemarker Templates</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="georss/georss.html" title="GeoRSS"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="index.html" title="Tutorials"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="freemarker-templates">
+<span id="tutorial-freemarkertemplate"></span><h1>Freemarker Templates<a class="headerlink" href="#freemarker-templates" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>This tutorial will introduce you to a more in depth view of what FreeMarker templates are and how you can use the data provided to templates by GeoServer.</p>
+<p><a class="reference external" href="http://www.freemarker.org/">Freemarker</a> is a simple yet powerful template engine that GeoServer uses whenever developer allowed user customization of outputs. In particular, at the time of writing it&#8217;s used to allow customization of GetFeatureInfo, GeoRSS and KML outputs.</p>
+<p>Freemarker allows for simple variable expansions, as in <tt class="docutils literal"><span class="pre">${myVarName}</span></tt>, expansion of nested properties, such as in <tt class="docutils literal"><span class="pre">${feature.myAtt.value}</span></tt>, up to little programs using loops, ifs and variables.
+Most of the relevant information about how to approach template writing is included in the Freemarker&#8217;s <a class="reference external" href="http://www.freemarker.org/docs/dgui.html">Designer guide</a> and won&#8217;t be repeated here: the guide, along with the <a class="reference internal" href="../googleearth/tutorials/kmlplacemark/index.html#getutorial-kmlplacemark"><em>KML Placemark Templates</em></a> and <a class="reference internal" href="GetFeatureInfo/index.html#tutorials-getfeatureinfo"><em>GetFeatureInfo Templates</em></a> tutorials should be good enough to give you a good grip on how a template is built.</p>
+<div class="section" id="template-lookup">
+<h3>Template Lookup<a class="headerlink" href="#template-lookup" title="Permalink to this headline">¶</a></h3>
+<p>Geoserver looks up templates in three different places, allowing for various level of customization. For example given the <tt class="docutils literal"><span class="pre">content.ftl</span></tt> template used to generate WMS GetFeatureInfo content:</p>
+<ul class="simple">
+<li>Look into <tt class="docutils literal"><span class="pre">GEOSERVER_DATA_DIR/workspaces/&lt;workspace&gt;/&lt;datastore&gt;/&lt;featuretype&gt;/content.ftl</span></tt> to see if there is a feature type specific template</li>
+<li>Look into <tt class="docutils literal"><span class="pre">GEOSERVER_DATA_DIR/workspaces/&lt;workspace&gt;/&lt;datastore&gt;/content.ftl</span></tt> to see if there is a store specific template</li>
+<li>Look into <tt class="docutils literal"><span class="pre">GEOSERVER_DATA_DIR/workspaces/&lt;workspace&gt;/content.ftl</span></tt> to see if there is a workspace specific template</li>
+<li>Look into <tt class="docutils literal"><span class="pre">GEOSERVER_DATA_DIR/workspaces/content.ftl</span></tt> looking for a global override</li>
+<li>Look into <tt class="docutils literal"><span class="pre">GEOSERVER_DATA_DIR/templates/content.ftl</span></tt> looking for a global override</li>
+<li>Look into the GeoServer classpath and load the default template</li>
+</ul>
+<p>Each templated output format tutorial should provide you with the template names, and state whether the templates can be type specific, or not.  Missing the source for the default template, look up for the service jar in the geoserver distribution (for example, wms-x.y.z.jar), unpack it, and you&#8217;ll find the actual xxx.ftl files GeoServer is using as the default templates.</p>
+</div>
+<div class="section" id="common-data-models">
+<h3>Common Data Models<a class="headerlink" href="#common-data-models" title="Permalink to this headline">¶</a></h3>
+<p>Freemarker calls &#8220;data model&#8221; the set of data provided to the template. Each output format used by Geoserver will inject a different data model according to the informations it&#8217;s managing, yet there are three very common elements that appear in almost each template, Feature, FeatureType and FeatureCollection. Here we provide a data model of each.</p>
+<p>The data model is a sort of a tree, where each element has a name and a type. Besides basic types, we&#8217;ll use:</p>
+<ul class="simple">
+<li>list: a flat list of items that you can scan thru using the FreeMarker <tt class="docutils literal"><span class="pre">&lt;#list&gt;</span></tt> directive;</li>
+<li>map: a key/value map, that you usually access using the dot notation, as in <tt class="docutils literal"><span class="pre">${myMap.myKey</span></tt>}, and can be nested;</li>
+<li>listMap: a special construct that is, at the same time, a Map, and a list of the values.</li>
+</ul>
+<p>Here are the three data models (as you can see there are redundancies, in particular in attributes, we chose this approach to make template building easier):</p>
+<p><strong>FeatureType (map)</strong></p>
+<ul class="simple">
+<li>name (string): the type name</li>
+<li>attributes (listMap): the type attributes<ul>
+<li>name (string): attribute  name</li>
+<li>namespace (string): attribute namespace URI</li>
+<li>prefix (string): attribute namespace prefix</li>
+<li>type (string): attribute type,  the fully qualified Java class name</li>
+<li>isGeometry (boolean): true if the attribute is geometric, false otherwise</li>
+</ul>
+</li>
+</ul>
+<p><strong>Feature (map)</strong></p>
+<ul class="simple">
+<li>fid (string): the feature ID (WFS feature id)</li>
+<li>typeName (string): the type name</li>
+<li>attributes (listMap): the list of attributes (both data and metadata)<ul>
+<li>name (string): attribute  name</li>
+<li>namespace (string): attribute namespace URI</li>
+<li>prefix (string): attribute namespace prefix</li>
+<li>isGeometry (boolean): true if the attribute is geometric, false otherwise</li>
+<li>value: a string representation of the the attribute value</li>
+<li>isComplex (boolean): true if the attribute is a feature (see <a class="reference internal" href="../data/app-schema/complex-features.html#app-schema-complex-features"><em>Complex Features</em></a>), false otherwise</li>
+<li>type (string or FeatureType): attribute type: if isComplex is false, the fully qualified Java class name; if isComplex is true, a FeatureType</li>
+<li>rawValue: the actual attribute value (is isComplex is true rawValue is a Feature)</li>
+</ul>
+</li>
+<li>type (map)<ul>
+<li>name (string): the type name (same as typeName)</li>
+<li>namespace (string): attribute namespace URI</li>
+<li>prefix (string): attribute namespace prefix</li>
+<li>title (string): The title configured in the admin console</li>
+<li>abstract (string): The abstract for the type</li>
+<li>description (string): The description for the type</li>
+<li>keywords (list): The keywords for the type</li>
+<li>metadataLinks (list): The metadata URLs for the type</li>
+<li>SRS (string): The layer&#8217;s SRS</li>
+<li>nativeCRS (string): The layer&#8217;s coordinate reference system as WKT</li>
+</ul>
+</li>
+</ul>
+<p><strong>FeatureCollection (map)</strong></p>
+<ul class="simple">
+<li>features (list of Feature, see above)</li>
+<li>type (FeatureType, see above)</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="index.html" title="previous chapter">Tutorials</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="georss/georss.html" title="next chapter">GeoRSS</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">Freemarker Templates</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a><ul>
+<li><a class="reference internal" href="#template-lookup">Template Lookup</a></li>
+<li><a class="reference internal" href="#common-data-models">Common Data Models</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="index.html" title="previous chapter">Tutorials</a></li>
+            <li>Next: <a href="georss/georss.html" title="next chapter">GeoRSS</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../_sources/tutorials/freemarker.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

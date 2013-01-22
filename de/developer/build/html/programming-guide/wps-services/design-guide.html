@@ -1,0 +1,192 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>WPS design guide &mdash; GeoServer 2.2.x Developer Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x Developer Manual" href="../../index.html" />
+      <link rel="up" title="WPS Services" href="index.html" />
+      <link rel="next" title="Implementing a WPS Service" href="implementing.html" />
+      <link rel="prev" title="WPS Services" href="index.html" />
+</head>
+<body class="programming-guide/wps-services/design-guide">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.2.x Developer Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.2.x Developer Manual</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Programming Guide</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">WPS Services</a> &raquo;</li>
+  <li>WPS design guide</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="implementing.html" title="Implementing a WPS Service"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="index.html" title="WPS Services"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="wps-design-guide">
+<span id="id1"></span><h1>WPS design guide<a class="headerlink" href="#wps-design-guide" title="Permalink to this headline">¶</a></h1>
+<p>This guide serves as an introduction to the WPS module. As such, it does not contain:</p>
+<ul class="simple">
+<li>a primer to the WPS protocol, that can be found in the <a class="reference external" href="http://www.opengeospatial.org/standards/wps">WPS specification</a> (the module implements the WPS 1.0 specification).</li>
+<li>it does not repeat again what can be already found in the classes javadocs</li>
+<li>it does not explain how to implement a OWS service using the GeoServer OWS framework, that is left to its dedicated <a class="reference internal" href="../ows-services/index.html#ows-services"><em>guide</em></a>.</li>
+</ul>
+<p>In short, it provides a global vision of how the module fits togheter, leaving the details to other information sources.</p>
+<div class="section" id="general-architecture">
+<h2>General architecture<a class="headerlink" href="#general-architecture" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">We really need to publish the Javadocs somewhere so that this document can link to them</p>
+</div>
+<p>The module is based on the usual GeoServer OWS framework application:</p>
+<ul class="simple">
+<li>a set of KVP parsers and KVP readers to parse the HTTP GET requests, found in the <tt class="docutils literal"><span class="pre">org.geoserver.wps.kvp</span></tt> package</li>
+<li>a set of XML parsers to parse the HTTP POST requests, found int the <tt class="docutils literal"><span class="pre">org.geoserver.wps.xml</span></tt> and
+<tt class="docutils literal"><span class="pre">org.geoserver.wps.xml.v1_0_0</span></tt></li>
+<li>a service object interface and implementations responding to the various WPS methods, in particular <tt class="docutils literal"><span class="pre">org.geoserver.wps.DefaultWebProcessingService</span></tt>, which in turn delegates most of the work to the <tt class="docutils literal"><span class="pre">GetCapabilities</span></tt>, <tt class="docutils literal"><span class="pre">DescribeProcess</span></tt> and <tt class="docutils literal"><span class="pre">ExecuteProcess</span></tt> classes</li>
+<li>a set of output transformers taking the results generated by <tt class="docutils literal"><span class="pre">DefaultWebProcessingService</span></tt> and turning them into the appropriate response (usually, XML). You can find some of those in the <tt class="docutils literal"><span class="pre">org.geoserver.wps.response</span></tt> package, whilst some others are generic ones that have been parametrized and declared in the Spring context (see the <tt class="docutils literal"><span class="pre">applicationContext.xml</span></tt> file).</li>
+</ul>
+<p>The module uses extensively the following GeoTools modules:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">net.opengis.wps</span></tt> which contains EMF models of the various elements and types described in the WPS schemas. Those objects are usually what flows between the KVP parsers, XML decoders, the service implementation, and the output transformers</li>
+<li><tt class="docutils literal"><span class="pre">gt-xsd-wps</span></tt> and <tt class="docutils literal"><span class="pre">gt-xsd</span></tt>, used for all XML encoding and decoding needs</li>
+<li><tt class="docutils literal"><span class="pre">gt-process</span></tt> that provides the concept of a process, with the ability to self describe its inputs and outputs, and of course execute and produce results</li>
+</ul>
+</div>
+<div class="section" id="the-processes">
+<h2>The processes<a class="headerlink" href="#the-processes" title="Permalink to this headline">¶</a></h2>
+<p>The module relies on <tt class="docutils literal"><span class="pre">gt-process</span></tt> SPI based plugin mechanism to lookup and use the processes available in the classpath. Implementing a new process boils down to:</p>
+<ul class="simple">
+<li>creating a <tt class="docutils literal"><span class="pre">ProcessFactory</span></tt> implementation</li>
+<li>creating one or more <tt class="docutils literal"><span class="pre">Process</span></tt> implementations</li>
+<li>registering the <tt class="docutils literal"><span class="pre">ProcessFactory</span></tt> in SPI by adding the factory class name in the <tt class="docutils literal"><span class="pre">META-INF/services/org.geotools.process.ProcessFactory</span></tt> file</li>
+</ul>
+<p>The WPS module shows an example of the above by bridging the Sextante API to the GeoTools process one, see the <tt class="docutils literal"><span class="pre">org.geoserver.wps.sextante</span></tt> package.
+This also means it&#8217;s possible to rely on libraries of existing processes provided they are wrapped into a GeoTools process API container.</p>
+<p>An alternative way of implementing a custom WPS process, based on Java Annotations, is described in the <a class="reference internal" href="implementing.html#wps-services-implementing"><em>Implementing a WPS Service</em></a> section.</p>
+</div>
+<div class="section" id="bridging-between-objects-and-i-o-formats">
+<h2>Bridging between objects and I/O formats<a class="headerlink" href="#bridging-between-objects-and-i-o-formats" title="Permalink to this headline">¶</a></h2>
+<p>The WPS specification is very generic. Any process can take as input pretty much anything, and return anything. It basically means WPS is a complex, XML based RPC protocol.</p>
+<p>Now, this means WPS can trade vector data, raster data, plain strings and numbers, spreadsheets or word processor and whatever else the imagination can lead one to.
+Also, given a single type of data, say a plain geometry, there are many useful ways to represent it: it could be GML2, or GML3, or WKT, WKB, or a one row shapefile. Different clients will find some formats easier than others to use, meaning the WPS should try to offer as many option as possible for both input and output.</p>
+<p>The classes stored in the <tt class="docutils literal"><span class="pre">org.geoserver.wps.ppio</span></tt> serve exactly this purpose: turning a representation format into an in memory object and vice versa. A new subclass of <tt class="docutils literal"><span class="pre">ProcessParameterIO</span></tt> (PPIO) is needed each time a new format for a known parameter type is desired, or when a process requires a new kind of parameter, and it then needs to be registered in the Spring contex so that <tt class="docutils literal"><span class="pre">ProcessParameterIO.find(Parameter,</span> <span class="pre">ApplicationContext)</span></tt> can find it.</p>
+<p>Both the XML reader and the XML encoders do use the PPIO dynamically: the WPS document structure
+is made so that parameters are actually xs:Any, so bot</p>
+<p>The code providing the description of the various processes also scans the available <tt class="docutils literal"><span class="pre">ProcessParameterIO</span></tt> implementations so that each parameter can be matched with all formats in which it can be represented.</p>
+</div>
+<div class="section" id="implementation-level">
+<h2>Implementation level<a class="headerlink" href="#implementation-level" title="Permalink to this headline">¶</a></h2>
+<p>At the moment the WPS is pretty much bare bones protocol wise, it implements only the required behaviour leaving off pretty much everything else. In particulat:
+- <tt class="docutils literal"><span class="pre">GetCapabilities</span></tt> and <tt class="docutils literal"><span class="pre">DescribeProcess</span></tt> are supported in both GET and POST form, but <tt class="docutils literal"><span class="pre">Execute</span></tt> is implemented only as a POST request
+- there is no raster data I/O support
+- there is no asynch support, no process monitoring, no output storage abilities.
+- there is no integration whatsoever with the WMS to visualize the results of an analysis (this will require output storage and per session catalog extensions)
+- the vector processes are not using any kind of disk buffering, meaning everything is kept just in memory (won&#8217;t scale to bigger data amounts)
+- there is no set of demo requests nor a GUI to build a request. That is considered fundamental to reduce the time spent trying to figure out how to build a proper request so it will be tackled sooner rather than later.</p>
+</div>
+<div class="section" id="the-transmute-package">
+<h2>The transmute package<a class="headerlink" href="#the-transmute-package" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">org.geoserver.wps.transmute</span></tt> package is an earlier attempt at doing what PPIO is doing.
+It is attempting to also provide a custom schema for each type of input/output, using subsetted schemas that do only contain one type (e.g., GML Point) but that has to reference the full schema
+definition anyways.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This package is a leftover, should be completely removed and replaced with PPIO usage instead. At the moment only the <tt class="docutils literal"><span class="pre">DescribeProcess</span></tt> code is using it.</p>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="index.html" title="previous chapter">WPS Services</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="implementing.html" title="next chapter">Implementing a WPS Service</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">WPS design guide</a><ul>
+<li><a class="reference internal" href="#general-architecture">General architecture</a></li>
+<li><a class="reference internal" href="#the-processes">The processes</a></li>
+<li><a class="reference internal" href="#bridging-between-objects-and-i-o-formats">Bridging between objects and I/O formats</a></li>
+<li><a class="reference internal" href="#implementation-level">Implementation level</a></li>
+<li><a class="reference internal" href="#the-transmute-package">The transmute package</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="index.html" title="previous chapter">WPS Services</a></li>
+            <li>Next: <a href="implementing.html" title="next chapter">Implementing a WPS Service</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/programming-guide/wps-services/design-guide.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2011 GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

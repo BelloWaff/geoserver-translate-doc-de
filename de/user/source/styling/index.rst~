@@ -1,0 +1,16 @@
+.. _styling:
+
+Styling
+=======
+
+Dieser Abschnitt behandeltdas Aussehen von räumlichen Daten, die durch den GeoServer ausgeliefert werden.
+
+.. toctree::
+   :maxdepth: 2
+
+   sld-introduction/
+   sld-working/
+   sld-cookbook/index
+   sld-reference/index
+   sld-extensions/index
+   sld-tipstricks/index

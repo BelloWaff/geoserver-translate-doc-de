@@ -1,0 +1,1329 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Lines &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../../index.html" />
+      <link rel="up" title="SLD Cookbook" href="index.html" />
+      <link rel="next" title="Polygons" href="polygons.html" />
+      <link rel="prev" title="Points" href="points.html" />
+</head>
+<body class="styling/sld-cookbook/lines">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Styling</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">SLD Cookbook</a> &raquo;</li>
+  <li>Lines</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="polygons.html" title="Polygons"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="points.html" title="Points"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="lines">
+<span id="sld-cookbook-lines"></span><h1>Lines<a class="headerlink" href="#lines" title="Permalink to this headline">¶</a></h1>
+<p>While lines can also seem to be simple shapes, having length but no width, there are many options and tricks for making
+lines display nicely.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The code examples shown on this page are <strong>not the full SLD code</strong>, as they omit the SLD header and footer information for the sake of brevity.  Please use the links to download the full SLD for each example.</p>
+</div>
+<div class="section" id="example-lines-layer">
+<span id="sld-cookbook-lines-attributes"></span><h2>Example lines layer<a class="headerlink" href="#example-lines-layer" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference download internal" href="../../_downloads/sld_cookbook_line.zip"><tt class="xref download docutils literal"><span class="pre">lines</span> <span class="pre">layer</span></tt></a> used in the examples below contains road information for a
+fictional country.  For reference, the attribute table for the points in this layer is included below.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="30%" />
+<col width="40%" />
+<col width="30%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>fid</strong> (Feature ID)</td>
+<td><strong>name</strong> (Road name)</td>
+<td><strong>type</strong> (Road class)</td>
+</tr>
+<tr class="row-even"><td>line.1</td>
+<td>Latway</td>
+<td>highway</td>
+</tr>
+<tr class="row-odd"><td>line.2</td>
+<td>Crescent Avenue</td>
+<td>secondary</td>
+</tr>
+<tr class="row-even"><td>line.3</td>
+<td>Forest Avenue</td>
+<td>secondary</td>
+</tr>
+<tr class="row-odd"><td>line.4</td>
+<td>Longway</td>
+<td>highway</td>
+</tr>
+<tr class="row-even"><td>line.5</td>
+<td>Saxer Avenue</td>
+<td>secondary</td>
+</tr>
+<tr class="row-odd"><td>line.6</td>
+<td>Ridge Avenue</td>
+<td>secondary</td>
+</tr>
+<tr class="row-even"><td>line.7</td>
+<td>Holly Lane</td>
+<td>local-road</td>
+</tr>
+<tr class="row-odd"><td>line.8</td>
+<td>Mulberry Street</td>
+<td>local-road</td>
+</tr>
+<tr class="row-even"><td>line.9</td>
+<td>Nathan Lane</td>
+<td>local-road</td>
+</tr>
+<tr class="row-odd"><td>line.10</td>
+<td>Central Street</td>
+<td>local-road</td>
+</tr>
+<tr class="row-even"><td>line.11</td>
+<td>Lois Lane</td>
+<td>local-road</td>
+</tr>
+<tr class="row-odd"><td>line.12</td>
+<td>Rocky Road</td>
+<td>local-road</td>
+</tr>
+<tr class="row-even"><td>line.13</td>
+<td>Fleet Street</td>
+<td>local-road</td>
+</tr>
+<tr class="row-odd"><td>line.14</td>
+<td>Diane Court</td>
+<td>local-road</td>
+</tr>
+<tr class="row-even"><td>line.15</td>
+<td>Cedar Trail</td>
+<td>local-road</td>
+</tr>
+<tr class="row-odd"><td>line.16</td>
+<td>Victory Road</td>
+<td>local-road</td>
+</tr>
+<tr class="row-even"><td>line.17</td>
+<td>Highland Road</td>
+<td>local-road</td>
+</tr>
+<tr class="row-odd"><td>line.18</td>
+<td>Easy Street</td>
+<td>local-road</td>
+</tr>
+<tr class="row-even"><td>line.19</td>
+<td>Hill Street</td>
+<td>local-road</td>
+</tr>
+<tr class="row-odd"><td>line.20</td>
+<td>Country Road</td>
+<td>local-road</td>
+</tr>
+<tr class="row-even"><td>line.21</td>
+<td>Main Street</td>
+<td>local-road</td>
+</tr>
+<tr class="row-odd"><td>line.22</td>
+<td>Jani Lane</td>
+<td>local-road</td>
+</tr>
+<tr class="row-even"><td>line.23</td>
+<td>Shinbone Alley</td>
+<td>local-road</td>
+</tr>
+<tr class="row-odd"><td>line.24</td>
+<td>State Street</td>
+<td>local-road</td>
+</tr>
+<tr class="row-even"><td>line.25</td>
+<td>River Road</td>
+<td>local-road</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference download internal" href="../../_downloads/sld_cookbook_line.zip"><tt class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">the</span> <span class="pre">lines</span> <span class="pre">shapefile</span></tt></a></p>
+</div>
+<div class="section" id="simple-line">
+<span id="sld-cookbook-lines-simpleline"></span><h2>Simple line<a class="headerlink" href="#simple-line" title="Permalink to this headline">¶</a></h2>
+<p>This example specifies lines be colored black with a thickness of 3 pixels.</p>
+<div class="figure align-center">
+<img alt="../../_images/line_simpleline.png" src="../../_images/line_simpleline.png" />
+<p class="caption"><em>Simple line</em></p>
+</div>
+<div class="section" id="code">
+<h3>Code<a class="headerlink" href="#code" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference download internal" href="../../_downloads/line_simpleline.sld"><tt class="xref download docutils literal"><span class="pre">View</span> <span class="pre">and</span> <span class="pre">download</span> <span class="pre">the</span> <span class="pre">full</span> <span class="pre">&quot;Simple</span> <span class="pre">line&quot;</span> <span class="pre">SLD</span></tt></a></p>
+<div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="highlight"><pre>   <span class="nt">&lt;FeatureTypeStyle&gt;</span>
+     <span class="nt">&lt;Rule&gt;</span>
+       <span class="nt">&lt;LineSymbolizer&gt;</span>
+         <span class="nt">&lt;Stroke&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke&quot;</span><span class="nt">&gt;</span>#000000<span class="nt">&lt;/CssParameter&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke-width&quot;</span><span class="nt">&gt;</span>3<span class="nt">&lt;/CssParameter&gt;</span>
+         <span class="nt">&lt;/Stroke&gt;</span>
+       <span class="nt">&lt;/LineSymbolizer&gt;</span>
+     <span class="nt">&lt;/Rule&gt;</span>
+   <span class="nt">&lt;/FeatureTypeStyle&gt;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="details">
+<h3>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h3>
+<p>There is one <tt class="docutils literal"><span class="pre">&lt;Rule&gt;</span></tt> in one <tt class="docutils literal"><span class="pre">&lt;FeatureTypeStyle&gt;</span></tt> for this SLD, which is the simplest possible situation.  (All
+subsequent examples will contain one <tt class="docutils literal"><span class="pre">&lt;Rule&gt;</span></tt> and one <tt class="docutils literal"><span class="pre">&lt;FeatureTypeStyle&gt;</span></tt> unless otherwise specified.)  Styling
+lines is accomplished via the <tt class="docutils literal"><span class="pre">&lt;LineSymbolizer&gt;</span></tt> (<strong>lines 3-8</strong>).  <strong>Line 5</strong> specifies the color of the line to be
+black (<tt class="docutils literal"><span class="pre">#000000</span></tt>), while <strong>line 6</strong> specifies the width of the lines to be 3 pixels.</p>
+</div>
+</div>
+<div class="section" id="line-with-border">
+<h2>Line with border<a class="headerlink" href="#line-with-border" title="Permalink to this headline">¶</a></h2>
+<p>This example shows how to draw lines with borders (sometimes called &#8220;cased lines&#8221;).
+In this case the lines are drawn with a 3 pixel blue center and a 1 pixel wide gray border.</p>
+<div class="figure align-center">
+<img alt="../../_images/line_linewithborder.png" src="../../_images/line_linewithborder.png" />
+<p class="caption"><em>Line with border</em></p>
+</div>
+<div class="section" id="id1">
+<h3>Code<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference download internal" href="../../_downloads/line_linewithborder.sld"><tt class="xref download docutils literal"><span class="pre">View</span> <span class="pre">and</span> <span class="pre">download</span> <span class="pre">the</span> <span class="pre">full</span> <span class="pre">&quot;Line</span> <span class="pre">with</span> <span class="pre">border&quot;</span> <span class="pre">SLD</span></tt></a></p>
+<div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22</pre></div></td><td class="code"><div class="highlight"><pre>   <span class="nt">&lt;FeatureTypeStyle&gt;</span>
+      <span class="nt">&lt;Rule&gt;</span>
+       <span class="nt">&lt;LineSymbolizer&gt;</span>
+         <span class="nt">&lt;Stroke&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke&quot;</span><span class="nt">&gt;</span>#333333<span class="nt">&lt;/CssParameter&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke-width&quot;</span><span class="nt">&gt;</span>5<span class="nt">&lt;/CssParameter&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke-linecap&quot;</span><span class="nt">&gt;</span>round<span class="nt">&lt;/CssParameter&gt;</span>
+         <span class="nt">&lt;/Stroke&gt;</span>
+       <span class="nt">&lt;/LineSymbolizer&gt;</span>
+     <span class="nt">&lt;/Rule&gt;</span>
+   <span class="nt">&lt;/FeatureTypeStyle&gt;</span>
+   <span class="nt">&lt;FeatureTypeStyle&gt;</span>
+      <span class="nt">&lt;Rule&gt;</span>
+       <span class="nt">&lt;LineSymbolizer&gt;</span>
+       <span class="nt">&lt;Stroke&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke&quot;</span><span class="nt">&gt;</span>#6699FF<span class="nt">&lt;/CssParameter&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke-width&quot;</span><span class="nt">&gt;</span>3<span class="nt">&lt;/CssParameter&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke-linecap&quot;</span><span class="nt">&gt;</span>round<span class="nt">&lt;/CssParameter&gt;</span>
+         <span class="nt">&lt;/Stroke&gt;</span>
+       <span class="nt">&lt;/LineSymbolizer&gt;</span>
+      <span class="nt">&lt;/Rule&gt;</span>
+   <span class="nt">&lt;/FeatureTypeStyle&gt;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id2">
+<h3>Details<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>Lines in SLD have no notion of a &#8220;fill&#8221;, only &#8220;stroke&#8221;. Thus, unlike points or polygons, it is not possible to style the
+&#8220;edge&#8221; of the line geometry. It is, however, possible to achieve this effect by drawing each line twice: once with a
+certain width and again with a slightly smaller width.  This gives the illusion of fill and stroke by obscuring the
+larger lines everywhere except along the edges of the smaller lines.</p>
+<p>Since every line is drawn twice, the order of the rendering is <em>very</em> important.
+GeoServer renders <tt class="docutils literal"><span class="pre">&lt;FeatureTypeStyle&gt;</span></tt>s in the order that they are presented in the SLD.
+In this style, the gray border lines
+are drawn first via the first <tt class="docutils literal"><span class="pre">&lt;FeatureTypeStyle&gt;</span></tt>, followed by the blue center lines in a second
+<tt class="docutils literal"><span class="pre">&lt;FeatureTypeStyle&gt;</span></tt>.    This ensures that the blue lines are not obscured by the gray lines,
+and also ensures proper rendering at intersections, so that the blue lines &#8220;connect&#8221;.</p>
+<p>In this example, <strong>lines 1-11</strong> comprise the first <tt class="docutils literal"><span class="pre">&lt;FeatureTypeStyle&gt;</span></tt>, which is the outer line (or &#8220;stroke&#8221;).
+<strong>Line 5</strong> specifies the color of the line to be dark gray (<tt class="docutils literal"><span class="pre">#333333</span></tt>), <strong>line 6</strong> specifies the width of this line
+to be 5 pixels, and in <strong>line 7</strong> a <tt class="docutils literal"><span class="pre">stroke-linecap</span></tt> parameter of <tt class="docutils literal"><span class="pre">round</span></tt>
+renders the ends of the line as rounded instead of flat.
+(When working with bordered lines using a round line cap ensures that the border connects properly at the ends of the lines.)</p>
+<p><strong>Lines 12-22</strong> comprise the second <tt class="docutils literal"><span class="pre">&lt;FeatureTypeStyle&gt;</span></tt>, which is the the inner line (or &#8220;fill&#8221;).  <strong>Line 16</strong>
+specifies the color of the line to be a medium blue (<tt class="docutils literal"><span class="pre">#6699FF</span></tt>), <strong>line 17</strong> specifies the width of this line to be 3
+pixels, and <strong>line 18</strong> again renders the edges of the line to be rounded instead of flat.</p>
+<p>The result is a 3 pixel blue line with a 1 pixel gray border, since the 5 pixel gray line will display 1 pixel on each
+side of the 3 pixel blue line.</p>
+</div>
+</div>
+<div class="section" id="dashed-line">
+<h2>Dashed line<a class="headerlink" href="#dashed-line" title="Permalink to this headline">¶</a></h2>
+<p>This example alters the <a class="reference internal" href="#sld-cookbook-lines-simpleline"><em>Simple line</em></a> to create a dashed line consisting of 5 pixels of drawn
+line alternating with 2 pixels of blank space.</p>
+<div class="figure align-center">
+<img alt="../../_images/line_dashedline.png" src="../../_images/line_dashedline.png" />
+<p class="caption"><em>Dashed line</em></p>
+</div>
+<div class="section" id="id3">
+<h3>Code<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference download internal" href="../../_downloads/line_dashedline.sld"><tt class="xref download docutils literal"><span class="pre">View</span> <span class="pre">and</span> <span class="pre">download</span> <span class="pre">the</span> <span class="pre">full</span> <span class="pre">&quot;Dashed</span> <span class="pre">line&quot;</span> <span class="pre">SLD</span></tt></a></p>
+<div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="highlight"><pre>   <span class="nt">&lt;FeatureTypeStyle&gt;</span>
+     <span class="nt">&lt;Rule&gt;</span>
+       <span class="nt">&lt;LineSymbolizer&gt;</span>
+         <span class="nt">&lt;Stroke&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke&quot;</span><span class="nt">&gt;</span>#0000FF<span class="nt">&lt;/CssParameter&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke-width&quot;</span><span class="nt">&gt;</span>3<span class="nt">&lt;/CssParameter&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke-dasharray&quot;</span><span class="nt">&gt;</span>5 2<span class="nt">&lt;/CssParameter&gt;</span>
+         <span class="nt">&lt;/Stroke&gt;</span>
+       <span class="nt">&lt;/LineSymbolizer&gt;</span>
+     <span class="nt">&lt;/Rule&gt;</span>
+   <span class="nt">&lt;/FeatureTypeStyle&gt;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id4">
+<h3>Details<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>In this example, <strong>line 5</strong> sets the color of the lines to be blue (<tt class="docutils literal"><span class="pre">#0000FF</span></tt>) and <strong>line 6</strong> sets the width of the
+lines to be 3 pixels.  <strong>Line 7</strong> determines the composition of the line dashes.  The value of <tt class="docutils literal"><span class="pre">5</span> <span class="pre">2</span></tt> creates a
+repeating pattern of 5 pixels of drawn line, followed by 2 pixels of omitted line.</p>
+</div>
+</div>
+<div class="section" id="railroad-hatching">
+<h2>Railroad (hatching)<a class="headerlink" href="#railroad-hatching" title="Permalink to this headline">¶</a></h2>
+<p>This example uses hatching to create a railroad style.  Both the line and the hatches are black, with a 2 pixel
+thickness for the main line and a 1 pixel width for the perpendicular hatches.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This example leverages an SLD extension in GeoServer.  Hatching is not part of the standard SLD 1.0 specification.</p>
+</div>
+<div class="figure align-center">
+<img alt="../../_images/line_railroad.png" src="../../_images/line_railroad.png" />
+<p class="caption"><em>Railroad (hatching)</em></p>
+</div>
+<div class="section" id="id5">
+<h3>Code<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference download internal" href="../../_downloads/line_railroad.sld"><tt class="xref download docutils literal"><span class="pre">View</span> <span class="pre">and</span> <span class="pre">download</span> <span class="pre">the</span> <span class="pre">full</span> <span class="pre">&quot;Railroad</span> <span class="pre">(hatching)&quot;</span> <span class="pre">SLD</span></tt></a></p>
+<div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26</pre></div></td><td class="code"><div class="highlight"><pre>   <span class="nt">&lt;FeatureTypeStyle&gt;</span>
+     <span class="nt">&lt;Rule&gt;</span>
+       <span class="nt">&lt;LineSymbolizer&gt;</span>
+         <span class="nt">&lt;Stroke&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke&quot;</span><span class="nt">&gt;</span>#333333<span class="nt">&lt;/CssParameter&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke-width&quot;</span><span class="nt">&gt;</span>3<span class="nt">&lt;/CssParameter&gt;</span>
+         <span class="nt">&lt;/Stroke&gt;</span>
+       <span class="nt">&lt;/LineSymbolizer&gt;</span>
+       <span class="nt">&lt;LineSymbolizer&gt;</span>
+         <span class="nt">&lt;Stroke&gt;</span>
+           <span class="nt">&lt;GraphicStroke&gt;</span>
+             <span class="nt">&lt;Graphic&gt;</span>
+               <span class="nt">&lt;Mark&gt;</span>
+                 <span class="nt">&lt;WellKnownName&gt;</span>shape://vertline<span class="nt">&lt;/WellKnownName&gt;</span>
+                 <span class="nt">&lt;Stroke&gt;</span>
+                   <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke&quot;</span><span class="nt">&gt;</span>#333333<span class="nt">&lt;/CssParameter&gt;</span>
+                   <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke-width&quot;</span><span class="nt">&gt;</span>1<span class="nt">&lt;/CssParameter&gt;</span>
+                 <span class="nt">&lt;/Stroke&gt;</span>
+               <span class="nt">&lt;/Mark&gt;</span>
+               <span class="nt">&lt;Size&gt;</span>12<span class="nt">&lt;/Size&gt;</span>
+             <span class="nt">&lt;/Graphic&gt;</span>
+           <span class="nt">&lt;/GraphicStroke&gt;</span>
+         <span class="nt">&lt;/Stroke&gt;</span>
+       <span class="nt">&lt;/LineSymbolizer&gt;</span>
+     <span class="nt">&lt;/Rule&gt;</span>
+   <span class="nt">&lt;/FeatureTypeStyle&gt;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id6">
+<h3>Details<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>In this example there are two <tt class="docutils literal"><span class="pre">&lt;LineSymbolizer&gt;</span></tt>s.
+The first symbolizer, on <strong>lines 3-8</strong>, draws a standard line, with <strong>line 5</strong> drawing the lines as dark gray
+(<tt class="docutils literal"><span class="pre">#333333</span></tt>) and <strong>line 6</strong> setting the width of the lines to be 2 pixels.</p>
+<p>The hatching is invoked in the second symbolizer, on <strong>lines 9-24</strong>. <strong>Line 14</strong> specifies that the symbolizer draw a vertical line
+hatch (<tt class="docutils literal"><span class="pre">shape://vertline</span></tt>) perpendicular to the line geometry. <strong>Lines 16-17</strong> set the hatch color to dark gray
+(<tt class="docutils literal"><span class="pre">#333333</span></tt>) and width to 1 pixel. Finally, <strong>line 20</strong> specifies both the length of the hatch and the distance
+between each hatch to both be 12 pixels.</p>
+</div>
+</div>
+<div class="section" id="spaced-graphic-symbols">
+<h2>Spaced graphic symbols<a class="headerlink" href="#spaced-graphic-symbols" title="Permalink to this headline">¶</a></h2>
+<p>This example uses a graphic stroke along with dash arrays to create a &#8220;dot and space&#8221; line type.
+Adding the dash array specification allows to control the amount of space between one symbol and the next one.
+Without using the dash
+array the lines would be densely populated with dots, each one touching the previous one.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This example may not work in other systems using SLD, since they may not support combining the use of <tt class="docutils literal"><span class="pre">stroke-dasharray</span></tt> and <tt class="docutils literal"><span class="pre">GraphicStroke</span></tt>.
+While the SLD is spec-compliant, the SLD specification does not state what this combination is supposed to produce.</p>
+</div>
+<div class="figure align-center">
+<img alt="../../_images/line_dashspace.png" src="../../_images/line_dashspace.png" />
+<p class="caption"><em>Spaced symbols along a line</em></p>
+</div>
+<div class="section" id="id7">
+<h3>Code<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference download internal" href="../../_downloads/line_dashspace.sld"><tt class="xref download docutils literal"><span class="pre">View</span> <span class="pre">and</span> <span class="pre">download</span> <span class="pre">the</span> <span class="pre">full</span> <span class="pre">&quot;Spaced</span> <span class="pre">symbols&quot;</span> <span class="pre">SLD</span></tt></a></p>
+<div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24</pre></div></td><td class="code"><div class="highlight"><pre>   <span class="nt">&lt;FeatureTypeStyle&gt;</span>
+     <span class="nt">&lt;Rule&gt;</span>
+       <span class="nt">&lt;LineSymbolizer&gt;</span>
+         <span class="nt">&lt;Stroke&gt;</span>
+           <span class="nt">&lt;GraphicStroke&gt;</span>
+             <span class="nt">&lt;Graphic&gt;</span>
+               <span class="nt">&lt;Mark&gt;</span>
+                 <span class="nt">&lt;WellKnownName&gt;</span>circle<span class="nt">&lt;/WellKnownName&gt;</span>
+                 <span class="nt">&lt;Fill&gt;</span>
+                   <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;fill&quot;</span><span class="nt">&gt;</span>#666666<span class="nt">&lt;/CssParameter&gt;</span>
+                 <span class="nt">&lt;/Fill&gt;</span>
+                 <span class="nt">&lt;Stroke&gt;</span>
+                   <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke&quot;</span><span class="nt">&gt;</span>#333333<span class="nt">&lt;/CssParameter&gt;</span>
+                   <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke-width&quot;</span><span class="nt">&gt;</span>1<span class="nt">&lt;/CssParameter&gt;</span>
+                 <span class="nt">&lt;/Stroke&gt;</span>
+               <span class="nt">&lt;/Mark&gt;</span>
+               <span class="nt">&lt;Size&gt;</span>4<span class="nt">&lt;/Size&gt;</span>
+             <span class="nt">&lt;/Graphic&gt;</span>
+           <span class="nt">&lt;/GraphicStroke&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke-dasharray&quot;</span><span class="nt">&gt;</span>4 6<span class="nt">&lt;/CssParameter&gt;</span>
+         <span class="nt">&lt;/Stroke&gt;</span>
+       <span class="nt">&lt;/LineSymbolizer&gt;</span>
+     <span class="nt">&lt;/Rule&gt;</span>
+   <span class="nt">&lt;/FeatureTypeStyle&gt;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id8">
+<h3>Details<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p>This example, like others before, uses a <tt class="docutils literal"><span class="pre">GraphicStroke</span></tt> to place a graphic symbol along a line. The symbol, defined
+at <strong>lines 7-16</strong> is a 4 pixel gray circle with a dark gray outline. The spacing between symbols is controlled with
+the <tt class="docutils literal"><span class="pre">stroke-dasharray</span></tt> at <strong>line 20</strong>, which specifies 4 pixels of pen-down (just enough to draw the circle) and 6 pixels of pen-up,
+to provide the spacing.</p>
+</div>
+</div>
+<div class="section" id="alternating-symbols-with-dash-offsets">
+<span id="sld-cookbook-lines-defaultlabel"></span><h2>Alternating symbols with dash offsets<a class="headerlink" href="#alternating-symbols-with-dash-offsets" title="Permalink to this headline">¶</a></h2>
+<p>This example shows how to create a complex line style which alternates a dashed line and a graphic symbol.
+The code builds on features shown in the previous examples:</p>
+<blockquote>
+<div><ul class="simple">
+<li><tt class="docutils literal"><span class="pre">stroke-dasharray</span></tt> controls pen-down/pen-up behavior to generate dashed lines</li>
+<li><tt class="docutils literal"><span class="pre">GraphicStroke</span></tt> places symbols along a line</li>
+<li>combining the two allows control of symbol spacing</li>
+</ul>
+</div></blockquote>
+<p>This also shows the usage of a <cite>dash offset</cite>, which controls where rendering starts
+in the dash array.
+For example, with a dash array of <tt class="docutils literal"><span class="pre">5</span> <span class="pre">10</span></tt> and a dash offset of <tt class="docutils literal"><span class="pre">7</span></tt> the
+renderer starts drawing the pattern 7 pixels from the beginning.  It skips the 5 pixels pen-down
+section and 2 pixels of the pen-up section, then draws the remaining 8 pixels of pen-up, then 5 down, 10 up, and so on.</p>
+<p>The example shows how to use these features to create two synchronized sequences of dash arrays,
+one drawing line segments and the other symbols.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This example may not work in other systems using SLD, since they may not support combining the use of <tt class="docutils literal"><span class="pre">stroke-dasharray</span></tt> and <tt class="docutils literal"><span class="pre">GraphicStroke</span></tt>.
+While the SLD is spec-compliant, the SLD specification does not state what this combination is supposed to produce.</p>
+</div>
+<div class="figure align-center">
+<img alt="../../_images/line_dashdot.png" src="../../_images/line_dashdot.png" />
+<p class="caption"><em>Alternating dash and symbol</em></p>
+</div>
+<div class="section" id="id9">
+<h3>Code<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference download internal" href="../../_downloads/line_dashdot.sld"><tt class="xref download docutils literal"><span class="pre">View</span> <span class="pre">and</span> <span class="pre">download</span> <span class="pre">the</span> <span class="pre">full</span> <span class="pre">&quot;Spaced</span> <span class="pre">symbols&quot;</span> <span class="pre">SLD</span></tt></a></p>
+<div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29</pre></div></td><td class="code"><div class="highlight"><pre>   <span class="nt">&lt;FeatureTypeStyle&gt;</span>
+     <span class="nt">&lt;Rule&gt;</span>
+       <span class="nt">&lt;LineSymbolizer&gt;</span>
+         <span class="nt">&lt;Stroke&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke&quot;</span><span class="nt">&gt;</span>#0000FF<span class="nt">&lt;/CssParameter&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke-width&quot;</span><span class="nt">&gt;</span>1<span class="nt">&lt;/CssParameter&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke-dasharray&quot;</span><span class="nt">&gt;</span>10 10<span class="nt">&lt;/CssParameter&gt;</span>
+         <span class="nt">&lt;/Stroke&gt;</span>
+       <span class="nt">&lt;/LineSymbolizer&gt;</span>
+       <span class="nt">&lt;LineSymbolizer&gt;</span>
+         <span class="nt">&lt;Stroke&gt;</span>
+           <span class="nt">&lt;GraphicStroke&gt;</span>
+             <span class="nt">&lt;Graphic&gt;</span>
+               <span class="nt">&lt;Mark&gt;</span>
+                 <span class="nt">&lt;WellKnownName&gt;</span>circle<span class="nt">&lt;/WellKnownName&gt;</span>
+                 <span class="nt">&lt;Stroke&gt;</span>
+                   <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke&quot;</span><span class="nt">&gt;</span>#000033<span class="nt">&lt;/CssParameter&gt;</span>
+                   <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke-width&quot;</span><span class="nt">&gt;</span>1<span class="nt">&lt;/CssParameter&gt;</span>
+                 <span class="nt">&lt;/Stroke&gt;</span>
+               <span class="nt">&lt;/Mark&gt;</span>
+               <span class="nt">&lt;Size&gt;</span>5<span class="nt">&lt;/Size&gt;</span>
+             <span class="nt">&lt;/Graphic&gt;</span>
+           <span class="nt">&lt;/GraphicStroke&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke-dasharray&quot;</span><span class="nt">&gt;</span>5 15<span class="nt">&lt;/CssParameter&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke-dashoffset&quot;</span><span class="nt">&gt;</span>7.5<span class="nt">&lt;/CssParameter&gt;</span>
+         <span class="nt">&lt;/Stroke&gt;</span>
+       <span class="nt">&lt;/LineSymbolizer&gt;</span>
+     <span class="nt">&lt;/Rule&gt;</span>
+   <span class="nt">&lt;/FeatureTypeStyle&gt;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id10">
+<h3>Details<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<p>In this example two <tt class="docutils literal"><span class="pre">LineSymbolizer</span></tt>s use <tt class="docutils literal"><span class="pre">stroke-dasharray</span></tt>  and different symbology
+to produce a sequence of alternating dashes and symbols. The first symbolizer
+(<strong>lines 3-9</strong>) is a simple dashed line alternating 10 pixels of pen-down with 10 pixels of pen-up.
+The second symbolizer (<strong>lines 10-27</strong>) alternates a 5 pixel empty circle with 15 pixels of white space.
+The circle symbol is produced by a <tt class="docutils literal"><span class="pre">Mark</span></tt> element, with its symbology specified
+by <tt class="docutils literal"><span class="pre">stroke</span></tt> parameters (<strong>lines 17-18</strong>).
+The spacing between symbols is controlled with
+the <tt class="docutils literal"><span class="pre">stroke-dasharray</span></tt> (<strong>line 24</strong>), which specifies 5 pixels of pen-down (just enough to draw the circle) and 15 pixels of pen-up.
+In order to have the two sequences positioned correctly the second one uses a <tt class="docutils literal"><span class="pre">stroke-dashoffset</span></tt> of 7.5 (<strong>line 25</strong>).
+This makes the sequence start with 12.5
+pixels of white space, then a circle (which is then centered between the two line segments of the other pattern),
+then 15 pixels of white space, and so on.</p>
+</div>
+</div>
+<div class="section" id="line-with-default-label">
+<h2>Line with default label<a class="headerlink" href="#line-with-default-label" title="Permalink to this headline">¶</a></h2>
+<p>This example shows a text label on the simple line.  This is how a label will be displayed in the absence of any other
+customization.</p>
+<div class="figure align-center">
+<img alt="../../_images/line_linewithdefaultlabel.png" src="../../_images/line_linewithdefaultlabel.png" />
+<p class="caption"><em>Line with default label</em></p>
+</div>
+<div class="section" id="id11">
+<h3>Code<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference download internal" href="../../_downloads/line_linewithdefaultlabel.sld"><tt class="xref download docutils literal"><span class="pre">View</span> <span class="pre">and</span> <span class="pre">download</span> <span class="pre">the</span> <span class="pre">full</span> <span class="pre">&quot;Line</span> <span class="pre">with</span> <span class="pre">default</span> <span class="pre">label&quot;</span> <span class="pre">SLD</span></tt></a></p>
+<div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20</pre></div></td><td class="code"><div class="highlight"><pre>   <span class="nt">&lt;FeatureTypeStyle&gt;</span>
+     <span class="nt">&lt;Rule&gt;</span>
+       <span class="nt">&lt;LineSymbolizer&gt;</span>
+         <span class="nt">&lt;Stroke&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke&quot;</span><span class="nt">&gt;</span>#FF0000<span class="nt">&lt;/CssParameter&gt;</span>
+         <span class="nt">&lt;/Stroke&gt;</span>
+       <span class="nt">&lt;/LineSymbolizer&gt;</span>
+       <span class="nt">&lt;TextSymbolizer&gt;</span>
+         <span class="nt">&lt;Label&gt;</span>
+           <span class="nt">&lt;ogc:PropertyName&gt;</span>name<span class="nt">&lt;/ogc:PropertyName&gt;</span>
+         <span class="nt">&lt;/Label&gt;</span>
+         <span class="nt">&lt;LabelPlacement&gt;</span>
+           <span class="nt">&lt;LinePlacement</span> <span class="nt">/&gt;</span>
+         <span class="nt">&lt;/LabelPlacement&gt;</span>
+         <span class="nt">&lt;Fill&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;fill&quot;</span><span class="nt">&gt;</span>#000000<span class="nt">&lt;/CssParameter&gt;</span>
+         <span class="nt">&lt;/Fill&gt;</span>
+       <span class="nt">&lt;/TextSymbolizer&gt;</span>
+     <span class="nt">&lt;/Rule&gt;</span>
+   <span class="nt">&lt;/FeatureTypeStyle&gt;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id12">
+<h3>Details<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<p>In this example, there is one rule with a <tt class="docutils literal"><span class="pre">&lt;LineSymbolizer&gt;</span></tt> and a <tt class="docutils literal"><span class="pre">&lt;TextSymbolizer&gt;</span></tt>.  The <tt class="docutils literal"><span class="pre">&lt;LineSymbolizer&gt;</span></tt>
+(<strong>lines 3-7</strong>) draws red lines (<tt class="docutils literal"><span class="pre">#FF0000</span></tt>).  Since no width is specified, the default is set to 1 pixel.  The
+<tt class="docutils literal"><span class="pre">&lt;TextSymbolizer&gt;</span></tt> (<strong>lines 8-15</strong>) determines the labeling of the lines.  <strong>Lines 9-11</strong> specify that the text of
+the label will be determined by the value of the &#8220;name&#8221; attribute for each line.  (Refer to the attribute table in the
+<a class="reference internal" href="#sld-cookbook-lines-attributes"><em>Example lines layer</em></a> section if necessary.)  <strong>Line 13</strong> sets the text color to black.  All other
+details about the label are set to the renderer default, which here is Times New Roman font, font color black, and font
+size of 10 pixels.</p>
+</div>
+</div>
+<div class="section" id="label-following-line">
+<span id="sld-cookbook-lines-labelfollowingline"></span><h2>Label following line<a class="headerlink" href="#label-following-line" title="Permalink to this headline">¶</a></h2>
+<p>This example renders the text label to follow the contour of the lines.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Labels following lines is an SLD extension specific to GeoServer.  It is not part of the SLD 1.0 specification.</p>
+</div>
+<div class="figure align-center">
+<img alt="../../_images/line_labelfollowingline.png" src="../../_images/line_labelfollowingline.png" />
+<p class="caption"><em>Label following line</em></p>
+</div>
+<div class="section" id="id13">
+<h3>Code<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference download internal" href="../../_downloads/line_labelfollowingline.sld"><tt class="xref download docutils literal"><span class="pre">View</span> <span class="pre">and</span> <span class="pre">download</span> <span class="pre">the</span> <span class="pre">full</span> <span class="pre">&quot;Label</span> <span class="pre">following</span> <span class="pre">line&quot;</span> <span class="pre">SLD</span></tt></a></p>
+<div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21</pre></div></td><td class="code"><div class="highlight"><pre>   <span class="nt">&lt;FeatureTypeStyle&gt;</span>
+     <span class="nt">&lt;Rule&gt;</span>
+       <span class="nt">&lt;LineSymbolizer&gt;</span>
+         <span class="nt">&lt;Stroke&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke&quot;</span><span class="nt">&gt;</span>#FF0000<span class="nt">&lt;/CssParameter&gt;</span>
+         <span class="nt">&lt;/Stroke&gt;</span>
+       <span class="nt">&lt;/LineSymbolizer&gt;</span>
+       <span class="nt">&lt;TextSymbolizer&gt;</span>
+         <span class="nt">&lt;Label&gt;</span>
+           <span class="nt">&lt;ogc:PropertyName&gt;</span>name<span class="nt">&lt;/ogc:PropertyName&gt;</span>
+         <span class="nt">&lt;/Label&gt;</span>
+         <span class="nt">&lt;LabelPlacement&gt;</span>
+           <span class="nt">&lt;LinePlacement</span> <span class="nt">/&gt;</span>
+         <span class="nt">&lt;/LabelPlacement&gt;</span>
+         <span class="nt">&lt;Fill&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;fill&quot;</span><span class="nt">&gt;</span>#000000<span class="nt">&lt;/CssParameter&gt;</span>
+         <span class="nt">&lt;/Fill&gt;</span>
+         <span class="nt">&lt;VendorOption</span> <span class="na">name=</span><span class="s">&quot;followLine&quot;</span><span class="nt">&gt;</span>true<span class="nt">&lt;/VendorOption&gt;</span>
+       <span class="nt">&lt;/TextSymbolizer&gt;</span>
+     <span class="nt">&lt;/Rule&gt;</span>
+   <span class="nt">&lt;/FeatureTypeStyle&gt;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id14">
+<h3>Details<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<p>As the <a class="reference internal" href="#sld-cookbook-lines-defaultlabel"><em>Alternating symbols with dash offsets</em></a> example showed, the default label behavior isn&#8217;t optimal.  The label
+is displayed at a tangent to the line itself, leading to uncertainty as to which label corresponds to which line.</p>
+<p>This example is similar to the <a class="reference internal" href="#sld-cookbook-lines-defaultlabel"><em>Alternating symbols with dash offsets</em></a> example with the exception of <strong>lines 12-18</strong>.
+<strong>Line 18</strong> sets the option to have the label follow the line, while <strong>lines 12-14</strong> specify that the label is placed
+along a line.  If <tt class="docutils literal"><span class="pre">&lt;LinePlacement</span> <span class="pre">/&gt;</span></tt> is not specified in an SLD, then <tt class="docutils literal"><span class="pre">&lt;PointPlacement</span> <span class="pre">/&gt;</span></tt> is assumed, which isn&#8217;t
+compatible with line-specific rendering options.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Not all labels are shown due to label conflict resolution.  See the next section on <a class="reference internal" href="#sld-cookbook-lines-optimizedlabel"><em>Optimized label placement</em></a> for an example of how to maximize label display.</p>
+</div>
+</div>
+</div>
+<div class="section" id="optimized-label-placement">
+<span id="sld-cookbook-lines-optimizedlabel"></span><h2>Optimized label placement<a class="headerlink" href="#optimized-label-placement" title="Permalink to this headline">¶</a></h2>
+<p>This example optimizes label placement for lines such that the maximum number of labels are displayed.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This example uses options that are specific to GeoServer and are not part of the SLD 1.0 specification.</p>
+</div>
+<div class="figure align-center">
+<img alt="../../_images/line_optimizedlabel.png" src="../../_images/line_optimizedlabel.png" />
+<p class="caption"><em>Optimized label</em></p>
+</div>
+<div class="section" id="id15">
+<h3>Code<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference download internal" href="../../_downloads/line_optimizedlabel.sld"><tt class="xref download docutils literal"><span class="pre">View</span> <span class="pre">and</span> <span class="pre">download</span> <span class="pre">the</span> <span class="pre">full</span> <span class="pre">&quot;Optimized</span> <span class="pre">label&quot;</span> <span class="pre">SLD</span></tt></a></p>
+<div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24</pre></div></td><td class="code"><div class="highlight"><pre>   <span class="nt">&lt;FeatureTypeStyle&gt;</span>
+     <span class="nt">&lt;Rule&gt;</span>
+       <span class="nt">&lt;LineSymbolizer&gt;</span>
+         <span class="nt">&lt;Stroke&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke&quot;</span><span class="nt">&gt;</span>#FF0000<span class="nt">&lt;/CssParameter&gt;</span>
+         <span class="nt">&lt;/Stroke&gt;</span>
+       <span class="nt">&lt;/LineSymbolizer&gt;</span>
+       <span class="nt">&lt;TextSymbolizer&gt;</span>
+         <span class="nt">&lt;Label&gt;</span>
+           <span class="nt">&lt;ogc:PropertyName&gt;</span>name<span class="nt">&lt;/ogc:PropertyName&gt;</span>
+         <span class="nt">&lt;/Label&gt;</span>
+         <span class="nt">&lt;LabelPlacement&gt;</span>
+            <span class="nt">&lt;LinePlacement</span> <span class="nt">/&gt;</span>
+         <span class="nt">&lt;/LabelPlacement&gt;</span>
+         <span class="nt">&lt;Fill&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;fill&quot;</span><span class="nt">&gt;</span>#000000<span class="nt">&lt;/CssParameter&gt;</span>
+         <span class="nt">&lt;/Fill&gt;</span>
+         <span class="nt">&lt;VendorOption</span> <span class="na">name=</span><span class="s">&quot;followLine&quot;</span><span class="nt">&gt;</span>true<span class="nt">&lt;/VendorOption&gt;</span>
+         <span class="nt">&lt;VendorOption</span> <span class="na">name=</span><span class="s">&quot;maxAngleDelta&quot;</span><span class="nt">&gt;</span>90<span class="nt">&lt;/VendorOption&gt;</span>
+         <span class="nt">&lt;VendorOption</span> <span class="na">name=</span><span class="s">&quot;maxDisplacement&quot;</span><span class="nt">&gt;</span>400<span class="nt">&lt;/VendorOption&gt;</span>
+         <span class="nt">&lt;VendorOption</span> <span class="na">name=</span><span class="s">&quot;repeat&quot;</span><span class="nt">&gt;</span>150<span class="nt">&lt;/VendorOption&gt;</span>
+       <span class="nt">&lt;/TextSymbolizer&gt;</span>
+     <span class="nt">&lt;/Rule&gt;</span>
+   <span class="nt">&lt;/FeatureTypeStyle&gt;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id16">
+<h3>Details<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<p>GeoServer uses &#8220;conflict resolution&#8221; to ensure that labels aren&#8217;t drawn on top of other labels, obscuring them both.
+This accounts for the reason why many lines don&#8217;t have labels in the previous example,
+<a class="reference internal" href="#sld-cookbook-lines-labelfollowingline"><em>Label following line</em></a>.  While this setting can be toggled, it is usually a good idea to leave it
+on and use other label placement options to ensure that labels are drawn as often as desired and in the correct places.
+This example does just that.</p>
+<p>This example is similar to the previous example, <a class="reference internal" href="#sld-cookbook-lines-labelfollowingline"><em>Label following line</em></a>.  The only differences are contained in <strong>lines 18-21</strong>.  <strong>Line 19</strong> sets the maximum angle that the label will follow.  This sets the label to never bend more than 90 degrees to prevent the label from becoming illegible due to a pronounced curve or angle.  <strong>Line 20</strong> sets the maximum displacement of the label to be 400 pixels.  In order to resolve conflicts with overlapping labels, GeoServer will attempt to move the labels such that they are no longer overlapping.  This value sets how far the label can be moved relative to its original placement.  Finally, <strong>line 21</strong> sets the labels to be repeated every 150 pixels.  A feature will typically receive only one label, but this can cause confusion for long lines. Setting the label to repeat ensures that the line is always labeled locally.</p>
+</div>
+</div>
+<div class="section" id="optimized-and-styled-label">
+<span id="sld-cookbook-lines-optimizedstyledlabel"></span><h2>Optimized and styled label<a class="headerlink" href="#optimized-and-styled-label" title="Permalink to this headline">¶</a></h2>
+<p>This example improves the style of the labels from the <a class="reference internal" href="#sld-cookbook-lines-optimizedlabel"><em>Optimized label placement</em></a> example.</p>
+<div class="figure align-center">
+<img alt="../../_images/line_optimizedstyledlabel.png" src="../../_images/line_optimizedstyledlabel.png" />
+<p class="caption"><em>Optimized and styled label</em></p>
+</div>
+<div class="section" id="id17">
+<h3>Code<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference download internal" href="../../_downloads/line_optimizedstyledlabel.sld"><tt class="xref download docutils literal"><span class="pre">View</span> <span class="pre">and</span> <span class="pre">download</span> <span class="pre">the</span> <span class="pre">full</span> <span class="pre">&quot;Optimized</span> <span class="pre">and</span> <span class="pre">styled</span> <span class="pre">label&quot;</span> <span class="pre">SLD</span></tt></a></p>
+<div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30</pre></div></td><td class="code"><div class="highlight"><pre>   <span class="nt">&lt;FeatureTypeStyle&gt;</span>
+     <span class="nt">&lt;Rule&gt;</span>
+       <span class="nt">&lt;LineSymbolizer&gt;</span>
+         <span class="nt">&lt;Stroke&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke&quot;</span><span class="nt">&gt;</span>#FF0000<span class="nt">&lt;/CssParameter&gt;</span>
+         <span class="nt">&lt;/Stroke&gt;</span>
+       <span class="nt">&lt;/LineSymbolizer&gt;</span>
+       <span class="nt">&lt;TextSymbolizer&gt;</span>
+         <span class="nt">&lt;Label&gt;</span>
+           <span class="nt">&lt;ogc:PropertyName&gt;</span>name<span class="nt">&lt;/ogc:PropertyName&gt;</span>
+         <span class="nt">&lt;/Label&gt;</span>
+         <span class="nt">&lt;LabelPlacement&gt;</span>
+           <span class="nt">&lt;LinePlacement</span> <span class="nt">/&gt;</span>
+         <span class="nt">&lt;/LabelPlacement&gt;</span>
+         <span class="nt">&lt;Fill&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;fill&quot;</span><span class="nt">&gt;</span>#000000<span class="nt">&lt;/CssParameter&gt;</span>
+         <span class="nt">&lt;/Fill&gt;</span>
+         <span class="nt">&lt;Font&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;font-family&quot;</span><span class="nt">&gt;</span>Arial<span class="nt">&lt;/CssParameter&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;font-size&quot;</span><span class="nt">&gt;</span>10<span class="nt">&lt;/CssParameter&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;font-style&quot;</span><span class="nt">&gt;</span>normal<span class="nt">&lt;/CssParameter&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;font-weight&quot;</span><span class="nt">&gt;</span>bold<span class="nt">&lt;/CssParameter&gt;</span>
+         <span class="nt">&lt;/Font&gt;</span>
+         <span class="nt">&lt;VendorOption</span> <span class="na">name=</span><span class="s">&quot;followLine&quot;</span><span class="nt">&gt;</span>true<span class="nt">&lt;/VendorOption&gt;</span>
+         <span class="nt">&lt;VendorOption</span> <span class="na">name=</span><span class="s">&quot;maxAngleDelta&quot;</span><span class="nt">&gt;</span>90<span class="nt">&lt;/VendorOption&gt;</span>
+         <span class="nt">&lt;VendorOption</span> <span class="na">name=</span><span class="s">&quot;maxDisplacement&quot;</span><span class="nt">&gt;</span>400<span class="nt">&lt;/VendorOption&gt;</span>
+         <span class="nt">&lt;VendorOption</span> <span class="na">name=</span><span class="s">&quot;repeat&quot;</span><span class="nt">&gt;</span>150<span class="nt">&lt;/VendorOption&gt;</span>
+       <span class="nt">&lt;/TextSymbolizer&gt;</span>
+     <span class="nt">&lt;/Rule&gt;</span>
+   <span class="nt">&lt;/FeatureTypeStyle&gt;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id18">
+<h3>Details<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
+<p>This example is similar to the <a class="reference internal" href="#sld-cookbook-lines-optimizedlabel"><em>Optimized label placement</em></a>.  The only difference is in the font information, which is contained in <strong>lines 18-23</strong>.  <strong>Line 19</strong> sets the font family to be &#8220;Arial&#8221;, <strong>line 20</strong> sets the font size to 10, <strong>line 21</strong> sets the font style to &#8220;normal&#8221; (as opposed to &#8220;italic&#8221; or &#8220;oblique&#8221;), and <strong>line 22</strong> sets the font weight to &#8220;bold&#8221; (as opposed to &#8220;normal&#8221;).</p>
+</div>
+</div>
+<div class="section" id="attribute-based-line">
+<h2>Attribute-based line<a class="headerlink" href="#attribute-based-line" title="Permalink to this headline">¶</a></h2>
+<p>This example styles the lines differently based on the &#8220;type&#8221; (Road class) attribute.</p>
+<div class="figure align-center">
+<img alt="../../_images/line_attributebasedline.png" src="../../_images/line_attributebasedline.png" />
+<p class="caption"><em>Attribute-based line</em></p>
+</div>
+<div class="section" id="id19">
+<h3>Code<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference download internal" href="../../_downloads/line_attributebasedline.sld"><tt class="xref download docutils literal"><span class="pre">View</span> <span class="pre">and</span> <span class="pre">download</span> <span class="pre">the</span> <span class="pre">full</span> <span class="pre">&quot;Attribute-based</span> <span class="pre">line&quot;</span> <span class="pre">SLD</span></tt></a></p>
+<div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51</pre></div></td><td class="code"><div class="highlight"><pre>   <span class="nt">&lt;FeatureTypeStyle&gt;</span>
+     <span class="nt">&lt;Rule&gt;</span>
+       <span class="nt">&lt;Name&gt;</span>local-road<span class="nt">&lt;/Name&gt;</span>
+       <span class="nt">&lt;ogc:Filter&gt;</span>
+         <span class="nt">&lt;ogc:PropertyIsEqualTo&gt;</span>
+           <span class="nt">&lt;ogc:PropertyName&gt;</span>type<span class="nt">&lt;/ogc:PropertyName&gt;</span>
+           <span class="nt">&lt;ogc:Literal&gt;</span>local-road<span class="nt">&lt;/ogc:Literal&gt;</span>
+         <span class="nt">&lt;/ogc:PropertyIsEqualTo&gt;</span>
+       <span class="nt">&lt;/ogc:Filter&gt;</span>
+       <span class="nt">&lt;LineSymbolizer&gt;</span>
+         <span class="nt">&lt;Stroke&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke&quot;</span><span class="nt">&gt;</span>#009933<span class="nt">&lt;/CssParameter&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke-width&quot;</span><span class="nt">&gt;</span>2<span class="nt">&lt;/CssParameter&gt;</span>
+         <span class="nt">&lt;/Stroke&gt;</span>
+       <span class="nt">&lt;/LineSymbolizer&gt;</span>
+     <span class="nt">&lt;/Rule&gt;</span>
+   <span class="nt">&lt;/FeatureTypeStyle&gt;</span>
+   <span class="nt">&lt;FeatureTypeStyle&gt;</span>
+     <span class="nt">&lt;Rule&gt;</span>
+       <span class="nt">&lt;Name&gt;</span>secondary<span class="nt">&lt;/Name&gt;</span>
+       <span class="nt">&lt;ogc:Filter&gt;</span>
+         <span class="nt">&lt;ogc:PropertyIsEqualTo&gt;</span>
+           <span class="nt">&lt;ogc:PropertyName&gt;</span>type<span class="nt">&lt;/ogc:PropertyName&gt;</span>
+           <span class="nt">&lt;ogc:Literal&gt;</span>secondary<span class="nt">&lt;/ogc:Literal&gt;</span>
+         <span class="nt">&lt;/ogc:PropertyIsEqualTo&gt;</span>
+       <span class="nt">&lt;/ogc:Filter&gt;</span>
+       <span class="nt">&lt;LineSymbolizer&gt;</span>
+         <span class="nt">&lt;Stroke&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke&quot;</span><span class="nt">&gt;</span>#0055CC<span class="nt">&lt;/CssParameter&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke-width&quot;</span><span class="nt">&gt;</span>3<span class="nt">&lt;/CssParameter&gt;</span>
+         <span class="nt">&lt;/Stroke&gt;</span>
+       <span class="nt">&lt;/LineSymbolizer&gt;</span>
+     <span class="nt">&lt;/Rule&gt;</span>
+   <span class="nt">&lt;/FeatureTypeStyle&gt;</span>
+   <span class="nt">&lt;FeatureTypeStyle&gt;</span>
+     <span class="nt">&lt;Rule&gt;</span>
+     <span class="nt">&lt;Name&gt;</span>highway<span class="nt">&lt;/Name&gt;</span>
+       <span class="nt">&lt;ogc:Filter&gt;</span>
+         <span class="nt">&lt;ogc:PropertyIsEqualTo&gt;</span>
+           <span class="nt">&lt;ogc:PropertyName&gt;</span>type<span class="nt">&lt;/ogc:PropertyName&gt;</span>
+           <span class="nt">&lt;ogc:Literal&gt;</span>highway<span class="nt">&lt;/ogc:Literal&gt;</span>
+         <span class="nt">&lt;/ogc:PropertyIsEqualTo&gt;</span>
+       <span class="nt">&lt;/ogc:Filter&gt;</span>
+       <span class="nt">&lt;LineSymbolizer&gt;</span>
+         <span class="nt">&lt;Stroke&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke&quot;</span><span class="nt">&gt;</span>#FF0000<span class="nt">&lt;/CssParameter&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke-width&quot;</span><span class="nt">&gt;</span>6<span class="nt">&lt;/CssParameter&gt;</span>
+         <span class="nt">&lt;/Stroke&gt;</span>
+       <span class="nt">&lt;/LineSymbolizer&gt;</span>
+     <span class="nt">&lt;/Rule&gt;</span>
+   <span class="nt">&lt;/FeatureTypeStyle&gt;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id20">
+<h3>Details<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Refer to the <a class="reference internal" href="#sld-cookbook-lines-attributes"><em>Example lines layer</em></a> to see the attributes for the layer.  This example has eschewed labels in order to simplify the style, but you can refer to the example <a class="reference internal" href="#sld-cookbook-lines-optimizedstyledlabel"><em>Optimized and styled label</em></a> to see which attributes correspond to which points.</p>
+</div>
+<p>There are three types of road classes in our fictional country, ranging from back roads to high-speed freeways:
+&#8220;highway&#8221;, &#8220;secondary&#8221;, and &#8220;local-road&#8221;.  In order to handle each case separately, there is more than one
+<tt class="docutils literal"><span class="pre">&lt;FeatureTypeStyle&gt;</span></tt>, each containing a single rule.  This ensures that each road type is rendered in order, as each
+<tt class="docutils literal"><span class="pre">&lt;FeatureTypeStyle&gt;</span></tt> is drawn based on the order in which it appears in the SLD.</p>
+<p>The three rules are designed as follows:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="30%" />
+<col width="30%" />
+<col width="20%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Rule order</strong></td>
+<td><strong>Rule name / type</strong></td>
+<td><strong>Color</strong></td>
+<td><strong>Size</strong></td>
+</tr>
+<tr class="row-even"><td>1</td>
+<td>local-road</td>
+<td><tt class="docutils literal"><span class="pre">#009933</span></tt> (green)</td>
+<td>2</td>
+</tr>
+<tr class="row-odd"><td>2</td>
+<td>secondary</td>
+<td><tt class="docutils literal"><span class="pre">#0055CC</span></tt> (blue)</td>
+<td>3</td>
+</tr>
+<tr class="row-even"><td>3</td>
+<td>highway</td>
+<td><tt class="docutils literal"><span class="pre">#FF0000</span></tt> (red)</td>
+<td>6</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Lines 2-16</strong> comprise the first <tt class="docutils literal"><span class="pre">&lt;Rule&gt;</span></tt>.  <strong>Lines 4-9</strong> set the filter for this rule, such that the &#8220;type&#8221;
+attribute has a value of &#8220;local-road&#8221;.  If this condition is true for a particular line, the rule is rendered according
+to the <tt class="docutils literal"><span class="pre">&lt;LineSymbolizer&gt;</span></tt> which is on <strong>lines 10-15</strong>.  <strong>Lines 12-13</strong> set the color of the line to be a dark green
+(<tt class="docutils literal"><span class="pre">#009933</span></tt>) and the width to be 2 pixels.</p>
+<p><strong>Lines 19-33</strong> comprise the second <tt class="docutils literal"><span class="pre">&lt;Rule&gt;</span></tt>.  <strong>Lines 21-26</strong> set the filter for this rule, such that the &#8220;type&#8221;
+attribute has a value of &#8220;secondary&#8221;.  If this condition is true for a particular line, the rule is rendered according
+to the <tt class="docutils literal"><span class="pre">&lt;LineSymbolizer&gt;</span></tt> which is on <strong>lines 27-32</strong>.  <strong>Lines 29-30</strong> set the color of the line to be a dark blue
+(<tt class="docutils literal"><span class="pre">#0055CC</span></tt>) and the width to be 3 pixels, making the lines slightly thicker than the &#8220;local-road&#8221; lines and also a
+different color.</p>
+<p><strong>Lines 36-50</strong> comprise the third and final <tt class="docutils literal"><span class="pre">&lt;Rule&gt;</span></tt>.  <strong>Lines 38-43</strong> set the filter for this rule, such that the
+&#8220;type&#8221; attribute has a value of &#8220;primary&#8221;.  If this condition is true for a particular line, the rule is rendered
+according to the <tt class="docutils literal"><span class="pre">&lt;LineSymbolizer&gt;</span></tt> which is on <strong>lines 44-49</strong>.  <strong>Lines 46-47</strong> set the color of the line to be a
+bright red (<tt class="docutils literal"><span class="pre">#FF0000</span></tt>) and the width to be 6 pixels, so that these lines are rendered on top of and thicker than the
+other two road classes.  In this way, the &#8220;primary&#8221; roads are given priority in the map rendering.</p>
+</div>
+</div>
+<div class="section" id="zoom-based-line">
+<h2>Zoom-based line<a class="headerlink" href="#zoom-based-line" title="Permalink to this headline">¶</a></h2>
+<p>This example alters the <a class="reference internal" href="#sld-cookbook-lines-simpleline"><em>Simple line</em></a> style at different zoom levels.</p>
+<div class="figure align-center">
+<img alt="../../_images/line_zoombasedlinelarge.png" src="../../_images/line_zoombasedlinelarge.png" />
+<p class="caption"><em>Zoom-based line: Zoomed in</em></p>
+</div>
+<div class="figure align-center">
+<img alt="../../_images/line_zoombasedlinemedium.png" src="../../_images/line_zoombasedlinemedium.png" />
+<p class="caption"><em>Zoom-based line: Partially zoomed</em></p>
+</div>
+<div class="figure align-center">
+<img alt="../../_images/line_zoombasedlinesmall.png" src="../../_images/line_zoombasedlinesmall.png" />
+<p class="caption"><em>Zoom-based line: Zoomed out</em></p>
+</div>
+<div class="section" id="id21">
+<h3>Code<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference download internal" href="../../_downloads/line_zoombasedline.sld"><tt class="xref download docutils literal"><span class="pre">View</span> <span class="pre">and</span> <span class="pre">download</span> <span class="pre">the</span> <span class="pre">full</span> <span class="pre">&quot;Zoom-based</span> <span class="pre">line&quot;</span> <span class="pre">SLD</span></tt></a></p>
+<div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33</pre></div></td><td class="code"><div class="highlight"><pre>   <span class="nt">&lt;FeatureTypeStyle&gt;</span>
+     <span class="nt">&lt;Rule&gt;</span>
+       <span class="nt">&lt;Name&gt;</span>Large<span class="nt">&lt;/Name&gt;</span>
+       <span class="nt">&lt;MaxScaleDenominator&gt;</span>180000000<span class="nt">&lt;/MaxScaleDenominator&gt;</span>
+       <span class="nt">&lt;LineSymbolizer&gt;</span>
+         <span class="nt">&lt;Stroke&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke&quot;</span><span class="nt">&gt;</span>#009933<span class="nt">&lt;/CssParameter&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke-width&quot;</span><span class="nt">&gt;</span>6<span class="nt">&lt;/CssParameter&gt;</span>
+         <span class="nt">&lt;/Stroke&gt;</span>
+       <span class="nt">&lt;/LineSymbolizer&gt;</span>
+     <span class="nt">&lt;/Rule&gt;</span>
+     <span class="nt">&lt;Rule&gt;</span>
+       <span class="nt">&lt;Name&gt;</span>Medium<span class="nt">&lt;/Name&gt;</span>
+       <span class="nt">&lt;MinScaleDenominator&gt;</span>180000000<span class="nt">&lt;/MinScaleDenominator&gt;</span>
+       <span class="nt">&lt;MaxScaleDenominator&gt;</span>360000000<span class="nt">&lt;/MaxScaleDenominator&gt;</span>
+       <span class="nt">&lt;LineSymbolizer&gt;</span>
+         <span class="nt">&lt;Stroke&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke&quot;</span><span class="nt">&gt;</span>#009933<span class="nt">&lt;/CssParameter&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke-width&quot;</span><span class="nt">&gt;</span>4<span class="nt">&lt;/CssParameter&gt;</span>
+         <span class="nt">&lt;/Stroke&gt;</span>
+       <span class="nt">&lt;/LineSymbolizer&gt;</span>
+     <span class="nt">&lt;/Rule&gt;</span>
+     <span class="nt">&lt;Rule&gt;</span>
+       <span class="nt">&lt;Name&gt;</span>Small<span class="nt">&lt;/Name&gt;</span>
+       <span class="nt">&lt;MinScaleDenominator&gt;</span>360000000<span class="nt">&lt;/MinScaleDenominator&gt;</span>
+       <span class="nt">&lt;LineSymbolizer&gt;</span>
+         <span class="nt">&lt;Stroke&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke&quot;</span><span class="nt">&gt;</span>#009933<span class="nt">&lt;/CssParameter&gt;</span>
+           <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke-width&quot;</span><span class="nt">&gt;</span>2<span class="nt">&lt;/CssParameter&gt;</span>
+         <span class="nt">&lt;/Stroke&gt;</span>
+       <span class="nt">&lt;/LineSymbolizer&gt;</span>
+     <span class="nt">&lt;/Rule&gt;</span>
+   <span class="nt">&lt;/FeatureTypeStyle&gt;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id22">
+<h3>Details<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h3>
+<p>It is often desirable to make shapes larger at higher zoom levels when creating a natural-looking map. This example
+varies the thickness of the lines according to the zoom level (or more accurately, scale denominator).  Scale
+denominators refer to the scale of the map.  A scale denominator of 10,000 means the map has a scale of 1:10,000 in the
+units of the map projection.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Determining the appropriate scale denominators (zoom levels) to use is beyond the scope of this example.</p>
+</div>
+<p>This style contains three rules.  The three rules are designed as follows:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="15%" />
+<col width="25%" />
+<col width="40%" />
+<col width="20%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Rule order</strong></td>
+<td><strong>Rule name</strong></td>
+<td><strong>Scale denominator</strong></td>
+<td><strong>Line width</strong></td>
+</tr>
+<tr class="row-even"><td>1</td>
+<td>Large</td>
+<td>1:180,000,000 or less</td>
+<td>6</td>
+</tr>
+<tr class="row-odd"><td>2</td>
+<td>Medium</td>
+<td>1:180,000,000 to 1:360,000,000</td>
+<td>4</td>
+</tr>
+<tr class="row-even"><td>3</td>
+<td>Small</td>
+<td>Greater than 1:360,000,000</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<p>The order of these rules does not matter since the scales denominated in each rule do not overlap.</p>
+<p>The first rule (<strong>lines 2-11</strong>) is the smallest scale denominator, corresponding to when the view is &#8220;zoomed in&#8221;.  The
+scale rule is set on <strong>line 4</strong>, so that the rule will apply to any map with a scale denominator of 180,000,000 or
+less.  <strong>Line 7-8</strong> draws the line to be dark green (<tt class="docutils literal"><span class="pre">#009933</span></tt>) with a width of 6 pixels.</p>
+<p>The second rule (<strong>lines 12-22</strong>) is the intermediate scale denominator, corresponding to when the view is &#8220;partially
+zoomed&#8221;.  <strong>Lines 14-15</strong> set the scale such that the rule will apply to any map with scale denominators between
+180,000,000 and 360,000,000.  (The <tt class="docutils literal"><span class="pre">&lt;MinScaleDenominator&gt;</span></tt> is inclusive and the <tt class="docutils literal"><span class="pre">&lt;MaxScaleDenominator&gt;</span></tt> is
+exclusive, so a zoom level of exactly 360,000,000 would <em>not</em> apply here.)  Aside from the scale, the only difference
+between this rule and the previous is the width of the lines, which is set to 4 pixels on <strong>line 19</strong>.</p>
+<p>The third rule (<strong>lines 23-32</strong>) is the largest scale denominator, corresponding to when the map is &#8220;zoomed out&#8221;.  The
+scale rule is set on <strong>line 25</strong>, so that the rule will apply to any map with a scale denominator of 360,000,000 or
+greater.  Again, the only other difference between this rule and the others is the width of the lines, which is set to
+2 pixels on <strong>line 29</strong>.</p>
+<p>The result of this style is that lines are drawn with larger widths as one zooms in and smaller widths as one zooms out.</p>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="points.html" title="previous chapter">Points</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="polygons.html" title="next chapter">Polygons</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">Lines</a><ul>
+<li><a class="reference internal" href="#example-lines-layer">Example lines layer</a></li>
+<li><a class="reference internal" href="#simple-line">Simple line</a><ul>
+<li><a class="reference internal" href="#code">Code</a></li>
+<li><a class="reference internal" href="#details">Details</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#line-with-border">Line with border</a><ul>
+<li><a class="reference internal" href="#id1">Code</a></li>
+<li><a class="reference internal" href="#id2">Details</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#dashed-line">Dashed line</a><ul>
+<li><a class="reference internal" href="#id3">Code</a></li>
+<li><a class="reference internal" href="#id4">Details</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#railroad-hatching">Railroad (hatching)</a><ul>
+<li><a class="reference internal" href="#id5">Code</a></li>
+<li><a class="reference internal" href="#id6">Details</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#spaced-graphic-symbols">Spaced graphic symbols</a><ul>
+<li><a class="reference internal" href="#id7">Code</a></li>
+<li><a class="reference internal" href="#id8">Details</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#alternating-symbols-with-dash-offsets">Alternating symbols with dash offsets</a><ul>
+<li><a class="reference internal" href="#id9">Code</a></li>
+<li><a class="reference internal" href="#id10">Details</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#line-with-default-label">Line with default label</a><ul>
+<li><a class="reference internal" href="#id11">Code</a></li>
+<li><a class="reference internal" href="#id12">Details</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#label-following-line">Label following line</a><ul>
+<li><a class="reference internal" href="#id13">Code</a></li>
+<li><a class="reference internal" href="#id14">Details</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#optimized-label-placement">Optimized label placement</a><ul>
+<li><a class="reference internal" href="#id15">Code</a></li>
+<li><a class="reference internal" href="#id16">Details</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#optimized-and-styled-label">Optimized and styled label</a><ul>
+<li><a class="reference internal" href="#id17">Code</a></li>
+<li><a class="reference internal" href="#id18">Details</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#attribute-based-line">Attribute-based line</a><ul>
+<li><a class="reference internal" href="#id19">Code</a></li>
+<li><a class="reference internal" href="#id20">Details</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#zoom-based-line">Zoom-based line</a><ul>
+<li><a class="reference internal" href="#id21">Code</a></li>
+<li><a class="reference internal" href="#id22">Details</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="points.html" title="previous chapter">Points</a></li>
+            <li>Next: <a href="polygons.html" title="next chapter">Polygons</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/styling/sld-cookbook/lines.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

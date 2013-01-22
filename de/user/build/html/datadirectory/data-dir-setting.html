@@ -1,0 +1,198 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Setting the Data Directory &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../_static/jquery.js"></script>
+  <script type="text/javascript" src="../_static/doctools.js"></script>
+  <script type="text/javascript" src="../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../index.html" />
+      <link rel="up" title="GeoServer Data Directory" href="index.html" />
+      <link rel="next" title="Structure of the Data Directory" href="data-dir-structure.html" />
+      <link rel="prev" title="Creating a New Data Directory" href="data-dir-creating.html" />
+</head>
+<body class="datadirectory/data-dir-setting">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">GeoServer Data Directory</a> &raquo;</li>
+  <li>Setting the Data Directory</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="data-dir-structure.html" title="Structure of the Data Directory"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="data-dir-creating.html" title="Creating a New Data Directory"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="setting-the-data-directory">
+<span id="data-dir-setting"></span><h1>Setting the Data Directory<a class="headerlink" href="#setting-the-data-directory" title="Permalink to this headline">¶</a></h1>
+<p>Setting up a GeoServer data directory is dependent on the type of GeoServer installation. Follow the instructions below specific to the target platform.</p>
+<div class="section" id="windows">
+<h2>Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h2>
+<p>On Windows platforms the location of the GeoServer data directory is controlled by the <tt class="docutils literal"><span class="pre">GEOSERVER_DATA_DIR</span></tt> environment variable.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">When the <tt class="docutils literal"><span class="pre">GEOSERVER_DATA_DIR</span></tt> environment variable is not set, the directory <tt class="docutils literal"><span class="pre">data_dir</span></tt> under the root of the GeoServer installation is used.</p>
+</div>
+<p>To set the <tt class="docutils literal"><span class="pre">GEOSERVER_DATA_DIR</span></tt>:</p>
+<p>On <strong>Windows XP</strong> systems:</p>
+<ol class="arabic">
+<li><p class="first">From the Desktop or Start Menu right-click the <tt class="docutils literal"><span class="pre">My</span> <span class="pre">Computer</span></tt> icon and select <tt class="docutils literal"><span class="pre">Properties</span></tt>.</p>
+</li>
+<li><p class="first">On the resulting dialog select the <tt class="docutils literal"><span class="pre">Advanced</span></tt> tab and click the <tt class="docutils literal"><span class="pre">Environment</span> <span class="pre">Variables</span></tt> button.</p>
+</li>
+<li><p class="first">Click the <tt class="docutils literal"><span class="pre">New</span></tt> button and create a environment variable called <tt class="docutils literal"><span class="pre">GEOSERVER_DATA_DIR</span></tt> and set it to the desired location.</p>
+<img alt="../_images/geoserver_data_dir.png" class="align-center" src="../_images/geoserver_data_dir.png" />
+</li>
+</ol>
+<p>On <strong>Windows Vista</strong> systems:</p>
+</div>
+<div class="section" id="linux">
+<h2>Linux<a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h2>
+<p>On Linux platforms the location of the GeoServer data directory is controlled by the <tt class="docutils literal"><span class="pre">GEOSERVER_DATA_DIR</span></tt> environment variable. Setting the variable can be achieved with the following command (in a bash shell):</p>
+<div class="highlight-python"><pre>% export GEOSERVER_DATA_DIR=/var/lib/geoserver_data</pre>
+</div>
+<p>Place the command in the <tt class="docutils literal"><span class="pre">.bash_profile</span></tt> or <tt class="docutils literal"><span class="pre">.bashrc</span></tt> file (again assuming a bash shell). Ensure that this done for the user GeoServer will be run by.</p>
+</div>
+<div class="section" id="mac-os-x">
+<h2>Mac OS X<a class="headerlink" href="#mac-os-x" title="Permalink to this headline">¶</a></h2>
+<p>If running the binary version of GeoServer on Mac OS X then the data directory is set in the exact same way as linux.</p>
+<p>If using the Mac OS X binary, then set the GEOSERVER_DATA_DIR environment variable to the file location.  See
+<a class="reference external" href="http://developer.apple.com/mac/library/qa/qa2001/qa1067.html">this page</a> for details on how to set an environment variable in Mac OS X</p>
+</div>
+<div class="section" id="web-archive">
+<h2>Web Archive<a class="headerlink" href="#web-archive" title="Permalink to this headline">¶</a></h2>
+<p>When running GeoServer inside of a servlet container the data directory can be specified in a number of ways. The <em>recommended</em> method is to set a <em>servlet context parameter</em>. An alternative is to set a Java System Property.</p>
+<div class="section" id="servlet-context-parameter">
+<h3>Servlet context parameter<a class="headerlink" href="#servlet-context-parameter" title="Permalink to this headline">¶</a></h3>
+<p>Servlet context parameter&#8217;s are specified in the <tt class="docutils literal"><span class="pre">WEB-INF/web.xml</span></tt> file for the GeoServer application:</p>
+<div class="highlight-python"><pre>&lt;web-app&gt;
+  ...
+  &lt;context-param&gt;
+    &lt;param-name&gt;GEOSERVER_DATA_DIR&lt;/param-name&gt;
+    &lt;param-value&gt;/var/lib/geoserver_data&lt;/param-value&gt;
+  &lt;/context-param&gt;
+  ...
+&lt;/web-app&gt;</pre>
+</div>
+</div>
+<div class="section" id="java-system-property">
+<h3>Java system property<a class="headerlink" href="#java-system-property" title="Permalink to this headline">¶</a></h3>
+<p>Depending on the servlet container used it is also possible to specify the data directory location with a Java System Property. This method can be useful during upgrades, as it prevents the need to set the data directory on every single upgrade.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Using a system property will typically set the property for all applications running in the servlet container, not just GeoServer.</p>
+</div>
+<p>Setting the Java System Property is dependent on the servlet container.</p>
+<p>In <strong>Tomcat</strong>:</p>
+<p>Edit the file <tt class="docutils literal"><span class="pre">bin/setclasspath.sh</span></tt> under the root of the Tomcat installation. Specify the <tt class="docutils literal"><span class="pre">GEOSERVER_DATA_DIR</span></tt> system property by setting the <tt class="docutils literal"><span class="pre">CATALINA_OPTS</span></tt> variable:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">CATALINA_OPTS</span><span class="o">=</span><span class="s">&quot;-DGEOSERVER_DATA_DIR=/var/lib/geoserver_data&quot;</span>
+</pre></div>
+</div>
+<p>In <strong>Glassfish</strong>:</p>
+<p>Edit the file <tt class="docutils literal"><span class="pre">domains/&lt;&lt;domain&gt;&gt;/config/domain.xml</span></tt> under the root of the Glassfish installation, where <tt class="docutils literal"><span class="pre">&lt;&lt;domain&gt;&gt;</span></tt> refers to the domain that the GeoServer web application is deployed under. Add a <tt class="docutils literal"><span class="pre">&lt;jvm-options&gt;</span></tt> inside of the <tt class="docutils literal"><span class="pre">&lt;java-config&gt;</span></tt> element:</p>
+<div class="highlight-python"><pre>...
+&lt;java-config&gt;
+   ...
+  &lt;jvm-options&gt;-DGEOSERVER_DATA_DIR=/var/lib/geoserver_data&lt;/jvm-options&gt;
+&lt;/java-config&gt;
+...</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="data-dir-creating.html" title="previous chapter">Creating a New Data Directory</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="data-dir-structure.html" title="next chapter">Structure of the Data Directory</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">Setting the Data Directory</a><ul>
+<li><a class="reference internal" href="#windows">Windows</a></li>
+<li><a class="reference internal" href="#linux">Linux</a></li>
+<li><a class="reference internal" href="#mac-os-x">Mac OS X</a></li>
+<li><a class="reference internal" href="#web-archive">Web Archive</a><ul>
+<li><a class="reference internal" href="#servlet-context-parameter">Servlet context parameter</a></li>
+<li><a class="reference internal" href="#java-system-property">Java system property</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="data-dir-creating.html" title="previous chapter">Creating a New Data Directory</a></li>
+            <li>Next: <a href="data-dir-structure.html" title="next chapter">Structure of the Data Directory</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../_sources/datadirectory/data-dir-setting.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

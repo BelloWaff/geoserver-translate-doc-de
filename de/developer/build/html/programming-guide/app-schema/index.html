@@ -1,0 +1,253 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>App-Schema Online Tests &mdash; GeoServer 2.2.x Developer Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x Developer Manual" href="../../index.html" />
+      <link rel="up" title="Programming Guide" href="../index.html" />
+      <link rel="next" title="Release Schedule" href="../../release-schedule/index.html" />
+      <link rel="prev" title="Security" href="../security/index.html" />
+</head>
+<body class="programming-guide/app-schema/index">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.2.x Developer Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.2.x Developer Manual</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Programming Guide</a> &raquo;</li>
+  <li>App-Schema Online Tests</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="../../release-schedule/index.html" title="Release Schedule"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="../security/index.html" title="Security"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="app-schema-online-tests">
+<span id="id1"></span><h1>App-Schema Online Tests<a class="headerlink" href="#app-schema-online-tests" title="Permalink to this headline">¶</a></h1>
+<p>The offline tests in app-schema-test suite use properties files as data source. In reality, properties files are only used as testing means, whereas in production, users would use databases as data source. Users would often encounter problems/bugs that cannot be recreated using properties files, which raises the need to run with a test database. Moreover, Niels&#8217; joining support to increase performance can only be tested online, and we need to ensure that it works with the current features/bug fixes covered in the tests.</p>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>This requires installation of Oracle driver in Maven repository:</p>
+<div class="highlight-python"><pre>mvn install:install-file -Dfile=ojdbc14.jar -DgroupId=com.oracle -DartifactId=ojdbc14 -Dversion=10.2.0.3.0 -Dpackaging=jar</pre>
+</div>
+<p>You would also need to have test databases for both Oracle and Postgis. Then follow these steps:</p>
+<ul>
+<li><p class="first">Create oracle.properties and postgis.properties in {user directory}/.geoserver directory.</p>
+</li>
+<li><p class="first">Populate each properties file with database details, e.g.:</p>
+<div class="highlight-python"><pre>password=onlinetestuser
+
+passwd=onlinetestuser
+
+user=onlinetestuser
+
+port=5432
+
+url=jdbc\:postgresql\://localhost:5432/onlinetest
+
+host=localhost
+
+database=onlinetest
+
+driver=org.postgresql.Driver
+
+dbtype=postgisng</pre>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="running-tests-from-maven">
+<h2>Running tests from Maven<a class="headerlink" href="#running-tests-from-maven" title="Permalink to this headline">¶</a></h2>
+<p>Without specifying any profile, the default Maven configuration for app-schema-test is to run offline tests only.</p>
+<p>To run online tests, enable the profile:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="o">-</span><span class="n">Papp</span><span class="o">-</span><span class="n">schema</span><span class="o">-</span><span class="n">online</span><span class="o">-</span><span class="n">test</span>
+</pre></div>
+</div>
+<p>This profile enables the data reference set tests and offline tests to run online. Data reference set tests are online tests based on data and use cases from GeoScience Victoria. Each is explicit for a database type (Oracle and Postgis) and has a copy to run with joining enabled.</p>
+<p>The offline tests are configured to run online with joining through separate modules for each database: app-schema-oracle-test and app-schema-postgis-test. These modules are placeholders for pom.xml files containing database specific parameters. This makes it easy to identify when a test fails with a particular database when running from Maven/buildbot.</p>
+<div class="section" id="memory-requirements">
+<h3>Memory requirements<a class="headerlink" href="#memory-requirements" title="Permalink to this headline">¶</a></h3>
+<p>The online tests require more memory than usual, so specifying the usual -Dtest.maxHeapSize=256m is not enough. Specify &#8211;Dtest.maxHeapSize=1024m instead.</p>
+<p>When the build is successful, you would see this in the &#8220;Reactor Summary&#8221;:</p>
+<div class="highlight-python"><pre>[INFO] Application Schema Integration Online Test with Oracle Database  SUCCESS  [5:52.980s]
+[INFO] Application Schema Integration Online Test with Postgis Database  SUCCESS  [1:42.428s]</pre>
+</div>
+</div>
+</div>
+<div class="section" id="running-tests-from-junit">
+<h2>Running tests from JUnit<a class="headerlink" href="#running-tests-from-junit" title="Permalink to this headline">¶</a></h2>
+<p>There is no need to import the online test modules as they are empty and you cannot run the tests through them in Eclipse.</p>
+<p>To run offline tests (in app-schema-test/src/test/java/org/geoserver/test) with a test database,
+enable joining and specify the database. Add these parameters in VM Arguments for postgis:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="o">-</span><span class="n">Dapp</span><span class="o">-</span><span class="n">schema</span><span class="o">.</span><span class="n">joining</span><span class="o">=</span><span class="n">true</span> <span class="o">-</span><span class="n">DtestDatabase</span><span class="o">=</span><span class="n">postgis</span> <span class="o">-</span><span class="n">Xmx256m</span>
+</pre></div>
+</div>
+<p>Similarly, to test with oracle:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="o">-</span><span class="n">Dapp</span><span class="o">-</span><span class="n">schema</span><span class="o">.</span><span class="n">joining</span><span class="o">=</span><span class="n">true</span> <span class="o">-</span><span class="n">DtestDatabase</span><span class="o">=</span><span class="n">oracle</span> <span class="o">-</span><span class="n">Xmx256m</span>
+</pre></div>
+</div>
+<p>Additionally for Oracle, you also need to add ojdbc14.jar in the test Classpath.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Please note that you should only run the tests in org.geoserver.test package with the above parameters, since the data reference tests in org.geoserver.test.onlineTest package contain non-joining tests which would fail.</p>
+</div>
+<p>You do not need to specify these VM Arguments for running data reference tests (in app-schema-test/src/test/java/org/geoserver/test/onlineTest). However, you would still need to specify the Oracle JDBC driver in the Classpath for Oracle specific tests. Data reference tests package also requires 768m memory to run from JUnit.</p>
+</div>
+<div class="section" id="adding-new-tests">
+<h2>Adding new tests<a class="headerlink" href="#adding-new-tests" title="Permalink to this headline">¶</a></h2>
+<p>When adding new tests to app-schema-test suite (except for onlineTest package for data reference tests), please note the following:</p>
+<div class="section" id="test-offline-only">
+<h3>Test offline only<a class="headerlink" href="#test-offline-only" title="Permalink to this headline">¶</a></h3>
+<p>If your test is a special case and does not need to be tested online, exclude them in both app-schema-oracle-test and app-schema-postgis-test pom.xml and ignore the points beyond this. Otherwise, read on.</p>
+</div>
+<div class="section" id="idexpression">
+<h3>idExpression<a class="headerlink" href="#idexpression" title="Permalink to this headline">¶</a></h3>
+<p>If your test database does not use primary keys, ensure idExpression is specified for the top level element in your mapping file.</p>
+</div>
+<div class="section" id="multi-valued-properties-ordering">
+<h3>Multi-valued properties ordering<a class="headerlink" href="#multi-valued-properties-ordering" title="Permalink to this headline">¶</a></h3>
+<p>When testing multi-valued properties, the order of the values could vary depending on the data source type. To be safe, compare your values as a list, instead of evaluating individual xpath node against a single value for such properties. E.g.:</p>
+<div class="highlight-python"><pre>List&lt;String&gt; names = new ArrayList&lt;String&gt;();
+names.add("New Group");
+names.add("-Xy");
+String name = evaluate("//gsml:MappedFeature[@gml:id='" + id
+        + "']/gsml:specification/gsml:GeologicUnit/gml:name[1]", doc);
+assertTrue(names.contains(name));
+names.remove(name);
+name = evaluate("//gsml:MappedFeature[@gml:id='" + id
+        + "']/gsml:specification/gsml:GeologicUnit/gml:name[2]", doc);
+assertTrue(names.contains(name));
+names.remove(name);
+assertTrue(names.isEmpty());</pre>
+</div>
+<p>This is because of the difference in the handling of queries with joining. Joining uses order by when querying tables. When the tests run offline, property data store returns data from properties file unordered.</p>
+<p>When joining is enabled:</p>
+<ul class="simple">
+<li>If the multi-valued properties are not feature chained, the order is unpredictable.</li>
+<li>If the multi-valued properties are feature chained, they are ordered by the foreign key used in feature chaining.</li>
+</ul>
+</div>
+<div class="section" id="column-names-in-upper-case">
+<h3>Column names in upper case<a class="headerlink" href="#column-names-in-upper-case" title="Permalink to this headline">¶</a></h3>
+<p>Ensure column names in mapping files are in upper case, even if they are in lower case in the properties file. This is to avoid failures with Oracle database, due to OracleDialect not wrapping names with escape characters. To work around this, the script for online tests creates the columns in upper case, therefore should be referred by with upper case.</p>
+</div>
+<div class="section" id="functions-in-feature-chaining">
+<h3>Functions in feature chaining<a class="headerlink" href="#functions-in-feature-chaining" title="Permalink to this headline">¶</a></h3>
+<p>If using feature chaining, avoid using functions in sourceExpression for linking attributes, i.e. attribute used in both OCQL and linkField. This is because functions used in feature chaining are not supported with joining support.</p>
+</div>
+<div class="section" id="wms-tests">
+<h3>WMS tests<a class="headerlink" href="#wms-tests" title="Permalink to this headline">¶</a></h3>
+<p>If you are testing Application Schema WMS support behaviour, it is highly recommended to also perform the optional perceptual diff tests,
+which are included in both online as well as offline unit tests.
+Perceptual diff tests for app-schema WMS support will only be performed if:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="o">-</span><span class="n">Dorg</span><span class="o">.</span><span class="n">geotools</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">enabled</span><span class="o">=</span><span class="n">true</span>
+</pre></div>
+</div>
+<p>and <a class="reference external" href="http://pdiff.sourceforge.net/">Perceptual Diff</a> is installed on the computer from which the tests are executed.</p>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="../security/index.html" title="previous chapter">Security</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="../../release-schedule/index.html" title="next chapter">Release Schedule</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">App-Schema Online Tests</a><ul>
+<li><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li><a class="reference internal" href="#running-tests-from-maven">Running tests from Maven</a><ul>
+<li><a class="reference internal" href="#memory-requirements">Memory requirements</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#running-tests-from-junit">Running tests from JUnit</a></li>
+<li><a class="reference internal" href="#adding-new-tests">Adding new tests</a><ul>
+<li><a class="reference internal" href="#test-offline-only">Test offline only</a></li>
+<li><a class="reference internal" href="#idexpression">idExpression</a></li>
+<li><a class="reference internal" href="#multi-valued-properties-ordering">Multi-valued properties ordering</a></li>
+<li><a class="reference internal" href="#column-names-in-upper-case">Column names in upper case</a></li>
+<li><a class="reference internal" href="#functions-in-feature-chaining">Functions in feature chaining</a></li>
+<li><a class="reference internal" href="#wms-tests">WMS tests</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="../security/index.html" title="previous chapter">Security</a></li>
+            <li>Next: <a href="../../release-schedule/index.html" title="next chapter">Release Schedule</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/programming-guide/app-schema/index.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2011 GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

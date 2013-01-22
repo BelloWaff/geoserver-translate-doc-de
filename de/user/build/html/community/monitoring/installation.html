@@ -1,0 +1,150 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Installing the Monitoring Extension &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../../index.html" />
+      <link rel="up" title="Monitoring" href="index.html" />
+      <link rel="next" title="Upgrading" href="upgrade.html" />
+      <link rel="prev" title="Monitoring" href="index.html" />
+</head>
+<body class="community/monitoring/installation">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Community</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Monitoring</a> &raquo;</li>
+  <li>Installing the Monitoring Extension</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="upgrade.html" title="Upgrading"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="index.html" title="Monitoring"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="installing-the-monitoring-extension">
+<span id="monitor-installation"></span><h1>Installing the Monitoring Extension<a class="headerlink" href="#installing-the-monitoring-extension" title="Permalink to this headline">¶</a></h1>
+<p>Monitoring is a community extension, and thus is not found on the standard GeoServer release download pages.  Community extensions are only available via <a class="reference external" href="http://geoserver.org/display/GEOS/Nightly">Nightly builds</a> or by compiling from source.</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If performing an upgrade of the monitoring extension please see <a class="reference internal" href="upgrade.html#monitor-upgrade"><em>Upgrading</em></a>.</p>
+</div>
+</div></blockquote>
+<ol class="arabic">
+<li><p class="first">Download the proper &#8220;monitoring&#8221; extension linked from the <a class="reference external" href="http://geoserver.org/display/GEOS/Nightly">GeoServer nightly builds page</a>.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Ensure the extension matching the version of the GeoServer installation is downloaded.</p>
+</div>
+</li>
+<li><p class="first">Extract the contents of the archive into the <tt class="docutils literal"><span class="pre">WEB-INF/lib</span></tt> directory of
+the GeoServer installation.</p>
+</li>
+</ol>
+<div class="section" id="verifying-the-installation">
+<h2>Verifying the Installation<a class="headerlink" href="#verifying-the-installation" title="Permalink to this headline">¶</a></h2>
+<p>There are two ways to verify that the monitoring extension has been properly installed.</p>
+<ul>
+<li><p class="first">Start GeoServer and open the <a class="reference internal" href="../../webadmin/index.html#web-admin"><em>Web Administration Interface</em></a>.  Log in using the administration account.  If successfully installed, there will be a <em class="guilabel">Monitor</em> section on the left column of the home page.</p>
+<div class="figure align-center">
+<img alt="../../_images/monitorwebadmin.png" src="../../_images/monitorwebadmin.png" />
+<p class="caption"><em>Monitoring section in the web admin interface</em></p>
+</div>
+</li>
+<li><p class="first">Start GeoServer and navigate to the current <a class="reference internal" href="../../datadirectory/index.html#data-directory"><em>GeoServer Data Directory</em></a>.  If successfully installed, a new directory named <tt class="docutils literal"><span class="pre">monitoring</span></tt> will be created in the data directory.</p>
+</li>
+</ul>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="index.html" title="previous chapter">Monitoring</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="upgrade.html" title="next chapter">Upgrading</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">Installing the Monitoring Extension</a><ul>
+<li><a class="reference internal" href="#verifying-the-installation">Verifying the Installation</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="index.html" title="previous chapter">Monitoring</a></li>
+            <li>Next: <a href="upgrade.html" title="next chapter">Upgrading</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/community/monitoring/installation.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

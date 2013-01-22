@@ -1,0 +1,172 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>SLD Reference &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../../index.html" />
+      <link rel="up" title="Styling" href="../index.html" />
+      <link rel="next" title="Rules" href="rules.html" />
+      <link rel="prev" title="Rasters" href="../sld-cookbook/rasters.html" />
+</head>
+<body class="styling/sld-reference/index">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Styling</a> &raquo;</li>
+  <li>SLD Reference</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="rules.html" title="Rules"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="../sld-cookbook/rasters.html" title="Rasters"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="sld-reference">
+<span id="id1"></span><h1>SLD Reference<a class="headerlink" href="#sld-reference" title="Permalink to this headline">¶</a></h1>
+<p>In SLD documents <strong>rules</strong>  and <strong>filters</strong> are used to determine sets of features to be styled with particular symbology.
+Rules may also specify the scale range in which the feature styling is visible.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="rules.html">Rules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rules.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rules.html#scale-selection">Scale Selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rules.html#rule-evaluation">Rule Evaluation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rules.html#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="filters.html">Filters</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="filters.html#attribute-filters">Attribute filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="filters.html#spatial-filters">Spatial filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="filters.html#logical-filters">Logical filters</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<p>Rules contain <strong>symbolizers</strong> to specify how features are styled.
+There are 5 types of symbolizers:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">PointSymbolizer</span></tt>, which styles features as <strong>points</strong></li>
+<li><tt class="docutils literal"><span class="pre">LineSymbolizer</span></tt>, which styles features as <strong>lines</strong></li>
+<li><tt class="docutils literal"><span class="pre">PolygonSymbolizer</span></tt>, which styles features as <strong>polygons</strong></li>
+<li><tt class="docutils literal"><span class="pre">TextSymbolizer</span></tt>, which styles <strong>text labels</strong> for features</li>
+<li><tt class="docutils literal"><span class="pre">RasterSymbolizer</span></tt>, which styles <strong>raster coverages</strong></li>
+</ul>
+<p>Each symbolizer type has options and parameters to control styling.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="pointsymbolizer.html">PointSymbolizer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pointsymbolizer.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pointsymbolizer.html#example">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pointsymbolizer.html#using-expressions-in-parameter-values">Using expressions in parameter values</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="linesymbolizer.html">LineSymbolizer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="linesymbolizer.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="linesymbolizer.html#example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="polygonsymbolizer.html">PolygonSymbolizer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="polygonsymbolizer.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="polygonsymbolizer.html#example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="textsymbolizer.html">TextSymbolizer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="textsymbolizer.html#syntax">Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="textsymbolizer.html#example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="labeling.html">Labeling</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="labeling.html#labelplacement">LabelPlacement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="labeling.html#pointplacement">PointPlacement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="labeling.html#lineplacement">LinePlacement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="labeling.html#composing-labels-from-multiple-attributes">Composing labels from multiple attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="labeling.html#geoserver-enhanced-options">Geoserver Enhanced Options</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rastersymbolizer.html">RasterSymbolizer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rastersymbolizer.html#syntax">Syntax</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="../sld-cookbook/rasters.html" title="previous chapter">Rasters</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="rules.html" title="next chapter">Rules</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="../sld-cookbook/rasters.html" title="previous chapter">Rasters</a></li>
+            <li>Next: <a href="rules.html" title="next chapter">Rules</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/styling/sld-reference/index.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

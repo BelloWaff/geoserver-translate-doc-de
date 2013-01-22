@@ -1,0 +1,406 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>ArcSDE &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../../index.html" />
+      <link rel="up" title="Working with Databases" href="index.html" />
+      <link rel="next" title="DB2" href="db2.html" />
+      <link rel="prev" title="H2" href="h2.html" />
+</head>
+<body class="data/database/arcsde">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Working with Databases</a> &raquo;</li>
+  <li>ArcSDE</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="db2.html" title="DB2"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="h2.html" title="H2"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="arcsde">
+<span id="data-arcsde"></span><h1>ArcSDE<a class="headerlink" href="#arcsde" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">ArcSDE support is not enabled by default and requires the ArcSDE extension to be installed prior to use.  Please see the section on <a class="reference internal" href="#arcsde-install"><em>Installing the ArcSDE extension</em></a> for details.</p>
+</div>
+<p>ESRI&#8217;s <a class="reference external" href="http://www.esri.com/software/arcgis/arcsde/">ArcSDE</a> is a spatial engine that runs on top of a relational database such as Oracle or SQL Server.  GeoServer with the ArcSDE extension supports ArcSDE <strong>versions 9.2 and 9.3</strong>.  It has been tested with <strong>Oracle 10g</strong> and <strong>Microsoft SQL Server 2000 Developer Edition</strong>.  The ArcSDE extension is based on the GeoTools ArcSDE driver and uses the ESRI Java API libraries.  See the <a class="reference external" href="http://docs.geotools.org/latest/userguide/library/data/arcsde.html">GeoTools ArcSDE page</a> for more technical details.</p>
+<p>There are two types of ArcSDE data that can be added to GeoServer:  <strong>vector</strong> and <strong>raster</strong>.</p>
+<div class="section" id="vector-support">
+<h2>Vector support<a class="headerlink" href="#vector-support" title="Permalink to this headline">¶</a></h2>
+<p>ArcSDE provides efficient access to vector layers, (&#8220;featureclasses&#8221; in ArcSDE jargon), over a number of relational databases.  GeoServer can set up featuretypes for registered ArcSDE featureclasses and spatial views.  For versioned ArcSDE featureclasses, GeoServer will work on the default database version, for both read and write access.</p>
+<p>Transactional support is enabled for featureclasses with a properly set primary key, regardless if the featureclass is managed by a user or by ArcSDE.  If a featureclass has no primary key set, it will be available as read-only.</p>
+</div>
+<div class="section" id="raster-support">
+<h2>Raster support<a class="headerlink" href="#raster-support" title="Permalink to this headline">¶</a></h2>
+<p>ArcSDE provides efficient access to multi-band rasters by storing the raw raster data as database blobs, dividing it into tiles and creating a pyramid. It also allows a compression method to be set for the tiled blob data and an interpolation method for the pyramid resampling.</p>
+<p>All the bands comprising a single ArcSDE raster layer must have the same pixel depth, which can be one of 1, 4, 8, 16, and 32 bits per sample for integral data types. For 8, 16 and 32 bit bands, they may be signed or unsigned. 32 and 64 bit floating point sample types are also supported.</p>
+<p>ArcSDE rasters may also be color mapped, as long as the raster has a single band of data typed 8 or 16 bit unsigned.</p>
+<p>Finally, ArcSDE supports raster catalogs.  A raster catalog is a mosaic of rasters with the same spectral properties but instead of the mosaic being precomputed, the rasters comprising the catalog are independent and the mosaic work performed by the application at runtime.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Technical Detail</strong></td>
+<td><strong>Status</strong></td>
+</tr>
+<tr class="row-even"><td>Compression methods</td>
+<td>LZW, JPEG</td>
+</tr>
+<tr class="row-odd"><td>Number of bands</td>
+<td>Any number of bands except for 1 and 4 bit rasters (supported for single-band only).</td>
+</tr>
+<tr class="row-even"><td>Bit depth for color-mapped rasters</td>
+<td>8 bit and 16 bit</td>
+</tr>
+<tr class="row-odd"><td>Raster Catalogs</td>
+<td>Any pixel storage type</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="installing-the-arcsde-extension">
+<span id="arcsde-install"></span><h2>Installing the ArcSDE extension<a class="headerlink" href="#installing-the-arcsde-extension" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Due to licensing requirements, not all files are included with the extension.  To install ArcSDE support, it is necessary to download additional files.  <strong>Just installing the ArcSDE extension will have no effect.</strong></p>
+</div>
+<div class="section" id="geoserver-files">
+<h3>GeoServer files<a class="headerlink" href="#geoserver-files" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Download the ArcSDE extension from the <a class="reference external" href="http://geoserver.org/display/GEOS/Download">GeoServer download page</a>.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Make sure to match the version of the extension to the version of the GeoServer instance!</p>
+</div>
+</li>
+<li><p class="first">Extract the contents of the archive into the <tt class="docutils literal"><span class="pre">WEB-INF/lib</span></tt> directory of
+the GeoServer installation.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="required-external-files">
+<h3>Required external files<a class="headerlink" href="#required-external-files" title="Permalink to this headline">¶</a></h3>
+<p>There are two files that are required but are not packaged with the GeoServer extension:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>File</strong></td>
+<td><strong>Notes</strong></td>
+</tr>
+<tr class="row-even"><td><tt class="file docutils literal"><span class="pre">jsde_sdk.jar</span></tt></td>
+<td>Also known as <tt class="file docutils literal"><span class="pre">jsde##_sdk.jar</span></tt> where <tt class="docutils literal"><span class="pre">##</span></tt> is the version number, such as <tt class="docutils literal"><span class="pre">92</span></tt> for ArcSDE version 9.2</td>
+</tr>
+<tr class="row-odd"><td><tt class="file docutils literal"><span class="pre">jpe_sdk.jar</span></tt></td>
+<td>Also known as <tt class="file docutils literal"><span class="pre">jpe##_sdk.jar</span></tt> where <tt class="docutils literal"><span class="pre">##</span></tt> is the version number, such as <tt class="docutils literal"><span class="pre">92</span></tt> for ArcSDE version 9.2</td>
+</tr>
+</tbody>
+</table>
+<p>You should always make sure the <tt class="file docutils literal"><span class="pre">jsde_sdk.jar</span></tt> and <tt class="file docutils literal"><span class="pre">jpe_sdk.jar</span></tt> versions match your ArcSDE server version, including
+service pack, although client jar versions higher than the ArcSDE Server version usually work just fine.</p>
+<p>These two files are available on your installation of the ArcSDE Java SDK from the ArcSDE insatallation media
+(usually <tt class="docutils literal"><span class="pre">C:\Program</span> <span class="pre">Files\ArcGIS\ArcSDE\lib</span></tt>).
+They may also be available on ESRI&#8217;s website if there&#8217;s a service pack containing them, but this is not
+guaranteed. To download these files from ESRI&#8217;s website:</p>
+<ol class="arabic simple">
+<li>Navigate to <a class="reference external" href="http://support.esri.com/index.cfm?fa=downloads.patchesServicePacks.listPatches&amp;PID=66">http://support.esri.com/index.cfm?fa=downloads.patchesServicePacks.listPatches&amp;PID=66</a></li>
+<li>Find the link to the latest service pack for your version of ArcSDE</li>
+<li>Scroll down to <em class="menuselection">Installing this Service Pack ‣ ArcSDE SDK ‣ UNIX</em> (regardless of your target OS)</li>
+<li>Download any of the target files (but be sure to match 32/64 bit to your OS)</li>
+<li>Open the archive, and extract the appropriate JARs.</li>
+</ol>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The JAR files may be in a nested archive inside this archive.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <tt class="file docutils literal"><span class="pre">icu4j##.jar</span></tt> may also be on your ArcSDE Java SDK installation folder, but it is already included as part of the the GeoServer ArcSDE extension and is not necessary to install separately.</p>
+</div>
+<ol class="arabic simple">
+<li>When downloaded, copy the two files to the <tt class="file docutils literal"><span class="pre">WEB-INF/lib</span></tt> directory of the GeoServer installation.</li>
+</ol>
+<p>After all GeoServer files and external files have been downloaded and copied, restart GeoServer.</p>
+</div>
+</div>
+<div class="section" id="adding-an-arcsde-vector-data-store">
+<h2>Adding an ArcSDE vector data store<a class="headerlink" href="#adding-an-arcsde-vector-data-store" title="Permalink to this headline">¶</a></h2>
+<p>In order to serve vector data layers, it is first necessary to register the ArcSDE instance as a data store in GeoServer.  Navigate to the <strong>New data source</strong> page, accessed from the <a class="reference internal" href="../../webadmin/data/stores.html#webadmin-stores"><em>Stores</em></a> page in the <a class="reference internal" href="../../webadmin/index.html#web-admin"><em>Web Administration Interface</em></a>. and an option for <strong>ArcSDE</strong> will be in the list of <em class="guilabel">Vector Data Stores</em>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If <tt class="docutils literal"><span class="pre">ArcSDE</span></tt> is not an option in the <strong>Feature Data Set Description</strong> drop down box, the extension is not properly installed.  Please see the section on <a class="reference internal" href="#arcsde-install"><em>Installing the ArcSDE extension</em></a>.</p>
+</div>
+<div class="figure align-center">
+<img alt="../../_images/arcsdevectorcreate.png" src="../../_images/arcsdevectorcreate.png" />
+<p class="caption"><em>ArcSDE in the list of data sources</em></p>
+</div>
+</div>
+<div class="section" id="configuring-an-arcsde-vector-data-store">
+<h2>Configuring an ArcSDE vector data store<a class="headerlink" href="#configuring-an-arcsde-vector-data-store" title="Permalink to this headline">¶</a></h2>
+<p>The next page contains configuration options for the ArcSDE vector data store.  Fill out the form, then click <em class="guilabel">Save</em>.</p>
+<div class="figure align-center">
+<img alt="../../_images/arcsdevectorconfigure.png" src="../../_images/arcsdevectorconfigure.png" />
+<p class="caption"><em>Configuring a new ArcSDE data store</em></p>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="18%" />
+<col width="9%" />
+<col width="73%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Option</strong></td>
+<td><strong>Required?</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">Feature</span> <span class="pre">Data</span> <span class="pre">Set</span> <span class="pre">ID</span></tt></td>
+<td>N/A</td>
+<td>The name of the data store as set on the previous page.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">Enabled</span></tt></td>
+<td>N/A</td>
+<td>When this box is checked the data store will be available to GeoServer</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">Namespace</span></tt></td>
+<td>Yes</td>
+<td>The namespace associated with the data store.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">Description</span></tt></td>
+<td>No</td>
+<td>A description of the data store.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">server</span></tt></td>
+<td>Yes</td>
+<td>The URL of the ArcSDE instance.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">port</span></tt></td>
+<td>Yes</td>
+<td>The port that the ArcSDE instance is set to listen to.  Default is 5151.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">instance</span></tt></td>
+<td>No</td>
+<td>The name of the specific ArcSDE instance, where applicable, depending on the underlying database.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">user</span></tt></td>
+<td>Yes</td>
+<td>The username to authenticate with the ArcSDE instance.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">password</span></tt></td>
+<td>No</td>
+<td>The password associated with the above username for authentication with the ArcSDE instance.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">pool.minConnections</span></tt></td>
+<td>No</td>
+<td>Connection pool configuration parameters. See the <a class="reference internal" href="connection-pooling.html#connection-pooling"><em>Database Connection Pooling</em></a> section for details.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">pool.maxConnections</span></tt></td>
+<td>No</td>
+<td>Connection pool configuration parameters. See the <a class="reference internal" href="connection-pooling.html#connection-pooling"><em>Database Connection Pooling</em></a> section for details.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">pool.timeOut</span></tt></td>
+<td>No</td>
+<td>Connection pool configuration parameters. See the <a class="reference internal" href="connection-pooling.html#connection-pooling"><em>Database Connection Pooling</em></a> section for details.</td>
+</tr>
+</tbody>
+</table>
+<p>You may now add featuretypes as you would normally do, by navigating to the <em class="guilabel">New Layer</em> page, accessed from the <a class="reference internal" href="../../webadmin/data/layers.html#webadmin-layers"><em>Layers</em></a> page in the <a class="reference internal" href="../../webadmin/index.html#web-admin"><em>Web Administration Interface</em></a>.</p>
+</div>
+<div class="section" id="configuring-an-arcsde-vector-data-store-with-direct-connect">
+<h2>Configuring an ArcSDE vector data store with Direct Connect<a class="headerlink" href="#configuring-an-arcsde-vector-data-store-with-direct-connect" title="Permalink to this headline">¶</a></h2>
+<p>ESRI Direct Connect[ESRI DC] allows clients to directly connect to an SDE GEODB 9.2+ without a need of an SDE server instance, and is recommended for high availability environments, as it removes the ArcSDE gateway server as a single point of failure.
+ESRI DC needs additional platform dependent binary drivers and a working Oracle Client ENVIRONMENT (if connecting to an ORACLE DB). See <a class="reference external" href="http://webhelp.esri.com/arcgisserver/9.3/java/index.htm#geodatabases/setting1995868008.htm">Properties of a direct connection to an ArcSDE geodatabase</a> in the ESRI ArcSDE documentation for more information on Direct Connect, and <a class="reference external" href="http://webhelp.esri.com/arcgisserver/9.3/java/index.htm#geodatabases/setting1995868008.htm">Setting up clients for a direct connection</a> for information about connecting to the different databases supported by ArcSDE.</p>
+<p>The GeoServer configuration parameters are the same as in the <cite>Configuring an ArcSDE vector data store</cite> section above, with a couple differences in how to format the parameters:</p>
+<blockquote>
+<div><ul class="simple">
+<li>server: In ESRI Direct Connect Mode a value must be given or the Direct Connect Driver will throw an error, so just put a &#8216;none&#8217; there - any String will work!</li>
+<li>port: In ESRI Direct Connect Mode the port has a String representation: <cite>sde:oracle10g</cite>, <cite>sde:oracle11g:/:test</cite>, etc. For further information check <a class="reference external" href="http://webhelp.esri.com/arcgisserver/9.3/java/geodatabases/arcsde-2034353163.htm">ArcSDE connection syntax</a> at the official ArcSDE documentation from ESRI.</li>
+<li>instance: In ESRI Direct Connect Mode a value must be given or the Direct Connect Driver will throw an error, so just put a &#8216;none&#8217; there - any String will work!</li>
+<li>user: The username to authenticate with the geo database.</li>
+<li>password: The password associated with the above username for authentication with the geo database.</li>
+</ul>
+</div></blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Be sure to assemble the password like: password&#64;&lt;Oracle Net Service name&gt; for Oracle</p>
+</div>
+<p>You may now add featuretypes as you would normally do, by navigating to the New Layer page, accessed from the Layers page in the Web Administration Interface.</p>
+</div>
+<div class="section" id="adding-an-arcsde-vector-data-store-with-jndi">
+<h2>Adding an ArcSDE vector data store with JNDI<a class="headerlink" href="#adding-an-arcsde-vector-data-store-with-jndi" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="configuring-an-arcsde-vector-data-store-with-jndi">
+<h2>Configuring an ArcSDE vector data store with JNDI<a class="headerlink" href="#configuring-an-arcsde-vector-data-store-with-jndi" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="adding-an-arcsde-raster-coveragestore">
+<h2>Adding an ArcSDE raster coveragestore<a class="headerlink" href="#adding-an-arcsde-raster-coveragestore" title="Permalink to this headline">¶</a></h2>
+<p>In order to serve raster layers (or coverages), it is first necessary to register the ArcSDE instance as a store in GeoServer.
+Navigate to the <strong>Add new store</strong> page, accessed from the <a class="reference internal" href="../../webadmin/data/stores.html#webadmin-stores"><em>Stores</em></a> page in the <a class="reference internal" href="../../webadmin/index.html#web-admin"><em>Web Administration Interface</em></a> and an option for
+<strong>ArcSDE Raster Format</strong> will be in list.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If <tt class="docutils literal"><span class="pre">ArcSDE</span> <span class="pre">Raster</span> <span class="pre">Format</span></tt> is not an option in the <strong>Coverage Data Set Description</strong> drop down box, the extension is not properly installed.  Please see the section on <a class="reference internal" href="#arcsde-install"><em>Installing the ArcSDE extension</em></a>.</p>
+</div>
+<div class="figure align-center">
+<img alt="../../_images/arcsderastercreate.png" src="../../_images/arcsderastercreate.png" />
+<p class="caption"><em>ArcSDE Raster in the list of data sources</em></p>
+</div>
+</div>
+<div class="section" id="configuring-an-arcsde-raster-coveragestore">
+<h2>Configuring an ArcSDE raster coveragestore<a class="headerlink" href="#configuring-an-arcsde-raster-coveragestore" title="Permalink to this headline">¶</a></h2>
+<p>The next page contains configuration options for the ArcSDE instance.  Fill out the form, then click <em class="guilabel">Save</em>.</p>
+<div class="figure align-center">
+<img alt="../../_images/arcsderasterconfigure.png" src="../../_images/arcsderasterconfigure.png" />
+<p class="caption"><em>Configuring a new ArcSDE coveragestore</em></p>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="18%" />
+<col width="9%" />
+<col width="73%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Option</strong></td>
+<td><strong>Required?</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">Coverage</span> <span class="pre">Data</span> <span class="pre">Set</span> <span class="pre">ID</span></tt></td>
+<td>N/A</td>
+<td>The name of the coveragestore as set on the previous page.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">Enabled</span></tt></td>
+<td>N/A</td>
+<td>When this box is checked the coveragestore will be available to GeoServer.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">Namespace</span></tt></td>
+<td>Yes</td>
+<td>The namespace associated with the coveragestore.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">Type</span></tt></td>
+<td>No</td>
+<td>The type of coveragestore.  Leave this to say <tt class="docutils literal"><span class="pre">ArcSDE</span> <span class="pre">Raster</span></tt>.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">URL</span></tt></td>
+<td>Yes</td>
+<td>The URL of the raster, of the form <tt class="docutils literal"><span class="pre">sde://&lt;user&gt;:&lt;pwd&gt;&#64;&lt;server&gt;/#&lt;tableName&gt;</span></tt>.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">Description</span></tt></td>
+<td>No</td>
+<td>A description of the coveragestore.</td>
+</tr>
+</tbody>
+</table>
+<p>You may now add coverages as you would normally do, by navigating to the <strong>Add new layer</strong> page, accessed from the <a class="reference internal" href="../../webadmin/data/layers.html#webadmin-layers"><em>Layers</em></a> page in the <a class="reference internal" href="../../webadmin/index.html#web-admin"><em>Web Administration Interface</em></a>.</p>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="h2.html" title="previous chapter">H2</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="db2.html" title="next chapter">DB2</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">ArcSDE</a><ul>
+<li><a class="reference internal" href="#vector-support">Vector support</a></li>
+<li><a class="reference internal" href="#raster-support">Raster support</a></li>
+<li><a class="reference internal" href="#installing-the-arcsde-extension">Installing the ArcSDE extension</a><ul>
+<li><a class="reference internal" href="#geoserver-files">GeoServer files</a></li>
+<li><a class="reference internal" href="#required-external-files">Required external files</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#adding-an-arcsde-vector-data-store">Adding an ArcSDE vector data store</a></li>
+<li><a class="reference internal" href="#configuring-an-arcsde-vector-data-store">Configuring an ArcSDE vector data store</a></li>
+<li><a class="reference internal" href="#configuring-an-arcsde-vector-data-store-with-direct-connect">Configuring an ArcSDE vector data store with Direct Connect</a></li>
+<li><a class="reference internal" href="#adding-an-arcsde-vector-data-store-with-jndi">Adding an ArcSDE vector data store with JNDI</a></li>
+<li><a class="reference internal" href="#configuring-an-arcsde-vector-data-store-with-jndi">Configuring an ArcSDE vector data store with JNDI</a></li>
+<li><a class="reference internal" href="#adding-an-arcsde-raster-coveragestore">Adding an ArcSDE raster coveragestore</a></li>
+<li><a class="reference internal" href="#configuring-an-arcsde-raster-coveragestore">Configuring an ArcSDE raster coveragestore</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="h2.html" title="previous chapter">H2</a></li>
+            <li>Next: <a href="db2.html" title="next chapter">DB2</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/data/database/arcsde.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

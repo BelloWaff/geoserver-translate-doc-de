@@ -1,0 +1,220 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>GeoServer Improvement Proposals &mdash; GeoServer 2.2.x Developer Manual</title>
+  <link rel="stylesheet" href="../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../_static/jquery.js"></script>
+  <script type="text/javascript" src="../_static/doctools.js"></script>
+  <script type="text/javascript" src="../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x Developer Manual" href="../index.html" />
+      <link rel="up" title="Policies and Procedures" href="index.html" />
+      <link rel="next" title="Community Modules" href="community-modules.html" />
+      <link rel="prev" title="Community Process" href="community-process.html" />
+</head>
+<body class="policies/gsip">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../index.html">GeoServer 2.2.x Developer Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../index.html">GeoServer 2.2.x Developer Manual</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Policies and Procedures</a> &raquo;</li>
+  <li>GeoServer Improvement Proposals</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="community-modules.html" title="Community Modules"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="community-process.html" title="Community Process"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="geoserver-improvement-proposals">
+<span id="gsip"></span><h1>GeoServer Improvement Proposals<a class="headerlink" href="#geoserver-improvement-proposals" title="Permalink to this headline">¶</a></h1>
+<p>GeoServer Improvements Proposals (GSIP) are the formal mechanism used to manage
+any sort of major change to GeoServer. Examples of changes which are managed by
+the GSIP process include:</p>
+<ul class="simple">
+<li>major features</li>
+<li>code re-architecture</li>
+<li>community process improvements</li>
+<li>intellectual property</li>
+</ul>
+<div class="section" id="how-a-gsip-works">
+<h2>How a GSIP works<a class="headerlink" href="#how-a-gsip-works" title="Permalink to this headline">¶</a></h2>
+<p>The typical life cycle of a GSIP is as follows:</p>
+<ol class="arabic simple">
+<li>Developer has an intent to perform a major change</li>
+<li>Developer communicates with the community about the change</li>
+<li>Developer goes off and implements the change</li>
+<li>Developer writes a GSIP and presents it to the community for feedback</li>
+<li>The PSC votes on the GSIP</li>
+<li>Developer commits changes upon receiving a positive vote</li>
+</ol>
+</div>
+<div class="section" id="voting-on-a-gsip">
+<h2>Voting on a GSIP<a class="headerlink" href="#voting-on-a-gsip" title="Permalink to this headline">¶</a></h2>
+<p>One of the duties of the GeoServer Project Steering Committee is to vote on
+GSIPs. The voting process works as follows:</p>
+<ul class="simple">
+<li>Each PSC member gets a single vote, which can be one of +1, -1, 0</li>
+<li>Any PSC member that votes negatively against a proposal must provide a
+reasonable explanation as to why</li>
+<li>Any PSC member that votes negatively against a proposal has a limited time to
+provide constructive feedback as to how the vote can be turned</li>
+<li>The GSIP author must incorporate any reasonable feedback into the proposal</li>
+<li>Any negative vote is reviewed to determine if criteria has been met to turn
+it to a positive vote</li>
+<li>The proposal is considered successful after a majority of positive votes is
+a achieved <strong>and</strong> all feedback from any negative votes has been addressed</li>
+</ul>
+</div>
+<div class="section" id="implementing-a-gsip">
+<h2>Implementing a GSIP<a class="headerlink" href="#implementing-a-gsip" title="Permalink to this headline">¶</a></h2>
+<p>GSIPs are written up on the
+<a class="reference external" href="http://geoserver.org/display/GEOS/GeoServer+Improvement+Proposals">wiki</a>. To
+make a GSIP:</p>
+<ol class="arabic simple">
+<li>Navigate to the <a class="reference external" href="http://geoserver.org/display/GEOS/Proposals+Under+Discussion">proposals under discussion page</a></li>
+<li>Log in to the wiki and click the <tt class="docutils literal"><span class="pre">Add</span> <span class="pre">Page</span></tt> link</li>
+<li>Use the <tt class="docutils literal"><span class="pre">Proposal</span></tt> template to create the new page</li>
+<li>Name the new page &#8220;GSIP ## - &lt;TITLE&gt;&#8221; where:<ol class="arabic">
+<li>## is the number of the GSIP</li>
+<li>&lt;TITLE&gt; is the title of the GSIP</li>
+</ol>
+</li>
+<li>Fill in the information in the page template, and click <tt class="docutils literal"><span class="pre">Save</span></tt> when
+complete.</li>
+</ol>
+</div>
+<div class="section" id="gsip-faq">
+<h2>GSIP FAQ<a class="headerlink" href="#gsip-faq" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="q-when-do-i-need-to-make-a-gsip">
+<h3>Q. When do I need to make a GSIP?<a class="headerlink" href="#q-when-do-i-need-to-make-a-gsip" title="Permalink to this headline">¶</a></h3>
+<p>A: Generally you will make a GSIP when you want something major done in
+GeoServer and need feedback from others. GSIPs are needed for things that will
+have an impact on other community members, and thus should be talked about.</p>
+<p>GSIPs are not intended to be a way to get feedback on experimental work. There
+are alternate mechanisms for this such as creating an R&amp;D page on the wiki,
+svn branches and spikes, etc... Often once the idea is formalized through
+experimentation it can be turned in to an official GSIP.</p>
+</div>
+<div class="section" id="q-who-can-comment-on-a-gsip">
+<h3>Q. Who can comment on a GSIP?<a class="headerlink" href="#q-who-can-comment-on-a-gsip" title="Permalink to this headline">¶</a></h3>
+<p>A: Anyone and everyone can comment on a GSIP including regular users, and it is
+encouraged. Comments an take place on the email lists, or as comments on the
+wiki page for the GSIP itself. Feedback from the user community is definitely
+desired so that the developers do not just making decisions in a vacuum. If you
+speak up your voice will be heard.</p>
+</div>
+<div class="section" id="q-who-can-vote-on-a-gsip">
+<h3>Q. Who can vote on a GSIP?<a class="headerlink" href="#q-who-can-vote-on-a-gsip" title="Permalink to this headline">¶</a></h3>
+<p>A: Only PSC members can officially vote on a GSIP. But more often than not this
+vote is based on general feedback from the user community.</p>
+</div>
+<div class="section" id="q-what-happens-if-i-propose-a-gsip-but-i-don-t-have-the-time-to-implement-it">
+<h3>Q: What happens if I propose a GSIP but I don&#8217;t have the time to implement it?<a class="headerlink" href="#q-what-happens-if-i-propose-a-gsip-but-i-don-t-have-the-time-to-implement-it" title="Permalink to this headline">¶</a></h3>
+<p>A: If a proposal is made but is not completed then it will be taken from a
+release schedule and live as a deferred proposal. A deferred proposal can be
+picked up by the original developer or another developer, or it can live in
+limbo until it officially gets rejected.</p>
+</div>
+<div class="section" id="q-if-i-am-a-psc-member-and-i-make-a-gsip-do-i-still-vote-on-it">
+<h3>Q: If I am a PSC member and I make a GSIP, do I still vote on it?<a class="headerlink" href="#q-if-i-am-a-psc-member-and-i-make-a-gsip-do-i-still-vote-on-it" title="Permalink to this headline">¶</a></h3>
+<p>A: Yes.</p>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="community-process.html" title="previous chapter">Community Process</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="community-modules.html" title="next chapter">Community Modules</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">GeoServer Improvement Proposals</a><ul>
+<li><a class="reference internal" href="#how-a-gsip-works">How a GSIP works</a></li>
+<li><a class="reference internal" href="#voting-on-a-gsip">Voting on a GSIP</a></li>
+<li><a class="reference internal" href="#implementing-a-gsip">Implementing a GSIP</a></li>
+<li><a class="reference internal" href="#gsip-faq">GSIP FAQ</a><ul>
+<li><a class="reference internal" href="#q-when-do-i-need-to-make-a-gsip">Q. When do I need to make a GSIP?</a></li>
+<li><a class="reference internal" href="#q-who-can-comment-on-a-gsip">Q. Who can comment on a GSIP?</a></li>
+<li><a class="reference internal" href="#q-who-can-vote-on-a-gsip">Q. Who can vote on a GSIP?</a></li>
+<li><a class="reference internal" href="#q-what-happens-if-i-propose-a-gsip-but-i-don-t-have-the-time-to-implement-it">Q: What happens if I propose a GSIP but I don&#8217;t have the time to implement it?</a></li>
+<li><a class="reference internal" href="#q-if-i-am-a-psc-member-and-i-make-a-gsip-do-i-still-vote-on-it">Q: If I am a PSC member and I make a GSIP, do I still vote on it?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="community-process.html" title="previous chapter">Community Process</a></li>
+            <li>Next: <a href="community-modules.html" title="next chapter">Community Modules</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../_sources/policies/gsip.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2011 GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

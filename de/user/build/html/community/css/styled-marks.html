@@ -1,0 +1,227 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Styled Marks in CSS &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../../index.html" />
+      <link rel="up" title="CSS Styling" href="index.html" />
+      <link rel="next" title="CSS Style Examples" href="examples.html" />
+      <link rel="prev" title="CSS Value Types" href="values.html" />
+</head>
+<body class="community/css/styled-marks">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Community</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">CSS Styling</a> &raquo;</li>
+  <li>Styled Marks in CSS</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="examples.html" title="CSS Style Examples"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="values.html" title="CSS Value Types"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="styled-marks-in-css">
+<h1>Styled Marks in CSS<a class="headerlink" href="#styled-marks-in-css" title="Permalink to this headline">¶</a></h1>
+<p>GeoServer&#8217;s CSS module provides a collection of predefined symbols that you can
+use and combine to create simple marks, strokes, and fill patterns without
+needing an image editing program.  You can access these symbols via the
+symbol() CSS function.  For example, the built-in circle symbol makes it easy
+to create a simple &#8216;dot&#8217; marker for a point layer:</p>
+<div class="highlight-python"><pre>* {
+  mark: symbol(circle);
+}</pre>
+</div>
+<p>Symbols work anywhere you can use a <tt class="docutils literal"><span class="pre">url()</span></tt> to reference an image (ie, you
+can use symbols for stroke and fill patterns as well as markers.)</p>
+<div class="section" id="symbol-names">
+<h2>Symbol Names<a class="headerlink" href="#symbol-names" title="Permalink to this headline">¶</a></h2>
+<p>GeoServer extensions can add extra symbols (such as the <tt class="docutils literal"><span class="pre">chart://</span></tt> symbol
+family which allows the use of charts as symbols via a naming scheme similar to
+the Google Charts API).  However, there are a few symbols that are always available:</p>
+<blockquote>
+<div><ul class="simple">
+<li>circle</li>
+<li>square</li>
+<li>triangle</li>
+<li>arrow</li>
+<li>cross</li>
+<li>star</li>
+<li>x</li>
+<li>shape://horizline</li>
+<li>shape://vertline</li>
+<li>shape://backslash</li>
+<li>shape://slash</li>
+<li>shape://plus</li>
+<li>shape://times</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="symbol-selectors">
+<h2>Symbol Selectors<a class="headerlink" href="#symbol-selectors" title="Permalink to this headline">¶</a></h2>
+<p>Symbols offer some additional styling options beyond those offered for image
+references. To specify these style properties, just add another
+rule with a special selector.  There are 8 &#8220;pseudoclass&#8221; selectors that are
+used to style selectors:</p>
+<blockquote>
+<div><ul class="simple">
+<li><tt class="docutils literal"><span class="pre">:mark</span></tt> specifies that a rule applies to symbols used as point markers</li>
+<li><tt class="docutils literal"><span class="pre">:shield</span></tt> specifies that a rule applies to symbols used as label
+shields (icons displayed behind label text)</li>
+<li><tt class="docutils literal"><span class="pre">:stroke</span></tt> specifies that a rule applies to symbols used as stroke
+patterns</li>
+<li><tt class="docutils literal"><span class="pre">:fill</span></tt> specifies that a rule applies to symbols used as fill patterns</li>
+<li><tt class="docutils literal"><span class="pre">:symbol</span></tt> specifies that a rule applies to any symbol, regardless of
+which context it is used in</li>
+<li><tt class="docutils literal"><span class="pre">:nth-mark(n)</span></tt> specifies that a rule applies to the symbol used for the
+nth stacked point marker on a feature.</li>
+<li><tt class="docutils literal"><span class="pre">:nth-shield(n)</span></tt> specifies that a rule applies to the symbol used for
+the background of the nth stacked label on a feature</li>
+<li><tt class="docutils literal"><span class="pre">:nth-stroke(n)</span></tt> specifies that a rule applies to the symbol used for
+the nth stacked stroke pattern on a feature.</li>
+<li><tt class="docutils literal"><span class="pre">:nth-fill(n)</span></tt> specifies that a rule applies to the symbol used for the
+nth stacked fill pattern on a feature.</li>
+<li><tt class="docutils literal"><span class="pre">:nth-symbol(n)</span></tt> specifies that a rule applies to the symbol used for
+the nth stacked symbol on a feature, regardless of which context it is
+used in.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="symbol-styling-properties">
+<h2>Symbol Styling Properties<a class="headerlink" href="#symbol-styling-properties" title="Permalink to this headline">¶</a></h2>
+<p>Styling a built-in symbol is similar to styling a polygon feature. However, the
+styling options are slightly different from those available to a true polygon
+feature:</p>
+<blockquote>
+<div><ul class="simple">
+<li>The <tt class="docutils literal"><span class="pre">mark</span></tt> and <tt class="docutils literal"><span class="pre">label</span></tt> families of properties are unavailable for
+symbols.</li>
+<li>Nested symbol styling is not currently supported.</li>
+<li>Only the first <tt class="docutils literal"><span class="pre">stroke</span></tt> and <tt class="docutils literal"><span class="pre">fill</span></tt> will be used.</li>
+<li>Additional <tt class="docutils literal"><span class="pre">size</span></tt> (as a length) and <tt class="docutils literal"><span class="pre">rotation</span></tt> (as an angle)
+properties are available.  These are analogous to the
+<tt class="docutils literal"><span class="pre">(mark|stroke|fill)-size</span></tt> and <tt class="docutils literal"><span class="pre">(mark|stroke|fill)-rotation</span></tt>
+properties available for true geometry styling.</li>
+</ul>
+</div></blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The various prefixed &#8216;-size&#8217; and &#8216;-rotation&#8217; properties on the
+containing style override those for the symbol if they are present.</p>
+</div>
+</div>
+<div class="section" id="example-styled-symbol">
+<h2>Example Styled Symbol<a class="headerlink" href="#example-styled-symbol" title="Permalink to this headline">¶</a></h2>
+<p>As an example, consider a situation where you are styling a layer that includes data about hospitals in your town.  You can create a simple hospital logo by placing a red cross symbol on top of a white circle background:</p>
+<div class="highlight-python"><pre>[usage='hospital'] {
+  mark: symbol('circle'), symbol('cross');
+}
+
+[usage='hospital'] :nth-mark(1) {
+  size: 16px;
+  fill: white;
+  stroke: red;
+}
+
+[usage='hospital'] :nth-mark(2) {
+  size: 12px;
+  fill: red;
+}</pre>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="values.html" title="previous chapter">CSS Value Types</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="examples.html" title="next chapter">CSS Style Examples</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">Styled Marks in CSS</a><ul>
+<li><a class="reference internal" href="#symbol-names">Symbol Names</a></li>
+<li><a class="reference internal" href="#symbol-selectors">Symbol Selectors</a></li>
+<li><a class="reference internal" href="#symbol-styling-properties">Symbol Styling Properties</a></li>
+<li><a class="reference internal" href="#example-styled-symbol">Example Styled Symbol</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="values.html" title="previous chapter">CSS Value Types</a></li>
+            <li>Next: <a href="examples.html" title="next chapter">CSS Style Examples</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/community/css/styled-marks.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

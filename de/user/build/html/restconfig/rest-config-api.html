@@ -1,0 +1,2680 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>REST Configuration API Reference &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../_static/jquery.js"></script>
+  <script type="text/javascript" src="../_static/doctools.js"></script>
+  <script type="text/javascript" src="../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../index.html" />
+      <link rel="up" title="RESTful Configuration" href="index.html" />
+      <link rel="next" title="REST Configuration Examples" href="rest-config-examples/index.html" />
+      <link rel="prev" title="Overview of REST" href="overview.html" />
+</head>
+<body class="restconfig/rest-config-api">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">RESTful Configuration</a> &raquo;</li>
+  <li>REST Configuration API Reference</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="rest-config-examples/index.html" title="REST Configuration Examples"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="overview.html" title="Overview of REST"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="rest-configuration-api-reference">
+<span id="rest-config-api-ref"></span><h1>REST Configuration API Reference<a class="headerlink" href="#rest-configuration-api-reference" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="formats-and-representations">
+<h2>Formats and representations<a class="headerlink" href="#formats-and-representations" title="Permalink to this headline">¶</a></h2>
+<p>A <tt class="docutils literal"><span class="pre">format</span></tt> specifies how a resource should be represented. A format is used:</p>
+<ul class="simple">
+<li>In an operation to specify what representation should be returned to the
+client</li>
+<li>In a POST or PUT operation to specify the representation being sent to the
+server</li>
+</ul>
+<p>In a GET operation the format can be specified in a number of ways. The first is
+with the <tt class="docutils literal"><span class="pre">Accepts</span></tt> header. For instance setting the header to &#8220;text/xml&#8221; would
+specify the desire to have the resource returned as XML. The second method of
+specifying the format is via file extension. For example consider the resource
+&#8220;foo&#8221;. To request a representation of foo as XML the request uri would end with
+&#8220;foo.xml&#8221;. To request as JSON the request uri would end with &#8220;foo.json&#8221;. When no
+format is specified the server will use its own internal format, usually html.</p>
+<p>In a POST or PUT operation the format specifies 1) the representatin of the
+content being sent to the server, and 2) the representation of the resposne to
+be sent back. The former is specified with the <tt class="docutils literal"><span class="pre">Content-type</span></tt> header. To send
+a representation in XML, the content type &#8220;text/xml&#8221; or &#8220;application/xml&#8221; would
+be used. The latter is specified with the <tt class="docutils literal"><span class="pre">Accepts</span></tt> header as specified in the
+above paragraph describing a GET operation.</p>
+<p>The following table defines the <tt class="docutils literal"><span class="pre">Content-type</span></tt> values for each format:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Format</th>
+<th class="head">Content-type</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>XML</td>
+<td>application/xml</td>
+</tr>
+<tr class="row-odd"><td>JSON</td>
+<td>application/json</td>
+</tr>
+<tr class="row-even"><td>HTML</td>
+<td>application/html</td>
+</tr>
+<tr class="row-odd"><td>SLD</td>
+<td>application/vnd.ogc.sld+xml</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="authentication">
+<h2>Authentication<a class="headerlink" href="#authentication" title="Permalink to this headline">¶</a></h2>
+<p>POST, PUT, and DELETE requests (requests that modify resources) require the
+client to be authenticated. Currently the only supported method of
+authentication is Basic authentication. See the
+<a class="reference internal" href="rest-config-examples/index.html#rest-config-examples"><em>examples</em></a> section for examples of how to perform
+authentication with various clients and environments.</p>
+</div>
+<div class="section" id="status-codes">
+<h2>Status codes<a class="headerlink" href="#status-codes" title="Permalink to this headline">¶</a></h2>
+<p>A Http request uses a <tt class="docutils literal"><span class="pre">status</span> <span class="pre">code</span></tt> to relay the outcome of the request to the
+client. Different status codes are used for various purposes through out this
+document. These codes are described in detail by the <a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html">http specification</a>.</p>
+</div>
+<div class="section" id="global-settings">
+<h2>Global Settings<a class="headerlink" href="#global-settings" title="Permalink to this headline">¶</a></h2>
+<p>Allows accessing global settings for GeoServer</p>
+<div class="section" id="operations">
+<h3>Operations<a class="headerlink" href="#operations" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">/settings[.&lt;format&gt;]</span></tt></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Action</th>
+<th class="head">Return Code</th>
+<th class="head">Formats</th>
+<th class="head">Default Format</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>List all global settings</td>
+<td>200</td>
+<td>HTML, XML, JSON</td>
+<td>HTML</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>Update global settings</td>
+<td>200</td>
+<td>XML, JSON</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p><em>Representations</em>:</p>
+<ul class="simple">
+<li><a class="reference download internal" href="../_downloads/settings_html.txt"><tt class="xref download docutils literal"><span class="pre">HTML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/settings_xml.txt"><tt class="xref download docutils literal"><span class="pre">XML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/settings_json.txt"><tt class="xref download docutils literal"><span class="pre">JSON</span></tt></a></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">/settings/contact[.&lt;format&gt;]</span></tt></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Action</th>
+<th class="head">Return Code</th>
+<th class="head">Formats</th>
+<th class="head">Default Format</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>List global contact information</td>
+<td>200</td>
+<td>HTML, XML, JSON</td>
+<td>HTML</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>Update global contact</td>
+<td>200</td>
+<td>XML, JSON</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p><em>Representations</em>:</p>
+<ul class="simple">
+<li><a class="reference download internal" href="../_downloads/contact_html.txt"><tt class="xref download docutils literal"><span class="pre">HTML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/contact_xml.txt"><tt class="xref download docutils literal"><span class="pre">XML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/contact_json.txt"><tt class="xref download docutils literal"><span class="pre">JSON</span></tt></a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="workspaces">
+<h2>Workspaces<a class="headerlink" href="#workspaces" title="Permalink to this headline">¶</a></h2>
+<p>A <tt class="docutils literal"><span class="pre">workspace</span></tt> is a grouping of data stores. More commonly known as a
+namespace, it is commonly used to group data that is related in some way.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For GeoServer 1.x a workspace can be considered the equivalent of a
+namespace, and the two are kept in sync. For example, the namespace
+&#8220;topp, <a class="reference external" href="http://openplans.org/topp">http://openplans.org/topp</a>&#8221; corresponds to the workspace &#8220;topp&#8221;.</p>
+</div>
+<div class="section" id="id1">
+<h3>Operations<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">/workspaces[.&lt;format&gt;]</span></tt></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Action</th>
+<th class="head">Return Code</th>
+<th class="head">Formats</th>
+<th class="head">Default Format</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>List all workspaces</td>
+<td>200</td>
+<td>HTML, XML, JSON</td>
+<td>HTML</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>Create a new workspace</td>
+<td>201 with <tt class="docutils literal"><span class="pre">Location</span></tt> header</td>
+<td>XML, JSON</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p><em>Representations</em>:</p>
+<ul class="simple">
+<li><a class="reference download internal" href="../_downloads/workspaces_html.txt"><tt class="xref download docutils literal"><span class="pre">HTML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/workspaces_xml.txt"><tt class="xref download docutils literal"><span class="pre">XML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/workspaces_json.txt"><tt class="xref download docutils literal"><span class="pre">JSON</span></tt></a></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;[.&lt;format&gt;]</span></tt></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Action</th>
+<th class="head">Return Code</th>
+<th class="head">Formats</th>
+<th class="head">Default Format</th>
+<th class="head">Parameters</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>Returns workspace <tt class="docutils literal"><span class="pre">ws</span></tt></td>
+<td>200</td>
+<td>HTML, XML, JSON</td>
+<td>HTML</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>200</td>
+<td>Modify workspace <tt class="docutils literal"><span class="pre">ws</span></tt></td>
+<td>XML, JSON</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>200</td>
+<td>Delete workspace <tt class="docutils literal"><span class="pre">ws</span></tt></td>
+<td>XML, JSON</td>
+<td>&nbsp;</td>
+<td><a class="reference internal" href="#workspace-recurse"><em>recurse</em></a></td>
+</tr>
+</tbody>
+</table>
+<p><em>Representations</em>:</p>
+<ul class="simple">
+<li><a class="reference download internal" href="../_downloads/workspace_html.txt"><tt class="xref download docutils literal"><span class="pre">HTML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/workspace_xml.txt"><tt class="xref download docutils literal"><span class="pre">XML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/workspace_json.txt"><tt class="xref download docutils literal"><span class="pre">JSON</span></tt></a></li>
+</ul>
+<p><em>Exceptions</em>:</p>
+<ul class="simple">
+<li>GET for a workspace that does not exist -&gt; 404</li>
+<li>PUT that changes name of workspace -&gt; 403</li>
+<li>DELETE against a workspace that is non-empty -&gt; 403</li>
+</ul>
+<p id="workspace-recurse">The <tt class="docutils literal"><span class="pre">recurse</span></tt> parameter is used to recursively delete all resources contained
+by the specified workspace. This includes data stores, coverage stores,
+feature types, etc... Allowable values for this parameter are &#8220;true&#8221; or &#8220;false&#8221;.
+The default value is &#8220;false&#8221;.</p>
+<p><tt class="docutils literal"><span class="pre">/workspaces/default[.&lt;format&gt;]</span></tt></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Action</th>
+<th class="head">Return Code</th>
+<th class="head">Formats</th>
+<th class="head">Default Format</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>Returns default workspace</td>
+<td>200</td>
+<td>HTML, XML, JSON</td>
+<td>HTML</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>200</td>
+<td>Set default workspace</td>
+<td>XML, JSON</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p><tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/settings[.&lt;format&gt;]</span></tt></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Action</th>
+<th class="head">Return Code</th>
+<th class="head">Formats</th>
+<th class="head">Default Format</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>Returns workspace settings</td>
+<td>200</td>
+<td>HTML, XML, JSON</td>
+<td>HTML</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>Creates or updates workspace settings</td>
+<td>200</td>
+<td>XML, JSON</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>Deletes workspace settings</td>
+<td>200</td>
+<td>XML, JSON</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p><em>Representations</em>:</p>
+<ul class="simple">
+<li><a class="reference download internal" href="../_downloads/workspaceSettings_html.txt"><tt class="xref download docutils literal"><span class="pre">HTML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/workspaceSettings_xml.txt"><tt class="xref download docutils literal"><span class="pre">XML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/workspaceSettings_json.txt"><tt class="xref download docutils literal"><span class="pre">JSON</span></tt></a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="namespaces">
+<h2>Namespaces<a class="headerlink" href="#namespaces" title="Permalink to this headline">¶</a></h2>
+<p>A <tt class="docutils literal"><span class="pre">namespace</span></tt> is a uniquely identifiable grouping of feature types. A
+namespaces is identified by a prefix and a uri.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In GeoServer 1.7.x a namespace is used to group data stores, serving the
+same purpose as a workspace. In 1.7.x the two are kept in sync. Therefore
+when adding a new namespace a workspace whose name matches the prefix of
+the namespace is implicitly created.</p>
+</div>
+<div class="section" id="id2">
+<h3>Operations<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">/namespaces[.&lt;format&gt;]</span></tt></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Action</th>
+<th class="head">Return Code</th>
+<th class="head">Formats</th>
+<th class="head">Default Format</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>List all namespaces</td>
+<td>200</td>
+<td>HTML, XML, JSON</td>
+<td>HTML</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>Create a new namespace</td>
+<td>201 with <tt class="docutils literal"><span class="pre">Location</span></tt> header</td>
+<td>XML, JSON</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p><em>Representations</em>:</p>
+<ul class="simple">
+<li><a class="reference download internal" href="../_downloads/namespaces_html.txt"><tt class="xref download docutils literal"><span class="pre">HTML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/namespaces_xml.txt"><tt class="xref download docutils literal"><span class="pre">XML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/namespaces_json.txt"><tt class="xref download docutils literal"><span class="pre">JSON</span></tt></a></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">/namespaces/&lt;ns&gt;[.&lt;format&gt;]</span></tt></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Action</th>
+<th class="head">Return Code</th>
+<th class="head">Formats</th>
+<th class="head">Default Format</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>Returns namespace <tt class="docutils literal"><span class="pre">ns</span></tt></td>
+<td>200</td>
+<td>HTML, XML, JSON</td>
+<td>HTML</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>200</td>
+<td>Modify namespace <tt class="docutils literal"><span class="pre">ns</span></tt></td>
+<td>XML, JSON</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>200</td>
+<td>Delete namespace <tt class="docutils literal"><span class="pre">ns</span></tt></td>
+<td>XML, JSON</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p><em>Representations</em>:</p>
+<ul class="simple">
+<li><a class="reference download internal" href="../_downloads/namespace_html.txt"><tt class="xref download docutils literal"><span class="pre">HTML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/namespace_xml.txt"><tt class="xref download docutils literal"><span class="pre">XML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/namespace_json.txt"><tt class="xref download docutils literal"><span class="pre">JSON</span></tt></a></li>
+</ul>
+<p><em>Exceptions</em>:</p>
+<ul class="simple">
+<li>GET for a namespace that does not exist -&gt; 404</li>
+<li>PUT that changes prefix of namespace -&gt; 403</li>
+<li>DELETE against a namespace whose corresponding workspace is non-empty -&gt; 403</li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">/namespaces/default[.&lt;format&gt;]</span></tt></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Action</th>
+<th class="head">Return Code</th>
+<th class="head">Formats</th>
+<th class="head">Default Format</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>Returns default namespace</td>
+<td>200</td>
+<td>HTML, XML, JSON</td>
+<td>HTML</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>200</td>
+<td>Set default namespace</td>
+<td>XML, JSON</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="data-stores">
+<h2>Data stores<a class="headerlink" href="#data-stores" title="Permalink to this headline">¶</a></h2>
+<p>A <tt class="docutils literal"><span class="pre">data</span> <span class="pre">store</span></tt> is a source of spatial data that is vector based. It can be a
+file in the case of a Shapefile, a database in the case of PostGIS, or a
+server in the case of a remote Web Feature Service.</p>
+<div class="section" id="id3">
+<h3>Operations<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/datastores[.&lt;format&gt;]</span></tt></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Action</th>
+<th class="head">Return Code</th>
+<th class="head">Formats</th>
+<th class="head">Default Format</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>List all data stores in workspace <tt class="docutils literal"><span class="pre">ws</span></tt></td>
+<td>200</td>
+<td>HTML, XML, JSON</td>
+<td>HTML</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>Create a new data store</td>
+<td>201 with <tt class="docutils literal"><span class="pre">Location</span></tt> header</td>
+<td>XML, JSON</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p><em>Representations</em>:</p>
+<ul class="simple">
+<li><a class="reference download internal" href="../_downloads/datastores_html.txt"><tt class="xref download docutils literal"><span class="pre">HTML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/datastores_xml.txt"><tt class="xref download docutils literal"><span class="pre">XML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/datastores_json.txt"><tt class="xref download docutils literal"><span class="pre">JSON</span></tt></a></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/datastores/&lt;ds&gt;[.&lt;format&gt;]</span></tt></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Action</th>
+<th class="head">Return Code</th>
+<th class="head">Formats</th>
+<th class="head">Default Format</th>
+<th class="head">Parameters</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>Return data store <tt class="docutils literal"><span class="pre">ds</span></tt></td>
+<td>200</td>
+<td>HTML, XML, JSON</td>
+<td>HTML</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>Modify data store <tt class="docutils literal"><span class="pre">ds</span></tt></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>Delete data store <tt class="docutils literal"><span class="pre">ds</span></tt></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><a class="reference internal" href="#datastore-recurse"><em>recurse</em></a></td>
+</tr>
+</tbody>
+</table>
+<p><em>Representations</em>:</p>
+<ul class="simple">
+<li><a class="reference download internal" href="../_downloads/datastore_html.txt"><tt class="xref download docutils literal"><span class="pre">HTML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/datastore_xml.txt"><tt class="xref download docutils literal"><span class="pre">XML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/datastore_json.txt"><tt class="xref download docutils literal"><span class="pre">JSON</span></tt></a></li>
+</ul>
+<p><em>Exceptions</em>:</p>
+<ul class="simple">
+<li>GET for a data store that does not exist -&gt; 404</li>
+<li>PUT that changes name of data store -&gt; 403</li>
+<li>PUT that changes workspace of data store -&gt; 403</li>
+<li>DELETE against a data store that contains configured feature types -&gt; 403</li>
+</ul>
+<p id="datastore-recurse">The <tt class="docutils literal"><span class="pre">recurse</span></tt> parameter is used to recursively delete all feature types contained
+by the specified data store. Allowable values for this parameter are &#8220;true&#8221; or  &#8220;false&#8221;.
+The default value is &#8220;false&#8221;.</p>
+<p><tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/datastores/&lt;ds&gt;/file[.&lt;extension&gt;]</span></tt>
+<tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/datastores/&lt;ds&gt;/url[.&lt;extension&gt;]</span></tt>
+<tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/datastores/&lt;ds&gt;/external[.&lt;extension&gt;]</span></tt></p>
+<p>This operation uploads a file containing spatial data into an existing datastore, or
+creates a new datastore.</p>
+<p id="extension-parameter">The <tt class="docutils literal"><span class="pre">extension</span></tt> parameter specifies the type of data being uploaded. The following
+extensions are supported:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Extension</th>
+<th class="head">Datastore</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>shp</td>
+<td>Shapefile</td>
+</tr>
+<tr class="row-odd"><td>properties</td>
+<td>Property file</td>
+</tr>
+<tr class="row-even"><td>h2</td>
+<td>H2 Database</td>
+</tr>
+<tr class="row-odd"><td>spatialite</td>
+<td>SpatiaLite Database</td>
+</tr>
+</tbody>
+</table>
+<p>The <tt class="docutils literal"><span class="pre">file</span></tt>, <tt class="docutils literal"><span class="pre">url</span></tt>, and <tt class="docutils literal"><span class="pre">external</span></tt> endpoints are used to specify the method that is
+used to upload the file.</p>
+<p>The <tt class="docutils literal"><span class="pre">file</span></tt> method is used to directly upload a file from a local source. The body of the request is the
+file itself.</p>
+<p>The <tt class="docutils literal"><span class="pre">url</span></tt> method is used to indirectly upload a file from an remote source. The body of the request is
+a url pointing to the file to upload. This url must be visible from the server.</p>
+<p>The <tt class="docutils literal"><span class="pre">external</span></tt> method is used to forgo upload and use an existing file on the server. The body of the
+request is the absolute path to the existing file.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Action</th>
+<th class="head">Return Code</th>
+<th class="head">Formats</th>
+<th class="head">Default Format</th>
+<th class="head">Parameters</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>Get the underlying files for the data store as a zip file with
+mime type <tt class="docutils literal"><span class="pre">application/zip</span></tt>. <em>Deprecated</em>.</td>
+<td>200</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>Uploads files to the data store <tt class="docutils literal"><span class="pre">ds</span></tt>, creating it if necessary.</td>
+<td>200</td>
+<td>See <a class="reference internal" href="#datastore-file-put-notes"><em>notes</em></a> below.</td>
+<td>&nbsp;</td>
+<td><a class="reference internal" href="#configure-parameter"><em>configure</em></a>, <a class="reference internal" href="#target-parameter"><em>target</em></a>, <a class="reference internal" href="#update-parameter"><em>update</em></a>, <a class="reference internal" href="#charset-parameter"><em>charset</em></a></td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p><em>Exceptions</em>:</p>
+<ul class="simple">
+<li>GET for a data store that does not exist -&gt; 404</li>
+<li>GET for a data store that is not file based -&gt; 404</li>
+</ul>
+<p id="datastore-file-put-notes">When the file for a datastore are PUT, it can be as a standalone file, or as
+a zipped archive. The standalone file method is only applicable to data stores
+that work from a single file, GML for example. Data stores like Shapefile
+must be sent as a zip archive.</p>
+<p>When uploading a zip archive the <tt class="docutils literal"><span class="pre">Content-type</span></tt> should be set to
+<tt class="docutils literal"><span class="pre">application/zip</span></tt>. When uploading a standalone file the content type should
+be appropriately set based on the file type.</p>
+<p id="configure-parameter">The <tt class="docutils literal"><span class="pre">configure</span></tt> parameter is used to control how the data store is
+configured upon file upload. It can take one of the three values &#8220;first&#8221;,
+&#8220;none&#8221;, or &#8220;all&#8221;.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">first</span></tt> - Only setup the first feature type available in the data store. This is the default.</li>
+<li><tt class="docutils literal"><span class="pre">none</span></tt> - Do not configure any feature types.</li>
+<li><tt class="docutils literal"><span class="pre">all</span></tt> - Configure all feature types.</li>
+</ul>
+<p id="target-parameter">The <tt class="docutils literal"><span class="pre">target</span></tt> parameter is used to control the type of datastore that is created
+on the server when the datastore being PUT to does not exist. The allowable values
+for this parameter are the same as for the <a class="reference internal" href="#extension-parameter"><em>extension parameter</em></a>.</p>
+<p id="update-parameter">The <tt class="docutils literal"><span class="pre">update</span></tt> parameter is used to control how existing data is handled when the
+file is PUT into a datastore that (a) already exists and (b) already contains a
+schema that matches the content of the file. It can take one of the two values
+&#8220;append&#8221;, or &#8220;overwrite&#8221;.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">append</span></tt> - Data being uploaded is appended to the existing data. This is the default.</li>
+<li><tt class="docutils literal"><span class="pre">overwrite</span></tt> - Data being uploaded replaces any existing data.</li>
+</ul>
+<p id="charset-parameter">The <tt class="docutils literal"><span class="pre">charset</span></tt> parameter is used to specify the character encoding of the file
+being uploaded. For example &#8220;ISO-8559-1&#8221;.</p>
+</div>
+</div>
+<div class="section" id="feature-types">
+<h2>Feature types<a class="headerlink" href="#feature-types" title="Permalink to this headline">¶</a></h2>
+<p>A <tt class="docutils literal"><span class="pre">feature</span> <span class="pre">type</span></tt> is a vector based spatial resource or data set that
+originates from a data store. In some cases, like Shapefile, a feature type
+has a one-to-one relationship with its data store. In other cases, like
+PostGIS, the relationship of feature type to data store is many-to-one, with
+each feature type corresponding to a table in the database.</p>
+<div class="section" id="id4">
+<h3>Operations<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/datastores/&lt;ds&gt;/featuretypes[.&lt;format&gt;]</span></tt></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Action</th>
+<th class="head">Return Code</th>
+<th class="head">Formats</th>
+<th class="head">Default Format</th>
+<th class="head">Parameters</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>List all feature types in datastore <tt class="docutils literal"><span class="pre">ds</span></tt></td>
+<td>200</td>
+<td>HTML, XML, JSON</td>
+<td>HTML</td>
+<td><a class="reference internal" href="#list-parameter"><em>list</em></a></td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>Create a new feature type, see <a class="reference internal" href="#featuretypes-post-notes"><em>notes</em></a> below</td>
+<td>201 with <tt class="docutils literal"><span class="pre">Location</span></tt> header</td>
+<td>XML, JSON</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p><em>Representations</em>:</p>
+<ul class="simple">
+<li><a class="reference download internal" href="../_downloads/featuretypes_html.txt"><tt class="xref download docutils literal"><span class="pre">HTML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/featuretypes_xml.txt"><tt class="xref download docutils literal"><span class="pre">XML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/featuretypes_json.txt"><tt class="xref download docutils literal"><span class="pre">JSON</span></tt></a></li>
+</ul>
+<p><em>Exceptions</em>:</p>
+<ul class="simple">
+<li>GET for a feature type that does not exist -&gt; 404</li>
+<li>PUT that changes name of feature type -&gt; 403</li>
+<li>PUT that changes data store of feature type -&gt; 403</li>
+</ul>
+<p id="featuretypes-post-notes">When creating a new feature type via <tt class="docutils literal"><span class="pre">POST</span></tt>, if no underlying dataset with the specified name exists an attempt will be made to create it. This will work only in cases where the underlying data format supports the creation of new types (such as a database). When creating a feature type in this manner the client should include all attribute information in
+the feature type representation.</p>
+<p id="list-parameter">The <tt class="docutils literal"><span class="pre">list</span></tt> parameter is used to control the category of feature types that
+are returned. It can take one of the three values &#8220;configured&#8221;, &#8220;available&#8221;, &#8220;available_with_geom&#8221; or &#8220;all&#8221;.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">configured</span></tt> - Only setup or configured feature types are returned. This
+is the default value.</li>
+<li><tt class="docutils literal"><span class="pre">available</span></tt> - Only unconfigured feature types (not yet setup) but are
+available from the specified datastore  will be returned.</li>
+<li><tt class="docutils literal"><span class="pre">available_with_geom</span></tt> - Same as <tt class="docutils literal"><span class="pre">available</span></tt> but only includes feature
+types that have a geometry attribute.</li>
+<li><tt class="docutils literal"><span class="pre">all</span></tt> - The union of <tt class="docutils literal"><span class="pre">configured</span></tt> and <tt class="docutils literal"><span class="pre">available</span></tt>.</li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/datastores/&lt;ds&gt;/featuretypes/&lt;ft&gt;[.&lt;format&gt;]</span></tt></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Action</th>
+<th class="head">Return Code</th>
+<th class="head">Formats</th>
+<th class="head">Default Format</th>
+<th class="head">Parameters</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>Return feature type <tt class="docutils literal"><span class="pre">ft</span></tt></td>
+<td>200</td>
+<td>HTML, XML, JSON</td>
+<td>HTML</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>Modify feature type <tt class="docutils literal"><span class="pre">ft</span></tt></td>
+<td>200</td>
+<td>XML,JSON</td>
+<td>&nbsp;</td>
+<td><a class="reference internal" href="#featuretype-recalculate"><em>recalculate</em></a></td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>Delete feature type <tt class="docutils literal"><span class="pre">ft</span></tt></td>
+<td>200</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><a class="reference internal" href="#featuretype-recurse"><em>recurse</em></a></td>
+</tr>
+</tbody>
+</table>
+<p><em>Representations</em>:</p>
+<ul class="simple">
+<li><a class="reference download internal" href="../_downloads/featuretype_html.txt"><tt class="xref download docutils literal"><span class="pre">HTML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/featuretype_xml.txt"><tt class="xref download docutils literal"><span class="pre">XML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/featuretype_json.txt"><tt class="xref download docutils literal"><span class="pre">JSON</span></tt></a></li>
+</ul>
+<p><em>Exceptions</em>:</p>
+<ul class="simple">
+<li>GET for a feature type that does not exist -&gt; 404</li>
+<li>PUT that changes name of feature type -&gt; 403</li>
+<li>PUT that changes data store of feature type -&gt; 403</li>
+</ul>
+<p id="featuretype-recurse">The <tt class="docutils literal"><span class="pre">recurse</span></tt> parameter is used to recursively delete all layers that reference
+by the specified feature type. Allowable values for this parameter are &#8220;true&#8221; or
+&#8220;false&#8221;.  The default value is &#8220;false&#8221;.</p>
+<p id="featuretype-recalculate">Some properties of feature types are automatically recalculated when necessary.
+In particular, the native bounding box is recalculated when the projection or projection policy are changed, and the lat/lon bounding box is recalculated when the native bounding box is recalculated, or when a new native bounding box is explicitly provided in the request.
+<em>The native and lat/lon bounding boxes are never automatically recalculated when they are explicitly included in the request.</em>
+In addition, the client may explicitly request a fixed set of fields to calculate by including a comma-separated list of their names as a parameter named <tt class="docutils literal"><span class="pre">recalculate</span></tt>.  For example:</p>
+<blockquote>
+<div><ul class="simple">
+<li><tt class="docutils literal"><span class="pre">recalculate=</span></tt> (empty parameter): Do not calculate any fields, regardless of the projection, projection policy, etc.
+This might be useful to avoid slow recalculation when operating against large datasets.</li>
+<li><tt class="docutils literal"><span class="pre">recalculate=nativebbox</span></tt>: Recalculate the native boundingbox, do not recalculate the lat/lon bounding box.</li>
+<li><tt class="docutils literal"><span class="pre">recalculate=nativebbox,latlonbbox</span></tt>: Recalculate both the native boundingbox and the lat/lon bounding box.</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="coverage-stores">
+<h2>Coverage stores<a class="headerlink" href="#coverage-stores" title="Permalink to this headline">¶</a></h2>
+<p>A <tt class="docutils literal"><span class="pre">coverage</span> <span class="pre">store</span></tt> is a source of spatial data that is raster based.</p>
+<div class="section" id="id5">
+<h3>Operations<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/coveragestores[.&lt;format&gt;]</span></tt></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Action</th>
+<th class="head">Return Code</th>
+<th class="head">Formats</th>
+<th class="head">Default Format</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>List all coverage stores in workspace <tt class="docutils literal"><span class="pre">ws</span></tt></td>
+<td>200</td>
+<td>HTML, XML, JSON</td>
+<td>HTML</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>Create a new coverage store</td>
+<td>201 with <tt class="docutils literal"><span class="pre">Location</span></tt> header</td>
+<td>XML, JSON</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p><em>Representations</em>:</p>
+<ul class="simple">
+<li><a class="reference download internal" href="../_downloads/coveragestores_html.txt"><tt class="xref download docutils literal"><span class="pre">HTML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/coveragestores_xml.txt"><tt class="xref download docutils literal"><span class="pre">XML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/coveragestores_json.txt"><tt class="xref download docutils literal"><span class="pre">JSON</span></tt></a></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/coveragestores/&lt;cs&gt;[.&lt;format&gt;]</span></tt></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Action</th>
+<th class="head">Return Code</th>
+<th class="head">Formats</th>
+<th class="head">Default Format</th>
+<th class="head">Parameters</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>Return coverage store <tt class="docutils literal"><span class="pre">cs</span></tt></td>
+<td>200</td>
+<td>HTML, XML, JSON</td>
+<td>HTML</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>Modify coverage store <tt class="docutils literal"><span class="pre">cs</span></tt></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>Delete coverage store <tt class="docutils literal"><span class="pre">ds</span></tt></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><a class="reference internal" href="#coveragestore-recurse"><em>recurse</em></a></td>
+</tr>
+</tbody>
+</table>
+<p><em>Representations</em>:</p>
+<ul class="simple">
+<li><a class="reference download internal" href="../_downloads/coveragestore_html.txt"><tt class="xref download docutils literal"><span class="pre">HTML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/coveragestore_xml.txt"><tt class="xref download docutils literal"><span class="pre">XML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/coveragestore_json.txt"><tt class="xref download docutils literal"><span class="pre">JSON</span></tt></a></li>
+</ul>
+<p><em>Exceptions</em>:</p>
+<ul class="simple">
+<li>GET for a coverage store that does not exist -&gt; 404</li>
+<li>PUT that changes name of coverage store -&gt; 403</li>
+<li>PUT that changes workspace of coverage store -&gt; 403</li>
+<li>DELETE against a coverage store that contains configured coverage -&gt; 403</li>
+</ul>
+<p id="coveragestore-recurse">The <tt class="docutils literal"><span class="pre">recurse</span></tt> parameter is used to recursively delete all coverages contained
+by the specified coverage store. Allowable values for this parameter are &#8220;true&#8221; or  &#8220;false&#8221;.
+The default value is &#8220;false&#8221;.</p>
+<p><tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/coveragestores/&lt;cs&gt;/file[.&lt;extension&gt;]</span></tt></p>
+<p>The <tt class="docutils literal"><span class="pre">extension</span></tt> parameter specifies the type of coverage store. The
+following extensions are supported:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Extension</th>
+<th class="head">Coveragestore</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>geotiff</td>
+<td>GeoTIFF</td>
+</tr>
+<tr class="row-odd"><td>worldimage</td>
+<td>Geo referenced image (JPEG,PNG,TIF)</td>
+</tr>
+<tr class="row-even"><td>imagemosaic</td>
+<td>Image mosaic</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Action</th>
+<th class="head">Return Code</th>
+<th class="head">Formats</th>
+<th class="head">Default Format</th>
+<th class="head">Parameters</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>Get the underlying files for the coverage store as a zip file with
+mime type <tt class="docutils literal"><span class="pre">application/zip</span></tt>.</td>
+<td>200</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><a class="reference internal" href="#coverage-recalculate"><em>recalculate</em></a></td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>Creates or overwrites the files for coverage store <tt class="docutils literal"><span class="pre">cs</span></tt>.</td>
+<td>200</td>
+<td>See <a class="reference internal" href="#coveragestore-file-put-notes"><em>notes</em></a> below.</td>
+<td>&nbsp;</td>
+<td><a class="reference internal" href="#configure-parameter"><em>configure</em></a>, <a class="reference internal" href="#coveragename-parameter"><em>coverageName</em></a></td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p><em>Exceptions</em>:</p>
+<ul class="simple">
+<li>GET for a data store that does not exist -&gt; 404</li>
+<li>GET for a data store that is not file based -&gt; 404</li>
+</ul>
+<p id="coveragestore-file-put-notes">When the file for a coveragestore is PUT, it can be as a standalone file, or
+as a zipped archive. The standalone file method is only applicable to coverage
+stores that work from a single file, GeoTIFF for example. Coverage stores like
+Image moscaic must be sent as a zip archive.</p>
+<p>When uploading a zip archive the <tt class="docutils literal"><span class="pre">Content-type</span></tt> should be set to
+<tt class="docutils literal"><span class="pre">application/zip</span></tt>. When uploading a standalone file the content type should
+be appropriately set based on the file type.</p>
+<p id="coveragename-parameter">The <tt class="docutils literal"><span class="pre">coverageName</span></tt> parameter is used to specify the name of the coverage
+within the coverage store. This parameter is only relevant if the <tt class="docutils literal"><span class="pre">configure</span></tt>
+parameter is not equal to &#8220;none&#8221;. If not specified the resulting coverage will
+receive the same name as its containing coverage store.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Currently the relationship between a coverage store and a coverage is one to
+one. However there is currently work underway to support multi-dimensional
+coverages, so in the future this parameter is likely to change.</p>
+</div>
+<p id="coverage-recalculate">Some properties of Coverages are automatically recalculated when necessary.
+In particular, the native bounding box is recalculated when the projection or projection policy are changed, and the lat/lon bounding box is recalculated when the native bounding box is recalculated, or when a new native bounding box is explicitly provided in the request.
+<em>The native and lat/lon bounding boxes are never automatically recalculated when they are explicitly included in the request.</em>
+In addition, the client may explicitly request a fixed set of fields to calculate by including a comma-separated list of their names as a parameter named <tt class="docutils literal"><span class="pre">recalculate</span></tt>.  For example:</p>
+<blockquote>
+<div><ul class="simple">
+<li><tt class="docutils literal"><span class="pre">recalculate=</span></tt> (empty parameter): Do not calculate any fields, regardless of the projection, projection policy, etc.
+This might be useful to avoid slow recalculation when operating against large datasets.</li>
+<li><tt class="docutils literal"><span class="pre">recalculate=nativebbox</span></tt>: Recalculate the native boundingbox, do not recalculate the lat/lon bounding box.</li>
+<li><tt class="docutils literal"><span class="pre">recalculate=nativebbox,latlonbbox</span></tt>: Recalculate both the native boundingbox and the lat/lon bounding box.</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="coverages">
+<h2>Coverages<a class="headerlink" href="#coverages" title="Permalink to this headline">¶</a></h2>
+<p>A <tt class="docutils literal"><span class="pre">coverage</span></tt> is a raster based data set which originates from a coverage
+store.</p>
+<div class="section" id="id6">
+<h3>Operations<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/coveragestores/&lt;cs&gt;/coverages[.&lt;format&gt;]</span></tt></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Action</th>
+<th class="head">Return Code</th>
+<th class="head">Formats</th>
+<th class="head">Default Format</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>List all coverages in coverage store <tt class="docutils literal"><span class="pre">cs</span></tt></td>
+<td>200</td>
+<td>HTML, XML, JSON</td>
+<td>HTML</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>Create a new coverage</td>
+<td>201 with <tt class="docutils literal"><span class="pre">Location</span></tt> header</td>
+<td>XML, JSON</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p><em>Representations</em>:</p>
+<ul class="simple">
+<li><a class="reference download internal" href="../_downloads/coverages_html.txt"><tt class="xref download docutils literal"><span class="pre">HTML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/coverages_xml.txt"><tt class="xref download docutils literal"><span class="pre">XML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/coverages_json.txt"><tt class="xref download docutils literal"><span class="pre">JSON</span></tt></a></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/coveragestores/&lt;cs&gt;/coverages/&lt;c&gt;[.&lt;format&gt;]</span></tt></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Action</th>
+<th class="head">Return Code</th>
+<th class="head">Formats</th>
+<th class="head">Default Format</th>
+<th class="head">Parameters</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>Return coverage <tt class="docutils literal"><span class="pre">c</span></tt></td>
+<td>200</td>
+<td>HTML, XML, JSON</td>
+<td>HTML</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>Modify coverage <tt class="docutils literal"><span class="pre">c</span></tt></td>
+<td>200</td>
+<td>XML,JSON</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>Delete coverage <tt class="docutils literal"><span class="pre">c</span></tt></td>
+<td>200</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><a class="reference internal" href="#coverage-recurse"><em>recurse</em></a></td>
+</tr>
+</tbody>
+</table>
+<p><em>Representations</em>:</p>
+<ul class="simple">
+<li><a class="reference download internal" href="../_downloads/coverage_html.txt"><tt class="xref download docutils literal"><span class="pre">HTML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/coverage_xml.txt"><tt class="xref download docutils literal"><span class="pre">XML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/coverage_json.txt"><tt class="xref download docutils literal"><span class="pre">JSON</span></tt></a></li>
+</ul>
+<p><em>Exceptions</em>:</p>
+<ul class="simple">
+<li>GET for a coverage that does not exist -&gt; 404</li>
+<li>PUT that changes name of coverage -&gt; 403</li>
+<li>PUT that changes coverage store of coverage -&gt; 403</li>
+</ul>
+<p id="coverage-recurse">The <tt class="docutils literal"><span class="pre">recurse</span></tt> parameter is used to recursively delete all layers that reference
+by the specified coverage. Allowable values for this parameter are &#8220;true&#8221; or
+&#8220;false&#8221;.  The default value is &#8220;false&#8221;.</p>
+</div>
+</div>
+<div class="section" id="styles">
+<h2>Styles<a class="headerlink" href="#styles" title="Permalink to this headline">¶</a></h2>
+<p>A <tt class="docutils literal"><span class="pre">style</span></tt> describes how a resource (feature type or coverage) should be
+symbolized or rendered by a Web Map Service. In GeoServer styles are
+specified with <a class="reference internal" href="../styling/index.html#styling"><em>SLD</em></a>.</p>
+<div class="section" id="id7">
+<h3>Operations<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">/styles[.&lt;format&gt;]</span></tt></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Action</th>
+<th class="head">Return Code</th>
+<th class="head">Formats</th>
+<th class="head">Default Format</th>
+<th class="head">Parameters</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>Return all styles</td>
+<td>200</td>
+<td>HTML, XML, JSON</td>
+<td>HTML</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>Create a new style</td>
+<td>201 with <tt class="docutils literal"><span class="pre">Location</span></tt> header</td>
+<td>SLD, XML, JSON
+See <a class="reference internal" href="#sld-post-put"><em>notes</em></a> below</td>
+<td>&nbsp;</td>
+<td><a class="reference internal" href="#name-parameter"><em>name</em></a></td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><a class="reference internal" href="#purge-parameter"><em>purge</em></a></td>
+</tr>
+</tbody>
+</table>
+<p><em>Representations</em>:</p>
+<ul class="simple">
+<li><a class="reference download internal" href="../_downloads/styles_html.txt"><tt class="xref download docutils literal"><span class="pre">HTML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/styles_xml.txt"><tt class="xref download docutils literal"><span class="pre">XML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/styles_json.txt"><tt class="xref download docutils literal"><span class="pre">JSON</span></tt></a></li>
+</ul>
+<p id="sld-post-put">When POSTing or PUTing a style as SLD, the <tt class="docutils literal"><span class="pre">Content-type</span></tt> header should be
+set to <tt class="docutils literal"><span class="pre">application/vnd.ogc.sld+xml</span></tt>.</p>
+<p id="name-parameter">The <tt class="docutils literal"><span class="pre">name</span></tt> parameter specifies the name to be given to the style. This
+option is most useful when POSTing a style in SLD format, and an appropriate
+name can be not be inferred from the SLD itself.</p>
+<p><tt class="docutils literal"><span class="pre">/styles/&lt;s&gt;[.&lt;format&gt;]</span></tt></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Action</th>
+<th class="head">Return Code</th>
+<th class="head">Formats</th>
+<th class="head">Default Format</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>Return style <tt class="docutils literal"><span class="pre">s</span></tt></td>
+<td>200</td>
+<td>SLD, HTML, XML, JSON</td>
+<td>HTML</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>Modify style <tt class="docutils literal"><span class="pre">s</span></tt></td>
+<td>200</td>
+<td>SLD, XML, JSON
+See <a class="reference internal" href="#sld-post-put"><em>notes</em></a> above</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>Delete style <tt class="docutils literal"><span class="pre">s</span></tt></td>
+<td>200</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p id="purge-parameter">The <tt class="docutils literal"><span class="pre">purge</span></tt> parameter specifies whether the underlying SLD file for the style should be deleted on disk. It is specified as a boolean value <tt class="docutils literal"><span class="pre">(true|false)</span></tt>. When set to <tt class="docutils literal"><span class="pre">true</span></tt> the underlying file will be deleted.</p>
+<p><em>Representations</em>:</p>
+<ul class="simple">
+<li><a class="reference download internal" href="../_downloads/style_sld.txt"><tt class="xref download docutils literal"><span class="pre">SLD</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/style_html.txt"><tt class="xref download docutils literal"><span class="pre">HTML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/style_xml.txt"><tt class="xref download docutils literal"><span class="pre">XML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/style_json.txt"><tt class="xref download docutils literal"><span class="pre">JSON</span></tt></a></li>
+</ul>
+<p><em>Exceptions</em>:</p>
+<ul class="simple">
+<li>GET for a style that does not exist -&gt; 404</li>
+<li>PUT that changes name of style -&gt; 403</li>
+<li>DELETE against style which is referenced by existing layers -&gt; 403</li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/styles[.&lt;format&gt;]</span></tt></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Action</th>
+<th class="head">Return Code</th>
+<th class="head">Formats</th>
+<th class="head">Default Format</th>
+<th class="head">Parameters</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>Return all styles within workspace <tt class="docutils literal"><span class="pre">ws</span></tt></td>
+<td>200</td>
+<td>HTML, XML, JSON</td>
+<td>HTML</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>Create a new style within workspace <tt class="docutils literal"><span class="pre">ws</span></tt></td>
+<td>201 with <tt class="docutils literal"><span class="pre">Location</span></tt> header</td>
+<td>SLD, XML, JSON
+See <a class="reference internal" href="#sld-post-put"><em>notes</em></a> below</td>
+<td>&nbsp;</td>
+<td><a class="reference internal" href="#name-parameter"><em>name</em></a></td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><a class="reference internal" href="#purge-parameter"><em>purge</em></a></td>
+</tr>
+</tbody>
+</table>
+<p><em>Representations</em>:</p>
+<ul class="simple">
+<li><a class="reference download internal" href="../_downloads/styles_html.txt"><tt class="xref download docutils literal"><span class="pre">HTML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/styles_xml.txt"><tt class="xref download docutils literal"><span class="pre">XML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/styles_json.txt"><tt class="xref download docutils literal"><span class="pre">JSON</span></tt></a></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/styles/&lt;s&gt;[.&lt;format&gt;]</span></tt></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Action</th>
+<th class="head">Return Code</th>
+<th class="head">Formats</th>
+<th class="head">Default Format</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>Return style <tt class="docutils literal"><span class="pre">s</span></tt> within workspace <tt class="docutils literal"><span class="pre">ws</span></tt></td>
+<td>200</td>
+<td>SLD, HTML, XML, JSON</td>
+<td>HTML</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>Modify style <tt class="docutils literal"><span class="pre">s</span></tt> within workspace <tt class="docutils literal"><span class="pre">ws</span></tt></td>
+<td>200</td>
+<td>SLD, XML, JSON
+See <a class="reference internal" href="#sld-post-put"><em>notes</em></a> above</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>Delete style <tt class="docutils literal"><span class="pre">s</span></tt> within workspace <tt class="docutils literal"><span class="pre">ws</span></tt></td>
+<td>200</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p><em>Representations</em>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference download internal" href="../_downloads/style_sld.txt"><tt class="xref download docutils literal"><span class="pre">SLD</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/style_html.txt"><tt class="xref download docutils literal"><span class="pre">HTML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/style_xml.txt"><tt class="xref download docutils literal"><span class="pre">XML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/style_json.txt"><tt class="xref download docutils literal"><span class="pre">JSON</span></tt></a></li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="layers">
+<h2>Layers<a class="headerlink" href="#layers" title="Permalink to this headline">¶</a></h2>
+<p>A <tt class="docutils literal"><span class="pre">layer</span></tt> is a <em>published</em> resource (feature type or coverage).</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In GeoServer 1.x a layer can considered the equivalent of a feature type or
+a coverage. In GeoServer 2.x, the two will be separate entities, with the
+relationship from a feature type to a layer being one-to-many.</p>
+</div>
+<div class="section" id="id8">
+<h3>Operations<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">/layers[.&lt;format&gt;]</span></tt></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Action</th>
+<th class="head">Return Code</th>
+<th class="head">Formats</th>
+<th class="head">Default Format</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>Return all layers</td>
+<td>200</td>
+<td>HTML, XML, JSON</td>
+<td>HTML</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p><em>Representations</em>:</p>
+<ul class="simple">
+<li><a class="reference download internal" href="../_downloads/layers_html.txt"><tt class="xref download docutils literal"><span class="pre">HTML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/layers_xml.txt"><tt class="xref download docutils literal"><span class="pre">XML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/layers_json.txt"><tt class="xref download docutils literal"><span class="pre">JSON</span></tt></a></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">/layers/&lt;l&gt;[.&lt;format&gt;]</span></tt></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Action</th>
+<th class="head">Return Code</th>
+<th class="head">Formats</th>
+<th class="head">Default Format</th>
+<th class="head">Parameters</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>Return layer <tt class="docutils literal"><span class="pre">l</span></tt></td>
+<td>200</td>
+<td>HTML, XML, JSON</td>
+<td>HTML</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>Modify layer <tt class="docutils literal"><span class="pre">l</span></tt></td>
+<td>200</td>
+<td>XML,JSON</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>Delete layer <tt class="docutils literal"><span class="pre">l</span></tt></td>
+<td>200</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><a class="reference internal" href="#layer-recurse"><em>recurse</em></a></td>
+</tr>
+</tbody>
+</table>
+<p><em>Representations</em>:</p>
+<ul class="simple">
+<li><a class="reference download internal" href="../_downloads/layer_html.txt"><tt class="xref download docutils literal"><span class="pre">HTML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/layer_xml.txt"><tt class="xref download docutils literal"><span class="pre">XML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/layer_json.txt"><tt class="xref download docutils literal"><span class="pre">JSON</span></tt></a></li>
+</ul>
+<p><em>Exceptions</em>:</p>
+<ul class="simple">
+<li>GET for a layer that does not exist -&gt; 404</li>
+<li>PUT that changes name of layer -&gt; 403</li>
+<li>PUT that changes resource of layer -&gt; 403</li>
+</ul>
+<p id="layer-recurse">The <tt class="docutils literal"><span class="pre">recurse</span></tt> parameter is used to recursively delete all resources referenced
+by the specified layer. Allowable values for this parameter are &#8220;true&#8221; or
+&#8220;false&#8221;.  The default value is &#8220;false&#8221;.</p>
+<p><tt class="docutils literal"><span class="pre">/layers/&lt;l&gt;/styles[.&lt;format&gt;]</span></tt></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Action</th>
+<th class="head">Return Code</th>
+<th class="head">Formats</th>
+<th class="head">Default Format</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>Return all styles for layer <tt class="docutils literal"><span class="pre">l</span></tt></td>
+<td>200</td>
+<td>SLD, HTML, XML, JSON</td>
+<td>HTML</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>Add a new style to layer <tt class="docutils literal"><span class="pre">l</span></tt></td>
+<td>201, with <tt class="docutils literal"><span class="pre">Location</span></tt> header</td>
+<td>XML, JSON</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="layer-groups">
+<h2>Layer groups<a class="headerlink" href="#layer-groups" title="Permalink to this headline">¶</a></h2>
+<p>A <tt class="docutils literal"><span class="pre">layer</span> <span class="pre">group</span></tt> is a grouping of layers and styles that can be accessed as a
+single layer in a WMS GetMap request. A Layer group is often referred to as a
+&#8220;base map&#8221;.</p>
+<div class="section" id="id9">
+<h3>Operations<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">/layergroups[.&lt;format&gt;]</span></tt></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Action</th>
+<th class="head">Return Code</th>
+<th class="head">Formats</th>
+<th class="head">Default Format</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>Return all layer groups</td>
+<td>200</td>
+<td>HTML, XML, JSON</td>
+<td>HTML</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>Add a new layer group</td>
+<td>201, with <tt class="docutils literal"><span class="pre">Location</span></tt> header</td>
+<td>XML,JSON</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p><em>Representations</em>:</p>
+<ul class="simple">
+<li><a class="reference download internal" href="../_downloads/layergroups_html.txt"><tt class="xref download docutils literal"><span class="pre">HTML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/layergroups_xml.txt"><tt class="xref download docutils literal"><span class="pre">XML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/layergroups_json.txt"><tt class="xref download docutils literal"><span class="pre">JSON</span></tt></a></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">/layergroups/&lt;lg&gt;[.&lt;format&gt;]</span></tt></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Action</th>
+<th class="head">Return Code</th>
+<th class="head">Formats</th>
+<th class="head">Default Format</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>Return layer group <tt class="docutils literal"><span class="pre">lg</span></tt></td>
+<td>200</td>
+<td>HTML, XML, JSON</td>
+<td>HTML</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>Modify layer group <tt class="docutils literal"><span class="pre">lg</span></tt></td>
+<td>200</td>
+<td>XML,JSON</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>Delete layer group <tt class="docutils literal"><span class="pre">lg</span></tt></td>
+<td>200</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p><em>Representations</em>:</p>
+<ul class="simple">
+<li><a class="reference download internal" href="../_downloads/layergroup_html.txt"><tt class="xref download docutils literal"><span class="pre">HTML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/layergroup_xml.txt"><tt class="xref download docutils literal"><span class="pre">XML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/layergroup_json.txt"><tt class="xref download docutils literal"><span class="pre">JSON</span></tt></a></li>
+</ul>
+<p><em>Exceptions</em>:</p>
+<ul class="simple">
+<li>GET for a layer group that does not exist -&gt; 404</li>
+<li>POST that specifies layer group with no layers -&gt; 400</li>
+<li>PUT that changes name of layer group -&gt; 403</li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/layergroups[.&lt;format&gt;]</span></tt></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Action</th>
+<th class="head">Return Code</th>
+<th class="head">Formats</th>
+<th class="head">Default Format</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>Return all layer groups within workspace <tt class="docutils literal"><span class="pre">ws</span></tt></td>
+<td>200</td>
+<td>HTML, XML, JSON</td>
+<td>HTML</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>Add a new layer group within workspace <tt class="docutils literal"><span class="pre">ws</span></tt></td>
+<td>201, with <tt class="docutils literal"><span class="pre">Location</span></tt> header</td>
+<td>XML,JSON</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p><em>Representations</em>:</p>
+<ul class="simple">
+<li><a class="reference download internal" href="../_downloads/layergroups_html.txt"><tt class="xref download docutils literal"><span class="pre">HTML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/layergroups_xml.txt"><tt class="xref download docutils literal"><span class="pre">XML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/layergroups_json.txt"><tt class="xref download docutils literal"><span class="pre">JSON</span></tt></a></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/layergroups/&lt;lg&gt;[.&lt;format&gt;]</span></tt></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Action</th>
+<th class="head">Return Code</th>
+<th class="head">Formats</th>
+<th class="head">Default Format</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>Return layer group <tt class="docutils literal"><span class="pre">lg</span></tt> within workspace <tt class="docutils literal"><span class="pre">ws</span></tt></td>
+<td>200</td>
+<td>HTML, XML, JSON</td>
+<td>HTML</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>Modify layer group <tt class="docutils literal"><span class="pre">lg</span></tt> within workspace <tt class="docutils literal"><span class="pre">ws</span></tt></td>
+<td>200</td>
+<td>XML,JSON</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>Delete layer group <tt class="docutils literal"><span class="pre">lg</span></tt> within workspace <tt class="docutils literal"><span class="pre">ws</span></tt></td>
+<td>200</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p><em>Representations</em>:</p>
+<ul class="simple">
+<li><a class="reference download internal" href="../_downloads/layergroup_html.txt"><tt class="xref download docutils literal"><span class="pre">HTML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/layergroup_xml.txt"><tt class="xref download docutils literal"><span class="pre">XML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/layergroup_json.txt"><tt class="xref download docutils literal"><span class="pre">JSON</span></tt></a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="fonts">
+<h2>Fonts<a class="headerlink" href="#fonts" title="Permalink to this headline">¶</a></h2>
+<p>This operation provides the list of <tt class="docutils literal"><span class="pre">fonts</span></tt> available in GeoServer and can be useful to verify if a <tt class="docutils literal"><span class="pre">font</span></tt> used in a SLD file is available before uploading it.</p>
+<p><tt class="docutils literal"><span class="pre">/fonts[.&lt;format&gt;]</span></tt></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Action</th>
+<th class="head">Return Code</th>
+<th class="head">Formats</th>
+<th class="head">Default Format</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>Return the fonts available in GeoServer</td>
+<td>200</td>
+<td>XML, JSON</td>
+<td>XML</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><a class="reference download internal" href="../_downloads/fonts_xml.txt"><tt class="xref download docutils literal"><span class="pre">XML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/fonts_json.txt"><tt class="xref download docutils literal"><span class="pre">JSON</span></tt></a></li>
+</ul>
+</div>
+<div class="section" id="freemarker-templates">
+<h2>Freemarker Templates<a class="headerlink" href="#freemarker-templates" title="Permalink to this headline">¶</a></h2>
+<p>Freemarker is a simple yet powerful template engine that GeoServer uses whenever developer allowed user customization of outputs.</p>
+<div class="section" id="id10">
+<h3>Operations<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">/templates/&lt;template&gt;.ftl</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/templates/&lt;template&gt;.ftl</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/datastores/&lt;ds&gt;/templates/&lt;template&gt;.ftl</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/datastores/&lt;ds&gt;/featuretypes/&lt;f&gt;/templates/&lt;template&gt;.ftl</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/coveragestores/&lt;cs&gt;/templates/&lt;template&gt;.ftl</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/coveragestores/&lt;cs&gt;/coverages/&lt;c&gt;/templates/&lt;template&gt;.ftl</span></tt></li>
+</ul>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Action</th>
+<th class="head">Return Code</th>
+<th class="head">Formats</th>
+<th class="head">Default Format</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>Return a template</td>
+<td>200</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>PUT</td>
+<td>Insert or update a template</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>DELETE</td>
+<td>Delete a template</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">/templates[.&lt;format&gt;]</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/templates[.&lt;format&gt;]</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/datastores/&lt;ds&gt;/templates[.&lt;format&gt;]</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/datastores/&lt;ds&gt;/featuretypes/&lt;f&gt;/templates[.&lt;format&gt;]</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/coveragestores/&lt;cs&gt;/templates[.&lt;format&gt;]</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">/workspaces/&lt;ws&gt;/coveragestores/&lt;cs&gt;/coverages/&lt;c&gt;/templates[.&lt;format&gt;]</span></tt></li>
+</ul>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Action</th>
+<th class="head">Return Code</th>
+<th class="head">Formats</th>
+<th class="head">Default Format</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>Return templates</td>
+<td>200</td>
+<td>HTML, XML, JSON</td>
+<td>HTML</td>
+</tr>
+</tbody>
+</table>
+<p><em>Representations</em>:</p>
+<ul class="simple">
+<li><a class="reference download internal" href="../_downloads/templates_html.txt"><tt class="xref download docutils literal"><span class="pre">HTML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/templates_xml.txt"><tt class="xref download docutils literal"><span class="pre">XML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/templates_json.txt"><tt class="xref download docutils literal"><span class="pre">JSON</span></tt></a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="ows-services">
+<h2>OWS Services<a class="headerlink" href="#ows-services" title="Permalink to this headline">¶</a></h2>
+<p>GeoServer includes several types of OGC services like WCS, WFS and
+WMS, commonly referred to as &#8220;OWS&#8221; services. These services can be
+global for the whole GeoServer instance or local to a particular
+workspace. In this last case, they are usually called &#8220;Virtual
+Services&#8221;.</p>
+<div class="section" id="id11">
+<h3>Operations<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">/services/wcs/settings[.&lt;format&gt;]</span></tt></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Action</th>
+<th class="head">Return Code</th>
+<th class="head">Formats</th>
+<th class="head">Default Format</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>Return global wcs settings</td>
+<td>200</td>
+<td>XML, JSON</td>
+<td>HTML</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>Modify global wcs settings</td>
+<td>200</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p><em>Representations</em>:</p>
+<ul class="simple">
+<li><a class="reference download internal" href="../_downloads/wcs_html.txt"><tt class="xref download docutils literal"><span class="pre">HTML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/wcs_xml.txt"><tt class="xref download docutils literal"><span class="pre">XML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/wcs_json.txt"><tt class="xref download docutils literal"><span class="pre">JSON</span></tt></a></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">/services/wcs/&lt;ws&gt;/settings[.&lt;format&gt;]</span></tt></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Action</th>
+<th class="head">Return Code</th>
+<th class="head">Formats</th>
+<th class="head">Default Format</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>Return wcs settings for workspace &lt;ws&gt;</td>
+<td>200</td>
+<td>HTML, XML, JSON</td>
+<td>HTML</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>Create or modify wcs settings for workspace &lt;ws&gt;</td>
+<td>200</td>
+<td>XML,JSON</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>Delete wcs settings for workspace &lt;ws&gt;</td>
+<td>200</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p><em>Representations</em>:</p>
+<ul class="simple">
+<li><a class="reference download internal" href="../_downloads/wcsWS_html.txt"><tt class="xref download docutils literal"><span class="pre">HTML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/wcsWS_xml.txt"><tt class="xref download docutils literal"><span class="pre">XML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/wcsWS_json.txt"><tt class="xref download docutils literal"><span class="pre">JSON</span></tt></a></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">/services/wfs/settings[.&lt;format&gt;]</span></tt></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Action</th>
+<th class="head">Return Code</th>
+<th class="head">Formats</th>
+<th class="head">Default Format</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>Return global wfs settings</td>
+<td>200</td>
+<td>HTML, XML, JSON</td>
+<td>HTML</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>Modify global wfs settings</td>
+<td>200</td>
+<td>XML,JSON</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p><em>Representations</em>:</p>
+<ul class="simple">
+<li><a class="reference download internal" href="../_downloads/wfs_html.txt"><tt class="xref download docutils literal"><span class="pre">HTML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/wfs_xml.txt"><tt class="xref download docutils literal"><span class="pre">XML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/wfs_json.txt"><tt class="xref download docutils literal"><span class="pre">JSON</span></tt></a></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">/services/wfs/&lt;ws&gt;/settings[.&lt;format&gt;]</span></tt></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Action</th>
+<th class="head">Return Code</th>
+<th class="head">Formats</th>
+<th class="head">Default Format</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>Return wfs settings for workspace &lt;ws&gt;</td>
+<td>200</td>
+<td>HTML, XML, JSON</td>
+<td>HTML</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>Modify wfs settings for workspace &lt;ws&gt;</td>
+<td>200</td>
+<td>XML,JSON</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>Delete wfs settings for workspace &lt;ws&gt;</td>
+<td>200</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p><em>Representations</em>:</p>
+<ul class="simple">
+<li><a class="reference download internal" href="../_downloads/wfsWS_html.txt"><tt class="xref download docutils literal"><span class="pre">HTML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/wfsWS_xml.txt"><tt class="xref download docutils literal"><span class="pre">XML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/wfsWS_json.txt"><tt class="xref download docutils literal"><span class="pre">JSON</span></tt></a></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">/services/wms/settings[.&lt;format&gt;]</span></tt></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Action</th>
+<th class="head">Return Code</th>
+<th class="head">Formats</th>
+<th class="head">Default Format</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>Return global wms settings</td>
+<td>200</td>
+<td>HTML, XML, JSON</td>
+<td>HTML</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>Modify global wms settings</td>
+<td>200</td>
+<td>XML,JSON</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p><em>Representations</em>:</p>
+<ul class="simple">
+<li><a class="reference download internal" href="../_downloads/wms_html.txt"><tt class="xref download docutils literal"><span class="pre">HTML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/wms_xml.txt"><tt class="xref download docutils literal"><span class="pre">XML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/wms_json.txt"><tt class="xref download docutils literal"><span class="pre">JSON</span></tt></a></li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">/services/wms/&lt;ws&gt;/settings[.&lt;format&gt;]</span></tt></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Action</th>
+<th class="head">Return Code</th>
+<th class="head">Formats</th>
+<th class="head">Default Format</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>Return wms settings for workspace &lt;ws&gt;</td>
+<td>200</td>
+<td>HTML, XML, JSON</td>
+<td>HTML</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>Modify wms settings for workspace &lt;ws&gt;</td>
+<td>200</td>
+<td>XML,JSON</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>Delete wms settings for workspace &lt;ws&gt;</td>
+<td>200</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p><em>Representations</em>:</p>
+<ul class="simple">
+<li><a class="reference download internal" href="../_downloads/wmsWS_html.txt"><tt class="xref download docutils literal"><span class="pre">HTML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/wmsWS_xml.txt"><tt class="xref download docutils literal"><span class="pre">XML</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/wmsWS_json.txt"><tt class="xref download docutils literal"><span class="pre">JSON</span></tt></a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="configuration-reloading">
+<h2>Configuration reloading<a class="headerlink" href="#configuration-reloading" title="Permalink to this headline">¶</a></h2>
+<p>Reloads the catalog and configuration from disk. This operation is used to
+reload GeoServer in cases where an external tool has modified the on disk
+configuration. This operation will also force GeoServer to drop any internal
+caches and reconnect to all data stores.</p>
+<p><tt class="docutils literal"><span class="pre">/reload</span></tt></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Action</th>
+<th class="head">Return Code</th>
+<th class="head">Formats</th>
+<th class="head">Default Format</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>Reloads the configuration from disk</td>
+<td>200</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>Reloads the configuration from disk</td>
+<td>200</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="resource-reset">
+<h2>Resource reset<a class="headerlink" href="#resource-reset" title="Permalink to this headline">¶</a></h2>
+<p>Resets all store/raster/schema caches and starts fresh. This operation is used to
+force GeoServer to drop all caches and stores and reconnect fresh to each of them first time they
+are needed by a request.
+This is useful in case the stores themselves cache some information about the data structures
+they manage that changed in the meantime.</p>
+<p><tt class="docutils literal"><span class="pre">/reset</span></tt></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Action</th>
+<th class="head">Return Code</th>
+<th class="head">Formats</th>
+<th class="head">Default Format</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>Reloads the configuration from disk</td>
+<td>200</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>Reloads the configuration from disk</td>
+<td>200</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="overview.html" title="previous chapter">Overview of REST</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="rest-config-examples/index.html" title="next chapter">REST Configuration Examples</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">REST Configuration API Reference</a><ul>
+<li><a class="reference internal" href="#formats-and-representations">Formats and representations</a></li>
+<li><a class="reference internal" href="#authentication">Authentication</a></li>
+<li><a class="reference internal" href="#status-codes">Status codes</a></li>
+<li><a class="reference internal" href="#global-settings">Global Settings</a><ul>
+<li><a class="reference internal" href="#operations">Operations</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#workspaces">Workspaces</a><ul>
+<li><a class="reference internal" href="#id1">Operations</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#namespaces">Namespaces</a><ul>
+<li><a class="reference internal" href="#id2">Operations</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#data-stores">Data stores</a><ul>
+<li><a class="reference internal" href="#id3">Operations</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#feature-types">Feature types</a><ul>
+<li><a class="reference internal" href="#id4">Operations</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#coverage-stores">Coverage stores</a><ul>
+<li><a class="reference internal" href="#id5">Operations</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#coverages">Coverages</a><ul>
+<li><a class="reference internal" href="#id6">Operations</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#styles">Styles</a><ul>
+<li><a class="reference internal" href="#id7">Operations</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#layers">Layers</a><ul>
+<li><a class="reference internal" href="#id8">Operations</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#layer-groups">Layer groups</a><ul>
+<li><a class="reference internal" href="#id9">Operations</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#fonts">Fonts</a></li>
+<li><a class="reference internal" href="#freemarker-templates">Freemarker Templates</a><ul>
+<li><a class="reference internal" href="#id10">Operations</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ows-services">OWS Services</a><ul>
+<li><a class="reference internal" href="#id11">Operations</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#configuration-reloading">Configuration reloading</a></li>
+<li><a class="reference internal" href="#resource-reset">Resource reset</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="overview.html" title="previous chapter">Overview of REST</a></li>
+            <li>Next: <a href="rest-config-examples/index.html" title="next chapter">REST Configuration Examples</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../_sources/restconfig/rest-config-api.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

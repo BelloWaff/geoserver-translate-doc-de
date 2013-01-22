@@ -1,0 +1,135 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Authentication &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../../index.html" />
+      <link rel="up" title="Security" href="../index.html" />
+      <link rel="next" title="Authentication chain" href="chain.html" />
+      <link rel="prev" title="Interaction between user/group and role services" href="../usergrouprole/interaction.html" />
+</head>
+<body class="security/auth/index">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Security</a> &raquo;</li>
+  <li>Authentication</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="chain.html" title="Authentication chain"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="../usergrouprole/interaction.html" title="Interaction between user/group and role services"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="authentication">
+<span id="sec-auth"></span><h1>Authentication<a class="headerlink" href="#authentication" title="Permalink to this headline">¶</a></h1>
+<p>There are three sets of GeoServer resources involved in authentication:</p>
+<ul class="simple">
+<li>The <a class="reference internal" href="../../webadmin/index.html#web-admin"><em>Web Administration Interface</em></a> (also known as web admin)</li>
+<li><a class="reference internal" href="../../services/index.html#services"><em>OWS</em></a> services (such as WFS and WMS)</li>
+<li><a class="reference internal" href="../../restconfig/overview.html#rest-overview"><em>REST</em></a> services</li>
+</ul>
+<p>The following sections describe how each set of GeoServer resources administers authentication. To configure the authentication settings and providers, please see the section on <a class="reference internal" href="../../webadmin/security/auth.html#webadmin-sec-auth"><em>Authentication</em></a> in the <a class="reference internal" href="../../webadmin/index.html#web-admin"><em>Web Administration Interface</em></a>.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="chain.html">Authentication chain</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chain.html#filter-chain-and-provider-chain">Filter chain and provider chain</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="web.html">Authenticating to the Web Admin Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="web.html#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="owsrest.html">Authentication to OWS and REST services</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="owsrest.html#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="providers.html">Authentication providers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="providers.html#username-password-authentication">Username/password authentication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="providers.html#ldap-authentication">LDAP authentication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="providers.html#jdbc-authentication">JDBC authentication</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="../usergrouprole/interaction.html" title="previous chapter">Interaction between user/group and role services</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="chain.html" title="next chapter">Authentication chain</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="../usergrouprole/interaction.html" title="previous chapter">Interaction between user/group and role services</a></li>
+            <li>Next: <a href="chain.html" title="next chapter">Authentication chain</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/security/auth/index.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

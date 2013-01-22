@@ -1,0 +1,165 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Directory of spatial files &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../../index.html" />
+      <link rel="up" title="Working with Vector Data" href="index.html" />
+      <link rel="next" title="Java Properties" href="properties.html" />
+      <link rel="prev" title="Shapefile" href="shapefile.html" />
+</head>
+<body class="data/vector/directory">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Working with Vector Data</a> &raquo;</li>
+  <li>Directory of spatial files</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="properties.html" title="Java Properties"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="shapefile.html" title="Shapefile"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="directory-of-spatial-files">
+<span id="data-shapefiles-directory"></span><h1>Directory of spatial files<a class="headerlink" href="#directory-of-spatial-files" title="Permalink to this headline">¶</a></h1>
+<p>The directory store automates the process of loading multiple shapefiles into GeoServer.  Loading a directory that contains multiple shapefiles will automatically add each shapefile to GeoServer.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">While GeoServer has robust support for the shapefile format, it is not the recommended format of choice in a production environment. Databases such as PostGIS are more suitable in production and offer better performance and scalability.  See the section on <a class="reference internal" href="../../production/index.html#production"><em>Running in a Production Environment</em></a> for more information.</p>
+</div>
+<div class="section" id="adding-a-directory">
+<h2>Adding a directory<a class="headerlink" href="#adding-a-directory" title="Permalink to this headline">¶</a></h2>
+<p>To begin, navigate to <em class="menuselection">Stores ‣ Add a new store ‣ Directory of spatial files</em>.</p>
+<div class="figure align-center">
+<img alt="../../_images/directory.png" src="../../_images/directory.png" />
+<p class="caption"><em>Adding a directory of spatial files as a store</em></p>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Option</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">Workspace</em></td>
+<td>Name of the workspace to contain the store.  This will also be the prefix of all of the layer names created from shapefiles in the store.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">Data Source Name</em></td>
+<td>Name of the store as known to GeoServer.</td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">Description</em></td>
+<td>Description of the directory store.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">Enabled</em></td>
+<td>Enables the store.  If disabled, no data in any of the shapefiles will be served.</td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">URL</em></td>
+<td>Location of the directory. Can be an absolute path (such as <tt class="file docutils literal"><span class="pre">file:C:\Data\shapefile_directory</span></tt>) or a path relative to the data directory (such as <tt class="file docutils literal"><span class="pre">file:data/shapefile_directory</span></tt>.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">namespace</em></td>
+<td>Namespace to be associated with the store.  This field is altered by changing the workspace name.</td>
+</tr>
+</tbody>
+</table>
+<p>When finished, click <em class="guilabel">Save</em>.</p>
+</div>
+<div class="section" id="configuring-shapefiles">
+<h2>Configuring shapefiles<a class="headerlink" href="#configuring-shapefiles" title="Permalink to this headline">¶</a></h2>
+<p>All of the shapefiles contained in the directory store will be loaded as part of the directory store, but they will need to be individually configured as new layers they can be served by GeoServer.  See the section on <a class="reference internal" href="../../webadmin/data/layers.html#webadmin-layers"><em>Layers</em></a> for how to add and edit new layers.</p>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="shapefile.html" title="previous chapter">Shapefile</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="properties.html" title="next chapter">Java Properties</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">Directory of spatial files</a><ul>
+<li><a class="reference internal" href="#adding-a-directory">Adding a directory</a></li>
+<li><a class="reference internal" href="#configuring-shapefiles">Configuring shapefiles</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="shapefile.html" title="previous chapter">Shapefile</a></li>
+            <li>Next: <a href="properties.html" title="next chapter">Java Properties</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/data/vector/directory.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

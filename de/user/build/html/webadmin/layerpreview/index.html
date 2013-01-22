@@ -1,0 +1,270 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Layer Preview &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../../index.html" />
+      <link rel="up" title="Web Administration Interface" href="../index.html" />
+      <link rel="next" title="Data" href="../data/index.html" />
+      <link rel="prev" title="JAI" href="../server/JAI.html" />
+</head>
+<body class="webadmin/layerpreview/index">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Web Administration Interface</a> &raquo;</li>
+  <li>Layer Preview</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="../data/index.html" title="Data"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="../server/JAI.html" title="JAI"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="layer-preview">
+<span id="layerpreview"></span><h1>Layer Preview<a class="headerlink" href="#layer-preview" title="Permalink to this headline">¶</a></h1>
+<p>This page provides layer views in various output formats. A layer must be enabled to be previewed.</p>
+<div class="figure align-center">
+<img alt="../../_images/preview_list2.png" src="../../_images/preview_list2.png" />
+<p class="caption"><em>Layer&#8217;s Preview Page</em></p>
+</div>
+<p>Each layer row consists of a type, name, title, and available formats for viewing.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="5%" />
+<col width="95%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Field</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td><img alt="../../_images/data_layers_type11.png" class="first last" src="../../_images/data_layers_type11.png" />
+</td>
+<td>Raster (grid) layer</td>
+</tr>
+<tr class="row-odd"><td><img alt="../../_images/data_layers_type21.png" class="first last" src="../../_images/data_layers_type21.png" />
+</td>
+<td>Vector (feature) layer</td>
+</tr>
+<tr class="row-even"><td><img alt="../../_images/preview_layergroup.png" class="first last" src="../../_images/preview_layergroup.png" />
+</td>
+<td>Layer group</td>
+</tr>
+</tbody>
+</table>
+<p>Name refers to the Workspace and Layer Name of a layer, while Title refers to the brief description configured in the <a class="reference internal" href="../data/layers.html#edit-layer-data"><em>Edit Layer Data</em></a> panel. In the following example, nurc refers to the Workspace, Arc_Sample refers to the Layer Name and &#8220;A sample ArcGrid field&#8221; is specified on the Edit Later Data panel.</p>
+<div class="figure align-center">
+<img alt="../../_images/preview_row1.png" src="../../_images/preview_row1.png" />
+<p class="caption"><em>Single Layer preview row</em></p>
+</div>
+<div class="section" id="output-formats">
+<h2>Output Formats<a class="headerlink" href="#output-formats" title="Permalink to this headline">¶</a></h2>
+<p>The Layer Preview page supports a variety of output formats for further use or  data sharing. You can preview all three layer types in the common OpenLayers and KML formats. Similarly, using the &#8220;All formats&#8221; menu you can preview all layer types in seven additional output formats—AtomPub, GIF, GeoRss, JPEG, KML (compressed), PDF, PNG, SVG, and TIFF. Only Vector layers provide the WFS output previews, including the common GML as well as the CSV, GML3, GeoJSON and shapefile formats. The table below provides a brief description of all supported output formats, organized by output type (image, text, or data).</p>
+<div class="section" id="image-outputs">
+<h3>Image Outputs<a class="headerlink" href="#image-outputs" title="Permalink to this headline">¶</a></h3>
+<p>All image outputs can be initiated from a WMS getMap request on either a raster,
+vector or coverage data. WMS are methods that allows visual display of spatial data  without necessarily providing access to the features that comprise those data.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Format</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td>KML</td>
+<td>KML (Keyhole Markup Language) is an XML-based language schema for expressing geographic data in an Earth browser, such as Google Earth or Google Maps. KML uses a tag-based structure with nested elements and attributes. For GeoServer, KML files are distributed as a KMZ, which is a zipped KML file.</td>
+</tr>
+<tr class="row-odd"><td>JPEG</td>
+<td>WMS output in raster format. The JPEG is a compressed graphic file format, with some loss of quality due to compression. It is best used for photos and not recommended for exact reproduction of data.</td>
+</tr>
+<tr class="row-even"><td>GIF</td>
+<td>WMS output in raster format. The GIF (Graphics Interchange Format) is a bitmap image format best suited for sharp-edged line art with a limited number of colors. This takes advantage of the format&#8217;s lossless compression, which favors flat areas of uniform color with well defined edges (in contrast to JPEG, which favors smooth gradients and softer images). GIF is limited to an 8-bit palette, or 256 colors.</td>
+</tr>
+<tr class="row-odd"><td>SVG</td>
+<td>WMS output in vector format. SVG (Scalable Vector Graphics) is a language for modeling two-dimensional graphics in XML. It differs from the GIF and JPEG in that it uses graphic objects rather than individual points.</td>
+</tr>
+<tr class="row-even"><td>TIFF</td>
+<td>WMS output in raster format. TIFF (Tagged Image File Format) is a flexible, adaptable format for handling multiple data in a single file. GeoTIFF containts geographic data embedded as tags within the TIFF file.</td>
+</tr>
+<tr class="row-odd"><td>PNG</td>
+<td>WMS output in raster format. The PNG (Portable Network Graphics) file format was created as the free, open-source successor to the GIF. The PNG file format supports truecolor (16 million colors) while the GIF supports only 256 colors. The PNG file excels when the image has large, uniformly coloured areas.</td>
+</tr>
+<tr class="row-even"><td>OpenLayers</td>
+<td>WMS GetMap request outputs a simple OpenLayers preview window. <a class="reference external" href="http://openlayers.org/">OpenLayers</a> is an open source JavaScript library for displaying map data in web browsers. The OpenLayers output has some advanced filters that are not available when using a standalone version of OpenLayers. Further, the generated preview contains a header with easy  configuration options for display.</td>
+</tr>
+<tr class="row-odd"><td>PDF</td>
+<td>A PDF (Portable Document Format) encapsulates a complete description of a fixed-layout 2D document,including any text, fonts, raster images, and 2D vector graphics.</td>
+</tr>
+</tbody>
+</table>
+<div class="figure align-left">
+<img alt="../../_images/preview_openlayers.png" src="../../_images/preview_openlayers.png" />
+<p class="caption"><em>Sample Image Output-an OpenLayers preview of nurc:Pk50095</em></p>
+</div>
+</div>
+<div class="section" id="text-outputs">
+<h3>Text Outputs<a class="headerlink" href="#text-outputs" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Format</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td>AtomPub</td>
+<td>WMS output of spatial data in XML format. The AtomPub (Atom Publishing Protocol) is an application-level protocol for publishing and editing Web Resources using HTTP and XML. Developed as a replacement for the RSS family of standards for content syndication, Atom allows subscription of geo data.</td>
+</tr>
+<tr class="row-odd"><td>GeoRss</td>
+<td>WMS GetMap request output of vector data in XML format. RSS (Rich Site Summary) is an XML format for delivering regularly changing web content. <a class="reference external" href="http://www.georss.org">GeoRss</a> is a  standard for encoding location as part of a RSS feed.supports  Layers Preview produces a RSS 2.0 documents, with GeoRSS Simple geometries using Atom.</td>
+</tr>
+<tr class="row-even"><td>GeoJSON</td>
+<td><a class="reference external" href="http://json.org/">JavaScript Object Notation</a> (JSON) is a lightweight data-interchange format based on the JavaScript programming language. This makes it an ideal interchange format for browser based applications since it can be parsed directly and easily in to javascript. GeoJSON is a plain text output format that add geographic types to JSON.</td>
+</tr>
+<tr class="row-odd"><td>CSV</td>
+<td>WFS GetFeature output in comma-delimited text. CSV (Comma Separated Values) files are text files containing rows of data. Data values in each row are separated by commas. CSV files also contain a comma-separated header row explaining each row&#8217;s value ordering. GeoServer&#8217;s CSVs are fully streaming, with no limitation on the amount of data that can be outputted.</td>
+</tr>
+</tbody>
+</table>
+<p>A fragment of a simple GeoRSS for nurc:Pk50095 using Atom:</p>
+<div class="highlight-python"><pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+     &lt;rss xmlns:atom="http://www.w3.org/2005/Atom"
+          xmlns:georss="http://www.georss.org/georss" version="2.0"&gt;
+        &lt;channel&gt;
+              &lt;title&gt;Pk50095&lt;/title&gt;
+              &lt;description&gt;Feed auto-generated by GeoServer&lt;/description&gt;
+              &lt;link&gt;&gt;&lt;/link&gt;
+              &lt;item&gt;
+                &lt;title&gt;fid--f04ca6b_1226f8d829e_-7ff4&lt;/title&gt;
+                &lt;georss:polygon&gt;46.722110379286 13.00635746384126
+                     46.72697223230676 13.308182612644663 46.91359611878293
+                     13.302316867622581 46.90870264238999 12.999446822650462
+                     46.722110379286 13.00635746384126
+                &lt;/georss:polygon&gt;
+                &lt;/item&gt;
+        &lt;/channel&gt;
+&lt;/rss&gt;</pre>
+</div>
+</div>
+<div class="section" id="data-outputs">
+<h3>Data Outputs<a class="headerlink" href="#data-outputs" title="Permalink to this headline">¶</a></h3>
+<p>All data outputs are initiated from a WFS GetFeature request on vector data.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Format</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td>GML2/3</td>
+<td>GML (Geography Markup Language) is the XML grammar defined by the <a class="reference external" href="http://en.wikipedia.org/wiki/Open_Geospatial_Consortium">Open Geospatial Consortium</a> (OGC) to express geographical features. GML serves as a modeling language for geographic systems as well as an open interchange format for geographic data sharing. GML2 is the default (Common) output format, while GML3 is available from the &#8220;All Formats&#8221; menu.</td>
+</tr>
+<tr class="row-odd"><td>Shapefile</td>
+<td>The ESRI Shapefile, or simply a shapefile, is the most commonly used format for exchanging GIS data. GeoServer outputs shapefiles in zip format, with a directory of .cst, .dbf, .prg, .shp, and .shx files.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="../server/JAI.html" title="previous chapter">JAI</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="../data/index.html" title="next chapter">Data</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">Layer Preview</a><ul>
+<li><a class="reference internal" href="#output-formats">Output Formats</a><ul>
+<li><a class="reference internal" href="#image-outputs">Image Outputs</a></li>
+<li><a class="reference internal" href="#text-outputs">Text Outputs</a></li>
+<li><a class="reference internal" href="#data-outputs">Data Outputs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="../server/JAI.html" title="previous chapter">JAI</a></li>
+            <li>Next: <a href="../data/index.html" title="next chapter">Data</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/webadmin/layerpreview/index.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

@@ -1,0 +1,164 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>GTOPO30 &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../../index.html" />
+      <link rel="up" title="Working with Raster Data" href="index.html" />
+      <link rel="next" title="WorldImage" href="worldimage.html" />
+      <link rel="prev" title="GeoTIFF" href="geotiff.html" />
+</head>
+<body class="data/raster/gtopo30">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Working with Raster Data</a> &raquo;</li>
+  <li>GTOPO30</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="worldimage.html" title="WorldImage"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="geotiff.html" title="GeoTIFF"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="gtopo30">
+<span id="data-gtopo30"></span><h1>GTOPO30<a class="headerlink" href="#gtopo30" title="Permalink to this headline">¶</a></h1>
+<p>GTOPO30 is a Digital Elevation Model (DEM) dataset with a horizontal grid spacing of 30 arc seconds.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">An example of a GTOPO30 can be found at <a class="reference external" href="http://edc.usgs.gov/products/elevation/gtopo30/gtopo30.html">http://edc.usgs.gov/products/elevation/gtopo30/gtopo30.html</a></p>
+</div>
+<div class="section" id="adding-a-gtopo30-data-store">
+<h2>Adding a GTOPO30 data store<a class="headerlink" href="#adding-a-gtopo30-data-store" title="Permalink to this headline">¶</a></h2>
+<p>By default, <em class="guilabel">GTOPO30</em> will be an option in the <em class="guilabel">Raster Data Sources</em> list when creating a new data store.</p>
+<div class="figure align-center">
+<img alt="../../_images/gtopo30create.png" src="../../_images/gtopo30create.png" />
+<p class="caption"><em>GTOPO30 in the list of raster data stores</em></p>
+</div>
+</div>
+<div class="section" id="configuring-a-gtopo30-data-store">
+<h2>Configuring a GTOPO30 data store<a class="headerlink" href="#configuring-a-gtopo30-data-store" title="Permalink to this headline">¶</a></h2>
+<div class="figure align-center">
+<img alt="../../_images/gtopo30configure.png" src="../../_images/gtopo30configure.png" />
+<p class="caption"><em>Configuring a GTOPO30 data store</em></p>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Option</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">Workspace</span></tt></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">Data</span> <span class="pre">Source</span> <span class="pre">Name</span></tt></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">Description</span></tt></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">Enabled</span></tt></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">URL</span></tt></td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="geotiff.html" title="previous chapter">GeoTIFF</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="worldimage.html" title="next chapter">WorldImage</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">GTOPO30</a><ul>
+<li><a class="reference internal" href="#adding-a-gtopo30-data-store">Adding a GTOPO30 data store</a></li>
+<li><a class="reference internal" href="#configuring-a-gtopo30-data-store">Configuring a GTOPO30 data store</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="geotiff.html" title="previous chapter">GeoTIFF</a></li>
+            <li>Next: <a href="worldimage.html" title="next chapter">WorldImage</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/data/raster/gtopo30.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

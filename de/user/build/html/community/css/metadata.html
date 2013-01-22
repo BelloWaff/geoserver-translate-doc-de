@@ -1,0 +1,194 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Providing Metadata &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../../index.html" />
+      <link rel="up" title="CSS Styling" href="index.html" />
+      <link rel="next" title="Multi-Valued Properties" href="multivalues.html" />
+      <link rel="prev" title="Filter Syntax" href="filters.html" />
+</head>
+<body class="community/css/metadata">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Community</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">CSS Styling</a> &raquo;</li>
+  <li>Providing Metadata</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="multivalues.html" title="Multi-Valued Properties"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="filters.html" title="Filter Syntax"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="providing-metadata">
+<h1>Providing Metadata<a class="headerlink" href="#providing-metadata" title="Permalink to this headline">¶</a></h1>
+<p>One feature that appears in SLD that has no analog in CSS is the ability to
+provide <em>metadata</em> for styles and style rules.  For example, this SLD embeds
+a title for its single rule:</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;</span>
+<span class="nt">&lt;StyledLayerDescriptor</span> <span class="na">version=</span><span class="s">&quot;1.0.0&quot;</span>
+    <span class="na">xmlns=</span><span class="s">&quot;http://www.opengis.net/sld&quot;</span>
+    <span class="na">xmlns:ogc=</span><span class="s">&quot;http://www.opengis.net/ogc&quot;</span>
+    <span class="na">xmlns:xlink=</span><span class="s">&quot;http://www.w3.org/1999/xlink&quot;</span>
+    <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+    <span class="na">xmlns:gml=</span><span class="s">&quot;http://www.opengis.net/gml&quot;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://www.opengis.net/sld</span>
+<span class="s">        http://schemas.opengis.net/sld/1.0.0/StyledLayerDescriptor.xsd&quot;</span>
+<span class="nt">&gt;</span>
+  <span class="nt">&lt;NamedLayer&gt;</span>
+    <span class="nt">&lt;Name&gt;</span>Country Borders<span class="nt">&lt;/Name&gt;</span>
+    <span class="nt">&lt;UserStyle&gt;</span>
+      <span class="nt">&lt;Name&gt;</span>borders<span class="nt">&lt;/Name&gt;</span>
+      <span class="nt">&lt;Title&gt;</span>Country Borders<span class="nt">&lt;/Title&gt;</span>
+      <span class="nt">&lt;Abstract&gt;</span>
+          Borders of countries, in an appropriately sovereign aesthetic.
+      <span class="nt">&lt;/Abstract&gt;</span>
+      <span class="nt">&lt;FeatureTypeStyle&gt;</span>
+        <span class="nt">&lt;Rule&gt;</span>
+          <span class="nt">&lt;Title&gt;</span>Borders<span class="nt">&lt;/Title&gt;</span>
+          <span class="nt">&lt;LineSymbolizer&gt;</span>
+            <span class="nt">&lt;Stroke&gt;</span>
+              <span class="nt">&lt;CssParameter</span> <span class="na">name=</span><span class="s">&quot;stroke-width&quot;</span><span class="nt">&gt;</span>0.2<span class="nt">&lt;/CssParameter&gt;</span>
+            <span class="nt">&lt;/Stroke&gt;</span>
+          <span class="nt">&lt;/LineSymbolizer&gt;</span>
+        <span class="nt">&lt;/Rule&gt;</span>
+     <span class="nt">&lt;/FeatureTypeStyle&gt;</span>
+    <span class="nt">&lt;/UserStyle&gt;</span>
+  <span class="nt">&lt;/NamedLayer&gt;</span>
+<span class="nt">&lt;/StyledLayerDescriptor&gt;</span>
+</pre></div>
+</div>
+<p>Software such as GeoServer can use this metadata to automatically generate nice
+legend images directly from the style.  You don&#8217;t have to give up this ability
+when styling maps in CSS; just add comment <em>before</em> your rules including
+lines that start with <a class="reference external" href="mailto:'&#37;&#52;&#48;title">'<span>&#64;</span>title</a>&#8216; and <a class="reference external" href="mailto:'&#37;&#52;&#48;abstract">'<span>&#64;</span>abstract</a>&#8216;.  Here is the analogous style in
+CSS:</p>
+<div class="highlight-css"><div class="highlight"><pre><span class="c">/*</span>
+<span class="c"> * @title This is a point layer.</span>
+<span class="c"> * @abstract This is an abstract point layer.</span>
+<span class="c"> */</span>
+<span class="o">*</span> <span class="p">{</span>
+    <span class="n">mark</span><span class="o">:</span> <span class="n">mark</span><span class="p">(</span><span class="k">circle</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Rules can provide either a title, an abstract, both, or neither.  The SLD Name
+for a rule is autogenerated based on the filters from the CSS rules that
+combined to form it, for aid in troubleshooting.</p>
+<div class="section" id="combined-rules">
+<h2>Combined Rules<a class="headerlink" href="#combined-rules" title="Permalink to this headline">¶</a></h2>
+<p>One thing to keep in mind when dealing with CSS styles is that multiple rules
+may apply to the same subset of map features, especially as styles get more
+complicated.  Metadata is inherited similarly to CSS properties, but metadata
+fields are <strong>combined</strong> instead of overriding less specific rules.  That means
+that when you have a style like this:</p>
+<div class="highlight-css"><div class="highlight"><pre><span class="c">/* @title Borders */</span>
+<span class="o">*</span> <span class="p">{</span>
+    <span class="n">stroke</span><span class="o">:</span> <span class="nb">black</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c">/* @title Parcels */</span>
+<span class="o">[</span><span class="nt">category</span><span class="o">=</span><span class="s1">&#39;parcel&#39;</span><span class="o">]</span> <span class="p">{</span>
+    <span class="n">fill</span><span class="o">:</span> <span class="nb">blue</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The legend entry for parcels will have the title <tt class="docutils literal"><span class="pre">'Parcels</span> <span class="pre">with</span> <span class="pre">Borders'</span></tt>.
+If you don&#8217;t like this behavior, then only provide titles for the most specific
+rules in your style. (Or, suggest something better in an issue report!)  Rules
+that don&#8217;t provide titles are simply omitted from title aggregation.</p>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="filters.html" title="previous chapter">Filter Syntax</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="multivalues.html" title="next chapter">Multi-Valued Properties</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">Providing Metadata</a><ul>
+<li><a class="reference internal" href="#combined-rules">Combined Rules</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="filters.html" title="previous chapter">Filter Syntax</a></li>
+            <li>Next: <a href="multivalues.html" title="next chapter">Multi-Valued Properties</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/community/css/metadata.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

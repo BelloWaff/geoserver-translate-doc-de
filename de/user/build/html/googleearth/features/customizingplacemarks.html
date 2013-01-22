@@ -1,0 +1,142 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Customizing Placemarks &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../../index.html" />
+      <link rel="up" title="Features" href="index.html" />
+      <link rel="next" title="KML Height and Time" href="kmlheighttime.html" />
+      <link rel="prev" title="Toggling Placemarks" href="togglingplacemarks.html" />
+</head>
+<body class="googleearth/features/customizingplacemarks">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Google Earth</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Features</a> &raquo;</li>
+  <li>Customizing Placemarks</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="kmlheighttime.html" title="KML Height and Time"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="togglingplacemarks.html" title="Toggling Placemarks"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="customizing-placemarks">
+<span id="ge-feature-customizing-placemarks"></span><h1>Customizing Placemarks<a class="headerlink" href="#customizing-placemarks" title="Permalink to this headline">¶</a></h1>
+<p>KML output can leverage some powerful visualization abilities in Google Earth. <strong>Titles</strong> can be displayed on top of the features. <strong>Descriptions</strong> (custom HTML shown when clicking on a feature) can be added to customize the views of the attribute data. In addition, using Google Earth&#8217;s time slider, <strong>time</strong>-based animations can be created. Finally, <strong>height</strong> of features can be set, as opposed to the default ground overlay. All of these can be accomplished by creating Freemarker templates.  Freemarker templates are text files (with limited HTML code), saved in the <a class="reference internal" href="../../datadirectory/index.html#data-directory"><em>GeoServer Data Directory</em></a>, that utilize variables that link to specific attributes in the data.</p>
+<div class="section" id="titles">
+<h2>Titles<a class="headerlink" href="#titles" title="Permalink to this headline">¶</a></h2>
+<p>Specifying labels via a template involves creating a special text file called <tt class="docutils literal"><span class="pre">title.ftl</span></tt> and placing it into the featuretypes directory inside the <a class="reference internal" href="../../datadirectory/index.html#data-directory"><em>GeoServer Data Directory</em></a> for the dataset to be labeled. For instance, to create a template to label the <tt class="docutils literal"><span class="pre">states</span></tt> layer by state name, one would create the file: <tt class="docutils literal"><span class="pre">&lt;data_dir&gt;/workspaces/topp/states_shapefile/states/title.ftl</span></tt>. The content of the file would be:</p>
+<div class="highlight-python"><pre>${STATE_NAME.value}</pre>
+</div>
+</div>
+<div class="section" id="descriptions">
+<h2>Descriptions<a class="headerlink" href="#descriptions" title="Permalink to this headline">¶</a></h2>
+<p>When working with KML, each feature is linked to a description, accessible when the feature is clicked on. By default, GeoServer creates a list of all the attributes and values for the particular feature.</p>
+<p>It is possible to modify this default behavior. Much like with featuretype titles, which are edited by creating a <tt class="docutils literal"><span class="pre">title.ftl</span></tt> template, specifying descriptions via a template involves creating a special text file called <tt class="docutils literal"><span class="pre">description.ftl</span></tt> and placing it into the featuretypes directory inside the <a class="reference internal" href="../../datadirectory/index.html#data-directory"><em>GeoServer Data Directory</em></a> for the dataset to be labeled. For instance, a sample description template would be saved here: <tt class="docutils literal"><span class="pre">&lt;data_dir&gt;/workspaces/topp/states_shapefile/states/description.ftl</span></tt>. The content of the file could be:</p>
+<div class="highlight-python"><pre>This is the state of ${STATE_NAME.value}.</pre>
+</div>
+<p>The resulting description will look like this:</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Add SS:  A custom description</p>
+</div>
+<p>It is also possible to create one description template for all layers in a given namespace. To do this, create a <tt class="docutils literal"><span class="pre">description.ftl</span></tt> file as above, and save it here:</p>
+<div class="highlight-python"><pre>&lt;data_dir&gt;/templates/&lt;namespace&gt;/description.ftl.</pre>
+</div>
+<p>Please note that if a description template is created for a specific layer that also has an associated namespace description template, the layer template (i.e. the most specific template) will take priority.</p>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="togglingplacemarks.html" title="previous chapter">Toggling Placemarks</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="kmlheighttime.html" title="next chapter">KML Height and Time</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">Customizing Placemarks</a><ul>
+<li><a class="reference internal" href="#titles">Titles</a></li>
+<li><a class="reference internal" href="#descriptions">Descriptions</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="togglingplacemarks.html" title="previous chapter">Toggling Placemarks</a></li>
+            <li>Next: <a href="kmlheighttime.html" title="next chapter">KML Height and Time</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/googleearth/features/customizingplacemarks.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

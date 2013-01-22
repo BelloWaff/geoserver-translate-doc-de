@@ -1,0 +1,127 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Known limitations &mdash; GeoServer 2.2.x Developer Manual</title>
+  <link rel="stylesheet" href="../../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x Developer Manual" href="../../../index.html" />
+      <link rel="up" title="Versioning" href="../index.html" />
+      <link rel="next" title="Security" href="../../security/index.html" />
+      <link rel="prev" title="Database tables" href="dbschema.html" />
+</head>
+<body class="programming-guide/versioning/gss/limitations">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../../index.html">GeoServer 2.2.x Developer Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../../index.html">GeoServer 2.2.x Developer Manual</a> &raquo;</li>
+  <li><a href="../../index.html" accesskey="U">Programming Guide</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Versioning</a> &raquo;</li>
+  <li>Known limitations</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="../../security/index.html" title="Security"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="dbschema.html" title="Database tables"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="known-limitations">
+<h1>Known limitations<a class="headerlink" href="#known-limitations" title="Permalink to this headline">¶</a></h1>
+<p>The current implementation is  a proof of concept with these major objectives:</p>
+<ul class="simple">
+<li>prove that synchronization can be attained</li>
+<li>make it solid against network failures</li>
+<li>make it implementable in a short time</li>
+</ul>
+<p>There are other important objectives that have been sacrificed in order to attain the above objectives.</p>
+<p>Someone needs to create the tables to be synchronized manually on both ends, and then register them in the proper metadata tables. Would be nicer if Central could post a feature type description to the units and have the tables be created instead (obvious issues: mismatch between raw SQL types and what can be expressed in a XML schema).</p>
+<p>The service has no support for modification of the table structure.</p>
+<p>No support for foreign keys.</p>
+<p>The service assumes the feature type schemas on both sides are the same, there are no checks.</p>
+<p>At the moment there is some redundancy in the manual work of setting up the synchronized tables. Central could learn which tables the unit wants to synch up via a GetCapabilities of sort for example, and/or could push a list of tables to be synchronized</p>
+<p>The Central part has no service protocol, though it might be interesting to have a way to interact with it:</p>
+<ul class="simple">
+<li>get a list of units and layers (capabilities)</li>
+<li>informations about latest synchronization per unit or per layer</li>
+<li>run manually the synchronization per unit, per layer (as opposed to waiting the service to do it automatically)</li>
+</ul>
+<p>The service obviously lack a GUI to setup layers to be synchronized on the unit side and units, layers and synchronization details (frequency, time windows) on the central side. At the moment everything has to be setup manually in the database.
+The system requires usage of UUID primary keys in all synchronized tables. There is the issue of generating them for data loading purposes. PostgreSQL has an installable module that allows for the generation of such keys1, otherwise the table can be setup in PostGIS using manual SQL and then it can be populated using a script leveraging versioning PostGIS datastore to insert the data (even before version enabling the table).</p>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="dbschema.html" title="previous chapter">Database tables</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="../../security/index.html" title="next chapter">Security</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="dbschema.html" title="previous chapter">Database tables</a></li>
+            <li>Next: <a href="../../security/index.html" title="next chapter">Security</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../../_sources/programming-guide/versioning/gss/limitations.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2011 GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

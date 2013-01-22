@@ -1,0 +1,221 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Control flow module &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../../index.html" />
+      <link rel="up" title="Extensions" href="../index.html" />
+      <link rel="next" title="Excel WFS Output Format" href="../excel.html" />
+      <link rel="prev" title="Extensions" href="../index.html" />
+</head>
+<body class="extensions/controlflow/index">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Extensions</a> &raquo;</li>
+  <li>Control flow module</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="../excel.html" title="Excel WFS Output Format"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="../index.html" title="Extensions"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="control-flow-module">
+<span id="control-flow"></span><h1>Control flow module<a class="headerlink" href="#control-flow-module" title="Permalink to this headline">¶</a></h1>
+<p>The <tt class="docutils literal"><span class="pre">control-flow</span></tt> module for GeoServer allows the administrator to control the amount of concurrent requests actually executing inside the server.
+This kind of control is useful for a number of reasons:</p>
+<ul class="simple">
+<li><em>Performance</em>: tests show that, with local data sources, the maximum throughput in <cite>GetMap</cite> requests is achieved when allowing at most 2 times the number of CPU cores requests to run in parallel.</li>
+<li><em>Resource control</em>: requests such as <cite>GetMap</cite> can use a significant amount of memory. The <a class="reference internal" href="../../services/wms/configuration.html#wms-configuration-limits"><em>WMS request limits</em></a> allow to control the amount of memory used per request, but an <tt class="docutils literal"><span class="pre">OutOfMemoryError</span></tt> is still possible if too many requests run in parallel. By controlling also the amount of requests executing it&#8217;s possible to limit the total amount of memory used below the memory that was actually given to the Java Virtual Machine.</li>
+<li><em>Fairness</em>: a single user should not be able to overwhelm the server with a lot of requests, leaving other users with tiny slices of the overall processing power.</li>
+</ul>
+<p>The control flow method does not normally reject requests, it just queues up those in excess and executes them late. However, it&#8217;s possible to configure the module to reject requests that have been waited in queue for too long.</p>
+<div class="section" id="rule-syntax-reference">
+<h2>Rule syntax reference<a class="headerlink" href="#rule-syntax-reference" title="Permalink to this headline">¶</a></h2>
+<p>The current implementation of the control flow module reads its rules from a <tt class="docutils literal"><span class="pre">controlflow.properties</span></tt> property file located in the <a class="reference internal" href="../../datadirectory/index.html#data-directory"><em>GeoServer data directory</em></a>.</p>
+<div class="section" id="total-ows-request-count">
+<h3>Total OWS request count<a class="headerlink" href="#total-ows-request-count" title="Permalink to this headline">¶</a></h3>
+<p>The global number of OWS requests executing in parallel can be specified with:</p>
+<div class="highlight-python"><pre>ows.global=&lt;count&gt;</pre>
+</div>
+<p>Every request in excess will be queued and executed when other requests complete leaving some free execution slot.</p>
+</div>
+<div class="section" id="per-request-control">
+<h3>Per request control<a class="headerlink" href="#per-request-control" title="Permalink to this headline">¶</a></h3>
+<p>A per request type control can be demanded using the following syntax:</p>
+<div class="highlight-python"><pre>ows.&lt;service&gt;[.&lt;request&gt;[.&lt;outputFormat&gt;]]=&lt;count&gt;</pre>
+</div>
+<p>Where:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">&lt;service&gt;</span></tt> is the OWS service in question (at the time of writing can be <tt class="docutils literal"><span class="pre">wms</span></tt>, <tt class="docutils literal"><span class="pre">wfs</span></tt>, <tt class="docutils literal"><span class="pre">wcs</span></tt>)</li>
+<li><tt class="docutils literal"><span class="pre">&lt;request&gt;</span></tt>, optional, is the request type. For example, for the <tt class="docutils literal"><span class="pre">wms</span></tt> service it can be <tt class="docutils literal"><span class="pre">GetMap</span></tt>, <tt class="docutils literal"><span class="pre">GetFeatureInfo</span></tt>, <tt class="docutils literal"><span class="pre">DescribeLayer</span></tt>, <tt class="docutils literal"><span class="pre">GetLegendGraphics</span></tt>, <tt class="docutils literal"><span class="pre">GetCapabilities</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">&lt;outputFormat&gt;</span></tt>, optional, is the output format of the request. For example, for the <tt class="docutils literal"><span class="pre">wms</span></tt> <tt class="docutils literal"><span class="pre">GetMap</span></tt> request it could be <tt class="docutils literal"><span class="pre">image/png</span></tt>, <tt class="docutils literal"><span class="pre">image/gif</span></tt> and so on</li>
+</ul>
+<p>A few examples:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># don&#39;t allow more than 16 WCS requests in parallel</span>
+<span class="n">ows</span><span class="o">.</span><span class="n">wcs</span><span class="o">=</span><span class="mi">16</span>
+<span class="c"># don&#39;t allow more than 8 GetMap requests in parallel</span>
+<span class="n">ows</span><span class="o">.</span><span class="n">wms</span><span class="o">.</span><span class="n">getmap</span><span class="o">=</span><span class="mi">8</span>
+<span class="c"># don&#39;t allow more than 2 WFS GetFeature requests with Excel output format</span>
+<span class="n">ows</span><span class="o">.</span><span class="n">wfs</span><span class="o">.</span><span class="n">getfeature</span><span class="o">.</span><span class="n">application</span><span class="o">/</span><span class="n">msexcel</span><span class="o">=</span><span class="mi">2</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="per-user-control">
+<h3>Per user control<a class="headerlink" href="#per-user-control" title="Permalink to this headline">¶</a></h3>
+<p>There are two mechanisms to identify user requests. The first one is cookie based, so it will work fine for browsers but not as much for other kinds of clients. The second one is ip based, which works for any type of client but that can limit all the users sitting behind the same router</p>
+<p>This avoids a single user (as identified by a cookie) to make too many requests in parallel:</p>
+<div class="highlight-python"><pre>user=&lt;count&gt;</pre>
+</div>
+<p>Where <tt class="docutils literal"><span class="pre">&lt;count&gt;</span></tt> is the maximum number of requests a single user can execute in parallel.</p>
+<p>The following avoids a single ip address from making too many requests in parallel:</p>
+<div class="highlight-python"><pre>ip=&lt;count&gt;</pre>
+</div>
+<p>Where <tt class="docutils literal"><span class="pre">&lt;count&gt;</span></tt> is the maximum number of requests a single ip address can execute in parallel.</p>
+<p>It is also possible to make this a bit more specific and throttle a single ip address instead by using the following:</p>
+<div class="highlight-python"><pre>ip.&lt;ip_addr&gt;=&lt;count&gt;</pre>
+</div>
+<p>Where <tt class="docutils literal"><span class="pre">&lt;count&gt;</span></tt> is the maximum number of requests the ip speficied in <tt class="docutils literal"><span class="pre">&lt;ip_addr&gt;</span></tt> will execute in parallel.</p>
+<p>To reject requests from a list of ip addresses:</p>
+<div class="highlight-python"><pre>ip.blacklist=&lt;ip_addr1&gt;,&lt;ip_addr2&gt;,...</pre>
+</div>
+</div>
+<div class="section" id="timeout">
+<h3>Timeout<a class="headerlink" href="#timeout" title="Permalink to this headline">¶</a></h3>
+<p>A request timeout is specified with the following syntax:</p>
+<div class="highlight-python"><pre>timeout=&lt;seconds&gt;</pre>
+</div>
+<p>where <tt class="docutils literal"><span class="pre">&lt;seconds&gt;</span></tt> is the number of seconds a request can stay queued waiting for execution. If the request does not enter execution before the timeout expires it will be rejected.</p>
+</div>
+</div>
+<div class="section" id="throttling-tile-requests-wms-c-tms-wmts">
+<h2>Throttling tile requests (WMS-C, TMS, WMTS)<a class="headerlink" href="#throttling-tile-requests-wms-c-tms-wmts" title="Permalink to this headline">¶</a></h2>
+<p>GeoWebCache contributes three cached tiles services to GeoServer: WMS-C, TMS, and WMTS. It is also possible to use the
+Control flow module to throttle them, by adding the following rule to the configuration file:</p>
+<div class="highlight-python"><pre>ows.gwc=&lt;count&gt;</pre>
+</div>
+<p>Where <tt class="docutils literal"><span class="pre">&lt;count&gt;</span></tt> is the maximum number of concurrent tile requests that will be delivered by GeoWebCache at any given time.</p>
+<p>Note also that tile request are sensitive to the other rules (user based, ip based, timeout, etc).</p>
+</div>
+<div class="section" id="a-complete-example">
+<h2>A complete example<a class="headerlink" href="#a-complete-example" title="Permalink to this headline">¶</a></h2>
+<p>Assuming the server we want to protect has 4 cores a sample configuration could be:</p>
+<div class="highlight-python"><pre># if a request waits in queue for more than 60 seconds it's not worth executing,
+# the client will  likely have given up by then
+timeout=60
+# don't allow the execution of more than 100 requests total in parallel
+ows.global=100
+# don't allow more than 10 GetMap in parallel
+ows.wms.getmap=10
+# don't allow more than 4 outputs with Excel output as it's memory bound
+ows.wfs.getfeature.application/msexcel=4
+# don't allow a single user to perform more than 6 requests in parallel
+# (6 being the Firefox default concurrency level at the time of writing)
+user=6
+# don't allow the execution of more than 16 tile requests in parallel
+# (assuming a server with 4 cores, GWC empirical tests show that throughput
+# peaks up at 4 x number of cores. Adjust as appropriate to your system)
+ows.gwc=16</pre>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="../index.html" title="previous chapter">Extensions</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="../excel.html" title="next chapter">Excel WFS Output Format</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">Control flow module</a><ul>
+<li><a class="reference internal" href="#rule-syntax-reference">Rule syntax reference</a><ul>
+<li><a class="reference internal" href="#total-ows-request-count">Total OWS request count</a></li>
+<li><a class="reference internal" href="#per-request-control">Per request control</a></li>
+<li><a class="reference internal" href="#per-user-control">Per user control</a></li>
+<li><a class="reference internal" href="#timeout">Timeout</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#throttling-tile-requests-wms-c-tms-wmts">Throttling tile requests (WMS-C, TMS, WMTS)</a></li>
+<li><a class="reference internal" href="#a-complete-example">A complete example</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="../index.html" title="previous chapter">Extensions</a></li>
+            <li>Next: <a href="../excel.html" title="next chapter">Excel WFS Output Format</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/extensions/controlflow/index.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

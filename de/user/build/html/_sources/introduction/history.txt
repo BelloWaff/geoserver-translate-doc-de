@@ -1,0 +1,16 @@
+.. _history:
+
+Geschichte
+==========
+
+Die GeoServer-Entwicklung wurde im Jahr 2001 von `The Open Planning Project <http://theopenplanningproject.org/>`_ (TOPP) gestartet, einem Non-Profit-Technologie-Inkubator, ansässig in New York. TOPP hat einen Werkzeugkasten produziert, um eine offenere Demokratie zu ermöglichen und Regierungen transparenter zu machen. Eines der ersten war der GeoServer, welcher aus der Erkenntnis entstand, dass ein Werkzeugkasten, um die Einbindung der Bürger in Planungen der öffentlichen Hand und städtische Planungen zu ermöglichen, in hohem Maße von der Fähigkeit profitieren würde, räumliche Daten bereitzustellen.
+
+Die Gründer vom GeoServer hatten die Vision eines räumlichen Wegs, analog dem World Wide Web. Mit dem Word Wide Web kann jeder nach Text suchen und ihn herunterladen. Mit dem räumlichen Web kann jeder nach räumlichen Daten suchen und sie herunterladen. Anbieter von Daten würden in der Lage sein, ihre Daten direkt im Web zu veröffentlichen und die Benutzer könnten direkt darauf zugreifen im Gegensatz zu den indirekten und beschwerlichen Methoden , die heute existieren.
+
+Die in das GeoServer-Projekt involvierten Entwickler gründeten das `GeoTools <http://geotools.org>`_ -Projekt, ein Open Source GIS Java Werkzeugkasten. Durch die GeoTools wurde die Unterstützung für Shapefiles, Oracle Datenbanken, ArcSDE-Integration und vieles mehr inzugefügt.
+
+Ungefähr in dieser Zeit wurde das GeoServer-Projekt gegründet, das OpenGIS-Konsortium (jetzt das `Open Geospatial Consortium <http://www.opengeospatial.org>`_) arbeitete an dem Web Feature Service Standard. Sie spezifizierten ein Protokoll, um räumliche Daten direkt im Web verfügbar zu machen, indem GML (Geographic Markup Language) verwendet wurde, ein vollständig kompatibles Datenformat. Außerdem wurde ein Web Map Service entwickelt, ein Protokoll zur Erzeugung und Darstellung von aus räumlichen Daten erzeugten Kartenbildern.
+
+Andere Projekte standen in Wechselbeziehung. `Refractions Research <http://www.refractions.net>`_ entwarfen PostGIS, eine freie und offene räumliche Datenbank, welche den Geoserver in die Lage versetzte, sich mit einer freien Datenbank zu verbinden. Außerdem entwarf `MetaCarta <http://metacarta.com>`_ `OpenLayers <http://openlayers.org>`_, ein browserbasiertes Open Source Hilfsmittel zur Darstellung von Karten. Alle diese Werkzeuge haben den GeoServer in seiner Funktionalität erweitert.
+
+GeoServer kann Daten nun für viele andere räumliche Datendarstellungsprogramme ausgeben, beispielsweise Google Earth, ein populärer, virtueller 3-D Globus. Ergänzend arbeitet GeoServer direkt mit Google zusammen, um GeoServer-Daten über Google Maps durchsuchbar zu machen. Bald wird eine Suche nach räumlichen Daten so einfach sein, wie eine Google-Suche nach einer Webseite. Also führt GeoServer seine Mission fort, um räumliche Daten für alle besser zugreifbar zu machen.

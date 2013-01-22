@@ -1,0 +1,197 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>WFS output formats &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../../index.html" />
+      <link rel="up" title="Web Feature Service" href="index.html" />
+      <link rel="next" title="WFS vendor parameters" href="vendor.html" />
+      <link rel="prev" title="WFS reference" href="reference.html" />
+</head>
+<body class="services/wfs/outputformats">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Services</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Web Feature Service</a> &raquo;</li>
+  <li>WFS output formats</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="vendor.html" title="WFS vendor parameters"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="reference.html" title="WFS reference"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="wfs-output-formats">
+<span id="id1"></span><h1>WFS output formats<a class="headerlink" href="#wfs-output-formats" title="Permalink to this headline">¶</a></h1>
+<p>WFS returns features and feature information in a number of formats. The syntax for specifying an output format is:</p>
+<div class="highlight-python"><pre>outputFormat=&lt;format&gt;</pre>
+</div>
+<p>where <tt class="docutils literal"><span class="pre">&lt;format&gt;</span></tt> is one of the following options:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="15%" />
+<col width="30%" />
+<col width="55%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Format</th>
+<th class="head">Syntax</th>
+<th class="head">Notes</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GML2</td>
+<td><tt class="docutils literal"><span class="pre">outputFormat=GML2</span></tt></td>
+<td>Default option for WFS 1.0.0</td>
+</tr>
+<tr class="row-odd"><td>GML3</td>
+<td><tt class="docutils literal"><span class="pre">outputFormat=GML3</span></tt></td>
+<td>Default option for WFS 1.1.0 and 2.0.0</td>
+</tr>
+<tr class="row-even"><td>Shapefile</td>
+<td><tt class="docutils literal"><span class="pre">outputFormat=shape-zip</span></tt></td>
+<td>ZIP archive will be generated containing the shapefile (see <a class="reference internal" href="#wfs-outputformat-shapezip"><em>Shapefile output customization</em></a> below)</td>
+</tr>
+<tr class="row-odd"><td>JSON</td>
+<td><tt class="docutils literal"><span class="pre">outputFormat=application/json</span></tt></td>
+<td>Returns a GeoJSON or a JSON output</td>
+</tr>
+<tr class="row-even"><td>JSONP</td>
+<td><tt class="docutils literal"><span class="pre">outputFormat=text/javascript</span></tt></td>
+<td>Returns a <a class="reference external" href="http://en.wikipedia.org/wiki/JSONP">JSONP</a> in the form: <tt class="docutils literal"><span class="pre">parseResponse(...json...)</span></tt>. See <a class="reference internal" href="../wms/vendor.html#wms-vendor-parameters"><em>WMS vendor parameters</em></a> to change the callback name. Note that this format is disabled by default (See <a class="reference internal" href="../wms/global.html#wms-global-variables"><em>Global variables affecting WMS</em></a>).</td>
+</tr>
+<tr class="row-odd"><td>CSV</td>
+<td><tt class="docutils literal"><span class="pre">outputFormat=csv</span></tt></td>
+<td>Returns a CSV (comma-separated values) file</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Some additional output formats (such as <a class="reference internal" href="../../extensions/excel.html#excel-extension"><em>Excel</em></a>) are available with the use of an extension. The full list of output formats supported by a particular GeoServer instance can be found by performing a WFS <a class="reference internal" href="reference.html#wfs-getcap"><em>GetCapabilities</em></a> request.</p>
+</div>
+<div class="section" id="shapefile-output-customization">
+<span id="wfs-outputformat-shapezip"></span><h2>Shapefile output customization<a class="headerlink" href="#shapefile-output-customization" title="Permalink to this headline">¶</a></h2>
+<p>The shapefile output format output can be customized by preparing a <a class="reference internal" href="../../tutorials/freemarker.html#tutorial-freemarkertemplate"><em>Freemarker template</em></a> which will configure the file name of the archive (ZIP file) and the files it contains. The default template is:</p>
+<div class="highlight-python"><pre>zip=${typename}
+shp=${typename}${geometryType}
+txt=wfsrequest</pre>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">zip</span></tt> property is the name of the archive, the <tt class="docutils literal"><span class="pre">shp</span></tt> property is the name of the shapefile for a given feature type, and <tt class="docutils literal"><span class="pre">txt</span></tt> is the dump of the actual WFS request.</p>
+<p>The properties available in the template are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><tt class="docutils literal"><span class="pre">typename</span></tt>—Feature type name (for the <tt class="docutils literal"><span class="pre">zip</span></tt> property this will be the first feature type if the request contains many feature types)</li>
+<li><tt class="docutils literal"><span class="pre">geometryType</span></tt>—Type of geometry contained in the shapefile. This is only used if the output geometry type is generic and the various geometries are stored in one shapefile per type.</li>
+<li><tt class="docutils literal"><span class="pre">workspace</span></tt>—Workspace of the feature type</li>
+<li><tt class="docutils literal"><span class="pre">timestamp</span></tt>—Date object with the request timestamp</li>
+<li><tt class="docutils literal"><span class="pre">iso_timestamp</span></tt>—String (ISO timestamp of the request at GMT) in <tt class="docutils literal"><span class="pre">yyyyMMdd_HHmmss</span></tt> format</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="format-options-as-parameter-in-wfs-requests">
+<h2>Format options as parameter in WFS requests<a class="headerlink" href="#format-options-as-parameter-in-wfs-requests" title="Permalink to this headline">¶</a></h2>
+<p>GeoServer provides the <tt class="docutils literal"><span class="pre">format_options</span></tt> vendor-specific parameter to specify parameters that are specific to each format. The syntax is:</p>
+<div class="highlight-python"><pre>format-options=param1:value1;param2:value2;...</pre>
+</div>
+<p>The currently supported format option in WFS output is:</p>
+<blockquote>
+<div><ul class="simple">
+<li><tt class="docutils literal"><span class="pre">filename</span></tt>—Applies only to the SHAPE-ZIP output format. If a file name is provided, the name is used as the output file name. For example, <tt class="docutils literal"><span class="pre">format_options=filename:roads.zip</span></tt>. If a file name is not specified, the output file name is inferred from the requested feature type name.</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="reference.html" title="previous chapter">WFS reference</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="vendor.html" title="next chapter">WFS vendor parameters</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">WFS output formats</a><ul>
+<li><a class="reference internal" href="#shapefile-output-customization">Shapefile output customization</a></li>
+<li><a class="reference internal" href="#format-options-as-parameter-in-wfs-requests">Format options as parameter in WFS requests</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="reference.html" title="previous chapter">WFS reference</a></li>
+            <li>Next: <a href="vendor.html" title="next chapter">WFS vendor parameters</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/services/wfs/outputformats.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

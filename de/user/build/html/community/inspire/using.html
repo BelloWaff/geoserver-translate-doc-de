@@ -1,0 +1,210 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Using the INSPIRE extension &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../../index.html" />
+      <link rel="up" title="INSPIRE" href="index.html" />
+      <link rel="next" title="Monitoring" href="../monitoring/index.html" />
+      <link rel="prev" title="Installing the INSPIRE extension" href="installing.html" />
+</head>
+<body class="community/inspire/using">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Community</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">INSPIRE</a> &raquo;</li>
+  <li>Using the INSPIRE extension</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="../monitoring/index.html" title="Monitoring"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="installing.html" title="Installing the INSPIRE extension"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="using-the-inspire-extension">
+<span id="community-inspire-using"></span><h1>Using the INSPIRE extension<a class="headerlink" href="#using-the-inspire-extension" title="Permalink to this headline">¶</a></h1>
+<p>When the INSPIRE extension has been properly installed, there will be two changes to GeoServer.</p>
+<ol class="arabic simple">
+<li>The GeoServer WMS 1.3.0 capabilities document will contain extra content relevant to INSPIRE.</li>
+<li>The <a class="reference internal" href="../../webadmin/services/WMS.html#webadmin-wms"><em>WMS</em></a> section of the <a class="reference internal" href="../../webadmin/index.html#web-admin"><em>Web Administration Interface</em></a> will show extra configuration options.</li>
+</ol>
+<div class="section" id="extended-wms-capabilities">
+<h2>Extended WMS Capabilities<a class="headerlink" href="#extended-wms-capabilities" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The INSPIRE directive is relevant to WMS 1.3.0 only, so please make sure that you are viewing the correct capabilities document.</p>
+</div>
+<p>The WMS 1.3.0 capabilities document will be extended once the INSPIRE extension is installed.  Those changes are:</p>
+<ol class="arabic">
+<li><p class="first">Two additional entries in the <tt class="docutils literal"><span class="pre">xsi:schemaLocation</span></tt> of the root <tt class="docutils literal"><span class="pre">&lt;WMS_Capabilities&gt;</span></tt> tag:</p>
+<blockquote>
+<div><ul class="simple">
+<li><tt class="docutils literal"><span class="pre">http://inspire.ec.europa.eu/schemas/inspire_vs/1.0</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">http://&lt;GEOSERVER_ROOT&gt;/www/inspire/inspire_vs.xsd</span></tt></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">An additional ExtendedCapabilities block.  This tag block shows up in between the tags for <tt class="docutils literal"><span class="pre">&lt;Exception&gt;</span></tt> and <tt class="docutils literal"><span class="pre">&lt;Layer&gt;</span></tt>.  It contains the following information:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Metadata URL and MIME type</li>
+<li>Default Language</li>
+<li>Supported Language(s)</li>
+<li>Response Language(s)</li>
+</ul>
+</div></blockquote>
+</li>
+</ol>
+<blockquote>
+<div><p>By default, this block will contain the following content:</p>
+<div class="highlight-python"><pre>&lt;inspire_vs:ExtendedCapabilities&gt;
+  &lt;inspire_common:MetadataUrl xsi:type="inspire_common:resourceLocatorType"&gt;
+    &lt;inspire_common:URL/&gt;
+    &lt;inspire_common:MediaType&gt;application/vnd.iso.19139+xml&lt;/inspire_common:MediaType&gt;
+  &lt;/inspire_common:MetadataUrl&gt;
+  &lt;inspire_common:SupportedLanguages xsi:type="inspire_common:supportedLanguagesType"&gt;
+    &lt;inspire_common:DefaultLanguage&gt;
+      &lt;inspire_common:Language&gt;eng&lt;/inspire_common:Language&gt;
+    &lt;/inspire_common:DefaultLanguage&gt;
+    &lt;inspire_common:SupportedLanguage&gt;
+      &lt;inspire_common:Language&gt;eng&lt;/inspire_common:Language&gt;
+    &lt;/inspire_common:SupportedLanguage&gt;
+  &lt;/inspire_common:SupportedLanguages&gt;
+  &lt;inspire_common:ResponseLanguage&gt;
+    &lt;inspire_common:Language&gt;eng&lt;/inspire_common:Language&gt;
+  &lt;/inspire_common:ResponseLanguage&gt;
+&lt;/inspire_vs:ExtendedCapabilities&gt;</pre>
+</div>
+</div></blockquote>
+<p>This information can be changed via the <a class="reference internal" href="../../webadmin/services/WMS.html#webadmin-wms"><em>WMS</em></a> section of the <a class="reference internal" href="../../webadmin/index.html#web-admin"><em>Web Administration Interface</em></a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you do not see this content in the WMS 1.3.0 capabilities document, the INSPIRE extension may not be installed properly.  Reread the section on <a class="reference internal" href="installing.html#community-inspire-installing"><em>Installing the INSPIRE extension</em></a> and verify that the correct file was saved to the correct directory.</p>
+</div>
+</div>
+<div class="section" id="extended-wms-configuration">
+<h2>Extended WMS configuration<a class="headerlink" href="#extended-wms-configuration" title="Permalink to this headline">¶</a></h2>
+<p>As with the WMS 1.3.0 capabilities document, the WMS configuration in the <a class="reference internal" href="../../webadmin/index.html#web-admin"><em>Web Administration Interface</em></a> is also extended to allow for changing the above published information.  INSPIRE-specific configuration is accessed on the main <a class="reference internal" href="../../webadmin/services/WMS.html#webadmin-wms"><em>WMS</em></a> page in the <a class="reference internal" href="../../webadmin/index.html#web-admin"><em>Web Administration Interface</em></a>.  This is accessed by clicking on the <em class="guilabel">WMS</em> link on the sidebar.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You must be logged in as an administrator to edit WMS configuration.</p>
+</div>
+<p>Once on the WMS configuration page, there will be a block titled <em class="guilabel">INSPIRE</em>.  This section will have three settings:</p>
+<ul class="simple">
+<li><em class="guilabel">Language</em> combo box, for setting the Supported, Default, and Response languages</li>
+<li><em class="guilabel">ISO 19139 Service Metadata URL</em> field, a URL containing the location of the metadata associated with the WMS</li>
+<li><em class="guilabel">Service Metadata Type</em> combo box, for detailing whether the metadata came from a CSW (Catalog Service) or a standalone metadata file</li>
+</ul>
+<div class="figure align-center">
+<img alt="../../_images/inspire.png" src="../../_images/inspire.png" />
+<p class="caption"><em>INSPIRE-related options</em></p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you do not see this content in the WMS configuration page, the INSPIRE extension may not be installed properly.  Reread the section on <a class="reference internal" href="installing.html#community-inspire-installing"><em>Installing the INSPIRE extension</em></a> and verify that the correct file was saved to the correct directory.</p>
+</div>
+<p>After clicking <em class="guilabel">Submit</em> on this page, any changes will be immediately reflected in the WMS 1.3.0 capabilities document.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Currently GeoServer does not offer the ability to configure alternate languages, as there is no way for an administrator to configure multiple responses.  There is an <a class="reference external" href="http://jira.codehaus.org/browse/GEOS-4502">open issue</a> on the GeoServer issue tracker that we are hoping to secure funding for.  If you are interested in implementing or funding this improvement, please raise the issue on the <a class="reference internal" href="../../introduction/gettinginvolved.html#getting-involved"><em>GeoServer mailing list</em></a>.</p>
+</div>
+</div>
+<div class="section" id="more-information">
+<h2>More information<a class="headerlink" href="#more-information" title="Permalink to this headline">¶</a></h2>
+<p>A tutorial on setting up GeoServer with the INSPIRE extension is available at:  <a class="reference external" href="http://location.defra.gov.uk/2011/07/data-publisher-how-to-guides/">http://location.defra.gov.uk/2011/07/data-publisher-how-to-guides/</a>.  See the section on <em class="guilabel">Setting up GeoServer on a Windows Machine</em>.</p>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="installing.html" title="previous chapter">Installing the INSPIRE extension</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="../monitoring/index.html" title="next chapter">Monitoring</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">Using the INSPIRE extension</a><ul>
+<li><a class="reference internal" href="#extended-wms-capabilities">Extended WMS Capabilities</a></li>
+<li><a class="reference internal" href="#extended-wms-configuration">Extended WMS configuration</a></li>
+<li><a class="reference internal" href="#more-information">More information</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="installing.html" title="previous chapter">Installing the INSPIRE extension</a></li>
+            <li>Next: <a href="../monitoring/index.html" title="next chapter">Monitoring</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/community/inspire/using.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

@@ -1,0 +1,151 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Workspaces &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../../index.html" />
+      <link rel="up" title="Data" href="index.html" />
+      <link rel="next" title="Stores" href="stores.html" />
+      <link rel="prev" title="Data" href="index.html" />
+</head>
+<body class="webadmin/data/workspaces">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Web Administration Interface</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Data</a> &raquo;</li>
+  <li>Workspaces</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="stores.html" title="Stores"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="index.html" title="Data"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="workspaces">
+<span id="webadmin-workspaces"></span><h1>Workspaces<a class="headerlink" href="#workspaces" title="Permalink to this headline">¶</a></h1>
+<p>This section describes how to view and configure workspaces. Analogous to a namespace, a workspace is a container which organizes other items. In GeoServer, a workspace is often used to group similar layers together. Individual layers are often referred to by their workspace name, colon, then store. For example, Ex: topp:states. Two different layers with the same name can exist as long as they exist in different workspaces. For example, Ex: sf:states, topp:states.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_workspaces1.png" src="../../_images/data_workspaces1.png" />
+<p class="caption"><em>Workspaces page</em></p>
+</div>
+<div class="section" id="edit-workspace">
+<h2>Edit Workspace<a class="headerlink" href="#edit-workspace" title="Permalink to this headline">¶</a></h2>
+<p>To view details and edit a workspace, click a workspace name.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_workspaces_URI.png" src="../../_images/data_workspaces_URI.png" />
+<p class="caption"><em>Workspace named &#8220;topp&#8221;</em></p>
+</div>
+<p>A workspace consists of a name and a Namespace URI (Uniform Resource Identifier). The workspace name is limited of ten characters and may not contain space. A URI is similar to a URL, except URIs don&#8217;t need to point to a location on the web, and only need to be a unique identifier. For a Workspace URI, we recommend using a URL associated with your project, with perhaps a different trailing identifier, such as <tt class="docutils literal"><span class="pre">http://www.openplans.org/topp</span></tt> for the &#8220;topp&#8221; workspace.</p>
+</div>
+<div class="section" id="add-or-remove-a-workspace">
+<h2>Add or Remove a Workspace<a class="headerlink" href="#add-or-remove-a-workspace" title="Permalink to this headline">¶</a></h2>
+<p>The buttons for adding and removing a workspace can be found at the top of the Workspaces view page.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_workspaces_add_remove.png" src="../../_images/data_workspaces_add_remove.png" />
+<p class="caption"><em>Buttons to add and remove</em></p>
+</div>
+<p>To add a workspace, select the <em class="guilabel">Add new workspace</em> button. You will be prompted to enter the the workspace name and URI.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_workspaces_medford.png" src="../../_images/data_workspaces_medford.png" />
+<p class="caption"><em>New Workspace page with example</em></p>
+</div>
+<p>To remove a workspace, click the workspace&#8217;s corresponding check box. As with the layer deletion process, multiple workspaces can be checked for removal on a single results page. Click the <em class="guilabel">Remove selected workspaces(s)</em> button. You will be asked to confirm or cancel the deletion. Clicking <em class="guilabel">OK</em> will remove the workspace.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_workspaces_rename_confirm.png" src="../../_images/data_workspaces_rename_confirm.png" />
+<p class="caption"><em>Workspace removal confirmation</em></p>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="index.html" title="previous chapter">Data</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="stores.html" title="next chapter">Stores</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">Workspaces</a><ul>
+<li><a class="reference internal" href="#edit-workspace">Edit Workspace</a></li>
+<li><a class="reference internal" href="#add-or-remove-a-workspace">Add or Remove a Workspace</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="index.html" title="previous chapter">Data</a></li>
+            <li>Next: <a href="stores.html" title="next chapter">Stores</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/webadmin/data/workspaces.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

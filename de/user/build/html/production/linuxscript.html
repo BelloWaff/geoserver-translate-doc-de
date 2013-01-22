@@ -1,0 +1,140 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Linux init scripts &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../_static/jquery.js"></script>
+  <script type="text/javascript" src="../_static/doctools.js"></script>
+  <script type="text/javascript" src="../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../index.html" />
+      <link rel="up" title="Running in a Production Environment" href="index.html" />
+      <link rel="next" title="Other Considerations" href="misc.html" />
+      <link rel="prev" title="Data Considerations" href="data.html" />
+</head>
+<body class="production/linuxscript">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Running in a Production Environment</a> &raquo;</li>
+  <li>Linux init scripts</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="misc.html" title="Other Considerations"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="data.html" title="Data Considerations"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="linux-init-scripts">
+<span id="production-linuxscript"></span><h1>Linux init scripts<a class="headerlink" href="#linux-init-scripts" title="Permalink to this headline">¶</a></h1>
+<p>You will have to adjust the scripts to your environment. Download a script, rename it to <tt class="file docutils literal"><span class="pre">geoserver</span></tt> and move it to <tt class="file docutils literal"><span class="pre">/etc/init.d</span></tt>. Use <strong class="command">chmod</strong> to make the script executable and test with <strong class="command">/etc/init.d/geoserver</strong>.</p>
+<p>To set different values for environment variables, create a file <tt class="file docutils literal"><span class="pre">/etc/default/geoserver</span></tt> and specify your  environment.</p>
+<p>Example settings in <tt class="file docutils literal"><span class="pre">/etc/default/geoserver</span></tt> for your environment:</p>
+<div class="highlight-python"><pre>USER=geoserver
+GEOSERVER_DATA_DIR=/home/$USER/data_dir
+GEOSERVER_HOME=/home/$USER/geoserver
+JAVA_HOME=/usr/lib/jvm/java-6-sun
+JAVA_OPTS="-Xms128m -Xmx512m"</pre>
+</div>
+<div class="section" id="debian-ubuntu">
+<h2>Debian/Ubuntu<a class="headerlink" href="#debian-ubuntu" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference download internal" href="../_downloads/geoserver_deb"><tt class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">the</span> <span class="pre">init</span> <span class="pre">script</span></tt></a></p>
+</div>
+<div class="section" id="suse">
+<h2>Suse<a class="headerlink" href="#suse" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference download internal" href="../_downloads/geoserver_suse"><tt class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">the</span> <span class="pre">init</span> <span class="pre">script</span></tt></a></p>
+</div>
+<div class="section" id="starting-geoserver-in-tomcat">
+<h2>Starting GeoServer in Tomcat<a class="headerlink" href="#starting-geoserver-in-tomcat" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference download internal" href="../_downloads/geoserver_tomcat"><tt class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">the</span> <span class="pre">init</span> <span class="pre">script</span></tt></a></p>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="data.html" title="previous chapter">Data Considerations</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="misc.html" title="next chapter">Other Considerations</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">Linux init scripts</a><ul>
+<li><a class="reference internal" href="#debian-ubuntu">Debian/Ubuntu</a></li>
+<li><a class="reference internal" href="#suse">Suse</a></li>
+<li><a class="reference internal" href="#starting-geoserver-in-tomcat">Starting GeoServer in Tomcat</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="data.html" title="previous chapter">Data Considerations</a></li>
+            <li>Next: <a href="misc.html" title="next chapter">Other Considerations</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../_sources/production/linuxscript.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

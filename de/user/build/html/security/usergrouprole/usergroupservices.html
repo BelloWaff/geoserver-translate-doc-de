@@ -1,0 +1,355 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>User/group services &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../../index.html" />
+      <link rel="up" title="Role system" href="index.html" />
+      <link rel="next" title="Roles" href="roles.html" />
+      <link rel="prev" title="Users and Groups" href="usergroups.html" />
+</head>
+<body class="security/usergrouprole/usergroupservices">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Security</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Role system</a> &raquo;</li>
+  <li>User/group services</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="roles.html" title="Roles"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="usergroups.html" title="Users and Groups"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="user-group-services">
+<span id="sec-rolesystem-usergroupservices"></span><h1>User/group services<a class="headerlink" href="#user-group-services" title="Permalink to this headline">¶</a></h1>
+<p>A <strong>user/group service</strong> provides the following information for users and groups:</p>
+<ul class="simple">
+<li>Listing of users</li>
+<li>Listing of groups, including users affiliated with each group</li>
+<li>User passwords</li>
+</ul>
+<p>Many authentication providers will make use of a user/group service to perform authentication. In this case, the user/group service would be the database against which users and passwords are authenticated. Depending on how the <a class="reference internal" href="../auth/chain.html#sec-auth-chain"><em>Authentication chain</em></a> is configured, there may be zero, one, or multiple user/group services active at any given time.</p>
+<p>A user/group service may be read-only, providing access to user information but not allowing new users and groups to be added or altered. This may occur if a user/group service was configured to delegate to an external service for the users and groups database. An example of this would be an external LDAP server.</p>
+<p>By default, GeoServer support two types of user/group services:</p>
+<ul class="simple">
+<li>XML—<em>(Default)</em> User/group service persisted as XML</li>
+<li>JDBC—User/group service persisted in database via JDBC</li>
+</ul>
+<div class="section" id="xml-user-group-service">
+<span id="sec-rolesystem-usergroupxml"></span><h2>XML user/group service<a class="headerlink" href="#xml-user-group-service" title="Permalink to this headline">¶</a></h2>
+<p>The XML user/group service persists the user/group database in an XML file. This is the default behavior in GeoServer. This service represents the user database as XML, and corresponds to this <a class="reference download internal" href="../../_downloads/users.xsd"><tt class="xref download docutils literal"><span class="pre">XML</span> <span class="pre">schema</span></tt></a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The XML user/group file, <tt class="file docutils literal"><span class="pre">users.xml</span></tt>, is located in the GeoServer data directory, <tt class="docutils literal"><span class="pre">security/usergroup/&lt;name&gt;/users.xml</span></tt>, where <tt class="docutils literal"><span class="pre">&lt;name&gt;</span></tt> is the name of the user/group service.</p>
+</div>
+<p>The following is the contents of <tt class="docutils literal"><span class="pre">users.xml</span></tt> that ships with the default GeoServer configuration:</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;userRegistry</span> <span class="na">version=</span><span class="s">&quot;1.0&quot;</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.geoserver.org/security/users&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;users&gt;</span>
+    <span class="nt">&lt;user</span> <span class="na">enabled=</span><span class="s">&quot;true&quot;</span> <span class="na">name=</span><span class="s">&quot;admin&quot;</span> <span class="na">password=</span><span class="s">&quot;crypt1:5WK8hBrtrte9wtImg5i5fjnd8VeqCjDB&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/users&gt;</span>
+  <span class="nt">&lt;groups/&gt;</span>
+<span class="nt">&lt;/userRegistry&gt;</span>
+</pre></div>
+</div>
+<p>This particular configuration defines a single user, <tt class="docutils literal"><span class="pre">admin</span></tt>, and no groups. By default, stored user passwords are encrypted using the
+<a class="reference internal" href="../passwd.html#sec-passwd-encryption"><em>weak PBE</em></a> method.</p>
+<p>For further information, please refer to <a class="reference internal" href="../../webadmin/security/ugr.html#webadmin-sec-usergroupservices"><em>configuring a user/group service</em></a> in the <a class="reference internal" href="../../webadmin/index.html#web-admin"><em>Web Administration Interface</em></a>.</p>
+</div>
+<div class="section" id="jdbc-user-group-service">
+<span id="sec-rolesystem-usergroupjdbc"></span><h2>JDBC user/group service<a class="headerlink" href="#jdbc-user-group-service" title="Permalink to this headline">¶</a></h2>
+<p>The JDBC user/group service persists the user/group database via JDBC, managing the user information in  multiple tables. The user/group database schema is as follows:</p>
+<table border="1" class="docutils">
+<caption>Table: users</caption>
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Field</th>
+<th class="head">Type</th>
+<th class="head">Null</th>
+<th class="head">Key</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>name</td>
+<td>varchar(128)</td>
+<td>NO</td>
+<td>PRI</td>
+</tr>
+<tr class="row-odd"><td>password</td>
+<td>varchar(254)</td>
+<td>YES</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>enabled</td>
+<td>char(1)</td>
+<td>NO</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<caption>Table: user_props</caption>
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Field</th>
+<th class="head">Type</th>
+<th class="head">Null</th>
+<th class="head">Key</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>username</td>
+<td>varchar(128)</td>
+<td>NO</td>
+<td>PRI</td>
+</tr>
+<tr class="row-odd"><td>propname</td>
+<td>varchar(64)</td>
+<td>NO</td>
+<td>PRI</td>
+</tr>
+<tr class="row-even"><td>propvalue</td>
+<td>varchar(2048)</td>
+<td>YES</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<caption>Table: groups</caption>
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Field</th>
+<th class="head">Type</th>
+<th class="head">Null</th>
+<th class="head">Key</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>name</td>
+<td>varchar(128)</td>
+<td>NO</td>
+<td>PRI</td>
+</tr>
+<tr class="row-odd"><td>enabled</td>
+<td>char(1)</td>
+<td>NO</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<caption>Table: group_members</caption>
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Field</th>
+<th class="head">Type</th>
+<th class="head">Null</th>
+<th class="head">Key</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>groupname</td>
+<td>varchar(128)</td>
+<td>NO</td>
+<td>PRI</td>
+</tr>
+<tr class="row-odd"><td>username</td>
+<td>varchar(128)</td>
+<td>NO</td>
+<td>PRI</td>
+</tr>
+</tbody>
+</table>
+<p>The <tt class="docutils literal"><span class="pre">users</span></tt> table is the primary table and contains the list of users with associated passwords. The <tt class="docutils literal"><span class="pre">user_props</span></tt> table maps additional properties to a user. (See <a class="reference internal" href="usergroups.html#sec-rolesystem-usergroups"><em>Users and Groups</em></a> for more details.)  The <tt class="docutils literal"><span class="pre">groups</span></tt> table lists all available groups, and the <tt class="docutils literal"><span class="pre">group_members</span></tt> table maps which users belong to which groups.</p>
+<p>The default GeoServer security configuration is:</p>
+<table border="1" class="docutils">
+<caption>Table: users</caption>
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">name</th>
+<th class="head">password</th>
+<th class="head">enabled</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>Empty</em></td>
+<td><em>Empty</em></td>
+<td><em>Empty</em></td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<caption>Table: user_props</caption>
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">username</th>
+<th class="head">propname</th>
+<th class="head">propvalue</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>Empty</em></td>
+<td><em>Empty</em></td>
+<td><em>Empty</em></td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<caption>Table: groups</caption>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">name</th>
+<th class="head">enabled</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>Empty</em></td>
+<td><em>Empty</em></td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<caption>Table: group_members</caption>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">groupname</th>
+<th class="head">username</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>Empty</em></td>
+<td><em>Empty</em></td>
+</tr>
+</tbody>
+</table>
+<p>For further information, please refer to <a class="reference internal" href="../../webadmin/security/ugr.html#webadmin-sec-usergroupservices"><em>configuring a user/group service</em></a> in the <a class="reference internal" href="../../webadmin/index.html#web-admin"><em>Web Administration Interface</em></a>.</p>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="usergroups.html" title="previous chapter">Users and Groups</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="roles.html" title="next chapter">Roles</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">User/group services</a><ul>
+<li><a class="reference internal" href="#xml-user-group-service">XML user/group service</a></li>
+<li><a class="reference internal" href="#jdbc-user-group-service">JDBC user/group service</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="usergroups.html" title="previous chapter">Users and Groups</a></li>
+            <li>Next: <a href="roles.html" title="next chapter">Roles</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/security/usergrouprole/usergroupservices.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

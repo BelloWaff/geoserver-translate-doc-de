@@ -1,0 +1,236 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Submitting Patches &mdash; GeoServer 2.2.x Developer Manual</title>
+  <link rel="stylesheet" href="../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../_static/jquery.js"></script>
+  <script type="text/javascript" src="../_static/doctools.js"></script>
+  <script type="text/javascript" src="../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x Developer Manual" href="../index.html" />
+      <link rel="up" title="Policies and Procedures" href="index.html" />
+      <link rel="next" title="Code Review" href="code-review.html" />
+      <link rel="prev" title="Comitting" href="comitting.html" />
+</head>
+<body class="policies/patches">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../index.html">GeoServer 2.2.x Developer Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../index.html">GeoServer 2.2.x Developer Manual</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Policies and Procedures</a> &raquo;</li>
+  <li>Submitting Patches</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="code-review.html" title="Code Review"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="comitting.html" title="Comitting"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="submitting-patches">
+<span id="patches"></span><h1>Submitting Patches<a class="headerlink" href="#submitting-patches" title="Permalink to this headline">¶</a></h1>
+<p>As with most open source project GeoServer is very happy to accept patches from the community. Patches
+from the community have been a source of some of the best bug fixes and improvements in GeoServer and
+is a great way to give back to the project.</p>
+<p>This document is a guide designed to help users through the process of successfully submitting a patch.</p>
+<div class="section" id="source-code">
+<h2>Source code<a class="headerlink" href="#source-code" title="Permalink to this headline">¶</a></h2>
+<p>Before one can generate a patch source code is needed. See the <a class="reference internal" href="../quickstart/index.html#quickstart"><em>developer quickstart</em></a>
+for information about obtaining a copy of the GeoServer sources.</p>
+<p>In general developers will only apply patches that apply cleanly against the latest versions of the stable
+and master branches. Therefore before you generate a patch it is important that you update your checkout to
+the latest for the branch you are working on.</p>
+</div>
+<div class="section" id="generating-a-patch">
+<h2>Generating a patch<a class="headerlink" href="#generating-a-patch" title="Permalink to this headline">¶</a></h2>
+<p>There are a number of valid ways to generate a patch.</p>
+<div class="section" id="github-pull-requests">
+<h3>GitHub pull requests<a class="headerlink" href="#github-pull-requests" title="Permalink to this headline">¶</a></h3>
+<p>The GeoServer git repository is hosted on github, which provides a very nice way to manage patches in the
+way of <a class="reference external" href="https://help.github.com/articles/using-pull-requests/">pull requests</a>. To issue a pull request
+requires that you <a class="reference external" href="https://github.com/geoserver/geoserver/fork_select">fork the GeoServer git repo</a> into
+your own account.</p>
+<p>Assuming that <tt class="docutils literal"><span class="pre">origin</span></tt> points to your github repo the the patch workflow then becomes:</p>
+<ol class="arabic">
+<li><p class="first">Make the change.</p>
+<div class="highlight-python"><pre>git checkout -b my_bugfix master
+git add .
+git commit-m "fixed bug xyz"</pre>
+</div>
+</li>
+<li><p class="first">Push the change up to your github repository.</p>
+<div class="highlight-python"><pre>git push origin my_bugfix</pre>
+</div>
+</li>
+<li><p class="first">Visit your github repo page and issue the pull request.</p>
+</li>
+</ol>
+<p>At this point the core developers will be notified of the pull request and review it at the earliest
+convenience.</p>
+</div>
+<div class="section" id="git-diff">
+<h3>Git diff<a class="headerlink" href="#git-diff" title="Permalink to this headline">¶</a></h3>
+<p>All git clients provide an easy way to generate a patch. Assuming you are using the command line tools
+a simple workflow for generating a patch is as follows.</p>
+<ol class="arabic">
+<li><p class="first">Make the change as above.</p>
+</li>
+<li><p class="first">Generate the patch.</p>
+<div class="highlight-python"><pre>git diff master &gt; my_bugfix.patch</pre>
+</div>
+</li>
+<li><p class="first">Open a <a class="reference external" href="https://jira.codehaus.org/browse/GEOS">JIRA</a> ticket and attach the patch file to the ticket.</p>
+</li>
+</ol>
+<p>At this point the core developers will be notified of the ticket t and review it at the earliest
+convenience.</p>
+</div>
+<div class="section" id="unix-diff">
+<h3>Unix diff<a class="headerlink" href="#unix-diff" title="Permalink to this headline">¶</a></h3>
+<p>If you are not working from git, perhaps working from a source archive directly, it is always possible to
+manually generate a patch with unix diff tools.</p>
+<ol class="arabic">
+<li><p class="first">Back up the source tree.</p>
+<div class="highlight-python"><pre>cp geoserver geoserver.orig</pre>
+</div>
+</li>
+<li><p class="first">Make the change.</p>
+</li>
+<li><p class="first">Generate the diff.</p>
+<div class="highlight-python"><pre>diff -ru geoserver.orig geoserver &gt; my_bugfix.patch</pre>
+</div>
+</li>
+<li><p class="first">Open a <a class="reference external" href="https://jira.codehaus.org/browse/GEOS">JIRA</a> ticket and attach the patch file to the ticket.</p>
+</li>
+</ol>
+<p>At this point the core developers will be notified of the ticket t and review it at the earliest
+convenience.</p>
+</div>
+</div>
+<div class="section" id="patch-guidelines">
+<h2>Patch guidelines<a class="headerlink" href="#patch-guidelines" title="Permalink to this headline">¶</a></h2>
+<p>The following guidelines are meant to ensure that changes submitted via patch be as easy as possible to
+review. The easier a patch is to review the easier it is to apply.</p>
+<div class="section" id="ensure-your-ide-editor-is-properly-configured">
+<h3>Ensure your IDE/editor is properly configured<a class="headerlink" href="#ensure-your-ide-editor-is-properly-configured" title="Permalink to this headline">¶</a></h3>
+<p>Ensure that your development environment is properly configured for GeoServer development. A common issue
+with patches from newcomers is that their text editor is configured to use tabs rather than spaces.</p>
+<p>See the the <a class="reference internal" href="../eclipse-guide/index.html#eclipse-guide"><em>Eclipse Guide</em></a> for general information about formatting and ide setup.</p>
+</div>
+<div class="section" id="include-only-relevant-changes">
+<h3>Include only relevant changes<a class="headerlink" href="#include-only-relevant-changes" title="Permalink to this headline">¶</a></h3>
+<p>Ensure the patch only contains changes relevant to the issue you are trying to fix. A common mistake is
+to include whitespace and formatting changes along with the relevant changes. These changes, while they
+may seem harmless, make the patch much harder to read.</p>
+</div>
+<div class="section" id="fix-one-thing-at-a-time">
+<h3>Fix one thing at a time<a class="headerlink" href="#fix-one-thing-at-a-time" title="Permalink to this headline">¶</a></h3>
+<p>Do not batch up multiple unrelated changes into a single patch. If you want to fix multiple issues work
+on them separately and submit separate patches for them.</p>
+</div>
+<div class="section" id="be-patient">
+<h3>Be patient<a class="headerlink" href="#be-patient" title="Permalink to this headline">¶</a></h3>
+<p>The core developers review community patches in spare time. Be cognizant of this and realize that just
+as you are contributing your own free time to the project, so is the developer who is reviewing and
+applying your patch.</p>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="comitting.html" title="previous chapter">Comitting</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="code-review.html" title="next chapter">Code Review</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">Submitting Patches</a><ul>
+<li><a class="reference internal" href="#source-code">Source code</a></li>
+<li><a class="reference internal" href="#generating-a-patch">Generating a patch</a><ul>
+<li><a class="reference internal" href="#github-pull-requests">GitHub pull requests</a></li>
+<li><a class="reference internal" href="#git-diff">Git diff</a></li>
+<li><a class="reference internal" href="#unix-diff">Unix diff</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#patch-guidelines">Patch guidelines</a><ul>
+<li><a class="reference internal" href="#ensure-your-ide-editor-is-properly-configured">Ensure your IDE/editor is properly configured</a></li>
+<li><a class="reference internal" href="#include-only-relevant-changes">Include only relevant changes</a></li>
+<li><a class="reference internal" href="#fix-one-thing-at-a-time">Fix one thing at a time</a></li>
+<li><a class="reference internal" href="#be-patient">Be patient</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="comitting.html" title="previous chapter">Comitting</a></li>
+            <li>Next: <a href="code-review.html" title="next chapter">Code Review</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../_sources/policies/patches.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2011 GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

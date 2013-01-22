@@ -1,0 +1,167 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>WFS basics &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../../index.html" />
+      <link rel="up" title="Web Feature Service" href="index.html" />
+      <link rel="next" title="WFS reference" href="reference.html" />
+      <link rel="prev" title="Web Feature Service" href="index.html" />
+</head>
+<body class="services/wfs/basics">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Services</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Web Feature Service</a> &raquo;</li>
+  <li>WFS basics</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="reference.html" title="WFS reference"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="index.html" title="Web Feature Service"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="wfs-basics">
+<span id="id1"></span><h1>WFS basics<a class="headerlink" href="#wfs-basics" title="Permalink to this headline">¶</a></h1>
+<p>GeoServer provides support for the <a class="reference external" href="http://www.opengeospatial.org">Open Geospatial Consortium (OGC)</a> <a class="reference external" href="http://www.opengeospatial.org/standards/wms">Web Feature Service (WFS)</a> specification, versions <strong>1.0.0</strong>, <strong>1.1.0</strong>, and <strong>2.0.0</strong>. WFS defines a standard for exchanging vector data over the Internet. With a compliant WFS, clients can query both the data structure and the source data. Advanced WFS operations also support feature locking and edit operations.</p>
+<p>GeoServer is the reference implementation of all three versions of the standard, completely implementing every part of the protocol. This includes the basic operations of <a class="reference internal" href="reference.html#wfs-getcap"><em>GetCapabilities</em></a>, <a class="reference internal" href="reference.html#wfs-dft"><em>DescribeFeatureType</em></a>, and <a class="reference internal" href="reference.html#wfs-getfeature"><em>GetFeature</em></a>, as well as more advanced options such as <a class="reference internal" href="reference.html#wfs-wfst"><em>Transaction</em></a>. GeoServer WFS is also integrated with its <a class="reference internal" href="../../security/index.html#security"><em>Security</em></a> system to limit access to data and transactions, and supports a variety of <a class="reference internal" href="outputformats.html#wfs-output-formats"><em>WFS output formats</em></a>, making the raw data more widely available.</p>
+<div class="section" id="differences-between-wfs-versions">
+<h2>Differences between WFS versions<a class="headerlink" href="#differences-between-wfs-versions" title="Permalink to this headline">¶</a></h2>
+<p>The major differences between the WFS versions are:</p>
+<ul class="simple">
+<li>WFS 1.1.0 and 2.0.0 return GML3 as the default GML, whereas in WFS 1.0.0, the default is GML2. GML3 adopts marginally different ways of specifying a geometry. GeoServer supports requests in both GML3 and GML2 formats.</li>
+<li>In WFS 1.1.0 and 2.0.0, the SRS (Spatial Reference System, or projection) is specified with <tt class="docutils literal"><span class="pre">urn:x-ogc:def:crs:EPSG:XXXX</span></tt>, whereas in WFS 1.0.0 the specification was <tt class="docutils literal"><span class="pre">http://www.opengis.net/gml/srs/epsg.xml#XXXX</span></tt>. This change has implications for the <a class="reference external" href="wfs_basics_axis">axis order</a> of the returned data.</li>
+<li>WFS 1.1.0 and 2.0.0 support on-the-fly reprojection of data, which supports returning the data in a SRS other than the native SRS.</li>
+<li>WFS 2.0.0 introduces a new version of the filter encoding specification, adding support for temporal filters.</li>
+<li>WFS 2.0.0 supports joins via a GetFeature request.</li>
+<li>WFS 2.0.0 adds the ability to page results of a GetFeature request via the <tt class="docutils literal"><span class="pre">startIndex</span></tt> and <tt class="docutils literal"><span class="pre">maxFeatures</span></tt> parameters. GeoServer now supports this functionality in WFS 1.0.0 and 1.1.0.</li>
+<li>WFS 2.0.0 supports stored queries, which are regular WFS queries stored on the server such that they may be invoked by passing the appropriate identifier with a WFS request.</li>
+<li>WFS 2.0.0 supports SOAP (Simple Object Access Protocol) as an alternative to the OGC interface.</li>
+</ul>
+</div>
+<div class="section" id="axis-ordering">
+<span id="wfs-basics-axis"></span><h2>Axis ordering<a class="headerlink" href="#axis-ordering" title="Permalink to this headline">¶</a></h2>
+<p>WFS 1.0.0 servers return geographic coordinates in longitude/latitude (x/y) order, the most common way to distribute data. For example, most shapefiles adopt this order by default.</p>
+<p>However, the traditional axis order for geographic and cartographic systems is the opposite—latitude/longitude (y/x)—and the later WFS specifications respect this. The default axis ordering support is:</p>
+<ul class="simple">
+<li>Latitude/longitude—WFS 1.1.0 and WFS 2.0.0</li>
+<li>Longitude/latitude—WMS 1.0.0</li>
+</ul>
+<p>This may cause difficulties when switching between servers with different WFS versions, or when upgrading your WFS. To minimize confusion and increase interoperability, GeoServer has adopted the following assumptions when specifying projections in the following formats:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="75%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Representation</th>
+<th class="head">Assumed axis order</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">EPSG:xxxx</span></tt></td>
+<td>longitude/latitude (x/y)</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">http://www.opengis.net/gml/srs/epsg.xml#xxxx</span></tt></td>
+<td>longitude/latitude (x/y)</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">urn:x-ogc:def:crs:EPSG:xxxx</span></tt></td>
+<td>latitude/longitude (y/x)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="index.html" title="previous chapter">Web Feature Service</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="reference.html" title="next chapter">WFS reference</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">WFS basics</a><ul>
+<li><a class="reference internal" href="#differences-between-wfs-versions">Differences between WFS versions</a></li>
+<li><a class="reference internal" href="#axis-ordering">Axis ordering</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="index.html" title="previous chapter">Web Feature Service</a></li>
+            <li>Next: <a href="reference.html" title="next chapter">WFS reference</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/services/wfs/basics.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

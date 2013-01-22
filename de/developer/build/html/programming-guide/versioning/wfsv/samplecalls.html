@@ -1,0 +1,478 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Versioning WFS - Sample calls &mdash; GeoServer 2.2.x Developer Manual</title>
+  <link rel="stylesheet" href="../../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x Developer Manual" href="../../../index.html" />
+      <link rel="up" title="Versioning implementation" href="implementation.html" />
+      <link rel="next" title="Phase two implementation proposal" href="phase2.html" />
+      <link rel="prev" title="WFS Extensions" href="wfs-extensions.html" />
+</head>
+<body class="programming-guide/versioning/wfsv/samplecalls">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../../index.html">GeoServer 2.2.x Developer Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../../index.html">GeoServer 2.2.x Developer Manual</a> &raquo;</li>
+  <li><a href="../../index.html" accesskey="U">Programming Guide</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Versioning</a> &raquo;</li>
+  <li><a href="implementation.html" accesskey="U">Versioning implementation</a> &raquo;</li>
+  <li>Versioning WFS - Sample calls</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="phase2.html" title="Phase two implementation proposal"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="wfs-extensions.html" title="WFS Extensions"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="versioning-wfs-sample-calls">
+<span id="versioning-implementation-samplecalls"></span><h1>Versioning WFS - Sample calls<a class="headerlink" href="#versioning-wfs-sample-calls" title="Permalink to this headline">¶</a></h1>
+<p>The sample versioning configuration contains a set of sample calls that can be performed against the versioning datastore to try out its functionality.
+Here are the calls with some narrative explaining them.</p>
+<div class="section" id="assess-initial-situation">
+<h2>Assess initial situation<a class="headerlink" href="#assess-initial-situation" title="Permalink to this headline">¶</a></h2>
+<p>All of the calls hit the topp:archsites feature type. This call extract two of the three feature we&#8217;re going to modify with the transaction.</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;wfs:GetFeature</span> <span class="na">service=</span><span class="s">&quot;WFSV&quot;</span> <span class="na">version=</span><span class="s">&quot;1.0.0&quot;</span>
+  <span class="na">xmlns:topp=</span><span class="s">&quot;http://www.openplans.org/topp&quot;</span>
+  <span class="na">xmlns:wfs=</span><span class="s">&quot;http://www.opengis.net/wfs&quot;</span>
+  <span class="na">xmlns:ogc=</span><span class="s">&quot;http://www.opengis.net/ogc&quot;</span>
+  <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+  <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://www.opengis.net/wfs</span>
+<span class="s">                      http://schemas.opengis.net/wfs/1.0.0/WFS-basic.xsd&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;wfs:Query</span> <span class="na">typeName=</span><span class="s">&quot;topp:archsites&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;ogc:Filter&gt;</span>
+       <span class="nt">&lt;ogc:FeatureId</span> <span class="na">fid=</span><span class="s">&quot;archsites.1&quot;</span><span class="nt">/&gt;</span>
+       <span class="nt">&lt;ogc:FeatureId</span> <span class="na">fid=</span><span class="s">&quot;archsites.2&quot;</span><span class="nt">/&gt;</span>
+       <span class="nt">&lt;ogc:FeatureId</span> <span class="na">fid=</span><span class="s">&quot;archsites.25&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/ogc:Filter&gt;</span>
+  <span class="nt">&lt;/wfs:Query&gt;</span>
+<span class="nt">&lt;/wfs:GetFeature&gt;</span>
+</pre></div>
+</div>
+<p>This is a standard WFS GetFeature, but you may have noticed that the service hit is &#8220;WFSV&#8221;.
+Also, if you run the request you&#8217;ll notice archsites.25 is not there, because we&#8217;re going to create it with the next request.</p>
+</div>
+<div class="section" id="transaction">
+<h2>Transaction<a class="headerlink" href="#transaction" title="Permalink to this headline">¶</a></h2>
+<p>This is a standard WFS transaction, versioning is totally transparent (that is, this transaction call is exactly the same you would perform on a standard WFS, the difference is that the backend will record the change instead of just applying it to the data).</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;wfs:Transaction</span> <span class="na">service=</span><span class="s">&quot;WFSV&quot;</span> <span class="na">version=</span><span class="s">&quot;1.0.0&quot;</span>
+  <span class="na">xmlns:topp=</span><span class="s">&quot;http://www.openplans.org/topp&quot;</span>
+  <span class="na">xmlns:ogc=</span><span class="s">&quot;http://www.opengis.net/ogc&quot;</span> <span class="na">xmlns:wfs=</span><span class="s">&quot;http://www.opengis.net/wfs&quot;</span>
+  <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+  <span class="na">xmlns:gml=</span><span class="s">&quot;http://www.opengis.net/gml&quot;</span>
+  <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://www.opengis.net/wfs</span>
+<span class="s">                      http://schemas.opengis.net/wfs/1.0.0/WFS-transaction.xsd</span>
+<span class="s">                      http://www.openplans.org/topp</span>
+<span class="s">                      http://localhost:8080/geoserver/wfsv?request=DescribeFeatureType&amp;amp;version=1.0.0&amp;amp;typeName=topp:archsites&quot;</span>
+  <span class="na">handle=</span><span class="s">&quot;Updating Signature rock label&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;wfs:Insert&gt;</span>
+    <span class="nt">&lt;topp:archsites&gt;</span>
+      <span class="nt">&lt;topp:cat&gt;</span>2<span class="nt">&lt;/topp:cat&gt;</span>
+      <span class="nt">&lt;topp:str1&gt;</span>Alien crash site<span class="nt">&lt;/topp:str1&gt;</span>
+      <span class="nt">&lt;topp:the_geom&gt;</span>
+        <span class="nt">&lt;gml:Point</span> <span class="na">srsName=</span><span class="s">&quot;http://www.opengis.net/gml/srs/epsg.xml#26713&quot;</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;gml:coordinates</span> <span class="na">decimal=</span><span class="s">&quot;.&quot;</span> <span class="na">cs=</span><span class="s">&quot;,&quot;</span> <span class="na">ts=</span><span class="s">&quot; &quot;</span><span class="nt">&gt;</span>604000,4930000<span class="nt">&lt;/gml:coordinates&gt;</span>
+        <span class="nt">&lt;/gml:Point&gt;</span>
+      <span class="nt">&lt;/topp:the_geom&gt;</span>
+    <span class="nt">&lt;/topp:archsites&gt;</span>
+  <span class="nt">&lt;/wfs:Insert&gt;</span>
+  <span class="nt">&lt;wfs:Update</span> <span class="na">typeName=</span><span class="s">&quot;topp:archsites&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;wfs:Property&gt;</span>
+      <span class="nt">&lt;wfs:Name&gt;</span>str1<span class="nt">&lt;/wfs:Name&gt;</span>
+      <span class="nt">&lt;wfs:Value&gt;</span>Signature Rock, updated<span class="nt">&lt;/wfs:Value&gt;</span>
+    <span class="nt">&lt;/wfs:Property&gt;</span>
+    <span class="nt">&lt;ogc:Filter&gt;</span>
+      <span class="nt">&lt;ogc:FeatureId</span> <span class="na">fid=</span><span class="s">&quot;archsites.1&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/ogc:Filter&gt;</span>
+  <span class="nt">&lt;/wfs:Update&gt;</span>
+  <span class="nt">&lt;wfs:Delete</span> <span class="na">typeName=</span><span class="s">&quot;topp:archsites&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;ogc:Filter&gt;</span>
+      <span class="nt">&lt;ogc:FeatureId</span> <span class="na">fid=</span><span class="s">&quot;archsites.2&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/ogc:Filter&gt;</span>
+  <span class="nt">&lt;/wfs:Delete&gt;</span>
+<span class="nt">&lt;/wfs:Transaction&gt;</span>
+</pre></div>
+</div>
+<p>The result is:</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="nt">&lt;wfs:WFS_TransactionResponse</span> <span class="na">version=</span><span class="s">&quot;1.0.0&quot;</span> <span class="na">xmlns:wfs=</span><span class="s">&quot;http://www.opengis.net/wfs&quot;</span>
+  <span class="na">xmlns:ogc=</span><span class="s">&quot;http://www.opengis.net/ogc&quot;</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+  <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://www.opengis.net/wfs http://localhost:8080/geoserver/schemas/wfs/1.0.0/WFS-transaction.xsd&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;wfs:InsertResult&gt;</span>
+    <span class="nt">&lt;ogc:FeatureId</span> <span class="na">fid=</span><span class="s">&quot;archsites.26&quot;</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;/wfs:InsertResult&gt;</span>
+  <span class="nt">&lt;wfs:TransactionResult</span> <span class="na">handle=</span><span class="s">&quot;Updating Signature rock label&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;wfs:Status&gt;</span>
+      <span class="nt">&lt;wfs:SUCCESS</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/wfs:Status&gt;</span>
+  <span class="nt">&lt;/wfs:TransactionResult&gt;</span>
+<span class="nt">&lt;/wfs:WFS_TransactionResponse&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="grabbing-the-versioning-log">
+<h2>Grabbing the versioning log<a class="headerlink" href="#grabbing-the-versioning-log" title="Permalink to this headline">¶</a></h2>
+<p>The following call retrieves the change log for the topp:archsites feature type:</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;wfsv:GetLog</span> <span class="na">service=</span><span class="s">&quot;WFSV&quot;</span> <span class="na">version=</span><span class="s">&quot;1.0.0&quot;</span>
+  <span class="na">outputFormat=</span><span class="s">&quot;HTML&quot;</span>
+  <span class="na">xmlns:topp=</span><span class="s">&quot;http://www.openplans.org/topp&quot;</span>
+  <span class="na">xmlns:ogc=</span><span class="s">&quot;http://www.opengis.net/ogc&quot;</span>
+  <span class="na">xmlns:wfs=</span><span class="s">&quot;http://www.opengis.net/wfs&quot;</span>
+  <span class="na">xmlns:wfsv=</span><span class="s">&quot;http://www.opengis.net/wfsv&quot;</span>
+  <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+  <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://www.opengis.net/wfsv</span>
+<span class="s">                      http://localhost:8080/geoserver/schemas/wfs/1.0.0/WFS-versioning.xsd&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;wfsv:DifferenceQuery</span> <span class="na">typeName=</span><span class="s">&quot;topp:archsites&quot;</span> <span class="na">fromFeatureVersion=</span><span class="s">&quot;1&quot;</span> <span class="na">toFeatureVersion=</span><span class="s">&quot;13&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/wfsv:GetLog&gt;</span>
+</pre></div>
+</div>
+<p>resulting in a single entry (the entries from 1 to 6 report the operations needed to version enable the tables). Note how the transaction handle was used as the commit message, and also the fact the user is unknown, because in this demo the http basic authentication was not used.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="14%" />
+<col width="20%" />
+<col width="20%" />
+<col width="45%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Revision</th>
+<th class="head">Author</th>
+<th class="head">Date</th>
+<th class="head">Message</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>7</td>
+<td>anonymous</td>
+<td>10/10/07 9.47</td>
+<td>Updating Signature rock label</td>
+</tr>
+</tbody>
+</table>
+<p>Alternatively, the GetLog result can be encoded in GML.
+GetFeature with version support</p>
+<p>Let&#8217;s do a before and after comparison. This first GetFeature tries to retrieve the value of the features at revision 1.</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;wfs:GetFeature</span> <span class="na">service=</span><span class="s">&quot;WFSV&quot;</span> <span class="na">version=</span><span class="s">&quot;1.0.0&quot;</span>
+  <span class="na">outputFormat=</span><span class="s">&quot;GML2&quot;</span>
+  <span class="na">xmlns:topp=</span><span class="s">&quot;http://www.openplans.org/topp&quot;</span>
+  <span class="na">xmlns:wfs=</span><span class="s">&quot;http://www.opengis.net/wfs&quot;</span>
+  <span class="na">xmlns:ogc=</span><span class="s">&quot;http://www.opengis.net/ogc&quot;</span>
+  <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+  <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://www.opengis.net/wfs</span>
+<span class="s">                      http://schemas.opengis.net/wfs/1.0.0/WFS-basic.xsd&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;wfs:Query</span> <span class="na">typeName=</span><span class="s">&quot;topp:archsites&quot;</span> <span class="na">featureVersion=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;ogc:Filter&gt;</span>
+       <span class="nt">&lt;ogc:FeatureId</span> <span class="na">fid=</span><span class="s">&quot;archsites.1&quot;</span><span class="nt">/&gt;</span>
+       <span class="nt">&lt;ogc:FeatureId</span> <span class="na">fid=</span><span class="s">&quot;archsites.2&quot;</span><span class="nt">/&gt;</span>
+       <span class="nt">&lt;ogc:FeatureId</span> <span class="na">fid=</span><span class="s">&quot;archsites.26&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/ogc:Filter&gt;</span>
+  <span class="nt">&lt;/wfs:Query&gt;</span>
+<span class="nt">&lt;/wfs:GetFeature&gt;</span>
+</pre></div>
+</div>
+<p>This one retrieves the results at revision 1, that is, before the transaction occurred. We can see features archsites.1 and archsites.2, whilst archsites.26 is not there (it has been created at revision 7).</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="nt">&lt;wfs:FeatureCollection</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.opengis.net/wfs&quot;</span> <span class="na">xmlns:wfs=</span><span class="s">&quot;http://www.opengis.net/wfs&quot;</span>
+  <span class="na">xmlns:topp=</span><span class="s">&quot;http://www.openplans.org/topp&quot;</span> <span class="na">xmlns:gml=</span><span class="s">&quot;http://www.opengis.net/gml&quot;</span>
+  <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+  <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://www.openplans.org/topp http://localhost:8080/geoserver/wfs?service=WFS&amp;amp;version=1.0.0&amp;amp;request=DescribeFeatureType&amp;amp;typeName=topp:archsites http://www.opengis.net/wfs http://localhost:8080/geoserver/schemas/wfs/1.0.0/WFS-basic.xsd&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;gml:boundedBy&gt;</span>
+    <span class="nt">&lt;gml:Box</span> <span class="na">srsName=</span><span class="s">&quot;http://www.opengis.net/gml/srs/epsg.xml#26713&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;gml:coordinates</span> <span class="na">xmlns:gml=</span><span class="s">&quot;http://www.opengis.net/gml&quot;</span> <span class="na">decimal=</span><span class="s">&quot;.&quot;</span> <span class="na">cs=</span><span class="s">&quot;,&quot;</span> <span class="na">ts=</span><span class="s">&quot; &quot;</span><span class="nt">&gt;</span>
+        591950,4914730 593493,4923000
+      <span class="nt">&lt;/gml:coordinates&gt;</span>
+    <span class="nt">&lt;/gml:Box&gt;</span>
+  <span class="nt">&lt;/gml:boundedBy&gt;</span>
+  <span class="nt">&lt;gml:featureMember&gt;</span>
+    <span class="nt">&lt;topp:archsites</span> <span class="na">fid=</span><span class="s">&quot;archsites.1&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;topp:cat&gt;</span>1<span class="nt">&lt;/topp:cat&gt;</span>
+      <span class="nt">&lt;topp:str1&gt;</span>Signature Rock<span class="nt">&lt;/topp:str1&gt;</span>
+      <span class="nt">&lt;topp:the_geom&gt;</span>
+        <span class="nt">&lt;gml:Point</span> <span class="na">srsName=</span><span class="s">&quot;http://www.opengis.net/gml/srs/epsg.xml#26713&quot;</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;gml:coordinates</span> <span class="na">xmlns:gml=</span><span class="s">&quot;http://www.opengis.net/gml&quot;</span> <span class="na">decimal=</span><span class="s">&quot;.&quot;</span> <span class="na">cs=</span><span class="s">&quot;,&quot;</span> <span class="na">ts=</span><span class="s">&quot; &quot;</span><span class="nt">&gt;</span>
+            593493,4914730
+          <span class="nt">&lt;/gml:coordinates&gt;</span>
+        <span class="nt">&lt;/gml:Point&gt;</span>
+      <span class="nt">&lt;/topp:the_geom&gt;</span>
+    <span class="nt">&lt;/topp:archsites&gt;</span>
+  <span class="nt">&lt;/gml:featureMember&gt;</span>
+  <span class="nt">&lt;gml:featureMember&gt;</span>
+    <span class="nt">&lt;topp:archsites</span> <span class="na">fid=</span><span class="s">&quot;archsites.2&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;topp:cat&gt;</span>2<span class="nt">&lt;/topp:cat&gt;</span>
+      <span class="nt">&lt;topp:str1&gt;</span>No Name<span class="nt">&lt;/topp:str1&gt;</span>
+      <span class="nt">&lt;topp:the_geom&gt;</span>
+        <span class="nt">&lt;gml:Point</span> <span class="na">srsName=</span><span class="s">&quot;http://www.opengis.net/gml/srs/epsg.xml#26713&quot;</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;gml:coordinates</span> <span class="na">xmlns:gml=</span><span class="s">&quot;http://www.opengis.net/gml&quot;</span> <span class="na">decimal=</span><span class="s">&quot;.&quot;</span> <span class="na">cs=</span><span class="s">&quot;,&quot;</span> <span class="na">ts=</span><span class="s">&quot; &quot;</span><span class="nt">&gt;</span>
+            591950,4923000
+          <span class="nt">&lt;/gml:coordinates&gt;</span>
+        <span class="nt">&lt;/gml:Point&gt;</span>
+      <span class="nt">&lt;/topp:the_geom&gt;</span>
+    <span class="nt">&lt;/topp:archsites&gt;</span>
+  <span class="nt">&lt;/gml:featureMember&gt;</span>
+<span class="nt">&lt;/wfs:FeatureCollection&gt;</span>
+</pre></div>
+</div>
+<p>Querying for revision 7 offers a different result:</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;wfs:GetFeature</span> <span class="na">service=</span><span class="s">&quot;WFSV&quot;</span> <span class="na">version=</span><span class="s">&quot;1.0.0&quot;</span>
+  <span class="na">outputFormat=</span><span class="s">&quot;GML2&quot;</span>
+  <span class="na">xmlns:topp=</span><span class="s">&quot;http://www.openplans.org/topp&quot;</span>
+  <span class="na">xmlns:wfs=</span><span class="s">&quot;http://www.opengis.net/wfs&quot;</span>
+  <span class="na">xmlns:ogc=</span><span class="s">&quot;http://www.opengis.net/ogc&quot;</span>
+  <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+  <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://www.opengis.net/wfs</span>
+<span class="s">                      http://schemas.opengis.net/wfs/1.0.0/WFS-basic.xsd&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;wfs:Query</span> <span class="na">typeName=</span><span class="s">&quot;topp:archsites&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;ogc:Filter&gt;</span>
+       <span class="nt">&lt;ogc:FeatureId</span> <span class="na">fid=</span><span class="s">&quot;archsites.1&quot;</span><span class="nt">/&gt;</span>
+       <span class="nt">&lt;ogc:FeatureId</span> <span class="na">fid=</span><span class="s">&quot;archsites.2&quot;</span><span class="nt">/&gt;</span>
+       <span class="nt">&lt;ogc:FeatureId</span> <span class="na">fid=</span><span class="s">&quot;archsites.26&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/ogc:Filter&gt;</span>
+  <span class="nt">&lt;/wfs:Query&gt;</span>
+<span class="nt">&lt;/wfs:GetFeature&gt;</span>
+</pre></div>
+</div>
+<div class="highlight-xml"><div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="nt">&lt;wfs:FeatureCollection</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.opengis.net/wfs&quot;</span> <span class="na">xmlns:wfs=</span><span class="s">&quot;http://www.opengis.net/wfs&quot;</span>
+  <span class="na">xmlns:topp=</span><span class="s">&quot;http://www.openplans.org/topp&quot;</span> <span class="na">xmlns:gml=</span><span class="s">&quot;http://www.opengis.net/gml&quot;</span>
+  <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+  <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://www.openplans.org/topp http://localhost:8080/geoserver/wfs?service=WFS&amp;amp;version=1.0.0&amp;amp;request=DescribeFeatureType&amp;amp;typeName=topp:archsites http://www.opengis.net/wfs http://localhost:8080/geoserver/schemas/wfs/1.0.0/WFS-basic.xsd&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;gml:boundedBy&gt;</span>
+    <span class="nt">&lt;gml:Box</span> <span class="na">srsName=</span><span class="s">&quot;http://www.opengis.net/gml/srs/epsg.xml#26713&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;gml:coordinates</span> <span class="na">xmlns:gml=</span><span class="s">&quot;http://www.opengis.net/gml&quot;</span> <span class="na">decimal=</span><span class="s">&quot;.&quot;</span> <span class="na">cs=</span><span class="s">&quot;,&quot;</span> <span class="na">ts=</span><span class="s">&quot; &quot;</span><span class="nt">&gt;</span>
+        593493,4914730 604000,4930000
+      <span class="nt">&lt;/gml:coordinates&gt;</span>
+    <span class="nt">&lt;/gml:Box&gt;</span>
+  <span class="nt">&lt;/gml:boundedBy&gt;</span>
+  <span class="nt">&lt;gml:featureMember&gt;</span>
+    <span class="nt">&lt;topp:archsites</span> <span class="na">fid=</span><span class="s">&quot;archsites.26&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;topp:cat&gt;</span>2<span class="nt">&lt;/topp:cat&gt;</span>
+      <span class="nt">&lt;topp:str1&gt;</span>Alien crash site<span class="nt">&lt;/topp:str1&gt;</span>
+      <span class="nt">&lt;topp:the_geom&gt;</span>
+        <span class="nt">&lt;gml:Point</span> <span class="na">srsName=</span><span class="s">&quot;http://www.opengis.net/gml/srs/epsg.xml#26713&quot;</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;gml:coordinates</span> <span class="na">xmlns:gml=</span><span class="s">&quot;http://www.opengis.net/gml&quot;</span> <span class="na">decimal=</span><span class="s">&quot;.&quot;</span> <span class="na">cs=</span><span class="s">&quot;,&quot;</span> <span class="na">ts=</span><span class="s">&quot; &quot;</span><span class="nt">&gt;</span>
+            604000,4930000
+          <span class="nt">&lt;/gml:coordinates&gt;</span>
+        <span class="nt">&lt;/gml:Point&gt;</span>
+      <span class="nt">&lt;/topp:the_geom&gt;</span>
+    <span class="nt">&lt;/topp:archsites&gt;</span>
+  <span class="nt">&lt;/gml:featureMember&gt;</span>
+  <span class="nt">&lt;gml:featureMember&gt;</span>
+    <span class="nt">&lt;topp:archsites</span> <span class="na">fid=</span><span class="s">&quot;archsites.1&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;topp:cat&gt;</span>1<span class="nt">&lt;/topp:cat&gt;</span>
+      <span class="nt">&lt;topp:str1&gt;</span>Signature Rock, updated<span class="nt">&lt;/topp:str1&gt;</span>
+      <span class="nt">&lt;topp:the_geom&gt;</span>
+        <span class="nt">&lt;gml:Point</span> <span class="na">srsName=</span><span class="s">&quot;http://www.opengis.net/gml/srs/epsg.xml#26713&quot;</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;gml:coordinates</span> <span class="na">xmlns:gml=</span><span class="s">&quot;http://www.opengis.net/gml&quot;</span> <span class="na">decimal=</span><span class="s">&quot;.&quot;</span> <span class="na">cs=</span><span class="s">&quot;,&quot;</span> <span class="na">ts=</span><span class="s">&quot; &quot;</span><span class="nt">&gt;</span>
+            593493,4914730
+          <span class="nt">&lt;/gml:coordinates&gt;</span>
+        <span class="nt">&lt;/gml:Point&gt;</span>
+      <span class="nt">&lt;/topp:the_geom&gt;</span>
+    <span class="nt">&lt;/topp:archsites&gt;</span>
+  <span class="nt">&lt;/gml:featureMember&gt;</span>
+<span class="nt">&lt;/wfs:FeatureCollection&gt;</span>
+</pre></div>
+</div>
+<p>Here we can see archsites.2 has been removed (deleted during the transaction) and archsites.26 appears.</p>
+</div>
+<div class="section" id="getdiff">
+<h2>GetDiff<a class="headerlink" href="#getdiff" title="Permalink to this headline">¶</a></h2>
+<p>Diff returns the difference between two revisions, eventually it&#8217;s possible to specify a filter to gather the diff concerning a specific feature set.
+Also notice that the output format is HTML, but if you don&#8217;t specify it, you&#8217;ll get the log encoded as a WFS Transaction (the transaction that applied to the initial revision bring you to the specified destination revision).</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;wfsv:GetDiff</span> <span class="na">service=</span><span class="s">&quot;WFSV&quot;</span> <span class="na">version=</span><span class="s">&quot;1.0.0&quot;</span>
+  <span class="na">outputFormat=</span><span class="s">&quot;HTML&quot;</span>
+  <span class="na">xmlns:topp=</span><span class="s">&quot;http://www.openplans.org/topp&quot;</span>
+  <span class="na">xmlns:ogc=</span><span class="s">&quot;http://www.opengis.net/ogc&quot;</span>
+  <span class="na">xmlns:wfs=</span><span class="s">&quot;http://www.opengis.net/wfs&quot;</span>
+  <span class="na">xmlns:wfsv=</span><span class="s">&quot;http://www.opengis.net/wfsv&quot;</span>
+  <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+  <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://www.opengis.net/wfsv</span>
+<span class="s">  http://localhost:8080/geoserver/schemas/wfs/1.0.0/WFS-versioning.xsd&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;wfsv:DifferenceQuery</span> <span class="na">typeName=</span><span class="s">&quot;topp:archsites&quot;</span> <span class="na">fromFeatureVersion=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/wfsv:GetDiff&gt;</span>
+</pre></div>
+</div>
+<p>The output, in human readable HTML format, is:</p>
+<div class="highlight-python"><pre>Feature type 'archsites', diff from version 1 to version CURRENT
+
+Feature archsites.26, inserted, feature content:
+
+    * cat: 2
+    * str1: Alien crash site
+    * the_geom: POINT (604000 4930000)
+
+Feature archsites.2, deleted, old feature content:
+
+    * cat: 2
+    * str1: No Name
+    * the_geom: POINT (591950 4923000)
+
+Feature archsites.1, updated, modified attributes:
++-----------+------------------+------------------------+
+| Attribute | Value at 1       | Value at CURRENT       |
++===========+==================+========================+
+| str1      | Signature Rock   |Signature Rock, updated |
++-----------+------------------+------------------------+</pre>
+</div>
+<p>If no output format is specified, the GetDiff will return a WFS transaction, that is, the actions needed to turn the features from version 1 to version CURRENT.
+The GetDiff can also work backwards, that is, one could specify toFeatureVersion &lt; fromFeatureVersion, this would return a reverse diff, which seen as a transaction, is the set of command needed to rollback the changes. Yet, it&#8217;s advisable to use the specific Rollback element for actually performing rollbacks, because it guarantees deleted features are restored with the original feature id (perfoming the transaction returned by a backwards diff would create a new feature id instead).</p>
+</div>
+<div class="section" id="rollback">
+<h2>Rollback<a class="headerlink" href="#rollback" title="Permalink to this headline">¶</a></h2>
+<p>Versioning WFS introduces a new transaction element, Rollback, that can be used to undo changes performed between two revisions, eventually limiting the rollback to features touched by a specific user, or satisfying a specific filter.</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;wfs:Transaction</span> <span class="na">service=</span><span class="s">&quot;WFSV&quot;</span> <span class="na">version=</span><span class="s">&quot;1.0.0&quot;</span>
+  <span class="na">xmlns:topp=</span><span class="s">&quot;http://www.openplans.org/topp&quot;</span>
+  <span class="na">xmlns:ogc=</span><span class="s">&quot;http://www.opengis.net/ogc&quot;</span>
+  <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+  <span class="na">xmlns:gml=</span><span class="s">&quot;http://www.opengis.net/gml&quot;</span>
+  <span class="na">xmlns:wfsv=</span><span class="s">&quot;http://www.opengis.net/wfsv&quot;</span>
+  <span class="na">xmlns:wfs=</span><span class="s">&quot;http://www.opengis.net/wfs&quot;</span>
+  <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://www.opengis.net/wfsv</span>
+<span class="s">                      http://localhost:8080/geoserver/schemas/wfs/1.0.0/WFS-versioning.xsd&quot;</span><span class="nt">&gt;</span>
+  handle=&quot;Rolling back previous changes&quot;&gt;
+  <span class="nt">&lt;wfsv:Rollback</span> <span class="na">safeToIgnore=</span><span class="s">&quot;false&quot;</span> <span class="na">vendorId=</span><span class="s">&quot;TOPP&quot;</span> <span class="na">typeName=</span><span class="s">&quot;archsites&quot;</span> <span class="na">toFeatureVersion=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/wfs:Transaction&gt;</span>
+</pre></div>
+</div>
+<p>and the result would be:</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="nt">&lt;wfs:WFS_TransactionResponse</span> <span class="na">version=</span><span class="s">&quot;1.0.0&quot;</span> <span class="na">xmlns:wfs=</span><span class="s">&quot;http://www.opengis.net/wfs&quot;</span>
+  <span class="na">xmlns:ogc=</span><span class="s">&quot;http://www.opengis.net/ogc&quot;</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+  <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://www.opengis.net/wfs http://localhost:8080/geoserver/schemas/wfs/1.0.0/WFS-transaction.xsd&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;wfs:InsertResult&gt;</span>
+    <span class="nt">&lt;ogc:FeatureId</span> <span class="na">fid=</span><span class="s">&quot;none&quot;</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;/wfs:InsertResult&gt;</span>
+  <span class="nt">&lt;wfs:TransactionResult&gt;</span>
+    <span class="nt">&lt;wfs:Status&gt;</span>
+      <span class="nt">&lt;wfs:SUCCESS</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/wfs:Status&gt;</span>
+  <span class="nt">&lt;/wfs:TransactionResult&gt;</span>
+<span class="nt">&lt;/wfs:WFS_TransactionResponse&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="versioning-aware-clients-and-transactions">
+<h2>Versioning aware clients and transactions<a class="headerlink" href="#versioning-aware-clients-and-transactions" title="Permalink to this headline">¶</a></h2>
+<p>Versioning aware clients should try to handle updates keeping the possibily of conflicts in mind. A conflict occurrs if the same feature
+is modified by two users in the same time frame. Suppose the first one managed to commit its changes.
+The second one should try to avoid overwriting the first user changes, and instead be notified that it does not have the latest revision.
+In that case, the client should first update (by getting a diff), handle the eventual conflict locally, and then try to commit again.</p>
+<p>The following example shows a transaction that should fail, because the client declares of being at a revision number
+that&#8217;s no more the latest revision:</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;wfs:Transaction</span> <span class="na">service=</span><span class="s">&quot;WFSV&quot;</span> <span class="na">version=</span><span class="s">&quot;1.0.0&quot;</span>
+  <span class="na">xmlns:topp=</span><span class="s">&quot;http://www.openplans.org/topp&quot;</span>
+  <span class="na">xmlns:ogc=</span><span class="s">&quot;http://www.opengis.net/ogc&quot;</span>
+  <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+  <span class="na">xmlns:gml=</span><span class="s">&quot;http://www.opengis.net/gml&quot;</span>
+  <span class="na">xmlns:wfsv=</span><span class="s">&quot;http://www.opengis.net/wfsv&quot;</span>
+  <span class="na">xmlns:wfs=</span><span class="s">&quot;http://www.opengis.net/wfs&quot;</span>
+  <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://www.opengis.net/wfsv</span>
+<span class="s">                      http://localhost:8080/geoserver/schemas/wfs/1.0.0/WFS-versioning.xsd&quot;</span><span class="nt">&gt;</span>
+  handle=&quot;Trying an update with wrong version&quot;&gt;
+  <span class="nt">&lt;wfsv:VersionedUpdate</span> <span class="na">typeName=</span><span class="s">&quot;topp:archsites&quot;</span> <span class="na">featureVersion=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;wfs:Property&gt;</span>
+      <span class="nt">&lt;wfs:Name&gt;</span>str1<span class="nt">&lt;/wfs:Name&gt;</span>
+      <span class="nt">&lt;wfs:Value&gt;</span>You won&#39;t see me updated<span class="nt">&lt;/wfs:Value&gt;</span>
+    <span class="nt">&lt;/wfs:Property&gt;</span>
+    <span class="nt">&lt;ogc:Filter&gt;</span>
+      <span class="nt">&lt;ogc:FeatureId</span> <span class="na">fid=</span><span class="s">&quot;archsites.1&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/ogc:Filter&gt;</span>
+  <span class="nt">&lt;/wfsv:VersionedUpdate&gt;</span>
+<span class="nt">&lt;/wfs:Transaction&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="wfs-extensions.html" title="previous chapter">WFS Extensions</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="phase2.html" title="next chapter">Phase two implementation proposal</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">Versioning WFS - Sample calls</a><ul>
+<li><a class="reference internal" href="#assess-initial-situation">Assess initial situation</a></li>
+<li><a class="reference internal" href="#transaction">Transaction</a></li>
+<li><a class="reference internal" href="#grabbing-the-versioning-log">Grabbing the versioning log</a></li>
+<li><a class="reference internal" href="#getdiff">GetDiff</a></li>
+<li><a class="reference internal" href="#rollback">Rollback</a></li>
+<li><a class="reference internal" href="#versioning-aware-clients-and-transactions">Versioning aware clients and transactions</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="wfs-extensions.html" title="previous chapter">WFS Extensions</a></li>
+            <li>Next: <a href="phase2.html" title="next chapter">Phase two implementation proposal</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../../_sources/programming-guide/versioning/wfsv/samplecalls.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2011 GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

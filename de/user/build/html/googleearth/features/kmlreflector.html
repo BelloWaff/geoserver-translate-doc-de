@@ -1,0 +1,245 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>KML Reflector &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../../index.html" />
+      <link rel="up" title="Features" href="index.html" />
+      <link rel="next" title="Toggling Placemarks" href="togglingplacemarks.html" />
+      <link rel="prev" title="Features" href="index.html" />
+</head>
+<body class="googleearth/features/kmlreflector">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Google Earth</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Features</a> &raquo;</li>
+  <li>KML Reflector</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="togglingplacemarks.html" title="Toggling Placemarks"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="index.html" title="Features"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="kml-reflector">
+<span id="ge-feature-kml-reflector"></span><h1>KML Reflector<a class="headerlink" href="#kml-reflector" title="Permalink to this headline">¶</a></h1>
+<p>Standard WMS requests can be quite long and cumbersome. The following is an example of a request for KML output from GeoServer:</p>
+<div class="highlight-python"><pre>http://localhost:8080/geoserver/ows?service=WMS&amp;request=GetMap&amp;version=1.1.1&amp;format=application/vnd.google-earth.kml+XML&amp;width=1024&amp;height=1024&amp;srs=EPSG:4326&amp;layers=topp:states&amp;styles=population&amp;bbox=-180,-90,180,90</pre>
+</div>
+<p>GeoServer includes an alternate way of requesting KML, and that is to use the <strong>KML reflector</strong>. The KML reflector is a simpler URL-encoded request that uses sensible defaults for many of the parameters in a standard WMS request. Using the KML reflector one can shorten the above request to:</p>
+<div class="highlight-python"><pre>http://localhost:8080/geoserver/wms/kml?layers=topp:states</pre>
+</div>
+<div class="section" id="using-the-kml-reflector">
+<h2>Using the KML reflector<a class="headerlink" href="#using-the-kml-reflector" title="Permalink to this headline">¶</a></h2>
+<p>The only mandatory parameter is the <tt class="docutils literal"><span class="pre">layers</span></tt> parameter. The syntax is as follows:</p>
+<div class="highlight-python"><pre>http://GEOSERVER_URL/wms/kml?layers=&lt;layer&gt;</pre>
+</div>
+<p>where <tt class="docutils literal"><span class="pre">GEOSERVER_URL</span></tt> is the URL of your GeoServer instance, and <tt class="docutils literal"><span class="pre">&lt;layer&gt;</span></tt> is the name of the featuretype to be served.</p>
+<p>The following table lists the default assumptions:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Key</strong></td>
+<td><strong>Value</strong></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">request</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">GetMap</span></tt></td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">service</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">wms</span></tt></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">version</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">1.1.1</span></tt></td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">srs</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">EPSG:4326</span></tt></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">format</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">applcation/vnd.google-earth.kmz+xml</span></tt></td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">width</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">256</span></tt></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">height</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">256</span></tt></td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">bbox</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">&lt;layer</span> <span class="pre">bounds&gt;</span></tt></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">kmattr</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">true</span></tt></td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">kmplacemark</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">false</span></tt></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">kmscore</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">50</span></tt></td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">styles</span></tt></td>
+<td>[default style for the featuretype]</td>
+</tr>
+</tbody>
+</table>
+<p>Any of these defaults can be changed when specifying the request. For instance, to specify a particular style, one can append <tt class="docutils literal"><span class="pre">styles=population</span></tt> to the request:</p>
+<div class="highlight-python"><pre>http://localhost:8080/geoserver/wms/kml?layers=topp:states&amp;styles=population</pre>
+</div>
+<p>To specify a different bounding box, append the parameter to the request:</p>
+<div class="highlight-python"><pre>http://localhost:8080/geoserver/wms/kml?layers=topp:states&amp;bbox=-124.73,24.96,-66.97,49.37</pre>
+</div>
+</div>
+<div class="section" id="reflector-modes">
+<h2>Reflector modes<a class="headerlink" href="#reflector-modes" title="Permalink to this headline">¶</a></h2>
+<p>The KML reflector can operate in one of three modes: <strong>refresh</strong>, <strong>superoverlay</strong>, and <strong>download</strong>.</p>
+<p>The mode is set by appending the following parameter to the URL:</p>
+<div class="highlight-python"><pre>mode=&lt;mode&gt;</pre>
+</div>
+<p>where <tt class="docutils literal"><span class="pre">&lt;mode&gt;</span></tt> is one of the three reflector modes.  The details for each mode are as follows:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Mode</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">refresh</span></tt></td>
+<td>(<em>default for all versions except 1.7.1 through 1.7.5</em>) Returns dynamic KML that can be refreshed/updated by the Google Earth client. Data is refreshed and new data/imagery is downloaded when zooming/panning stops. This mode can return either vector or raster (placemark or overlay) The decision to return either vector or raster data is determined by the value of <tt class="docutils literal"><span class="pre">kmscore</span></tt>.  Please see the section on <a class="reference internal" href="kmlscoring.html#ge-feature-kml-scoring"><em>KML Scoring</em></a> for more information.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">superoverlay</span></tt></td>
+<td>(<em>default for versions 1.7.1 through 1.7.5</em>) Returns KML as a super-overlay. A super-overlay is a form of KML in which data is broken up into regions.  Please see the section on <a class="reference internal" href="kmlsuperoverlays.html#ge-feature-kml-super-overlays"><em>KML Super-Overlays</em></a> for more information.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">download</span></tt></td>
+<td>Returns KML which contains the entire data set. In the case of a vector layer, this will include a series of KML placemarks. With raster layers, this will include a single KML ground overlay. This is the only mode that doesn&#8217;t dynamically request new data from the server, and thus is self-contained KML.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="more-about-the-superoverlay-mode">
+<h2>More about the &#8220;superoverlay&#8221; mode<a class="headerlink" href="#more-about-the-superoverlay-mode" title="Permalink to this headline">¶</a></h2>
+<p>When requesting KML using the <tt class="docutils literal"><span class="pre">superoverlay</span></tt> mode, there are four additional submodes available regarding how and when data is requested. These options are set by appending the following parameter to the KML reflector request:</p>
+<div class="highlight-python"><pre>superoverlay_mode=&lt;submode&gt;</pre>
+</div>
+<p>where <tt class="docutils literal"><span class="pre">&lt;submode&gt;</span></tt> is one of the following options:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Submode</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">auto</span></tt></td>
+<td>(<em>default</em>) Always returns vector features if the original data is in vector form, and returns raster imagery if the original data is in raster form. This can sometimes be less than optimal if the geometry of the features are very complicated, which can slow down Google Earth.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">raster</span></tt></td>
+<td>Always returns raster imagery, regardless of the original data. This is almost always faster, but all vector information is lost in this view.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">overview</span></tt></td>
+<td>Displays either vector or raster data depending on the view. At higher zoom levels, raster imagery will be displayed, and at lower zoom levels, vector features will be displayed. The determination for when to switch between vector and raster is made by the regionation parameters set on the server.  See the section on <a class="reference internal" href="kmlregionation.html#ge-feature-kml-regionation"><em>KML Regionation</em></a> for more information.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">hybrid</span></tt></td>
+<td>Displays both raster and vector data at all times.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="index.html" title="previous chapter">Features</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="togglingplacemarks.html" title="next chapter">Toggling Placemarks</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">KML Reflector</a><ul>
+<li><a class="reference internal" href="#using-the-kml-reflector">Using the KML reflector</a></li>
+<li><a class="reference internal" href="#reflector-modes">Reflector modes</a></li>
+<li><a class="reference internal" href="#more-about-the-superoverlay-mode">More about the &#8220;superoverlay&#8221; mode</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="index.html" title="previous chapter">Features</a></li>
+            <li>Next: <a href="togglingplacemarks.html" title="next chapter">Toggling Placemarks</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/googleearth/features/kmlreflector.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

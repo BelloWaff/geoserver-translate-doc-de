@@ -1,0 +1,193 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Stores &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../../index.html" />
+      <link rel="up" title="Data" href="index.html" />
+      <link rel="next" title="Layers" href="layers.html" />
+      <link rel="prev" title="Workspaces" href="workspaces.html" />
+</head>
+<body class="webadmin/data/stores">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Web Administration Interface</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Data</a> &raquo;</li>
+  <li>Stores</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="layers.html" title="Layers"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="workspaces.html" title="Workspaces"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="stores">
+<span id="webadmin-stores"></span><h1>Stores<a class="headerlink" href="#stores" title="Permalink to this headline">¶</a></h1>
+<p>A store connects to a data source that contains raster or vector data. A data source can be a file or group of files, a table in a database, a single raster file, or a directory, for example a Vector Product Format library. Using the store construct means that connection parameters are defined once, rather than for each piece of data in a source. As such, it is necessary to register a store before loading any data.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_stores.png" src="../../_images/data_stores.png" />
+<p class="caption"><em>Stores View</em></p>
+</div>
+<p>While there are many potential formats for data source, there are only four types of stores. For raster data, a store can be a file. For vector data, a store can be a file, database, or server.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="15%" />
+<col width="85%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Type Icon</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td><img alt="../../_images/data_stores_type1.png" class="first last" src="../../_images/data_stores_type1.png" />
+</td>
+<td>raster data in a file</td>
+</tr>
+<tr class="row-odd"><td><img alt="../../_images/data_stores_type3.png" class="first last" src="../../_images/data_stores_type3.png" />
+</td>
+<td>vector data in a file</td>
+</tr>
+<tr class="row-even"><td><img alt="../../_images/data_stores_type2.png" class="first last" src="../../_images/data_stores_type2.png" />
+</td>
+<td>vector data in a database</td>
+</tr>
+<tr class="row-odd"><td><img alt="../../_images/data_stores_type5.png" class="first last" src="../../_images/data_stores_type5.png" />
+</td>
+<td>vector server (web feature server)</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="editing-a-store">
+<h2>Editing a Store<a class="headerlink" href="#editing-a-store" title="Permalink to this headline">¶</a></h2>
+<p>To view and edit a store, click a store name. The exact contents of this page depend on the specific format chosen. (See the sections <a class="reference internal" href="../../data/vector/index.html#data-vector"><em>Working with Vector Data</em></a>, <a class="reference internal" href="../../data/raster/index.html#data-raster"><em>Working with Raster Data</em></a>, and <a class="reference internal" href="../../data/database/index.html#data-database"><em>Working with Databases</em></a> for information about specific data formats.) In the example lists the contents of the <tt class="docutils literal"><span class="pre">nurc:ArcGridSample</span></tt> store.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_stores_edit.png" src="../../_images/data_stores_edit.png" />
+<p class="caption"><em>Editing a raster data store</em></p>
+</div>
+<p>While connection parameters will vary depending on data format, some of the basic information is common across formats. The Workspace menu lists all registered workspaces. The store is assigned to the selected workspace (<tt class="docutils literal"><span class="pre">nurc</span></tt>). <em class="guilabel">Data Source Name</em> is the store name as listed on the view page. The <em class="guilabel">Description</em> is optional and only displays in the administration interface. <em class="guilabel">Enabled</em> enables or disables access to the store, along with all data defined in it.</p>
+</div>
+<div class="section" id="adding-a-store">
+<h2>Adding a Store<a class="headerlink" href="#adding-a-store" title="Permalink to this headline">¶</a></h2>
+<p>The buttons for adding and removing a workspace can be found at the top of the Stores page.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_stores_add_remove1.png" src="../../_images/data_stores_add_remove1.png" />
+<p class="caption"><em>Buttons to add and remove stores</em></p>
+</div>
+<p>To add a workspace, select the <em class="guilabel">Add new Store</em> button. You will be prompted to choose a data source. GeoServer natively supports many formats (with more available via extensions). Click the appropriate data source to continue.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_stores_chooser.png" src="../../_images/data_stores_chooser.png" />
+<p class="caption"><em>Choosing the data source for a new store</em></p>
+</div>
+<p>The next page will configure the store. (The example below shows the ArcGrid raster configuration page.)  However, since connection parameters differ across data sources, the exact contents of this page depend on the store&#8217;s specific format. See the sections <a class="reference internal" href="../../data/vector/index.html#data-vector"><em>Working with Vector Data</em></a>, <a class="reference internal" href="../../data/raster/index.html#data-raster"><em>Working with Raster Data</em></a>, and <a class="reference internal" href="../../data/database/index.html#data-database"><em>Working with Databases</em></a> for information on specific data formats.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_stores_add.png" src="../../_images/data_stores_add.png" />
+<p class="caption"><em>Configuration page for an ArcGrid raster data source</em></p>
+</div>
+</div>
+<div class="section" id="removing-a-store">
+<h2>Removing a Store<a class="headerlink" href="#removing-a-store" title="Permalink to this headline">¶</a></h2>
+<p>To remove a store, click the store&#8217;s corresponding check box. Multiple stores can be selected for batch removal.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_stores_delete1.png" src="../../_images/data_stores_delete1.png" />
+<p class="caption"><em>Stores selected for deletion</em></p>
+</div>
+<p>Click the <em class="guilabel">Remove selected Stores</em> button. You will be asked to confirm the deletion of the the data within each store. Selecting <em class="guilabel">OK</em> removes the store(s), and will redirect to the main Stores page.</p>
+<div class="figure align-center">
+<img alt="../../_images/data_stores_delete_confirm.png" src="../../_images/data_stores_delete_confirm.png" />
+<p class="caption"><em>Confirm deletion of stores</em></p>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="workspaces.html" title="previous chapter">Workspaces</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="layers.html" title="next chapter">Layers</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">Stores</a><ul>
+<li><a class="reference internal" href="#editing-a-store">Editing a Store</a></li>
+<li><a class="reference internal" href="#adding-a-store">Adding a Store</a></li>
+<li><a class="reference internal" href="#removing-a-store">Removing a Store</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="workspaces.html" title="previous chapter">Workspaces</a></li>
+            <li>Next: <a href="layers.html" title="next chapter">Layers</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/webadmin/data/stores.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

@@ -1,0 +1,196 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>WCS configuration &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../../index.html" />
+      <link rel="up" title="Web Coverage Service" href="index.html" />
+      <link rel="next" title="Virtual OWS Services" href="../virtual-services.html" />
+      <link rel="prev" title="WCS Vendor Parameters" href="vendor.html" />
+</head>
+<body class="services/wcs/configuration">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Services</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Web Coverage Service</a> &raquo;</li>
+  <li>WCS configuration</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="../virtual-services.html" title="Virtual OWS Services"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="vendor.html" title="WCS Vendor Parameters"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="wcs-configuration">
+<span id="id1"></span><h1>WCS configuration<a class="headerlink" href="#wcs-configuration" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="coverage-processing">
+<h2>Coverage processing<a class="headerlink" href="#coverage-processing" title="Permalink to this headline">¶</a></h2>
+<p>The WCS processing chain can be tuned in respect of how raster overviews and read subsampling are used.</p>
+<p>The overview policy has four possible values:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="10%" />
+<col width="80%" />
+<col width="10%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Option</strong></td>
+<td><strong>Description</strong></td>
+<td><strong>Version</strong></td>
+</tr>
+<tr class="row-even"><td><strong>Lower resolution overview</strong></td>
+<td>Looks up the two overviews with a resolution closest to the one requested and chooses the one at the lower resolution.</td>
+<td>2.0.3</td>
+</tr>
+<tr class="row-odd"><td><strong>Don&#8217;t use overviews</strong></td>
+<td>Overviews will be ignored, the data at its native resolution will be used instead. This is the default value.</td>
+<td>2.0.3</td>
+</tr>
+<tr class="row-even"><td><strong>Higher resolution overview</strong></td>
+<td>Looks up the two overviews with a resolution closest to the one requested and chooses the one at the higher resolution.</td>
+<td>2.0.3</td>
+</tr>
+<tr class="row-odd"><td><strong>Closest overview</strong></td>
+<td>Looks up the overview closest to the one requested</td>
+<td>2.0.3</td>
+</tr>
+</tbody>
+</table>
+<p>While reading coverage data at a resolution lower than the one available on persistent storage its common to use subsampling, that is, read one every N pixels as a way to reduce the resolution of the data read in memory. <strong>Use subsampling</strong> controls wheter subsampling is enabled or not.</p>
+</div>
+<div class="section" id="request-limits">
+<h2>Request limits<a class="headerlink" href="#request-limits" title="Permalink to this headline">¶</a></h2>
+<p>The request limit options allow the administrator to limit the resources consumed by each WCS <tt class="docutils literal"><span class="pre">GetCoverage</span></tt> request.</p>
+<p>The request limits limit the size of the image read from the source and the size of the image returned to the client. Both of these limits are to be considered a worst case scenario and are setup to make sure the server never gets asked to deal with too much data.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="10%" />
+<col width="80%" />
+<col width="10%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Option</strong></td>
+<td><strong>Description</strong></td>
+<td><strong>Version</strong></td>
+</tr>
+<tr class="row-even"><td><strong>Maximum input memory</strong></td>
+<td>Sets the maximum amount of memory, in kilobytes, a GetCovearge request might use, at most, to read a coverage from the data source. The memory is computed as <tt class="docutils literal"><span class="pre">rw</span> <span class="pre">*</span> <span class="pre">rh</span> <span class="pre">*</span> <span class="pre">pixelsize</span></tt>, where <tt class="docutils literal"><span class="pre">rw</span></tt> and <tt class="docutils literal"><span class="pre">rh</span></tt> are the size of the raster to be read and <tt class="docutils literal"><span class="pre">pixelsize</span></tt> is the dimension or a pixel (e.g., a RGBA image will have 32bit pixels, a batimetry might have 16bit signed int ones)</td>
+<td>2.0.3</td>
+</tr>
+<tr class="row-odd"><td><strong>Maximum output memory</strong></td>
+<td>Sets the maximum amount of memory, in kilobytes, a GetCoverage request might use, at most, to host the resulting raster. The memory is computed as <tt class="docutils literal"><span class="pre">ow</span> <span class="pre">*</span> <span class="pre">oh</span> <span class="pre">*</span> <span class="pre">pixelsize</span></tt>, where <tt class="docutils literal"><span class="pre">ow</span></tt> and <tt class="docutils literal"><span class="pre">oh</span></tt> are the size of the raster to be generated in output.</td>
+<td>2.0.3</td>
+</tr>
+</tbody>
+</table>
+<p>To understand the limits let&#8217;s consider a very simplified examle in which no tiles and overviews enter the game:</p>
+<ul class="simple">
+<li>The request hits a certain area of the original raster. Reading it at full resolution requires grabbing a raster of size <tt class="docutils literal"><span class="pre">rw</span> <span class="pre">*</span> <span class="pre">rh</span></tt>, which has a certain number of bands, each with a certain size. The amount of memory used for the read will be <tt class="docutils literal"><span class="pre">rw</span> <span class="pre">*</span> <span class="pre">rh</span> <span class="pre">*</span> <span class="pre">pixelsize</span></tt>. This is the value measured by the input memory limit</li>
+<li>The WCS performs the necessary processing: band selection, resolution change (downsampling or upsampling), reprojection</li>
+<li>The resuling raster will have size <tt class="docutils literal"><span class="pre">ow</span> <span class="pre">*</span> <span class="pre">oh</span></tt> and will have a certain number of bands, possibly less than the input data, each with a certain size. The amount of memory used for the final raster will be <tt class="docutils literal"><span class="pre">ow</span> <span class="pre">*</span> <span class="pre">oh</span> <span class="pre">*</span> <span class="pre">pixelsize</span></tt>. This is the value measured by the output memory limit.</li>
+<li>Finally the resulting raster will be encoded in the output format. Depending on the output format structure the size of the result might be higher than the in memory size (ArcGrid case) or smaller (for example in the case of GeoTIFF output, which is normally LZW compressed)</li>
+</ul>
+<p>In fact reality is a bit more complicated:</p>
+<ul class="simple">
+<li>The input source might be tiled, which means there is no need to fully read in memory the region, but it is sufficient to do so one tile at a time. The input limits won&#8217;t consider inner tiling when computing the limits, but if all the input coverages are tiled the input limits should be designed considering the amount of data to be read from the persistent storage as opposed to the amount of data to be stored in memory</li>
+<li>The reader might be using overviews or performing subsampling during the read to avoid actually reading all the data at the native resolution should the output be subsampled</li>
+<li>The output format might be tile aware as well (GeoTIFF is), meaning it might be able to write out one tile at a time. In this case not even the output raster will be stored in memory fully at any given time.</li>
+</ul>
+<p>Only a few input formats are so badly structure that they force the reader to read the whole input data in one shot, and should be avoided. Examples are:
+* JPEG or PNG images with world file
+* Single tiled and JPEG compressed GeoTIFF files</p>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="vendor.html" title="previous chapter">WCS Vendor Parameters</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="../virtual-services.html" title="next chapter">Virtual OWS Services</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">WCS configuration</a><ul>
+<li><a class="reference internal" href="#coverage-processing">Coverage processing</a></li>
+<li><a class="reference internal" href="#request-limits">Request limits</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="vendor.html" title="previous chapter">WCS Vendor Parameters</a></li>
+            <li>Next: <a href="../virtual-services.html" title="next chapter">Virtual OWS Services</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/services/wcs/configuration.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

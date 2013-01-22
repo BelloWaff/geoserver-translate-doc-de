@@ -1,0 +1,145 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Interface basics &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../_static/jquery.js"></script>
+  <script type="text/javascript" src="../_static/doctools.js"></script>
+  <script type="text/javascript" src="../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../index.html" />
+      <link rel="up" title="Web Administration Interface" href="index.html" />
+      <link rel="next" title="Server" href="server/index.html" />
+      <link rel="prev" title="Web Administration Interface" href="index.html" />
+</head>
+<body class="webadmin/basics">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Web Administration Interface</a> &raquo;</li>
+  <li>Interface basics</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="server/index.html" title="Server"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="index.html" title="Web Administration Interface"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="interface-basics">
+<span id="webadmin-basics"></span><h1>Interface basics<a class="headerlink" href="#interface-basics" title="Permalink to this headline">¶</a></h1>
+<p>This section will introduce the basic concepts of the web administration interface (generally abbreviated to &#8220;web admin&#8221; .)</p>
+<div class="section" id="welcome-page">
+<h2>Welcome Page<a class="headerlink" href="#welcome-page" title="Permalink to this headline">¶</a></h2>
+<p>For most installations, GeoServer will start a web server on localhost at port 8080, accessible at the following URL:</p>
+<div class="highlight-python"><pre>http://localhost:8080/geoserver/web</pre>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This URL is dependent on your installation of GeoServer. When using the WAR installation, for example, the URL will be dependent on your container setup.</p>
+</div>
+<p>When correctly configured, a welcome page will open in your browser.</p>
+<div class="figure align-center">
+<img alt="../_images/web-admin1.png" src="../_images/web-admin1.png" />
+<p class="caption"><em>Welcome Page</em></p>
+</div>
+<p>The welcome page contains links to various areas of the GeoServer configuration. The <em class="guilabel">About GeoServer</em> section in the <em class="guilabel">Server</em> menu provides external links to the GeoServer documentation, homepage, and bug tracker. The page also provides login access to the geoserver console. This security measure prevents unauthorized users from making changes to your GeoServer configuration. The default username and password is <tt class="docutils literal"><span class="pre">admin</span></tt> and <tt class="docutils literal"><span class="pre">geoserver</span></tt>. These can be changed only by editing the <tt class="file docutils literal"><span class="pre">security/users.properties</span></tt> file in the <a class="reference internal" href="../datadirectory/index.html#data-directory"><em>GeoServer Data Directory</em></a>.</p>
+<div class="figure align-center">
+<img alt="../_images/8080login.png" src="../_images/8080login.png" />
+<p class="caption"><em>Login</em></p>
+</div>
+<p>Regardless of authorization access, the web admin menu links to the <em class="guilabel">Demo</em> and <em class="guilabel">Layer Preview</em> portion of the console. The <a class="reference internal" href="demos/index.html#webadmin-demos"><em>Demos</em></a> page contains links to various information pages, while the <a class="reference internal" href="layerpreview/index.html#layerpreview"><em>Layer Preview</em></a> page provides spatial data in various output formats.</p>
+<p>When logged on, additional options will be presented.</p>
+<div class="figure align-center">
+<img alt="../_images/welcome_logged_in.png" src="../_images/welcome_logged_in.png" />
+<p class="caption"><em>Additional options when logged in</em></p>
+</div>
+<p>Geoserver Web Coverage Service (WCS), Web Feature Service (WFS), and Web Map Service (WMS) configuration specifications can be accessed from this welcome page as well. For further information, please see the section on <a class="reference internal" href="../services/index.html#services"><em>Services</em></a>.</p>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="index.html" title="previous chapter">Web Administration Interface</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="server/index.html" title="next chapter">Server</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">Interface basics</a><ul>
+<li><a class="reference internal" href="#welcome-page">Welcome Page</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="index.html" title="previous chapter">Web Administration Interface</a></li>
+            <li>Next: <a href="server/index.html" title="next chapter">Server</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../_sources/webadmin/basics.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

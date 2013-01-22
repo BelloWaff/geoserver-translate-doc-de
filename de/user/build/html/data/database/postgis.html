@@ -1,0 +1,300 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>PostGIS &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../../index.html" />
+      <link rel="up" title="Working with Databases" href="index.html" />
+      <link rel="next" title="H2" href="h2.html" />
+      <link rel="prev" title="Working with Databases" href="index.html" />
+</head>
+<body class="data/database/postgis">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Working with Databases</a> &raquo;</li>
+  <li>PostGIS</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="h2.html" title="H2"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="index.html" title="Working with Databases"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="postgis">
+<span id="data-postgis"></span><h1>PostGIS<a class="headerlink" href="#postgis" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="http://postgis.org">PostGIS</a> is an open source spatial database based on <a class="reference external" href="http://postgresql.com/">PostgreSQL</a>, and is currently one of the most popular open source spatial databases today.</p>
+<div class="section" id="adding-a-postgis-database">
+<h2>Adding a PostGIS database<a class="headerlink" href="#adding-a-postgis-database" title="Permalink to this headline">¶</a></h2>
+<p>As with all formats, adding a shapefile to GeoServer involves adding a new store to the existing <a class="reference internal" href="../../webadmin/data/stores.html#webadmin-stores"><em>Stores</em></a>  through the <a class="reference internal" href="../../webadmin/index.html#web-admin"><em>Web Administration Interface</em></a>.</p>
+<div class="section" id="using-default-connection">
+<h3>Using default connection<a class="headerlink" href="#using-default-connection" title="Permalink to this headline">¶</a></h3>
+<p>To begin, navigate to <em class="menuselection">Stores ‣ Add a new store ‣ PostGIS NG</em>.</p>
+<div class="figure align-center">
+<img alt="../../_images/postgis.png" src="../../_images/postgis.png" />
+<p class="caption"><em>Adding a PostGIS database</em></p>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Option</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">Workspace</em></td>
+<td>Name of the workspace to contain the database.  This will also be the prefix of any layer names created from tables in the database.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">Data Source Name</em></td>
+<td>Name of the database.  This can be different from the name as known to PostgreSQL/PostGIS.</td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">Description</em></td>
+<td>Description of the database/store.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">Enabled</em></td>
+<td>Enables the store.  If disabled, no data in the database will be served.</td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">dbtype</em></td>
+<td>Type of database.  Leave this value as the default.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">host</em></td>
+<td>Host name where the database exists.</td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">port</em></td>
+<td>Port number to connect to the above host.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">database</em></td>
+<td>Name of the database as known on the host.</td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">schema</em></td>
+<td>Schema in the above database.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">user</em></td>
+<td>User name to connect to the database.</td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">passwd</em></td>
+<td>Password associated with the above user.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">namespace</em></td>
+<td>Namespace to be associated with the database.  This field is altered by changing the workspace name.</td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">max connections</em></td>
+<td>Maximum amount of open connections to the database.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">min connections</em></td>
+<td>Minimum number of pooled connections.</td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">fetch size</em></td>
+<td>Number of records read with each interaction with the database.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">Connection timeout</em></td>
+<td>Time (in seconds) the connection pool will wait before timing out.</td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">validate connections</em></td>
+<td>Checks the connection is alive before using it.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">Loose bbox</em></td>
+<td>Performs only the primary filter on the bounding box.  See the section on <a class="reference internal" href="#postgis-loose-bbox"><em>Using loose bounding box</em></a> for details.</td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">preparedStatements</em></td>
+<td>Enables prepared statements.</td>
+</tr>
+</tbody>
+</table>
+<p>When finished, click <em class="guilabel">Save</em>.</p>
+</div>
+<div class="section" id="using-jndi">
+<h3>Using JNDI<a class="headerlink" href="#using-jndi" title="Permalink to this headline">¶</a></h3>
+<p>GeoServer can also connect to a PostGIS database using <a class="reference external" href="http://java.sun.com/products/jndi/">JNDI</a> (Java Naming and Directory Interface).</p>
+<p>To begin, navigate to <em class="menuselection">Stores ‣ Add a new store ‣ PostGIS NG (JNDI)</em>.</p>
+<div class="figure align-center">
+<img alt="../../_images/postgisjndi.png" src="../../_images/postgisjndi.png" />
+<p class="caption"><em>Adding a PostGIS database (using JNDI)</em></p>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Option</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">Workspace</em></td>
+<td>Name of the workspace to contain the store.  This will also be the prefix of all of the layer names created from the store.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">Data Source Name</em></td>
+<td>Name of the database.  This can be different from the name as known to PostgreSQL/PostGIS.</td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">Description</em></td>
+<td>Description of the database/store.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">Enabled</em></td>
+<td>Enables the store.  If disabled, no data in the database will be served.</td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">dbtype</em></td>
+<td>Type of database.  Leave this value as the default.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">jndiReferenceName</em></td>
+<td>JNDI path to the database.</td>
+</tr>
+<tr class="row-even"><td><em class="guilabel">schema</em></td>
+<td>Schema for the above database.</td>
+</tr>
+<tr class="row-odd"><td><em class="guilabel">namespace</em></td>
+<td>Namespace to be associated with the database.  This field is altered by changing the workspace name.</td>
+</tr>
+</tbody>
+</table>
+<p>When finished, click <em class="guilabel">Save</em>.</p>
+</div>
+</div>
+<div class="section" id="configuring-postgis-layers">
+<h2>Configuring PostGIS layers<a class="headerlink" href="#configuring-postgis-layers" title="Permalink to this headline">¶</a></h2>
+<p>When properly loaded, all tables in the database will be visible to GeoServer, but they will need to be individually configured before being served by GeoServer.  See the section on <a class="reference internal" href="../../webadmin/data/layers.html#webadmin-layers"><em>Layers</em></a> for how to add and edit new layers.</p>
+</div>
+<div class="section" id="using-loose-bounding-box">
+<span id="postgis-loose-bbox"></span><h2>Using loose bounding box<a class="headerlink" href="#using-loose-bounding-box" title="Permalink to this headline">¶</a></h2>
+<p>When the option <em class="guilabel">loose bbox</em> is enabled, only the bounding box of a geometry is used.  This can result in a significant performance gain, but at the expense of total accuracy; some geometries may be considered inside of a bounding box when they are technically not.</p>
+<p>If primarily connecting to this data via WMS, this flag can be set safely since a loss of some accuracy is usually acceptable. However, if using WFS and especially if making use of BBOX filtering capabilities, this flag should not be set.</p>
+</div>
+<div class="section" id="publishing-a-postgis-view">
+<h2>Publishing a PostGIS view<a class="headerlink" href="#publishing-a-postgis-view" title="Permalink to this headline">¶</a></h2>
+<p>Publishing a view follows the same process as publishing a table. The only additional step is to manually ensure that the view has an entry in the <tt class="docutils literal"><span class="pre">geometry_columns</span></tt> table.</p>
+<p>For example consider a table with the schema:</p>
+<div class="highlight-python"><pre>my_table( id int PRIMARY KEY, name VARCHAR, the_geom GEOMETRY )</pre>
+</div>
+<p>Consider also the following view:</p>
+<div class="highlight-python"><pre>CREATE VIEW my_view as SELECT id, the_geom FROM my_table;</pre>
+</div>
+<p>Before this view can be served by GeoServer, the following step is necessary to manually create the <tt class="docutils literal"><span class="pre">geometry_columns</span></tt> entry:</p>
+<div class="highlight-python"><pre>INSERT INTO geometry_columns VALUES ('','public','my_view','my_geom', 2, 4326, 'POINT' );</pre>
+</div>
+</div>
+<div class="section" id="performance-considerations">
+<h2>Performance considerations<a class="headerlink" href="#performance-considerations" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="geos">
+<h3>GEOS<a class="headerlink" href="#geos" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://trac.osgeo.org/geos/">GEOS</a> (Geometry Engine, Open Source) is an optional component of a PostGIS installation.  It is recommended that GEOS be installed with any PostGIS instance used by GeoServer, as this allows GeoServer to make use of its functionality when doing spatial operations.  When GEOS is not available, these operations are performed internally which can result in degraded performance.</p>
+</div>
+<div class="section" id="spatial-indexing">
+<h3>Spatial indexing<a class="headerlink" href="#spatial-indexing" title="Permalink to this headline">¶</a></h3>
+<p>It is strongly recommended to create a spatial index on tables with a spatial component (i.e. containing a geometry column).  Any table of which does not have a spatial index will likely respond slowly to queries.</p>
+</div>
+</div>
+<div class="section" id="common-problems">
+<h2>Common problems<a class="headerlink" href="#common-problems" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="primary-keys">
+<h3>Primary keys<a class="headerlink" href="#primary-keys" title="Permalink to this headline">¶</a></h3>
+<p>In order to enable transactional extensions on a table (for transactional WFS), the table must have a primary key.  A table without a primary key is considered read only to GeoServer.</p>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="index.html" title="previous chapter">Working with Databases</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="h2.html" title="next chapter">H2</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">PostGIS</a><ul>
+<li><a class="reference internal" href="#adding-a-postgis-database">Adding a PostGIS database</a><ul>
+<li><a class="reference internal" href="#using-default-connection">Using default connection</a></li>
+<li><a class="reference internal" href="#using-jndi">Using JNDI</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#configuring-postgis-layers">Configuring PostGIS layers</a></li>
+<li><a class="reference internal" href="#using-loose-bounding-box">Using loose bounding box</a></li>
+<li><a class="reference internal" href="#publishing-a-postgis-view">Publishing a PostGIS view</a></li>
+<li><a class="reference internal" href="#performance-considerations">Performance considerations</a><ul>
+<li><a class="reference internal" href="#geos">GEOS</a></li>
+<li><a class="reference internal" href="#spatial-indexing">Spatial indexing</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#common-problems">Common problems</a><ul>
+<li><a class="reference internal" href="#primary-keys">Primary keys</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="index.html" title="previous chapter">Working with Databases</a></li>
+            <li>Next: <a href="h2.html" title="next chapter">H2</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/data/database/postgis.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

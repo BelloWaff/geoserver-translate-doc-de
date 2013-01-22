@@ -1,0 +1,298 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Disk Quota &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../../index.html" />
+      <link rel="up" title="GeoWebCache REST API" href="index.html" />
+      <link rel="next" title="Troubleshooting" href="../troubleshooting.html" />
+      <link rel="prev" title="Seeding and Truncating" href="seed.html" />
+</head>
+<body class="geowebcache/rest/diskquota">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Caching with GeoWebCache</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">GeoWebCache REST API</a> &raquo;</li>
+  <li>Disk Quota</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="../troubleshooting.html" title="Troubleshooting"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="seed.html" title="Seeding and Truncating"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="disk-quota">
+<span id="gwc-rest-diskquota"></span><h1>Disk Quota<a class="headerlink" href="#disk-quota" title="Permalink to this headline">¶</a></h1>
+<p>The GeoWebCache REST API provides a RESTful interface through which users can configure the disk usage limits and expiration policies for a GeoWebCache instance.</p>
+<div class="section" id="operations">
+<h2>Operations<a class="headerlink" href="#operations" title="Permalink to this headline">¶</a></h2>
+<p>URL: <tt class="docutils literal"><span class="pre">/gwc/rest/diskquota.&lt;format&gt;</span></tt></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Action</th>
+<th class="head">Return Code</th>
+<th class="head">Formats</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>GET</td>
+<td>Return the global disk quota configuration</td>
+<td>200</td>
+<td>XML, JSON</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>Modify the global disk quota configuration</td>
+<td>200</td>
+<td>XML, JSON</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>&nbsp;</td>
+<td>405</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Representations</strong>:</p>
+<ul class="simple">
+<li><a class="reference download internal" href="../../_downloads/diskquota_xml.txt"><tt class="xref download docutils literal"><span class="pre">XML</span></tt></a></li>
+<li><a class="reference download internal" href="../../_downloads/diskquota_json.txt"><tt class="xref download docutils literal"><span class="pre">JSON</span></tt></a></li>
+</ul>
+<p>The examples below use the <a class="reference external" href="http://curl.haxx.se/">cURL</a> tool, though the examples apply to any HTTP-capable tool or library.</p>
+<div class="section" id="retrieving-the-current-configuration">
+<h3>Retrieving the current configuration<a class="headerlink" href="#retrieving-the-current-configuration" title="Permalink to this headline">¶</a></h3>
+<p>The following returns the current disk quota configuration in <strong>XML</strong> format:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -u admin:geoserver -v -XGET http://localhost:8080/geoserver/gwc/rest/diskquota.xml</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>&lt; HTTP/1.1 200 OK
+&lt; Date: Mon, 21 Mar 2011 13:50:49 GMT
+&lt; Server: Noelios-Restlet-Engine/1.0..8
+&lt; Content-Type: text/xml; charset=ISO-8859-1
+&lt; Content-Length: 422
+&lt;
+&lt;gwcQuotaConfiguration&gt;
+  &lt;enabled&gt;true&lt;/enabled&gt;
+  &lt;diskBlockSize&gt;2048&lt;/diskBlockSize&gt;
+  &lt;cacheCleanUpFrequency&gt;5&lt;/cacheCleanUpFrequency&gt;
+  &lt;cacheCleanUpUnits&gt;SECONDS&lt;/cacheCleanUpUnits&gt;
+  &lt;maxConcurrentCleanUps&gt;5&lt;/maxConcurrentCleanUps&gt;
+  &lt;globalExpirationPolicyName&gt;LRU&lt;/globalExpirationPolicyName&gt;
+  &lt;globalQuota&gt;
+    &lt;value&gt;100&lt;/value&gt;
+    &lt;units&gt;MiB&lt;/units&gt;
+  &lt;/globalQuota&gt;
+  &lt;layerQuotas/&gt;
+&lt;/gwcQuotaConfiguration&gt;</pre>
+</div>
+<p>The following returns the current disk quota configuration in <strong>JSON</strong> format:</p>
+<div class="highlight-xml"><div class="highlight"><pre>curl -u admin:geoserver -v -XGET http://localhost:8080/geoserver/gwc/rest/diskquota.json
+</pre></div>
+</div>
+<div class="highlight-python"><pre>&lt; HTTP/1.1 200 OK
+&lt; Date: Mon, 21 Mar 2011 13:53:42 GMT
+&lt; Server: Noelios-Restlet-Engine/1.0..8
+&lt; Content-Type: application/json; charset=ISO-8859-1
+&lt; Content-Length: 241
+&lt;
+* Connection #0 to host localhost left intact
+* Closing connection #0
+{"gwcQuotaConfiguration":{"diskBlockSize":2048,"enabled":true,"maxConcurrentCleanUps":5,"cacheCleanUpFrequency":5,"globalExpirationPolicyName":"LRU","globalQuota":{"value":"100","units":"MiB"},"cacheCleanUpUnits":"SECONDS"}}</pre>
+</div>
+</div>
+<div class="section" id="changing-configuration">
+<h3>Changing configuration<a class="headerlink" href="#changing-configuration" title="Permalink to this headline">¶</a></h3>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>The request body for PUT should contain only the desired properties to be modified. For example, the following will only change the maxConcurrentCleanups property in XML format:</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;gwcQuotaConfiguration&gt;&lt;maxConcurrentCleanUps&gt;</span>2<span class="nt">&lt;/maxConcurrentCleanUps&gt;&lt;/gwcQuotaConfiguration&gt;</span>
+</pre></div>
+</div>
+<p>The following will only change the diskBlockSize, enabled, and globalQuota properties in JSON format:</p>
+<div class="last highlight-json"><div class="highlight"><pre><span class="p">{</span><span class="nt">&quot;gwcQuotaConfiguration&quot;</span><span class="p">:{</span><span class="nt">&quot;diskBlockSize&quot;</span><span class="p">:</span><span class="mi">2048</span><span class="p">,</span><span class="nt">&quot;enabled&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="nt">&quot;globalQuota&quot;</span><span class="p">:{</span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="s2">&quot;100&quot;</span><span class="p">,</span><span class="nt">&quot;units&quot;</span><span class="p">:</span><span class="s2">&quot;MiB&quot;</span><span class="p">}}</span>
+</pre></div>
+</div>
+</div>
+<p>The following XML example successfully enables the quota and sets the globalQuota size:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -v -u admin:geoserver &quot;http://localhost:8090/geoserver/gwc/rest/diskquota.xml&quot; -X PUT -d &quot;&lt;gwcQuotaConfiguration&gt;&lt;enabled&gt;true&lt;/enabled&gt;&lt;globalQuota&gt;&lt;value&gt;100&lt;/value&gt;&lt;units&gt;GiB&lt;/units&gt;&lt;/globalQuota&gt;&lt;/gwcQuotaConfiguration&gt;&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>&lt; HTTP/1.1 200 OK
+&lt; Date: Fri, 18 Mar 2011 20:59:31 GMT
+&lt; Server: Noelios-Restlet-Engine/1.0..8
+&lt; Content-Type: text/xml; charset=ISO-8859-1
+&lt; Content-Length: 422
+&lt;
+&lt;gwcQuotaConfiguration&gt;
+  &lt;enabled&gt;true&lt;/enabled&gt;
+  &lt;diskBlockSize&gt;2048&lt;/diskBlockSize&gt;
+  &lt;cacheCleanUpFrequency&gt;5&lt;/cacheCleanUpFrequency&gt;
+  &lt;cacheCleanUpUnits&gt;SECONDS&lt;/cacheCleanUpUnits&gt;
+  &lt;maxConcurrentCleanUps&gt;5&lt;/maxConcurrentCleanUps&gt;
+  &lt;globalExpirationPolicyName&gt;LFU&lt;/globalExpirationPolicyName&gt;
+  &lt;globalQuota&gt;
+    &lt;value&gt;100&lt;/value&gt;
+    &lt;units&gt;GiB&lt;/units&gt;
+  &lt;/globalQuota&gt;
+  &lt;layerQuotas/&gt;
+&lt;/gwcQuotaConfiguration&gt;</pre>
+</div>
+<p>The following JSON example changes the globalQuote and expirationPolicyName parameters:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -v -u admin:geoserver &quot;http://localhost:8090/geoserver/gwc/rest/diskquota.json&quot; -X PUT -d &quot;{&quot;gwcQuotaConfiguration&quot;:{&quot;globalQuota&quot;:{&quot;value&quot;:&quot;100&quot;,&quot;units&quot;:&quot;MiB&quot;},&quot;globalExpirationPolicyName&quot;:&quot;LRU&quot;}}&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>&lt; HTTP/1.1 200 OK
+&lt; Date: Fri, 18 Mar 2011 21:02:20 GMT
+&lt; Server: Noelios-Restlet-Engine/1.0..8
+&lt; Content-Type: application/json; charset=ISO-8859-1
+&lt; Content-Length: 241
+&lt;
+* Connection #0 to host localhost left intact
+* Closing connection #0
+{"gwcQuotaConfiguration":{"diskBlockSize":2048,"enabled":true,"maxConcurrentCleanUps":5,"cacheCleanUpFrequency":5,"globalExpirationPolicyName":"LRU","globalQuota":{"value":"100","units":"MiB"},"cacheCleanUpUnits":"SECONDS","layerQuotas":[]}}</pre>
+</div>
+<p>The following <em>invalid</em> XML example has an invalid parameter (maxConcurrentCleanUps must be &gt; 0). It returns a 400 response code and contains an error message as plain text:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -v -u admin:geoserver &quot;http://localhost:8090/geoserver/gwc/rest/diskquota.xml&quot; -X PUT -d &quot;&lt;gwcQuotaConfiguration&gt;&lt;maxConcurrentCleanUps&gt;-1&lt;/maxConcurrentCleanUps&gt;&lt;/gwcQuotaConfiguration&gt;&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>&lt; HTTP/1.1 400 Bad Request
+&lt; Date: Fri, 18 Mar 2011 20:53:26 GMT
+&lt; Server: Noelios-Restlet-Engine/1.0..8
+&lt; Content-Type: text/plain; charset=ISO-8859-1
+&lt; Content-Length: 53
+&lt;
+* Connection #0 to host localhost left intact
+* Closing connection #0
+maxConcurrentCleanUps shall be a positive integer: -1</pre>
+</div>
+<p>The following <em>invalid</em> JSON example uses an unknown unit of measure (ZZiB). It returns a 400 response code and contains an error message as plain text:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">curl -v -u admin:geoserver &quot;http://localhost:8090/geoserver/gwc/rest/diskquota.json&quot; -X PUT -d &quot;{&quot;gwcQuotaConfiguration&quot;:{&quot;globalQuota&quot;:{&quot;value&quot;:&quot;100&quot;,&quot;units&quot;:&quot;ZZiB&quot;}}}&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>&lt; HTTP/1.1 400 Bad Request
+&lt; Date: Fri, 18 Mar 2011 20:56:23 GMT
+&lt; Server: Noelios-Restlet-Engine/1.0..8
+&lt; Content-Type: text/plain; charset=ISO-8859-1
+&lt; Content-Length: 601
+&lt;
+No enum const class org.geowebcache.diskquota.storage.StorageUnit.ZZiB : No enum const class org.geowebcache.diskquota.storage.StorageUnit.ZZiB
+---- Debugging information ----
+message             : No enum const class org.geowebcache.diskquota.storage.StorageUnit.ZZiB
+cause-exception     : java.lang.IllegalArgumentException
+cause-message       : No enum const class org.geowebcache.diskquota.storage.StorageUnit.ZZiB
+class               : org.geowebcache.diskquota.DiskQuotaConfig
+required-type       : org.geowebcache.diskquota.storage.Quota
+line number         : -1
+* Connection #0 to host localhost left intact
+* Closing connection #0</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="seed.html" title="previous chapter">Seeding and Truncating</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="../troubleshooting.html" title="next chapter">Troubleshooting</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">Disk Quota</a><ul>
+<li><a class="reference internal" href="#operations">Operations</a><ul>
+<li><a class="reference internal" href="#retrieving-the-current-configuration">Retrieving the current configuration</a></li>
+<li><a class="reference internal" href="#changing-configuration">Changing configuration</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="seed.html" title="previous chapter">Seeding and Truncating</a></li>
+            <li>Next: <a href="../troubleshooting.html" title="next chapter">Troubleshooting</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/geowebcache/rest/diskquota.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

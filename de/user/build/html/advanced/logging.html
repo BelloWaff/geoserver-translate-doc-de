@@ -1,0 +1,195 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Advanced log configuration &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../_static/jquery.js"></script>
+  <script type="text/javascript" src="../_static/doctools.js"></script>
+  <script type="text/javascript" src="../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../index.html" />
+      <link rel="up" title="Advanced GeoServer Configuration" href="index.html" />
+      <link rel="next" title="WMS Decorations" href="wmsdecoration.html" />
+      <link rel="prev" title="Manually editing the EPSG database" href="crshandling/manualepsg.html" />
+</head>
+<body class="advanced/logging">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Advanced GeoServer Configuration</a> &raquo;</li>
+  <li>Advanced log configuration</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="wmsdecoration.html" title="WMS Decorations"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="crshandling/manualepsg.html" title="Manually editing the EPSG database"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="advanced-log-configuration">
+<span id="logging"></span><h1>Advanced log configuration<a class="headerlink" href="#advanced-log-configuration" title="Permalink to this headline">¶</a></h1>
+<p>GeoServer logging subsystem is based on Java logging, which is in turn by default redirected to Log4J
+and controlled by the current logging configuration set in the <a class="reference internal" href="../webadmin/server/globalsettings.html#globalsettings"><em>Global Settings</em></a>.</p>
+<p>The standard configuration can be overridden in a number of ways to create custom logging profiles
+or to force GeoServer to use another logging library altogheter.</p>
+<div class="section" id="custom-logging-profiles">
+<h2>Custom logging profiles<a class="headerlink" href="#custom-logging-profiles" title="Permalink to this headline">¶</a></h2>
+<p>Anyone can write a new logging profile by adding a Log4J configuration file to the list of files already available in the <tt class="docutils literal"><span class="pre">$GEOSERVER_DATA_DIR/logs</span></tt> folder.
+The name of the file will become the configuration name displayed in the admin console and the contents will drive the specific behavior of the logger.</p>
+<p>Here is an example, taken from the <tt class="docutils literal"><span class="pre">GEOTOOLS_DEVELOPER_LOGGING</span></tt> configuration, which enables the geotools log messages to appear in the logs:</p>
+<div class="highlight-python"><pre>log4j.rootLogger=WARN, geoserverlogfile, stdout
+
+log4j.appender.stdout=org.apache.log4j.ConsoleAppender
+log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
+log4j.appender.stdout.layout.ConversionPattern=%d{dd MMM HH:mm:ss} %p [%c] - %m%n
+
+log4j.category.log4j=FATAL
+
+log4j.appender.geoserverlogfile=org.apache.log4j.RollingFileAppender
+# Keep three backup files.
+log4j.appender.geoserverlogfile.MaxBackupIndex=3
+# Pattern to output: date priority [category] - message
+log4j.appender.geoserverlogfile.layout=org.apache.log4j.PatternLayout
+log4j.appender.geoserverlogfile.layout.ConversionPattern=%d %p [%c] - %m%n
+
+
+log4j.category.org.geotools=TRACE
+# Some more geotools loggers you may be interest in tweaking
+log4j.category.org.geotools.factory=TRACE
+log4j.category.org.geotools.renderer=DEBUG
+log4j.category.org.geotools.data=TRACE
+log4j.category.org.geotools.feature=TRACE
+log4j.category.org.geotools.filter=TRACE
+log4j.category.org.geotools.factory=TRACE
+
+log4j.category.org.geoserver=INFO
+log4j.category.org.vfny.geoserver=INFO
+
+log4j.category.org.springframework=WARN</pre>
+</div>
+<p>Any custom configuration can be setup to enable specific packages to emit logs at the desired logging level.
+There are however a few rules to follow:</p>
+<ul class="simple">
+<li>the configuration should always include a <tt class="docutils literal"><span class="pre">geoserverlogfile</span></tt> appender that GeoServer will configure to work against the location configured in the <a class="reference internal" href="../webadmin/server/globalsettings.html#globalsettings"><em>Global Settings</em></a></li>
+<li>a logger writing to the standard output should be called <tt class="docutils literal"><span class="pre">stdout</span></tt> and again GeoServer will enable/disable it according to the configuration set in the <a class="reference internal" href="../webadmin/server/globalsettings.html#globalsettings"><em>Global Settings</em></a></li>
+<li>it is advisable, but not require, to setup log rolling for the <tt class="docutils literal"><span class="pre">geoserverlogfile</span></tt> appender</li>
+</ul>
+</div>
+<div class="section" id="overriding-the-log-location-setup-in-the-geoserver-configuration">
+<h2>Overriding the log location setup in the GeoServer configuration<a class="headerlink" href="#overriding-the-log-location-setup-in-the-geoserver-configuration" title="Permalink to this headline">¶</a></h2>
+<p>When setting up a cluster of GeoServer machines it is common to share a single data directory among all the cluster nodes.
+There is however a gotcha, all nodes would end up writing the logs in the same file, which would cause various kinds of troubles depending on the operating system file locking rules (a single server might be able to write, or all togheter in an uncontrolled manner resulting in an unreadable log file).</p>
+<p>In this case it is convenient to set a separate log location for each GeoServer node by setting  the following parameter among the JVM system variables, enviroment variables, or servlet context parameters:</p>
+<div class="highlight-python"><pre>GEOSERVER_LOG_LOCATION=&lt;the location of the file&gt;</pre>
+</div>
+<p>A common choice could be to use the machine name as a distinction, setting values such as  <tt class="docutils literal"><span class="pre">logs/geoserver_node1.log</span></tt>, <tt class="docutils literal"><span class="pre">logs/geoserver_node2.log</span></tt> and so on: in this case all the log files would still be contained in the data directory and properly rotated, but each server would have its own separate log file to write on.</p>
+</div>
+<div class="section" id="forcing-geoserver-to-relinquish-log4j-control">
+<h2>Forcing GeoServer to relinquish Log4J control<a class="headerlink" href="#forcing-geoserver-to-relinquish-log4j-control" title="Permalink to this headline">¶</a></h2>
+<p>GeoServer internally overrides the Log4J configuration by using the current logging configuration as a template and appling the log location and standard output settings configured by the administrator.</p>
+<p>If you wish GeoServer not to override the normal Log4J behavior you can set the following parameter among the JVM system variables, enviroment variables, or servlet context parameters:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">RELINQUISH_LOG4J_CONTROL</span><span class="o">=</span><span class="n">true</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="forcing-geoserver-to-use-an-alternate-logging-redirection">
+<h2>Forcing GeoServer to use an alternate logging redirection<a class="headerlink" href="#forcing-geoserver-to-use-an-alternate-logging-redirection" title="Permalink to this headline">¶</a></h2>
+<p>GeoServer uses the GeoTools logging framework, which in turn is based on Java Logging, but allowing to redirect all message to an alternate framework of users choice.</p>
+<p>By default GeoServer setups a Log4J redirection, but it is possible to configure GeoServer to use plain Java Logging or Commons Logging instead (support for other loggers is also possible by using some extra programming).</p>
+<p>If you wish to force GeoServer to use a different logging mechanism set the following parameters among the JVM system variables, enviroment variables, or servlet context parameters:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">GT2_LOGGING_REDIRECTION</span><span class="o">=</span><span class="p">[</span><span class="n">JavaLogging</span><span class="p">,</span><span class="n">CommonsLogging</span><span class="p">,</span><span class="n">Log4J</span><span class="p">]</span>
+<span class="n">RELINQUISH_LOG4J_CONTROL</span><span class="o">=</span><span class="n">true</span>
+</pre></div>
+</div>
+<p>As noted in the example you&#8217;ll also have to demand that GeoServer does not exert control over the Log4J configuration</p>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="crshandling/manualepsg.html" title="previous chapter">Manually editing the EPSG database</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="wmsdecoration.html" title="next chapter">WMS Decorations</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">Advanced log configuration</a><ul>
+<li><a class="reference internal" href="#custom-logging-profiles">Custom logging profiles</a></li>
+<li><a class="reference internal" href="#overriding-the-log-location-setup-in-the-geoserver-configuration">Overriding the log location setup in the GeoServer configuration</a></li>
+<li><a class="reference internal" href="#forcing-geoserver-to-relinquish-log4j-control">Forcing GeoServer to relinquish Log4J control</a></li>
+<li><a class="reference internal" href="#forcing-geoserver-to-use-an-alternate-logging-redirection">Forcing GeoServer to use an alternate logging redirection</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="crshandling/manualepsg.html" title="previous chapter">Manually editing the EPSG database</a></li>
+            <li>Next: <a href="wmsdecoration.html" title="next chapter">WMS Decorations</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../_sources/advanced/logging.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

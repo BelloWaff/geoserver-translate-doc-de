@@ -1,0 +1,137 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>KML Height and Time &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../../index.html" />
+      <link rel="up" title="Features" href="index.html" />
+      <link rel="next" title="KML Legends" href="kmllegends.html" />
+      <link rel="prev" title="Customizing Placemarks" href="customizingplacemarks.html" />
+</head>
+<body class="googleearth/features/kmlheighttime">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Google Earth</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Features</a> &raquo;</li>
+  <li>KML Height and Time</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="kmllegends.html" title="KML Legends"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="customizingplacemarks.html" title="Customizing Placemarks"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="kml-height-and-time">
+<span id="ge-feature-kml-height-time"></span><h1>KML Height and Time<a class="headerlink" href="#kml-height-and-time" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="height">
+<h2>Height<a class="headerlink" href="#height" title="Permalink to this headline">¶</a></h2>
+<p>GeoServer by default creates two dimensional overlays in Google Earth.  However, GeoServer can output features with height information (also called &#8220;KML extrudes&#8221;) if desired. This can have the effect of having features &#8220;float&#8221; above the ground, or create bar graph style structures in the shape of the features. The height of features can be linked to an attribute of the data.</p>
+<p>Setting the height of features is determined by using a KML Freemarker template. Create a file called <tt class="docutils literal"><span class="pre">height.ftl</span></tt>, and save it in the same directory as the featuretype in your <a class="reference internal" href="../../datadirectory/index.html#data-directory"><em>GeoServer Data Directory</em></a>. For example, to create a height template for the <tt class="docutils literal"><span class="pre">states</span></tt> layer, the file should be saved in <tt class="docutils literal"><span class="pre">&lt;data_dir&gt;/workspaces/topp/states_shapefile/states/height.ftl</span></tt>.</p>
+<p>To set the height based on an attribute, the syntax is:</p>
+<div class="highlight-python"><pre>${ATTRIBUTE.value}</pre>
+</div>
+<p>Replace the word <tt class="docutils literal"><span class="pre">ATTRIBUTE</span></tt> with the name of the height attribute in your data set.  For a complete tutorial on working with the height templates see <a class="reference internal" href="../tutorials/heights/heights.html#tutorials-heights"><em>Heights Templates</em></a>.</p>
+</div>
+<div class="section" id="time">
+<h2>Time<a class="headerlink" href="#time" title="Permalink to this headline">¶</a></h2>
+<p>Google Earth also contains a &#8220;time slider&#8221;, which can allow animations of data, and show changes over time.  As with height, time can be linked to an attribute of the data, as long as the data set has a date/time attribute. Linking this date/time attribute to the time slider in Google Earth is accomplished by creating a Freemarker template. Create a file called <tt class="docutils literal"><span class="pre">time.ftl</span></tt>, and save it in the same  directory that contains your data&#8217;s <tt class="docutils literal"><span class="pre">info.xml</span></tt>.</p>
+<p>To set the time based on an attribute the syntax is:</p>
+<div class="highlight-python"><pre>${DATETIME_ATTRIBUTE.value}</pre>
+</div>
+<p>Replace the word <tt class="docutils literal"><span class="pre">DATETIME_ATTRIBUTE</span></tt> with the name of the date/time attribute. When creating KML, GeoServer will automatically link the data to the time element in Google Earth. If set successfully, the time slider will automatically appear.</p>
+<p>For a full tutorial on using GeoServer with Google Earth&#8217;s time slider see <a class="reference internal" href="../tutorials/time/time.html#tutorials-time"><em>Time</em></a></p>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="customizingplacemarks.html" title="previous chapter">Customizing Placemarks</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="kmllegends.html" title="next chapter">KML Legends</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">KML Height and Time</a><ul>
+<li><a class="reference internal" href="#height">Height</a></li>
+<li><a class="reference internal" href="#time">Time</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="customizingplacemarks.html" title="previous chapter">Customizing Placemarks</a></li>
+            <li>Next: <a href="kmllegends.html" title="next chapter">KML Legends</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/googleearth/features/kmlheighttime.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

@@ -1,0 +1,219 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Microsoft SQL Server and SQL Azure &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../../index.html" />
+      <link rel="up" title="Working with Databases" href="index.html" />
+      <link rel="next" title="Teradata" href="teradata.html" />
+      <link rel="prev" title="Oracle" href="oracle.html" />
+</head>
+<body class="data/database/sqlserver">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Working with Databases</a> &raquo;</li>
+  <li>Microsoft SQL Server and SQL Azure</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="teradata.html" title="Teradata"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="oracle.html" title="Oracle"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="microsoft-sql-server-and-sql-azure">
+<span id="data-sqlserver"></span><h1>Microsoft SQL Server and SQL Azure<a class="headerlink" href="#microsoft-sql-server-and-sql-azure" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">GeoServer does not come built-in with support for SQL Server; it must be installed through an extension. Proceed to <a class="reference internal" href="#sqlserver-install"><em>Installing the SQL Server extension</em></a> for installation details.</p>
+</div>
+<p>Microsoft&#8217;s <a class="reference external" href="http://www.microsoft.com/sqlserver/2008">SQL Server</a> is a relational database with spatial functionality. SQL Azure is the database option provided in the Azure cloud solution which is in many respects similar to SQL Server 2008.</p>
+<div class="section" id="supported-versions">
+<h2>Supported versions<a class="headerlink" href="#supported-versions" title="Permalink to this headline">¶</a></h2>
+<p>The extension supports SQL Server 2008 and SQL Azure.</p>
+</div>
+<div class="section" id="installing-the-sql-server-extension">
+<span id="sqlserver-install"></span><h2>Installing the SQL Server extension<a class="headerlink" href="#installing-the-sql-server-extension" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Due to licensing requirements, not all files are included with the extension.  To install SQL Server support, it is necessary to download additional files.</p>
+</div>
+<div class="section" id="geoserver-files">
+<h3>GeoServer files<a class="headerlink" href="#geoserver-files" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Download the SQL Server extension from the <a class="reference external" href="http://geoserver.org/display/GEOS/Download">GeoServer download page</a>.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Make sure to match the version of the extension to the version of the GeoServer instance!</p>
+</div>
+</li>
+<li><p class="first">Extract the contents of the archive into the <tt class="docutils literal"><span class="pre">WEB-INF/lib</span></tt> directory of the GeoServer installation.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="microsoft-files">
+<h3>Microsoft files<a class="headerlink" href="#microsoft-files" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Navigate to <a class="reference external" href="http://www.microsoft.com/download/en/details.aspx?id=19847">Microsoft&#8217;s JDBC driver for SQL Server and SQL Azure download page</a>.</li>
+<li>Extract the contents of the archive</li>
+<li>If you are running Java 6 or above, copy the file <tt class="docutils literal"><span class="pre">sqljdbc4.jar</span></tt> to the <tt class="docutils literal"><span class="pre">WEB-INF/lib</span></tt> directory of the GeoServer installation.
+If you are running Java 5 instead (supported up to GeoServer 2.1.x) copy the file <tt class="docutils literal"><span class="pre">sqljdbc.jar</span></tt> to the <tt class="docutils literal"><span class="pre">WEB-INF/lib</span></tt> directory</li>
+<li>For GeoServer installed on Windows, copy <tt class="docutils literal"><span class="pre">\x86\sqljdbc_auth.dll</span></tt> and <tt class="docutils literal"><span class="pre">\x86\sqljdbc_xa.dll</span></tt> to <tt class="docutils literal"><span class="pre">C:\Windows\System32</span></tt></li>
+</ol>
+</div>
+</div>
+<div class="section" id="adding-a-sql-server-database">
+<h2>Adding a SQL Server database<a class="headerlink" href="#adding-a-sql-server-database" title="Permalink to this headline">¶</a></h2>
+<p>Once the extension is properly installed <tt class="docutils literal"><span class="pre">SQL</span> <span class="pre">Server</span></tt> will show up as an option when creating a new data store.</p>
+<div class="figure align-center">
+<img alt="../../_images/sqlservercreate.png" src="../../_images/sqlservercreate.png" />
+<p class="caption"><em>SQL Server in the list of vector data sources</em></p>
+</div>
+</div>
+<div class="section" id="configuring-a-sql-server-data-store">
+<h2>Configuring a SQL Server data store<a class="headerlink" href="#configuring-a-sql-server-data-store" title="Permalink to this headline">¶</a></h2>
+<div class="figure align-center">
+<img alt="../../_images/sqlserverconfigure.png" src="../../_images/sqlserverconfigure.png" />
+<p class="caption"><em>Configuring a SQL Server data store</em></p>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">host</span></tt></td>
+<td>The sql server instance host name or ip address, only. Note that <tt class="docutils literal"><span class="pre">server\instance</span></tt> notation is not accepted - specify the port below, instead, if you have a non-default instance.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">port</span></tt></td>
+<td>The port on which the SQL server instance is accepting connections.  See the <a class="reference internal" href="#port-notes"><em>note</em></a> below.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">database</span></tt></td>
+<td>The name of the database to connect to. Might be left blank if the user connecting to SQL Server has a &#8220;default database&#8221; set in the user configuration</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">schema</span></tt></td>
+<td>The database schema to access tables from (optional).</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">user</span></tt></td>
+<td>The name of the user to connect to the oracle database as.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">password</span></tt></td>
+<td>The password to use when connecting to the database. Leave blank for no password.</td>
+</tr>
+<tr class="row-odd"><td><p class="first"><tt class="docutils literal"><span class="pre">max</span> <span class="pre">connections</span></tt></p>
+<p class="last"><tt class="docutils literal"><span class="pre">min</span> <span class="pre">connections</span></tt></p>
+</td>
+<td>Connection pool configuration parameters. See the <a class="reference internal" href="connection-pooling.html#connection-pooling"><em>Database Connection Pooling</em></a> section for details. If you are connecting to SQL Azure make sure to set the <tt class="docutils literal"><span class="pre">validate</span> <span class="pre">connections</span></tt> flag as SQL Azure closes inactive connections after a very short delay.</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="determining-the-port-used-by-the-sql-server-instance">
+<span id="port-notes"></span><h3>Determining the port used by the SQL Server instance<a class="headerlink" href="#determining-the-port-used-by-the-sql-server-instance" title="Permalink to this headline">¶</a></h3>
+<p>You can determine the port in use by connecting to your SQL server instance using some other software, and then using <strong class="command">netstat</strong> to display details on network connections.  In the following example on a Windows PC, the port is 2646</p>
+<div class="highlight-python"><pre>C:\&gt;netstat -a | find "sql1"
+TCP   DPI908194:1918   maittestsql1.dpi.nsw.gov.au:2646   ESTABLISHED</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="oracle.html" title="previous chapter">Oracle</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="teradata.html" title="next chapter">Teradata</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">Microsoft SQL Server and SQL Azure</a><ul>
+<li><a class="reference internal" href="#supported-versions">Supported versions</a></li>
+<li><a class="reference internal" href="#installing-the-sql-server-extension">Installing the SQL Server extension</a><ul>
+<li><a class="reference internal" href="#geoserver-files">GeoServer files</a></li>
+<li><a class="reference internal" href="#microsoft-files">Microsoft files</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#adding-a-sql-server-database">Adding a SQL Server database</a></li>
+<li><a class="reference internal" href="#configuring-a-sql-server-data-store">Configuring a SQL Server data store</a><ul>
+<li><a class="reference internal" href="#determining-the-port-used-by-the-sql-server-instance">Determining the port used by the SQL Server instance</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="oracle.html" title="previous chapter">Oracle</a></li>
+            <li>Next: <a href="teradata.html" title="next chapter">Teradata</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/data/database/sqlserver.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

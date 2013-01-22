@@ -1,0 +1,232 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Virtual OWS Services &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../_static/jquery.js"></script>
+  <script type="text/javascript" src="../_static/doctools.js"></script>
+  <script type="text/javascript" src="../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../index.html" />
+      <link rel="up" title="Services" href="index.html" />
+      <link rel="next" title="RESTful Configuration" href="../restconfig/index.html" />
+      <link rel="prev" title="WCS configuration" href="wcs/configuration.html" />
+</head>
+<body class="services/virtual-services">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Services</a> &raquo;</li>
+  <li>Virtual OWS Services</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="../restconfig/index.html" title="RESTful Configuration"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="wcs/configuration.html" title="WCS configuration"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="virtual-ows-services">
+<span id="virtual-services"></span><h1>Virtual OWS Services<a class="headerlink" href="#virtual-ows-services" title="Permalink to this headline">¶</a></h1>
+<p>The different types of services in GeoServer include WFS, WMS, and WCS, commonly referred to as &#8220;OWS&#8221; services. These services are global in that each service publishes ever layer configured on the server. WFS publishes all vector layer (feature types), WCS publishes all raster layers (coverages), and WMS publishes everything.</p>
+<p>A <em>virtual service</em> is a view of the global service that consists only of a subset of the layers. Virtual services are based on GeoServer workspaces. For each workspace that exists a virtual service exists along with it. The virtual service publishes only those layers that fall under the corresponding workspace.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Virtual services only apply to the core OWS services, and not OWS services
+accessed through GeoWebCache. It also does not apply to other subsystems such
+as REST.</p>
+</div>
+<p>When a client accesses a virtual service that client only has access to those layers published by that virtual service. Access to layers in the global service via the virtual service will result in an exception. This makes virtual services ideal for compartmentalizing access to layers. A service provider may wish to create multiple services for different clients handing one service url to one client, and a different service url to another client. Virtual services allow the service provider to achieve this with a single GeoServer instance.</p>
+<div class="section" id="filtering-by-workspace">
+<h2>Filtering by workspace<a class="headerlink" href="#filtering-by-workspace" title="Permalink to this headline">¶</a></h2>
+<p>Consider the following snippets of the WFS capabilities document from the GeoServer release configuration that list all the feature types:</p>
+<div class="highlight-python"><pre>http://localhost:8080/geoserver/wfs?request=GetCapabilities
+
+&lt;wfs:WFS_Capabilities&gt;
+
+  &lt;FeatureType xmlns:tiger="http://www.census.gov"&gt;
+   &lt;Name&gt;tiger:poly_landmarks&lt;/Name&gt;
+--
+  &lt;FeatureType xmlns:tiger="http://www.census.gov"&gt;
+   &lt;Name&gt;tiger:poi&lt;/Name&gt;
+--
+  &lt;FeatureType xmlns:tiger="http://www.census.gov"&gt;
+   &lt;Name&gt;tiger:tiger_roads&lt;/Name&gt;
+--
+  &lt;FeatureType xmlns:sf="http://www.openplans.org/spearfish"&gt;
+   &lt;Name&gt;sf:archsites&lt;/Name&gt;
+--
+  &lt;FeatureType xmlns:sf="http://www.openplans.org/spearfish"&gt;
+   &lt;Name&gt;sf:bugsites&lt;/Name&gt;
+--
+  &lt;FeatureType xmlns:sf="http://www.openplans.org/spearfish"&gt;
+   &lt;Name&gt;sf:restricted&lt;/Name&gt;
+--
+  &lt;FeatureType xmlns:sf="http://www.openplans.org/spearfish"&gt;
+   &lt;Name&gt;sf:roads&lt;/Name&gt;
+--
+  &lt;FeatureType xmlns:sf="http://www.openplans.org/spearfish"&gt;
+   &lt;Name&gt;sf:streams&lt;/Name&gt;
+--
+  &lt;FeatureType xmlns:topp="http://www.openplans.org/topp"&gt;
+   &lt;Name&gt;topp:tasmania_cities&lt;/Name&gt;
+--
+  &lt;FeatureType xmlns:topp="http://www.openplans.org/topp"&gt;
+   &lt;Name&gt;topp:tasmania_roads&lt;/Name&gt;
+--
+  &lt;FeatureType xmlns:topp="http://www.openplans.org/topp"&gt;
+   &lt;Name&gt;topp:tasmania_state_boundaries&lt;/Name&gt;
+--
+  &lt;FeatureType xmlns:topp="http://www.openplans.org/topp"&gt;
+   &lt;Name&gt;topp:tasmania_water_bodies&lt;/Name&gt;
+--
+  &lt;FeatureType xmlns:topp="http://www.openplans.org/topp"&gt;
+   &lt;Name&gt;topp:states&lt;/Name&gt;
+--
+  &lt;FeatureType xmlns:tiger="http://www.census.gov"&gt;
+   &lt;Name&gt;tiger:giant_polygon&lt;/Name&gt;
+
+&lt;/wfs:WFS_Capabilities&gt;</pre>
+</div>
+<p>The above document lists every feature type configured on the server. Now consider the following capabilities request:</p>
+<div class="highlight-python"><pre>http://localhost:8080/geoserver/topp/wfs?request=GetCapabilities</pre>
+</div>
+<p>The part of interest in the above request is the &#8220;topp&#8221; prefix to the wfs service. The above url results in the following feature types in the capabilities document:</p>
+<div class="highlight-python"><pre>&lt;wfs:WFS_Capabilities&gt;
+
+   &lt;FeatureType xmlns:topp="http://www.openplans.org/topp"&gt;
+    &lt;Name&gt;topp:tasmania_cities&lt;/Name&gt;
+ --
+   &lt;FeatureType xmlns:topp="http://www.openplans.org/topp"&gt;
+    &lt;Name&gt;topp:tasmania_roads&lt;/Name&gt;
+ --
+   &lt;FeatureType xmlns:topp="http://www.openplans.org/topp"&gt;
+    &lt;Name&gt;topp:tasmania_state_boundaries&lt;/Name&gt;
+ --
+   &lt;FeatureType xmlns:topp="http://www.openplans.org/topp"&gt;
+    &lt;Name&gt;topp:tasmania_water_bodies&lt;/Name&gt;
+ --
+   &lt;FeatureType xmlns:topp="http://www.openplans.org/topp"&gt;
+    &lt;Name&gt;topp:states&lt;/Name&gt;
+
+ &lt;/wfs:WFS_Capabilities&gt;</pre>
+</div>
+<p>The above feature types correspond to those configured on the server as part of the &#8220;topp&#8221; workspace.</p>
+<p>The consequence of a virtual service is not only limited to the capabilities document of the service. When a client accesses a virtual service it is restricted to only those layers for all operations. For instance, consider the following WFS feature request:</p>
+<div class="highlight-python"><pre>http://localhost:8080/geoserver/topp/wfs?request=GetFeature&amp;typename=tiger:roads</pre>
+</div>
+<p>The above request results in an exception. Since the request feature type &#8220;tiger:roads&#8221; is not in the &#8220;topp&#8221; workspace the client will receive an error stating that the requested feature type does not exist.</p>
+</div>
+<div class="section" id="filtering-by-layer">
+<h2>Filtering by layer<a class="headerlink" href="#filtering-by-layer" title="Permalink to this headline">¶</a></h2>
+<p>It is possible to further filter a global service by specifying the name of layer as part of the virtual service. For instance consider the following capabilities document:</p>
+<div class="highlight-python"><pre>http://localhost:8080/geoserver/topp/states/wfs?request=GetCapabilities</pre>
+</div>
+<p>The part of interest is the &#8220;states&#8221; prefix to the wfs service. The above url results in the following capabilities document that contains a single feature type:</p>
+<div class="highlight-python"><pre>&lt;wfs:WFS_Capabilities&gt;
+
+  &lt;FeatureType xmlns:topp="http://www.openplans.org/topp"&gt;
+   &lt;Name&gt;topp:states&lt;/Name&gt;
+
+&lt;wfs:WFS_Capabilities&gt;</pre>
+</div>
+</div>
+<div class="section" id="turning-off-global-services">
+<h2>Turning off global services<a class="headerlink" href="#turning-off-global-services" title="Permalink to this headline">¶</a></h2>
+<p>It is possible to completely restrict access to the global OWS services by setting a configuration flag. When global access is disabled OWS services may only occur through a virtual service. Any client that tries to access a service globally will receive an exception.</p>
+<p>To disable global services log into the GeoServer web administration interface and navigate to &#8220;Global Settings&#8221;. Uncheck the &#8220;Enable Global Services&#8221; check box.</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../_images/global-services.jpg" src="../_images/global-services.jpg" />
+</div>
+</div></blockquote>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="wcs/configuration.html" title="previous chapter">WCS configuration</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="../restconfig/index.html" title="next chapter">RESTful Configuration</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">Virtual OWS Services</a><ul>
+<li><a class="reference internal" href="#filtering-by-workspace">Filtering by workspace</a></li>
+<li><a class="reference internal" href="#filtering-by-layer">Filtering by layer</a></li>
+<li><a class="reference internal" href="#turning-off-global-services">Turning off global services</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="wcs/configuration.html" title="previous chapter">WCS configuration</a></li>
+            <li>Next: <a href="../restconfig/index.html" title="next chapter">RESTful Configuration</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../_sources/services/virtual-services.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

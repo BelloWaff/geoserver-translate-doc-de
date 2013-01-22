@@ -1,0 +1,196 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Java Properties &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../../index.html" />
+      <link rel="up" title="Working with Vector Data" href="index.html" />
+      <link rel="next" title="GML" href="gml.html" />
+      <link rel="prev" title="Directory of spatial files" href="directory.html" />
+</head>
+<body class="data/vector/properties">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Working with Vector Data</a> &raquo;</li>
+  <li>Java Properties</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="gml.html" title="GML"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="directory.html" title="Directory of spatial files"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="java-properties">
+<span id="data-java-properties"></span><h1>Java Properties<a class="headerlink" href="#java-properties" title="Permalink to this headline">¶</a></h1>
+<p>The Properties data store provides access to one or more feature types (layers) stored in Java property files; these are plain text files stored on the local filesystem. The Properties data store was never intended to be shipped with GeoServer. It originated in a GeoTools tutorial, and later found widespread use by developers in automated tests that required a convenient store for small snippets of data. It slipped into GeoServer through the completeness of the packaging process, and was automatically detected and offered to users via the web interface. The Property data store has proved useful in tutorials and examples.</p>
+<ul class="simple">
+<li>We do not recommend the use the Properties data store for large amounts of data, with either many features or large geometries. Its performance will be terrible.</li>
+<li>For small data sets, such as collections of a few dozen points, you may find it to be satisfactory. For example, if you have a few points you wish to add as an extra layer, and no convenient database in which store them, the Properties data store provides a straightforward means of delivering them.</li>
+<li>Changes to a property file are immediately reflected in GeoServer responses. There is no need to recreate the data store unless the first line of a property file is changed, or property files are added or removed.</li>
+</ul>
+<div class="section" id="adding-a-properties-data-store">
+<h2>Adding a Properties data store<a class="headerlink" href="#adding-a-properties-data-store" title="Permalink to this headline">¶</a></h2>
+<p>By default, <em class="guilabel">Properties</em> will be an option in the <em class="guilabel">Vector Data Sources</em> list when creating a new data store.</p>
+<div class="figure align-center">
+<img alt="../../_images/propertiescreate.png" src="../../_images/propertiescreate.png" />
+<p class="caption"><em>Properties in the list of vector data stores</em></p>
+</div>
+</div>
+<div class="section" id="configuring-a-properties-data-store">
+<h2>Configuring a Properties data store<a class="headerlink" href="#configuring-a-properties-data-store" title="Permalink to this headline">¶</a></h2>
+<div class="figure align-center">
+<img alt="../../_images/propertiesconfigure.png" src="../../_images/propertiesconfigure.png" />
+<p class="caption"><em>Configuring a Properties data store</em></p>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Option</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">Workspace</span></tt></td>
+<td>Sets the namespace prefix of the feature types (layers) and their properties</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">Data</span> <span class="pre">Source</span> <span class="pre">Name</span></tt></td>
+<td>Unique identifier to distinguish this data store</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">Description</span></tt></td>
+<td>Optional text giving a verbose description of the data store</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">Enabled</span></tt></td>
+<td>Features will be delivered only if this option is checked</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">directory</span></tt></td>
+<td>Filesystem path to a directory containing one or more property files, for example <tt class="docutils literal"><span class="pre">/usr/local/geoserver/data/ex</span></tt></td>
+</tr>
+</tbody>
+</table>
+<p>Every property file <tt class="docutils literal"><span class="pre">TYPENAME.properties</span></tt> in the designated directory is served as a feature type <tt class="docutils literal"><span class="pre">TYPENAME</span></tt> (the name of the file without the <tt class="docutils literal"><span class="pre">.properties</span></tt>), in the namespace of the data store.</p>
+<p>Before a feature type (layer) can be used, you must edit it to ensure that its bounding box and other metadata is configured.</p>
+</div>
+<div class="section" id="property-file-format">
+<h2>Property file format<a class="headerlink" href="#property-file-format" title="Permalink to this headline">¶</a></h2>
+<p>The property file format is a subset of the Java properties format: a list of lines of the form <tt class="docutils literal"><span class="pre">KEY=VALUE</span></tt>.</p>
+<p>This example <tt class="docutils literal"><span class="pre">stations.properties</span></tt> defines four features of the feature type (layer) <tt class="docutils literal"><span class="pre">stations</span></tt>:</p>
+<div class="highlight-python"><pre>_=id:Integer,code:String,name:String,location:Geometry:srid=4326
+stations.27=27|ALIC|Alice Springs|POINT(133.8855 -23.6701)
+stations.4=4|NORF|Norfolk Island|POINT(167.9388 -29.0434)
+stations.12=12|COCO|Cocos|POINT(96.8339 -12.1883)
+stations.31=31|ALBY|Albany|POINT(117.8102 -34.9502)</pre>
+</div>
+<ul class="simple">
+<li>Blank lines are not permitted anywhere in the file.</li>
+<li>The first line of the property file begins with <tt class="docutils literal"><span class="pre">_=</span></tt> and defines the type information required to interpret the following lines.<ul>
+<li>Comma separated values are of the form <tt class="docutils literal"><span class="pre">NAME:TYPE</span></tt></li>
+<li>Names are the property name that are used to encode the property in WFS responses.</li>
+<li>Types include <tt class="docutils literal"><span class="pre">Integer</span></tt>, <tt class="docutils literal"><span class="pre">String</span></tt>, <tt class="docutils literal"><span class="pre">Float</span></tt>, and <tt class="docutils literal"><span class="pre">Geometry</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">Geometry</span></tt> can have an extra suffix <tt class="docutils literal"><span class="pre">:srid=XXXX</span></tt> that defines the Spatial Reference System by its numeric EPSG code. Note that geometries defined in this way are in longitude/latitude order.</li>
+</ul>
+</li>
+<li>Subsequent lines define features, one per line.<ul>
+<li>The key before the <tt class="docutils literal"><span class="pre">=</span></tt> is the feature ID (<tt class="docutils literal"><span class="pre">fid</span></tt> or <tt class="docutils literal"><span class="pre">gml:id</span></tt> in WFS responses). Each must be an <a class="reference external" href="http://www.w3.org/TR/1999/REC-xml-names-19990114/#NT-NCName">NCName</a>.</li>
+<li>Feature data follows the <tt class="docutils literal"><span class="pre">=</span></tt> separated by vertical bars (<tt class="docutils literal"><span class="pre">|</span></tt>). The types of the data must match the declaration on the first line.</li>
+<li>Leave a field empty if you want it to be null; in this case the property will be ignored.</li>
+</ul>
+</li>
+</ul>
+<p>Note that in this example <tt class="docutils literal"><span class="pre">srid=4326</span></tt> sets the spatial reference system (SRS) to <tt class="docutils literal"><span class="pre">EPSG:4326</span></tt>, which is by convention in longitude/latitude order when referred to in the short form. If you request these features in GML 3 you will see that GeoServer correctly translates the geometry to the URN form SRS <tt class="docutils literal"><span class="pre">urn:x-ogc:def:crs:EPSG:4326</span></tt> in latitude/longitude form. See the <a class="reference internal" href="../../webadmin/services/WFS.html#webadmin-wfs"><em>WFS</em></a> page for more on SRS axis order options.</p>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="directory.html" title="previous chapter">Directory of spatial files</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="gml.html" title="next chapter">GML</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">Java Properties</a><ul>
+<li><a class="reference internal" href="#adding-a-properties-data-store">Adding a Properties data store</a></li>
+<li><a class="reference internal" href="#configuring-a-properties-data-store">Configuring a Properties data store</a></li>
+<li><a class="reference internal" href="#property-file-format">Property file format</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="directory.html" title="previous chapter">Directory of spatial files</a></li>
+            <li>Next: <a href="gml.html" title="next chapter">GML</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/data/vector/properties.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

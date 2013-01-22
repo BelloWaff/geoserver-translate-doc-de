@@ -1,0 +1,178 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Windows Binary &mdash; GeoServer 2.2.x User Manual</title>
+  <link rel="stylesheet" href="../../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../../_static/jquery.js"></script>
+  <script type="text/javascript" src="../../_static/doctools.js"></script>
+  <script type="text/javascript" src="../../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x User Manual" href="../../index.html" />
+      <link rel="up" title="Windows" href="index.html" />
+      <link rel="next" title="Mac OS X" href="../osx/index.html" />
+      <link rel="prev" title="Windows Installer" href="installer.html" />
+</head>
+<body class="installation/windows/binary">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../../index.html">GeoServer 2.2.x User Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../../index.html">GeoServer 2.2.x User Manual</a> &raquo;</li>
+  <li><a href="../index.html" accesskey="U">Installation</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Windows</a> &raquo;</li>
+  <li>Windows Binary</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="../osx/index.html" title="Mac OS X"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="installer.html" title="Windows Installer"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="windows-binary">
+<span id="installation-windows-bin"></span><h1>Windows Binary<a class="headerlink" href="#windows-binary" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Dieser Abschnitt behandelt die betriebsystemunabhängige Binärdatei. Lesen Sie bitte den Abschnitt über den <a class="reference internal" href="installer.html#installation-windows-installer"><em>Windows Installer</em></a> für das assistenten-gestützte Installationsprogramm für Windows.</p>
+</div>
+<p>Die am häufigsten verwendete Installationsvariante für den GeoServer ist die Benutzung des betriebssystemunabhängigen Installationsprogramms. Diese Version ist eine in <a class="reference external" href="http://www.mortbay.org/jetty/">Jetty</a>, , ein schlankes Servlet Container-System, integrierte Geoserver Web-Anwendung (webapp). Es bietet Vorteile durch die sehr ähnliche Funktionsweise über sämtliche Betriebssysteme und ist zusätzlich sehr einfach aufzusetzen.</p>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Navigieren Sie zur <a class="reference external" href="http://geoserver.org/display/GEOS/Download">GeoServer Download Seite</a> und wählen die gewünschte Version zum Herunterladen aus.</li>
+<li>Wählen Sie <em class="guilabel">OS-independent binary</em> auf der Download-Seite aus.</li>
+<li>Laden Sie das Archiv herunter und entpacken es in das Verzeichnis, Download the archive, and unpack to the directory where you would like the program to be located.  A typical place would be <tt class="file docutils literal"><span class="pre">C:\Program</span> <span class="pre">Files\GeoServer</span></tt>.</li>
+</ol>
+<div class="section" id="setting-environment-variables">
+<h3>Setting environment variables<a class="headerlink" href="#setting-environment-variables" title="Permalink to this headline">¶</a></h3>
+<p>You will need to set the <tt class="docutils literal"><span class="pre">JAVA_HOME</span></tt> environment variable if it is not already set.  This is the path to your JDK/JRE such that <tt class="file docutils literal"><span class="pre">%JAVA_HOME%\bin\java.exe</span></tt> exists.  You can download a JRE at <a class="reference external" href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">http://www.oracle.com/technetwork/java/javase/downloads/index.html</a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Oracle Java SE 6 or newer is strongly recommended.  (As of GeoServer 2.2.x, Oracle JRE 5 is no longer supported.)  A Java Development Kit (JDK) is not required to run GeoServer.  For more information about Java and GeoServer, please see the section on <a class="reference internal" href="../../production/java.html#production-java"><em>Java Considerations</em></a>.</p>
+</div>
+<ol class="arabic simple">
+<li>Navigate to <em class="menuselection">Control Panel ‣ System ‣ Advanced ‣ Environment Variables</em>.</li>
+<li>Under <em class="guilabel">System variables</em> click <em class="guilabel">New</em>.</li>
+<li>For <em class="guilabel">Variable name</em> enter <tt class="docutils literal"><span class="pre">JAVA_HOME</span></tt>.  For <em class="guilabel">Variable value</em> enter the path to your JDK/JRE.</li>
+<li>Click OK three times.</li>
+</ol>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You may also want to set the <tt class="docutils literal"><span class="pre">GEOSERVER_HOME</span></tt> variable, which is the directory where GeoServer is installed, and the <tt class="docutils literal"><span class="pre">GEOSERVER_DATA_DIR</span></tt> variable, which is the location of the GeoServer data directory (usually <tt class="file docutils literal"><span class="pre">%GEOSERVER_HOME\data_dir</span></tt>).  The latter is mandatory if you wish to use a data directory other than the one built in to GeoServer. The procedure for setting these variables is identical to the above. Note that the specified data directory should be a valid <a class="reference internal" href="../../datadirectory/index.html#data-directory"><em>GeoServer Data Directory</em></a>.</p>
+</div>
+</div>
+</div>
+<div class="section" id="running">
+<h2>Running<a class="headerlink" href="#running" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This can be done either via Windows Explorer or the command line.</p>
+</div>
+<ol class="arabic simple">
+<li>Navigate to the <tt class="file docutils literal"><span class="pre">bin</span></tt> directory inside the location where GeoServer is installed.</li>
+<li>Run <tt class="file docutils literal"><span class="pre">startup.bat</span></tt>.  A command-line window will appear and persist.  This window contains diagnostic and troubleshooting information.  This window should not be closed, or else GeoServer will shut down.</li>
+<li>To access the <a class="reference internal" href="../../webadmin/index.html#web-admin"><em>Web Administration Interface</em></a>, navigate to <tt class="docutils literal"><span class="pre">http://localhost:8080/geoserver</span></tt>.</li>
+</ol>
+</div>
+<div class="section" id="stopping">
+<h2>Stopping<a class="headerlink" href="#stopping" title="Permalink to this headline">¶</a></h2>
+<p>Either close the persistent command-line window, or run the <tt class="file docutils literal"><span class="pre">shutdown.bat</span></tt> file inside the <tt class="file docutils literal"><span class="pre">bin</span></tt> directory.</p>
+</div>
+<div class="section" id="uninstallation">
+<h2>Uninstallation<a class="headerlink" href="#uninstallation" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Stop GeoServer (if it is running)</li>
+<li>Delete the directory where GeoServer is installed.</li>
+</ol>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="installer.html" title="previous chapter">Windows Installer</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="../osx/index.html" title="next chapter">Mac OS X</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">Windows Binary</a><ul>
+<li><a class="reference internal" href="#installation">Installation</a><ul>
+<li><a class="reference internal" href="#setting-environment-variables">Setting environment variables</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#running">Running</a></li>
+<li><a class="reference internal" href="#stopping">Stopping</a></li>
+<li><a class="reference internal" href="#uninstallation">Uninstallation</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="installer.html" title="previous chapter">Windows Installer</a></li>
+            <li>Next: <a href="../osx/index.html" title="next chapter">Mac OS X</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../../_sources/installation/windows/binary.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright GeoServer.
+    Last updated on Jan 11, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>

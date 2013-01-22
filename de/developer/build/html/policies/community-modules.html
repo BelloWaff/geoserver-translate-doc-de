@@ -1,0 +1,581 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <title>Community Modules &mdash; GeoServer 2.2.x Developer Manual</title>
+  <link rel="stylesheet" href="../_static/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="../_static/blueprint/print.css" type="text/css" media="print" /> 
+  <!--[if IE]>
+  <link rel="stylesheet" href="../_static/blueprint/ie.css" type="text/css" media="screen, projection" />
+  <![endif]-->
+  <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.2.x',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html'
+    };
+  </script>
+  <script type="text/javascript" src="../_static/jquery.js"></script>
+  <script type="text/javascript" src="../_static/doctools.js"></script>
+  <script type="text/javascript" src="../_static/searchtools.js"></script>
+  <script type="text/javascript" src="../searchindex.js"></script>
+      <link rel="top" title="GeoServer 2.2.x Developer Manual" href="../index.html" />
+      <link rel="up" title="Policies and Procedures" href="index.html" />
+      <link rel="next" title="Project Steering Committee" href="psc.html" />
+      <link rel="prev" title="GeoServer Improvement Proposals" href="gsip.html" />
+</head>
+<body class="policies/community-modules">
+  <div id="header" class="selfclear">
+    <div class="wrap selfclear">
+      <div id="logo"><a href="../index.html">GeoServer 2.2.x Developer Manual</a></div>
+      <ul id="top-nav">
+        <li class="first"><a href="http://geoserver.org/display/GEOS/What+is+Geoserver">About</a></li>
+        <li><a href="http://blog.geoserver.org/">Blog</a></li>
+        <li><a href="http://geoserver.org/display/GEOS/Download">Download</a></li>
+        <li><a href="../index.html">Documentation</a></li>
+      </ul>
+        <form id="quick-search" action="../search.html" method="get">
+          <fieldset>
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+            <input id="quick-search-query" type="text" name="q" accessKey="q" name="searchQuery.queryString" size="25" value="Search Documentation&hellip;" size="20" tabindex="3" onblur="if(this.value=='') this.value='Search Documentation&hellip;';" onfocus="if(this.value=='Search Documentation&hellip;') this.value='';" />
+            <input id="quick-search-submit" type="image" value="Search" src="../_static/chrome/search_icon_green.png" />
+          </fieldset>
+        </form>
+    </div><!-- /.wrap -->
+  </div><!-- /#header -->
+  <div id="main">
+    <div class="wrap selfclear">
+      <div id="content">
+<ul id="breadcrumbs">
+  
+  <li><a href="../index.html">GeoServer 2.2.x Developer Manual</a> &raquo;</li>
+  <li><a href="index.html" accesskey="U">Policies and Procedures</a> &raquo;</li>
+  <li>Community Modules</li>
+</ul>
+<ul id="relatedlinks" class="selfclear">
+  <li class="first">
+    <a href="psc.html" title="Project Steering Committee"
+       accesskey="N">next</a></li>
+  <li>
+    <a href="gsip.html" title="GeoServer Improvement Proposals"
+       accesskey="P">previous</a>|</li>
+</ul>
+        
+  <div class="section" id="community-modules">
+<span id="id1"></span><h1>Community Modules<a class="headerlink" href="#community-modules" title="Permalink to this headline">¶</a></h1>
+<p>This document describes the GeoServer community module process. It is a guide
+that describes how the GeoServer project takes in contributions from the
+community.</p>
+<p>In GeoServer a module can fall into one of three classes:</p>
+<ul class="simple">
+<li><strong>core</strong>, those modules which GeoServer requires to function and are
+distributed with the main GeoServer distribution</li>
+<li><strong>extension</strong>, plug-ins available as separate artifacts from the main
+distribution</li>
+<li><strong>community</strong>, experimental or unstable modules which are not part of the
+release process</li>
+</ul>
+<p>Every module added to GeoServer has its origin as a community module. If the
+module becomes stable enough it will eventually become part of the main
+GeoServer distribution either as a core module, or as an extension.</p>
+<div class="section" id="creating-a-community-module">
+<h2>Creating a community module<a class="headerlink" href="#creating-a-community-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="requirements">
+<h3>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h3>
+<p>The single requirement for adding a community module is the approval of one
+Project Steering Committee member.</p>
+</div>
+<div class="section" id="process">
+<h3>Process<a class="headerlink" href="#process" title="Permalink to this headline">¶</a></h3>
+<p>The following outlines the steps to be taken in order to add a new community module.</p>
+<ol class="arabic">
+<li><p class="first"><strong>Get approval</strong></p>
+<p>The first step is to get approval to add the community module. This
+involves first explaining to the rest of the GeoServer community the
+purpose and function of the extension to be added. The two best ways to
+do this are:</p>
+<ol class="arabic simple">
+<li>send an email to the developers list, or</li>
+<li>participate in a weekly IRC meeting</li>
+</ol>
+<p>After explaining the intention, the approval of at least one Project
+Steering Committee member is needed before proceeding. Getting approval is
+easy as long as it is explained that the extension will be useful to other
+users or developers.</p>
+</li>
+<li><p class="first"><strong>Get version control access</strong></p>
+<p>The next step is to create the community module in the subversion
+repository. To do this it is necessary to be granted commit status. The
+process for signing up for version control access is defined in the
+<a class="reference internal" href="comitting.html#comitting"><em>Comitting</em></a> section.</p>
+</li>
+<li><p class="first"><strong>Add a new module</strong></p>
+<p>Once commit access is obtained the module can be added. All community
+modules live under the directory <tt class="docutils literal"><span class="pre">community</span></tt>, directly under the root of
+the source tree. The community modules on trunk can be found
+<a class="reference external" href="http://svn.codehaus.org/geoserver/trunk/src/community">here</a>.</p>
+<p>For example, from the root of the GeoServer source tree:</p>
+<div class="highlight-python"><pre>[geoserver]% cd community
+[geoserver/community]% svn mkdir myCommunityModule
+[geoserver/community]% svn commit -m "adding my community module" myCommunityModule</pre>
+</div>
+</li>
+<li><p class="first"><strong>Add a Maven POM</strong></p>
+<p>Every module in the build requires a maven pom file, <tt class="docutils literal"><span class="pre">pom.xml</span></tt>. Use the
+following as a template:</p>
+<blockquote>
+<div><div class="highlight-xml"><div class="highlight"><pre>  <span class="nt">&lt;project</span> <span class="na">xmlns=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0&quot;</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span> <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
+
+  <span class="nt">&lt;parent&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.geoserver<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>geoserver<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>1.7.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span> <span class="c">&lt;!-- change this to the proper GeoServer version --&gt;</span>
+  <span class="nt">&lt;/parent&gt;</span>
+
+  <span class="nt">&lt;groupId&gt;</span>org.geoserver<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>myCommunityModule<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>1.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
+  <span class="nt">&lt;packaging&gt;</span>jar<span class="nt">&lt;/packaging&gt;</span>
+  <span class="nt">&lt;name&gt;</span>My Community Module<span class="nt">&lt;/name&gt;</span>
+
+  <span class="nt">&lt;dependencies&gt;</span>
+    <span class="c">&lt;!-- add any dependencies your module has here --&gt;</span>
+  <span class="nt">&lt;/dependencies&gt;</span>
+<span class="nt">&lt;/project&gt;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Add the file to the root of the new community module,
+<tt class="docutils literal"><span class="pre">myCommunityModule/pom.xml</span></tt></p>
+</li>
+<li><p class="first"><strong>Add a build profile</strong></p>
+<p>The final step involves adding the new module to the maven build, and in
+particular adding a build profile for it. To do this:</p>
+<ol class="arabic">
+<li><p class="first">Edit <tt class="docutils literal"><span class="pre">community/pom.xml</span></tt> and add the following inside of the
+<tt class="docutils literal"><span class="pre">&lt;profiles&gt;</span></tt> element:</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;profiles&gt;</span>
+  ...
+  <span class="nt">&lt;profile&gt;</span>
+    <span class="nt">&lt;id&gt;</span>myComunityModule<span class="nt">&lt;/id&gt;</span>
+    <span class="nt">&lt;modules&gt;</span>
+      <span class="nt">&lt;module&gt;</span>myCommunityModule<span class="nt">&lt;/module&gt;</span>
+    <span class="nt">&lt;/modules&gt;</span>
+  <span class="nt">&lt;/profile&gt;</span>
+<span class="nt">&lt;/profiles&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Edit <tt class="docutils literal"><span class="pre">web/app/pom.xml</span></tt> and add the following inside of the <tt class="docutils literal"><span class="pre">&lt;profiles&gt;</span></tt>
+element:</p>
+<div class="highlight-xml"><div class="highlight"><pre>   <span class="nt">&lt;profiles&gt;</span>
+     ...
+     <span class="nt">&lt;profile&gt;</span>
+       <span class="nt">&lt;id&gt;</span>myCommunityModule<span class="nt">&lt;/id&gt;</span>
+       <span class="nt">&lt;dependencies&gt;</span>
+         <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.geoserver<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>myCommuityModule<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;version&gt;</span>1.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
+          <span class="nt">&lt;/dependency&gt;</span>
+       <span class="nt">&lt;/dependencies&gt;</span>
+     <span class="nt">&lt;/profile&gt;</span>
+   <span class="nt">&lt;/profiles&gt;</span>
+
+.. warning::
+
+   If the community module depends on any other community modules,
+   they too should be included in the profile definition.
+
+.. warning::
+
+   Ensure that the name of the profile matches the name of the
+   community module
+</pre></div>
+</div>
+</li>
+</ol>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="promoting-a-community-module">
+<h2>Promoting a community module<a class="headerlink" href="#promoting-a-community-module" title="Permalink to this headline">¶</a></h2>
+<p>Once a community modules becomes &#8220;stable&#8221;, it may be promoted to a core or
+extension module. Which depends on the nature of the community module. If the
+module is plug-in based (ie. it provides functionality that some users may want,
+but others may not) then it should become an extension. Otherwise it should
+become a core module.</p>
+<div class="section" id="id2">
+<h3>Requirements<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>The following properties must hold true in order to promote a community module:</p>
+<ol class="arabic">
+<li><p class="first"><strong>The module has at least a &#8220;handful&#8221; of users</strong></p>
+<p>In order to avoid cluttering the main code base, only those community
+modules which are of interest to at least 3 users (this may include the
+maintainer) are promoted.</p>
+</li>
+<li><p class="first"><strong>The module has a designated and active maintainer</strong></p>
+<p>Every core and extension module requires a module maintainer. The job of
+the maintainer is to fix bugs and address issues which arise with the
+module. If a community module is promoted and the maintainer &#8220;drops off&#8221;,
+the module is in danger of being demoted back to community status.</p>
+</li>
+<li><p class="first"><strong>The module is considered &#8220;stable&#8221; by the majority of the PSC</strong></p>
+<p>A module will only be promoted if it is deemed &#8220;stable&#8221; by the majority of
+the PSC. Those PSC members deeming it &#8220;unstable&#8221; must provide a reasonable
+justification for the assertion.</p>
+</li>
+<li><p class="first"><strong>The module maintains 40% test coverage</strong></p>
+<p>A minimum of 40% test coverage must be maintained by the module in order to
+be promoted. Of course higher coverage is encouraged. The more test
+coverage a community module the more credibility it gets.</p>
+</li>
+<li><p class="first"><strong>The module has no IP violations</strong></p>
+<p>The module must not contain any code with a license or copyright that
+violates the GPL.</p>
+</li>
+<li><p class="first"><strong>The module has a page in the user manual</strong></p>
+<p>Each module needs a page in the user manual documenting its function and
+usage. Tutorials and walk-throughs are encouraged.</p>
+</li>
+<li><p class="first"><strong>The maintainer has signed the GeoServer Contributor Agreement</strong></p>
+<p>The Open Planning Project (TOPP) retains all copyright on code released as
+part of GeoServer. Since core and extension modules are released along with
+the rest of GeoServer, the maintainer of said modules must agree to assign
+copyright of code to TOPP.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="id3">
+<h3>Process<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first"><strong>Submit a GeoServer Improvement Proposal</strong></p>
+<p>To promote a community module the contributor must create a
+<a class="reference internal" href="gsip.html#gsip"><em>GeoServer Improvement Proposals</em></a> (GSIP). The proposal must
+then go through the regular feedback and voting process.</p>
+</li>
+<li><p class="first"><strong>Move the module</strong></p>
+<p>Once the proposal is accepted, the next step is to move the module out of
+the community space. Where the module ends up depends on wether it is being
+promoted to a core module, or an extension.</p>
+<p><em>Core modules</em></p>
+<p>Core modules live under the root of the source tree:</p>
+<div class="highlight-python"><pre>[geoserver]% svn move community/myCommunityModule .
+[geoserver]% svn commit -m "promoting my community module to a core module" myCommunityModule community/</pre>
+</div>
+<p><em>Extensions</em></p>
+<p>Extension modules live under the extension directory, under the root of the
+source tree:</p>
+<div class="highlight-python"><pre>[geoserver]% svn move community/myCommunityModule extension
+[geoserver]% svn commit -m "promoting my community module to an extension" extension community</pre>
+</div>
+</li>
+<li><p class="first"><strong>Update the build</strong></p>
+<p>Once the module has been moved, the maven build must be updated.</p>
+<p><em>Core modules</em></p>
+<ol class="arabic">
+<li><p class="first">Edit <tt class="docutils literal"><span class="pre">community/pom.xml</span></tt> and remove the profile for the community
+module</p>
+</li>
+<li><p class="first">Edit <tt class="docutils literal"><span class="pre">pom.xml</span></tt> under the root of the source tree and add a module
+enty:</p>
+<div class="highlight-python"><pre>&lt;modules&gt;
+  ...
+  &lt;module&gt;myCommunityModule&lt;/module&gt;
+&lt;/modules&gt;</pre>
+</div>
+</li>
+</ol>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Edit <tt class="docutils literal"><span class="pre">web/app/pom.xml</span></tt> and move the dependency on the community module
+into the main dependencies section of the pom. Then remove the profile</li>
+</ol>
+</div></blockquote>
+<p><em>Extensions</em></p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Copy the profile for the community module from <tt class="docutils literal"><span class="pre">community/pom.xml</span></tt>
+to <tt class="docutils literal"><span class="pre">extension/pom.xml</span></tt></li>
+<li>Remove the profile from <tt class="docutils literal"><span class="pre">community/pom.xml</span></tt></li>
+</ol>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>Update the release process</strong></p>
+<p>The next step is to include the new module in the release process.</p>
+<p><em>Core modules</em></p>
+<ol class="arabic">
+<li><p class="first">Edit <tt class="docutils literal"><span class="pre">release/src.xml</span></tt> and add an <tt class="docutils literal"><span class="pre">&lt;include&gt;</span></tt> for the module:</p>
+<div class="highlight-python"><pre>...
+&lt;moduleSets&gt;
+  &lt;moduleSet&gt;
+   ...
+   &lt;include&gt;org.geoserver:myCommunityModule&lt;/include&gt;
+  &lt;/moduleSet&gt;
+&lt;/moduleSets&gt;
+...</pre>
+</div>
+</li>
+</ol>
+<p><em>Extensions</em></p>
+<ol class="arabic">
+<li><p class="first">Create a new directory under <tt class="docutils literal"><span class="pre">release/extensions</span></tt> which matches the
+name of the extension</p>
+</li>
+<li><p class="first">Add the following to the new directory:</p>
+<ol class="arabic">
+<li><p class="first">A license called &#8216;&lt;module&gt;-LICENSE.txt&#8217; which contains the license
+for the extension</p>
+</li>
+<li><p class="first">A readme called &#8216;&lt;module&gt;-README.txt&#8217; which contains instructions
+on how to install the extension</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Don&#8217;t skip this step.</p>
+</div>
+</li>
+<li><p class="first">Any &#8220;static&#8221; files that are required by the extension (example
+would be a proprietary driver not available for download via maven)</p>
+</li>
+</ol>
+</li>
+<li><p class="first">Create a release descriptor called &#8216;ext-&lt;module&gt;.xml&#8217; under the
+release directory which follows the following structure (where
+&#8220;%module%&#8221; is the name of the module):</p>
+<div class="highlight-xml"><div class="highlight"><pre>   <span class="nt">&lt;assembly&gt;</span>
+     <span class="nt">&lt;id&gt;</span>%module%<span class="nt">&lt;/id&gt;</span>
+     <span class="nt">&lt;formats&gt;</span>
+       <span class="nt">&lt;format&gt;</span>zip<span class="nt">&lt;/format&gt;</span>
+     <span class="nt">&lt;/formats&gt;</span>
+     <span class="nt">&lt;includeBaseDirectory&gt;</span>false<span class="nt">&lt;/includeBaseDirectory&gt;</span>
+     <span class="nt">&lt;fileSets&gt;</span>
+       <span class="nt">&lt;fileSet&gt;</span>
+         <span class="nt">&lt;directory&gt;</span>release/extensions/%module%<span class="nt">&lt;/directory&gt;</span>
+         <span class="nt">&lt;outputDirectory&gt;&lt;/outputDirectory&gt;</span>
+         <span class="nt">&lt;includes&gt;</span>
+           <span class="nt">&lt;include&gt;</span>*<span class="nt">&lt;/include&gt;</span>
+         <span class="nt">&lt;/includes&gt;</span>
+       <span class="nt">&lt;/fileSet&gt;</span>
+       <span class="nt">&lt;fileSet&gt;</span>
+         <span class="nt">&lt;directory&gt;</span>release/target/dependency<span class="nt">&lt;/directory&gt;</span>
+         <span class="nt">&lt;outputDirectory&gt;&lt;/outputDirectory&gt;</span>
+         <span class="nt">&lt;includes&gt;</span>
+           <span class="nt">&lt;include&gt;</span>%module%-*.jar<span class="nt">&lt;/include&gt;</span>
+         <span class="nt">&lt;/includes&gt;</span>
+       <span class="nt">&lt;/fileSet&gt;</span>
+       <span class="nt">&lt;fileSet&gt;</span>
+         <span class="nt">&lt;directory&gt;</span>release/extensions<span class="nt">&lt;/directory&gt;</span>
+         <span class="nt">&lt;outputDirectory&gt;&lt;/outputDirectory&gt;</span>
+         <span class="nt">&lt;includes&gt;</span>
+           <span class="nt">&lt;include&gt;</span>LICENSE.txt<span class="nt">&lt;/include&gt;</span>
+         <span class="nt">&lt;/includes&gt;</span>
+       <span class="nt">&lt;/fileSet&gt;</span>
+     <span class="nt">&lt;/fileSets&gt;</span>
+   <span class="nt">&lt;/assembly&gt;</span>
+
+* Add additional ``include`` elements in the second ``fileSet`` for
+  the jar dependencies of the module
+* Add additional ``include`` elements in the third ``fileSet`` for
+  the static file dependencies of the module
+</pre></div>
+</div>
+</li>
+<li><p class="first">Add a dependency from <tt class="docutils literal"><span class="pre">release/pom.xml</span></tt> to the extension
+module:</p>
+<div class="highlight-python"><pre>&lt;dependencies&gt;
+   ...
+   &lt;dependency&gt;
+     &lt;groupId&gt;org.geoserver.extension&lt;/groupId&gt;
+     &lt;artifactId&gt;%module%&lt;/artifactId&gt;
+     &lt;version&gt;%version%&lt;/version&gt;
+   &lt;/dependency&gt;
+   ...
+ &lt;/dependencies&gt;</pre>
+</div>
+</li>
+<li><p class="first">Add an entry for the release descriptor to the root <tt class="docutils literal"><span class="pre">pom.xml</span></tt> of
+the source tree (ie. one step up from the release directory):</p>
+<div class="highlight-python"><pre>&lt;!-- artifact assembly --&gt;
+&lt;plugin&gt;
+  &lt;artifactId&gt;maven-assembly-plugin&lt;/artifactId&gt;
+  &lt;version&gt;2.1&lt;/version&gt;
+  &lt;configuration&gt;
+    &lt;descriptors&gt;
+     &lt;descriptor&gt;release/src.xml&lt;/descriptor&gt;
+     &lt;descriptor&gt;release/war.xml&lt;/descriptor&gt;
+     &lt;descriptor&gt;release/javadoc.xml&lt;/descriptor&gt;
+     &lt;descriptor&gt;release/bin.xml&lt;/descriptor&gt;
+     &lt;descriptor&gt;release/doc.xml&lt;/descriptor&gt;
+     ...
+     &lt;descriptor&gt;release/ext-%module%.xml&lt;/descriptor&gt;
+    &lt;/descriptors&gt;
+  &lt;/configuration&gt;
+&lt;/plugin&gt;</pre>
+</div>
+</li>
+</ol>
+<blockquote>
+<div><ol class="arabic">
+<li><p class="first">Update the documentation</p>
+<p>Add a page to the user manual for the new module.</p>
+<div class="admonition-todo admonition" id="index-0">
+<p class="first admonition-title">Todo</p>
+<p class="last">Finish this by linking somwhere...</p>
+</div>
+</li>
+<li><p class="first">Download the contributor agreement</p>
+<p>The final step in the process is to download and fill out the
+<a class="reference external" href="http://geoserver.org/download/attachments/819262/assignment_agreement.pdf?version=1">contributor agreement form</a>. Follow the instructions
+on the form to submit it.</p>
+</li>
+</ol>
+</div></blockquote>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="demoting-a-community-module">
+<h2>Demoting a community module<a class="headerlink" href="#demoting-a-community-module" title="Permalink to this headline">¶</a></h2>
+<p>For one reason or another a module is neglected and becomes unmaintained. When
+this happens the GeoServer PSC essentially becomes the maintainer and may decide
+to do one of two things:</p>
+<ol class="arabic">
+<li><p class="first"><strong>Assume maintainership</strong></p>
+<p>In this case someone (may be more than one person) on the PSC agrees to
+take on maintainership duties responsibilities for the module, such as bug
+fixing</p>
+</li>
+<li><p class="first"><strong>Demote the module</strong></p>
+<p>If no one steps up to maintain the module it <strong>may</strong> be demoted back to
+community status. If and when a module is demoted depends on the
+circumstances. If the module is relatively &#8220;quiet&#8221; in that it just works
+and not many bug reports arise from it, it may be left alone and not
+demoted.</p>
+</li>
+</ol>
+<div class="section" id="id4">
+<h3>Requirements<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>The following properties must hold true in order to demote a module back to
+community status:</p>
+<ol class="arabic">
+<li><p class="first"><strong>The module has no designated maintainer</strong></p>
+<p>The module maintainer has stepped down or is unreachable and has not been
+active for a number of weeks.</p>
+</li>
+<li><p class="first"><strong>The module is problematic</strong></p>
+<p>The module contains one or more issues with blocker status, or contains a
+&#8220;handful&#8221; of issues with high priority.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="id5">
+<h3>Process<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>The following outlines the steps to demote a module to community status:</p>
+<ol class="arabic">
+<li><p class="first"><strong>Call for a maintainer</strong></p>
+<p>Before demoting the module first try to find a new maintainer for it. Send
+an email to both the developer and user list advertising the module is in
+danger of getting pushed back to community status. Wait a few days to see
+if anyone steps up to take on maintainership.</p>
+</li>
+<li><p class="first"><strong>Move the module and update the build</strong></p>
+<p>If no one steps up to take on the maintainer role, reverse the steps
+described here, taken to promote the module. In summary:</p>
+<ol class="arabic simple">
+<li>Move the module back to the <tt class="docutils literal"><span class="pre">community</span></tt> directory</li>
+<li>Disable any of the modules release artifacts</li>
+<li>Move the profile for the module from <tt class="docutils literal"><span class="pre">extension/pom.xml</span></tt> to
+<tt class="docutils literal"><span class="pre">community/pom.xml</span></tt> in the case of an extension module</li>
+</ol>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="stepping-down-from-module-maintainership">
+<h2>Stepping down from module maintainership<a class="headerlink" href="#stepping-down-from-module-maintainership" title="Permalink to this headline">¶</a></h2>
+<p>Often a module maintainer does not have the time or resources to continue to
+maintain a contribution. This is understood and is a fact of life in the open
+source software world. However, to relieve the burden on the project and PSC,
+the following steps taken by any maintainer stepping down are highly
+appreciated.</p>
+<ol class="arabic">
+<li><p class="first"><strong>Give notice</strong></p>
+<p>The more time you can give to the project in lieu of your departure the
+better. Send an email to the developers list as soon as you know you will
+be dropping off</p>
+</li>
+<li><p class="first"><strong>Find a new maintainer</strong></p>
+<p>While often not possible, any attempt to find a new maintainer for the
+module is greatly appreciated.</p>
+</li>
+</ol>
+</div>
+</div>
+
+
+      <div class="selfclear pagination-nav">
+          <div class="leftwise"><strong>Previous</strong>: <a href="gsip.html" title="previous chapter">GeoServer Improvement Proposals</a></div>
+          <div class="rightwise"><strong>Next</strong>: <a href="psc.html" title="next chapter">Project Steering Committee</a></div>
+      </div>
+      </div><!-- /#content> -->
+  <div id="sidebar" class="contrast">
+      <div id="toc" class="section">
+        <h3 class="pngfix">Table Of Contents</h3>
+        <ul>
+<li><a class="reference internal" href="#">Community Modules</a><ul>
+<li><a class="reference internal" href="#creating-a-community-module">Creating a community module</a><ul>
+<li><a class="reference internal" href="#requirements">Requirements</a></li>
+<li><a class="reference internal" href="#process">Process</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#promoting-a-community-module">Promoting a community module</a><ul>
+<li><a class="reference internal" href="#id2">Requirements</a></li>
+<li><a class="reference internal" href="#id3">Process</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#demoting-a-community-module">Demoting a community module</a><ul>
+<li><a class="reference internal" href="#id4">Requirements</a></li>
+<li><a class="reference internal" href="#id5">Process</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#stepping-down-from-module-maintainership">Stepping down from module maintainership</a></li>
+</ul>
+</li>
+</ul>
+
+        <div class="section-footer"></div>
+      </div>
+        <div class="section">
+          <h3>Continue Reading</h3>
+          <ul>
+            <li>Previous: <a href="gsip.html" title="previous chapter">GeoServer Improvement Proposals</a></li>
+            <li>Next: <a href="psc.html" title="next chapter">Project Steering Committee</a></li>
+          </ul>
+        </div>
+        <div class="section">
+        <h3>This Page</h3>
+        <ul class="this-page-menu">
+          <li><a href="../_sources/policies/community-modules.txt">Show Source</a></li>
+        </ul>
+        </div>
+  </div><!-- /#sidebar -->
+  </div><!-- /.wrap> -->
+</div><!-- /#main -->
+<div id="footer">
+  <div class="wrap">
+    &copy; Copyright 2011 GeoServer.
+    Last updated on Jan 04, 2013.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div><!-- /.wrap> -->
+</div><!-- /#footer -->
+  </body>
+</html>
